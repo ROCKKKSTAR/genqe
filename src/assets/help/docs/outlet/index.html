@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+
+  <title>Outlet - PPG LMS Documentation</title>
+  
+  <link
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+    crossorigin="anonymous"
+  />
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="../../assets/css/just-the-docs.css"
+  />
+  <!--Different Browser icon for All Devices -->
+  <link
+    href="../../assets/images/fav_icon.ico"
+    rel="icon"
+    type="image/x-icon"
+  />
+  <!--IE Browser icon for All Devices -->
+  <link
+    href="../../assets/images/fav_icon.ico"
+    rel="shortcut icon"
+    type="image/x-icon"
+  />
+  <!--Icon for Devices -->
+  <link
+    href="../../assets/images/fav_icon.ico"
+    rel="apple-touch-icon"
+  />
+  <!--Icon for Devices -->
+  <link
+    href="../../assets/images/fav_icon.ico"
+    rel="apple-touch-icon-precomposed"
+  />
+
+  <script
+    type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"
+  ></script>
+  <script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"
+  ></script>
+  
+  <script
+    type="text/javascript"
+    src="../../assets/js/vendor/lunr.min.js"
+  ></script>
+  
+
+  <script
+    type="text/javascript"
+    src="../../assets/js/just-the-docs.js"
+  ></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+
+<body>
+  <div class="page-wrap">
+    <div class="side-bar">
+      <div class="site-header">
+        <a href="../.." class="site-title lh-tight">PPG LMS</a>
+        <button class="menu-button fs-3 js-main-nav-trigger" data-text-toggle="Hide" type="button">Menu</button>
+      </div>
+
+      <div class="navigation main-nav js-main-nav">
+        <nav role="navigation" aria-label="Main navigation">
+  <ul class="navigation-list"><li
+      class="navigation-list-item"
+    ><a
+        href="../../index.html"
+        class="navigation-list-link"
+        >Getting Started</a
+      ></li><li
+      class="navigation-list-item"
+    ><a
+        href="../../docs/overview/index.html"
+        class="navigation-list-link"
+        >Overview</a
+      ></li><li
+      class="navigation-list-item"
+    ><a
+        href="../../docs/newLmsUserSetup/index.html"
+        class="navigation-list-link"
+        >New LMS User Setup</a
+      ></li><li
+      class="navigation-list-item"
+    ><a
+        href="../../docs/setUpNewAdmissionToken/index.html"
+        class="navigation-list-link"
+        >Setup New Admission Token</a
+      ></li><li
+      class="navigation-list-item"
+    ><a
+        href="../../docs/guestAdmission/index.html"
+        class="navigation-list-link"
+        >Guest Admission</a
+      ></li><li
+      class="navigation-list-item"
+    ><a
+        href="../../docs/offlineParthnerIntergration/index.html"
+        class="navigation-list-link"
+        >Offline Partner Integration</a
+      ></li><li
+      class="navigation-list-item"
+    ><a
+        href="../../docs/securityMatrix/index.html"
+        class="navigation-list-link"
+        >Security matrix</a
+      ></li><li
+      class="navigation-list-item"
+    ><a
+        href="../../docs/API%20Documentation/index.html"
+        class="navigation-list-link"
+        >API Documentation</a
+      ><ul class="navigation-list-child-list"><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/login/index.html"
+            class="navigation-list-link"
+            >Login</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/profile/index.html"
+            class="navigation-list-link"
+            >Profile</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/changePassword/index.html"
+            class="navigation-list-link"
+            >Change Password</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/certificateList/index.html"
+            class="navigation-list-link"
+            >Certificate List</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/cardSave/index.html"
+            class="navigation-list-link"
+            >Card Save</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/verifyToken/index.html"
+            class="navigation-list-link"
+            >Verify Token</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/boardingPassScan/index.html"
+            class="navigation-list-link"
+            >Boarding Pass Scan</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/boardingPassSave/index.html"
+            class="navigation-list-link"
+            >Boarding Pass Save</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/boardingPassId/index.html"
+            class="navigation-list-link"
+            >Boarding Pass ID</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/corporateTokens/index.html"
+            class="navigation-list-link"
+            >Corporates Token</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/corporates/index.html"
+            class="navigation-list-link"
+            >Corporates</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/redeemCoupon/index.html"
+            class="navigation-list-link"
+            >Redeem Coupon</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/getFacilities/index.html"
+            class="navigation-list-link"
+            >Get Facilities</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/getProducts/index.html"
+            class="navigation-list-link"
+            >Get Products</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/getOrders/index.html"
+            class="navigation-list-link"
+            >Get Orders</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/getOutlets/index.html"
+            class="navigation-list-link"
+            >Get Outlets</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/getEntitlements/index.html"
+            class="navigation-list-link"
+            >Get Entitlements</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/getadmissions/index.html"
+            class="navigation-list-link"
+            >Get Admissions</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/blackListedToken/index.html"
+            class="navigation-list-link"
+            >Blacklisted Token</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/whitelistedToken/index.html"
+            class="navigation-list-link"
+            >Whitelisted Token</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/mapOutlets/index.html"
+            class="navigation-list-link"
+            >Map Outlets</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/mapProducts/index.html"
+            class="navigation-list-link"
+            >Map Products</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/getToken/index.html"
+            class="navigation-list-link"
+            >Get Token</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/getCouponCode/index.html"
+            class="navigation-list-link"
+            >Coupon Code</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/getCouponDetails/index.html"
+            class="navigation-list-link"
+            >Coupon Details</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/cancelCoupon/index.html"
+            class="navigation-list-link"
+            >Cancel Coupon</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/redeemToken/index.html"
+            class="navigation-list-link"
+            >Redeem Token</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/updateCoupon/index.html"
+            class="navigation-list-link"
+            >Update Coupon</a
+          ></li></ul></li><li
+      class="navigation-list-item"
+    ><a
+        href="../../docs/LMSprocessflowdiadram/index.html"
+        class="navigation-list-link"
+        >LMS Process Flow Diagram</a
+      ></li><li
+      class="navigation-list-item active"
+    ><a
+        href="../../docs/features/index.html"
+        class="navigation-list-link"
+        >Features</a
+      ><ul class="navigation-list-child-list"><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/dashboard/index.html"
+            class="navigation-list-link"
+            >Dashboard</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/admissions/index.html"
+            class="navigation-list-link"
+            >Admissions</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/orders/index.html"
+            class="navigation-list-link"
+            >Orders</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/GenerateCoupons/index.html"
+            class="navigation-list-link"
+            >Generate Coupons</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/partnerResponse/index.html"
+            class="navigation-list-link"
+            >Partner Responses</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/fileImportExport/index.html"
+            class="navigation-list-link"
+            >File Import/Export</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/partner/index.html"
+            class="navigation-list-link"
+            >Partner</a
+          ></li><li
+          class="navigation-list-item  active"
+        ><a
+            href="../../docs/outlet/index.html"
+            class="navigation-list-link active"
+            >Outlet</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/product/index.html"
+            class="navigation-list-link"
+            >Product</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/admissionToken/index.html"
+            class="navigation-list-link"
+            >Admission Token</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/partnerContract/index.html"
+            class="navigation-list-link"
+            >Partner Contract</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/airport/index.html"
+            class="navigation-list-link"
+            >Port/Station</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/users/index.html"
+            class="navigation-list-link"
+            >Users</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/members/index.html"
+            class="navigation-list-link"
+            >Members</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/devices/index.html"
+            class="navigation-list-link"
+            >Devices</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/vendor/index.html"
+            class="navigation-list-link"
+            >Vendor</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/tax/index.html"
+            class="navigation-list-link"
+            >Tax</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/country/index.html"
+            class="navigation-list-link"
+            >Country</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/pincode/index.html"
+            class="navigation-list-link"
+            >Pincode</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/receiptTemplate/index.html"
+            class="navigation-list-link"
+            >Recipt Template</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/token/index.html"
+            class="navigation-list-link"
+            >Token</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/module/index.html"
+            class="navigation-list-link"
+            >Module</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/action/index.html"
+            class="navigation-list-link"
+            >Action</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/role/index.html"
+            class="navigation-list-link"
+            >Role</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/globalSettings/index.html"
+            class="navigation-list-link"
+            >Global Settings</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/AdmissionPOS/index.html"
+            class="navigation-list-link"
+            >Admission POS</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/DMR/index.html"
+            class="navigation-list-link"
+            >DMR</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/AdmissionflowsviaSunmiDevice/index.html"
+            class="navigation-list-link"
+            >Admission flows via Sunmi Device</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/WalkinPOS/index.html"
+            class="navigation-list-link"
+            >Walkin POS</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/FailedAdmissions/index.html"
+            class="navigation-list-link"
+            >Failed Admissions</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/PartnerMigration/index.html"
+            class="navigation-list-link"
+            >Partner Migration</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/BoardingPass/index.html"
+            class="navigation-list-link"
+            >Boarding Pass</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/CustomerInteraction/index.html"
+            class="navigation-list-link"
+            >Customer Interaction</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/AirlineCodes/index.html"
+            class="navigation-list-link"
+            >Airline Codes</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/WASconsumption/index.html"
+            class="navigation-list-link"
+            >WAS Consumption</a
+          ></li></ul></li><li
+      class="navigation-list-item"
+    ><a
+        href="../../docs/ReleaseLogs/index.html"
+        class="navigation-list-link"
+        >Release Logs</a
+      ><ul class="navigation-list-child-list"><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/FirstRelease/index.html"
+            class="navigation-list-link"
+            >Release Notes - Build 1.1.23.01-07</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/SecondRelease/index.html"
+            class="navigation-list-link"
+            >Release Notes - Build 1.1.23.01-20</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/ThirdRelease/index.html"
+            class="navigation-list-link"
+            >Release Notes - Build 1.1.23.02-20</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/FourthRelease/index.html"
+            class="navigation-list-link"
+            >Release Notes - Build 1.1.23.02-24</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/fifthRelease/index.html"
+            class="navigation-list-link"
+            >Release Notes - Build 1.1.23.03-16</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/SixthRelease/index.html"
+            class="navigation-list-link"
+            >Release Notes - Build 1.1.23.03-25</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/SeventhRelease/index.html"
+            class="navigation-list-link"
+            >Release Notes - Build 1.1.23.03-31</a
+          ></li></ul></li><li
+      class="navigation-list-item"
+    ><a
+        href="../../docs/Reports/index.html"
+        class="navigation-list-link"
+        >Reports</a
+      ><ul class="navigation-list-child-list"><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/OperationalReports/index.html"
+            class="navigation-list-link"
+            >Operational Reports</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/BillingReports/index.html"
+            class="navigation-list-link"
+            >Billing Reports</a
+          ></li></ul></li></ul>
+</nav>
+
+      </div>
+      <!-- <footer class="site-footer">
+        <p class="text-small text-grey-dk-000 mb-4">This site is created by <a href="#">C Simplify IT</a>, for Samvad.</p>
+      </footer> -->
+    </div>
+    <div class="main-content-wrap js-main-content" tabindex="0">
+      <div class="main-content">
+        <div class="page-header js-page-header">
+          
+          <div class="search">
+            <div class="search-input-wrap">
+              <input type="text" class="js-search-input search-input" tabindex="0" placeholder="Search PPG LMS Documentation" aria-label="Search PPG LMS Documentation" autocomplete="off">
+              <svg width="14" height="14" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" class="search-icon"><title>Search</title><g fill-rule="nonzero"><path d="M17.332 20.735c-5.537 0-10-4.6-10-10.247 0-5.646 4.463-10.247 10-10.247 5.536 0 10 4.601 10 10.247s-4.464 10.247-10 10.247zm0-4c3.3 0 6-2.783 6-6.247 0-3.463-2.7-6.247-6-6.247s-6 2.784-6 6.247c0 3.464 2.7 6.247 6 6.247z"/><path d="M11.672 13.791L.192 25.271 3.02 28.1 14.5 16.62z"/></g></svg>
+            </div>
+            <div class="js-search-results search-results-wrap"></div>
+          </div>
+          
+        </div>
+        <div class="page">
+          <div id="main-content" class="page-content" role="main">
+          <h2><strong>Outlet</strong></h2>
+<p>
+  You can add new partners manually or import complete file containing list of
+  outlets and their details. Also, edit existing outlet's details in the system
+  for futher use.
+</p>
+<iframe width="680" height="385" src="https://www.youtube.com/embed/zjjLb5K0ZFA?rel=0&ampcontrols=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<p><strong>Process to import the Outlets</strong></p>
+<iframe width="680" height="385" src="https://www.youtube.com/embed/5ignTG3YiVQ?rel=0&ampcontrols=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<p>
+  "Outlet" tab is accessiable from the sidebar as a "Masters" submenu item.
+  Click on it to get in-depth data view of all the outlets.
+</p>
+<img
+  src="../../assets/images/outletTab.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  You can search for the outlet(s) by entering its details in the search field.
+</p>
+<img
+  src="../../assets/images/searchOutlet.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  Or, you can click on dropdown icon for advance serach in which you are having
+  more option to filter out list.
+</p>
+<img
+  src="../../assets/images/advSearchOutlet.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Reset" button to reset the form values.</p>
+<img
+  src="../../assets/images/resetBtnOutlet.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Search" button to search for the result.</p>
+<img
+  src="../../assets/images/searchBtnOutlet.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>You can find outlets list in the table.</p>
+<img
+  src="../../assets/images/outletTable.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  You can view outlet's details by double click on that row of the table for
+  whose details you want to see.
+</p>
+<img
+  src="../../assets/images/dblClickOutlet.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  System then populates a screen where you can see the complete detail of that
+  particular outlet including outlet name, type, category, address, etc.
+</p>
+<img
+  src="../../assets/images/outletDetails.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  Also, you can see four horizontal tabs in the details page below the form
+  fields - Outlet Photos, Users, Outlet Timings, Localisation.
+</p>
+<img
+  src="../../assets/images/outletDetailsTab.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  By default "Outlet Photos" data is visible, where you can see the photos of
+  the outlet or can add new ones.
+</p>
+<img
+  src="../../assets/images/outletPhotos.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>You can see the available photos of the outlet in the system.</p>
+<img
+  src="../../assets/images/outletPhotos1.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  You can also add new photos by clicking on "Add New Outlet Photos" button
+  present on the top of the outlet images.
+</p>
+<img
+  src="../../assets/images/addNewOutletPhoto.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>In this screen, you can upload the photos of the outlet.</p>
+<img
+  src="../../assets/images/uploadOutletPhoto.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Reset" button to delete the uploaded photos.</p>
+<img
+  src="../../assets/images/resetBtnPhotos.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Add Outlet Photos" to save the uploaded photos.</p>
+<img
+  src="../../assets/images/addOutletPhotos.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Users" tab to view, edit or new add users for the outlet.</p>
+<img
+  src="../../assets/images/usersOutletTab.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>You can find the table of existing users.</p>
+<img
+  src="../../assets/images/userOutletTable.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<!-- <p>Double click on the any row to view its detailed information.</p>
+<img src="../../assets/images/orderDetails.jpg" alt="" style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361;">
+<p>The system will populate the new screen for you, where you can view/edit the existing information.</p>
+<img src="../../assets/images/orderDetails.jpg" alt="" style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361;">
+<p>Click on "Reset" button to reset the edited fields.</p>
+<img src="../../assets/images/orderDetails.jpg" alt="" style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361;">
+<p>Click on "Add User" to save the edited fields changes.</p>
+<img src="../../assets/images/orderDetails.jpg" alt="" style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361;">
+<p>You can also add new user by clicking on "Add New User" button present on the top of the table.</p>
+<img src="../../assets/images/orderDetails.jpg" alt="" style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361;">
+<p>In this screen, you can fill the following details to add new user for the outlet.</p>
+<img src="../../assets/images/orderDetails.jpg" alt="" style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361;">
+<p>Click on "Reset" button to reset the fields.</p>
+<img src="../../assets/images/orderDetails.jpg" alt="" style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361;">
+<p>Click on "Add User" to save the data.</p>
+<img src="../../assets/images/orderDetails.jpg" alt="" style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361;"> -->
+<p>
+  Click on "Outlet Timings" tab to view, edit or new timings for the outlet.
+</p>
+<img
+  src="../../assets/images/outletTimingsTab.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>You can find the table of currently running timings for the outlet.</p>
+<img
+  src="../../assets/images/outletTimingsTable.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  You can also add new timings by clicking on "Add New Timings" button present
+  on the top of the table.
+</p>
+<img
+  src="../../assets/images/addNewTimings.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  In this screen, you can fill the following details like a switch button for
+  every day which represents on which the outlet is closed/open and timings
+  (opening and closing) for each day specifically for the outlet.
+</p>
+<img
+  src="../../assets/images/timingsDetails.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  You can also add multiple timings for single day by clicking on "Add Hours"
+  link.
+</p>
+<img
+  src="../../assets/images/addHours.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>It will open another field each time you click on "Add Hours" option.</p>
+<img
+  src="../../assets/images/addHours1.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Reset" button to reset the fields.</p>
+<img
+  src="../../assets/images/resetBtnTimings.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Add Timings" to save the data.</p>
+<img
+  src="../../assets/images/addTimingsBtn.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Localisation" tab to view the data in different languages.</p>
+<img
+  src="../../assets/images/localisationTab.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>You can find the table for existing attributes.</p>
+<img
+  src="../../assets/images/localisationTable.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Save" to save the data.</p>
+<img
+  src="../../assets/images/saveLocalisation.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Fill the partner name and  Partner Outlet ID As shown below and click on "Add Partner Link".</p>
+<img
+  src="../../assets/images/OutletPartnerLinkTab.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Outlet Settings" button to view/edit the settings.</p>
+<img
+  src="../../assets/images/outletsettingstab.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  The popup will open for you where you can view and add the outlet settings by
+  clicking on add outlet setting.
+</p>
+<img
+  src="../../assets/images/addoutletsetting.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Fill all the details here.</p>
+<img
+  src="../../assets/images/outletsettingdetails.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Save" button to save the save the outlet settings.</p>
+<img
+  src="../../assets/images/saveoutletsetting.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Clicking on this button will download all the holistic view admission tokens associated with the  outlet in pdf format provided the outlet has some admission token binded to.</p>
+<img
+  src="../../assets/images/generateAI.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  Clicking on the submit button will bring the user to the outlet screen. 
+</p>
+<img
+  src="../../assets/images/outletsubmit.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  You can also add new outlet by clicking on "New" button present on the top
+  right corner on the main screen.
+</p>
+<img
+  src="../../assets/images/newBtnOutlet.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Fill the following information to add new outlet in the system.</p>
+<img
+  src="../../assets/images/addNewOutlet.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Reset" button to reset the form.</p>
+<img
+  src="../../assets/images/resetBtnOutlet1.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Save" button to save the filled details in the system.</p>
+<img
+  src="../../assets/images/saveBtnOutlet1.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  You can import one or more outlets by clicking on this button. 
+An excel template is downloaded, open the template input the outlet details and upload the template. All the imported outlets will be fetched in the outlet screen.
+</p>
+<img
+  src="../../assets/images/importBtnOutlet.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  Follow the steps present in "Import" tab present the sidenav of this
+  documentation.
+</p>
+<img
+  src="../../assets/images/importsteps.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p><strong>Below are the input fields used in this screen:</strong></p>
+<table class="table-bordered">
+  <tr>
+    <th>Name of the field</th>
+    <th>Entry Mode</th>
+    <th>Mandatory</th>
+    <th>Comments</th>
+  </tr>
+  <tr>
+    <td>Outlet Name</td>
+    <td>Free text with dropdown</td>
+    <td>Yes</td>
+    <td>
+      You have to enter starting three alphabets of the outlet name and it will
+      show you the result based on that. Once you have selected any outlet from
+      the dropdown, you will see some of the fields get auto filled.
+    </td>
+  </tr>
+  <tr>
+    <td>Outlet Category</td>
+    <td>Selection</td>
+    <td>Yes</td>
+    <td>
+      Category could have following values - Arrival, Departure, Outside Airport
+    </td>
+  </tr>
+  <tr>
+    <td>Outlet Code</td>
+    <td>Free Text</td>
+    <td>Yes</td>
+    <td>
+      You have to enter the shortcode of that outlet which must be unique.
+    </td>
+  </tr>
+  <tr>
+    <td>Outlet Type</td>
+    <td>Selection</td>
+    <td>Yes</td>
+    <td>
+      Type could have following values - Dinning, Kids Area, Lounge, MASSAGE
+      CENTRE, Meeting Room, SPA center
+    </td>
+  </tr>
+  <tr>
+    <td>Outlet Brand</td>
+    <td>Free Text</td>
+    <td>Yes</td>
+    <td>
+      This field displays the information about the brand that owns the outlet.
+    </td>
+  </tr>
+  <tr>
+    <td>Outlet Owned By</td>
+    <td>Free Text with dropdown</td>
+    <td>Yes</td>
+    <td>
+      Name of the owner of the outlet and you have to enter the first three
+      letters of the name and select it from dropdown.
+    </td>
+  </tr>
+  <tr>
+    <td>Outlet Operated By</td>
+    <td>Free text with dropdown</td>
+    <td>Yes</td>
+    <td>
+      Name of the person who is operating things in that outlet.First it needs
+      to be defined in vendor screen.
+    </td>
+  </tr>
+  <tr>
+    <td>Parent Lounge</td>
+    <td>View only</td>
+    <td>No</td>
+    <td>System generated</td>
+  </tr>
+  <tr>
+    <td>Business Line</td>
+    <td>Selection</td>
+    <td>Yes</td>
+    <td>Business Line could have following values - Lounge, Spa, F&B</td>
+  </tr>
+  <tr>
+    <td>Outlet Receipt</td>
+    <td>Free Text with Dropdown</td>
+    <td>Yes</td>
+    <td>
+      First its needs to be Created in Receipt Template Screen. Here Just type
+      first 3 alphabets and select that receipt name from dropdown
+    </td>
+  </tr>
+  <tr>
+    <td>Address Line 1</td>
+    <td>Free text</td>
+    <td>Yes</td>
+    <td>Enter the address of the outlet</td>
+  </tr>
+  <tr>
+    <td>Address Line 2</td>
+    <td>Free text</td>
+    <td>No</td>
+    <td>Enter the address of the outlet</td>
+  </tr>
+  <tr>
+    <td>Port</td>
+    <td>Free text with dropdown</td>
+    <td>Yes</td>
+    <td>
+      First its needs to be defined in Port/Station Screen.You have to enter
+      starting three alphabets of the port and it will show you the result based
+      on that. If you hover over on "i" symbol you will get the information
+      about that port.
+    </td>
+  </tr>
+  <tr>
+    <td>Journey Type</td>
+    <td>Selection</td>
+    <td>Yes</td>
+    <td>Journey could have following values -Both, Domestic, International</td>
+  </tr>
+  <tr>
+    <td>Travel Direction</td>
+    <td>Selection</td>
+    <td>Yes</td>
+    <td>
+      Travel Direction could have following values - Arrival, Both, Departure
+    </td>
+  </tr>
+  <tr>
+    <td>Terminal Code</td>
+    <td>Free text</td>
+    <td>Yes</td>
+    <td>From Airport Configuration</td>
+  </tr>
+  <tr>
+    <td>Sub Termial</td>
+    <td>Free text</td>
+    <td>No</td>
+    <td>
+      If the terminal has multiple locations, then either use the gate code, or
+      any other indication to reflect sub location within the terminal.
+    </td>
+  </tr>
+  <tr>
+    <td>Zone</td>
+    <td>Selection</td>
+    <td>Yes</td>
+    <td>
+      Zone could have following values - Before Security, After Security, In
+      Transit
+    </td>
+  </tr>
+  <tr>
+    <td>Capacity</td>
+    <td>Number</td>
+    <td>Yes</td>
+    <td>Number of people allowed (sitting area) at a time in outlet</td>
+  </tr>
+  <tr>
+    <td>IsActive</td>
+    <td>Switch (Toggle) button</td>
+    <td>Yes</td>
+    <td>Yes/No</td>
+  </tr>
+  <tr>
+    <td>Is Secured</td>
+    <td>Switch (Toggle) button</td>
+    <td>Yes</td>
+    <td>Yes/No</td>
+  </tr>
+  <tr>
+    <td>Secured By</td>
+    <td>Selection</td>
+    <td>Yes</td>
+    <td>
+      Secured By could have following values - Keycode, None, Queue, eGate
+    </td>
+  </tr>
+  <tr>
+    <td>Base Currency</td>
+    <td>Selection</td>
+    <td>Yes</td>
+    <td>
+      ISO Code of currency. Currently currency could have following values -
+      USD, YEN etc.
+    </td>
+  </tr>
+  <tr>
+    <td>Date of Opening</td>
+    <td>Date</td>
+    <td>Yes</td>
+    <td>Date of opening of outlet</td>
+  </tr>
+  <tr>
+    <td>Phone No</td>
+    <td>Number</td>
+    <td>Yes</td>
+    <td>Phone number of the outlet</td>
+  </tr>
+  <tr>
+    <td>Fax</td>
+    <td>Free text</td>
+    <td>No</td>
+    <td>Fax number of the outlet</td>
+  </tr>
+  <tr>
+    <td>Outlet Description</td>
+    <td>Free text</td>
+    <td>Yes</td>
+    <td>Enter description if you want to add for the outlet</td>
+  </tr>
+  <tr>
+    <td>Outlet Photo</td>
+    <td>Upload</td>
+    <td>No</td>
+    <td>You can upload multiple photos of the outlet</td>
+  </tr>
+  <tr>
+    <td>Users</td>
+    <td>View only</td>
+    <td>No</td>
+    <td>
+      Once the outlet is created, you can add that outlet in user screen for
+      that particular user and once its done, Here it will be visible.
+    </td>
+  </tr>
+  <tr>
+    <td>Outlet Timings</td>
+    <td>Switch(toggle) button and time</td>
+    <td>No</td>
+    <td>
+      You can close/open day for the outlet by clicking on switch button. And
+      add multiple opening/closing timings for the outlet
+    </td>
+  </tr>
+  <tr>
+    <td>Localisation</td>
+    <td>Free text</td>
+    <td>No</td>
+    <td>You can add attributes in different languages</td>
+  </tr>
+  <tr>
+    <td>Outlet Partner Link</td>
+    <td>Free text</td>
+    <td>No</td>
+    <td>
+      This tab has two fields Partner Name and Partner Outlet I'd. In partner
+      field we enter the name of the partner and in Partner Outlet we enter the
+      I'd provided by the partner. </br>
+      Partner outlet I'd : In this field we input
+      the I'd of the outlet which is provided by the partner. This I'd syncs the
+      outlets eg Partner A give I'd of Outlet A (in MAS 3.0) as 1024. Then for
+      outlet A in outlet partner I'd we input 1024.
+    </td>
+  </tr>
+</table>
+
+
+          </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

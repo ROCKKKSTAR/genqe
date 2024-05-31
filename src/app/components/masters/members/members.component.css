@@ -1,0 +1,295 @@
+.create-member-id-link {
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline;
+    margin-top: -71px;
+    margin-left: 60%;
+  }
+  .table-width{
+    width:50%;
+    position: relative;
+    right:50%
+  }
+
+  .saveCardTable{
+    position: relative;
+    left: -117%;
+  }
+
+  .modal-content{
+    width: 64% !important;
+    position: relative !important;
+    left: 22% !important;
+  }
+
+  .saveCardButtons{
+    position: relative;
+    left: 155%;
+  }
+
+  h2,
+p,
+hr,
+label {
+  color: #00263a;
+}
+
+.detail-card-box {
+  height: 78vh;
+  width: 45vw;
+  position: relative;
+  right: 71%;
+}
+
+.modal-content {
+  background-color: white;
+  max-width: 500px;
+
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: none;
+  /* right: 37%; */
+}
+
+.card-box {
+  gap: 16px;
+  box-shadow: 2px 2px 8px #ddd;
+  padding: 12px;
+}
+
+.card-heading {
+  box-shadow: 0px 2px 6px -2px #aaa;
+}
+
+.card-img-container {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+.card-grid {
+  overflow-y: auto;
+  max-height: calc(100vh - 80px);
+}
+
+.lounge-grid .card-box:nth-child(even),
+.lounge-pax-grid .card-box:nth-child(even),
+.card-grid .card-box:nth-child(even) {
+  background-color: #f0f4f8;
+}
+.lounge-grid .card-box:nth-child(odd),
+.lounge-pax-grid .card-box:nth-child(odd),
+.card-grid .card-box:nth-child(odd) {
+  background-color: #fff;
+}
+.lounge-pax-grid,
+.lounge-grid {
+  overflow-y: auto;
+  /* max-height: calc(100vh - 180px); */
+  height: calc(100vh - 334px);
+}
+
+.add-card {
+  position: absolute;
+  right: 7%;
+  bottom: 5%;
+  height: 58px;
+  width: 58px;
+  border-radius: 50%;
+  background-color: #ffb549;
+  color: #fff;
+  cursor: pointer;
+}
+.add-refresh {
+  position: fixed;
+  /* left: 7%; */
+  /* bottom: -30%; */
+  height: 59px;
+  width: 58px;
+  border-radius: 50%;
+  background-color: #a9a9a9;
+  color: #fff;
+  cursor: pointer;
+}
+
+.remove-card {
+  background-color: #808080;
+  color: #fff;
+}
+
+.remove-card i,
+.remove-card span {
+  color: #fff;
+}
+
+.add-card i {
+  font-size: 22px;
+}
+
+.qr-btn i {
+  margin-top: 2px;
+  margin-left: 2px;
+}
+
+.img-wrapper {
+  min-height: 48px;
+  max-height: 48px;
+  min-width: 80px;
+  max-width: 80px;
+}
+
+.qr-btn {
+  height: 26px;
+  width: 26px;
+  border-radius: 50%;
+  color: #fff;
+  background-color: #00263a;
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  border: 2px solid #fff;
+}
+.linked-cards {
+  position: absolute;
+  top: -7px;
+  left: -7px;
+  border: 2px solid #fff;
+}
+
+.cross-Button {
+  position: relative;
+  left: 1%;
+}
+
+.qr-Code {
+  /* position: relative;
+  top:27%;
+  left:26% */
+  display: grid;
+  place-items: center;
+  height: 68%;
+}
+
+.button-text {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.date {
+  position: relative;
+  left: 1%;
+}
+
+.loader {
+  width: 15px;
+  height: 15px;
+  border: 2px solid black;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+::ng-deep .close-btn {
+  background-color: red !important;
+  border: 1px solid red !important;
+  box-shadow: 0 0 2px red, inset 0 0 0 1px red !important;
+}
+.icon-container {
+  margin-left: auto;
+}
+
+.icon-item {
+  cursor: pointer;
+  font-size: 42px;
+}
+.lounges-btn {
+  cursor: pointer;
+  font-size: 12px;
+  text-align: right;
+  text-decoration: underline;
+}
+.cardName {
+  position: relative;
+  top: 25%;
+  font-size: 15px;
+}
+.linked h2 {
+  padding-top: 20px;
+  margin-bottom: 0;
+}
+.linked:nth-child(even) {
+  background-color: #f0f4f8;
+}
+
+@media (max-width: 350px) {
+  .add-card,
+  .add-refresh,
+  .remove-card {
+    height: 44px;
+    width: 44px;
+  }
+
+  .card-box {
+    padding: 6px;
+  }
+
+  p,
+  span,
+  label {
+    font-size: 12px;
+  }
+
+  .card-box img {
+    height: 32px !important;
+  }
+
+  .icon-item i.fa {
+    font-size: 28px;
+  }
+  .img-wrapper {
+    min-height: 32px;
+    max-height: 32px;
+    min-width: 56px;
+    max-width: 56px;
+  }
+}
+
+
+.cards{
+position: relative;
+}
+
+.modal-content-data{
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: none;
+  width: 117% !important;
+  position: relative !important;
+  left: 4% !important;
+}
+
+.modal-content-reason{
+background-color: white;
+max-width: 500px;
+padding: 20px;
+border-radius: 5px;
+box-shadow: none;
+width: 64% !important;
+position: relative !important;
+left: 22% !important;
+}

@@ -1,0 +1,1885 @@
+<div
+  class="content-wrapper d-flex"
+  [ngClass]="{ 'sidebar-open': isSidebarOpen }"
+>
+  <div class="sidebar-wrapper">
+    <app-sidebar [(sidebarState)]="isSidebarOpen"></app-sidebar>
+  </div>
+  <div class="main-wrapper pt-3">
+    <div *ngIf="LoaderShow">
+      <app-loader [message]="'Loading Users...'"></app-loader>
+    </div>
+
+    <div *ngIf="ExportLoader">
+      <app-loader [message]="exportloaderMessage"></app-loader>
+    </div>
+
+    <div *ngIf="ResetLoaderShow">
+      <app-loader [message]="resetloaderMessage"></app-loader>
+    </div>
+
+    <div class="container-fluid h-100">
+      <div class="row h-100">
+        <div class="col-md-12">
+          <div
+            class="property-details-wrapper"
+            *ngIf="!showUserDetails && !showImport"
+          >
+            <div class="row">
+              <div class="col-md-8">
+                <p class="main-heading">
+                  <span
+                    >{{ data ? data.master.user.txtHeading : "User" }}:</span
+                  >
+                  {{
+                    data
+                      ? data.master.user.txtDes
+                      : "View and add new user for outlet."
+                  }}
+                </p>
+                <!-- <input type="file" accept="image/*" (change)="changeSelectedfile($event.target.files)"> -->
+              </div>
+              <div class="col-md-4 text-right" *ngIf="usertype !== 3">
+                <a
+                  href="javascript:void(0)"
+                  mat-raised-button
+                  (click)="exportReport('User')"
+                  style="line-height: 25px !important"
+                  class="btn btn-info"
+                  ><i class="fa fa-file-text-o" aria-hidden="true"></i>
+                  {{ data ? data.buttons.export : "Export" }}</a
+                >
+                <a (click)="showUsersImport()" class="btn btn-success mr-2"
+                  ><i class="fa fa-upload" aria-hidden="true"></i>
+                  {{ data ? data.buttons.import : "Import" }}</a
+                >
+                <a class="btn btn-info" (click)="addNewUser(true)"
+                  ><i class="fa fa-plus" aria-hidden="true"></i>
+                  {{ data ? data.buttons.new : "New" }}</a
+                >
+
+                <!-- <a (click)="UserSync()" class="btn btn-secondary mr-2"
+                  ><i class="fa fa-refresh" aria-hidden="true"></i> User Sync</a
+                > -->
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="search-wrapper">
+                  <div class="search-product">
+                    <div class="search_main">
+                      <div class="search-input">
+                        <span
+                          ><i class="fa fa-search" aria-hidden="true"></i
+                        ></span>
+                        <input
+                          type="search"
+                          [(ngModel)]="simplesearch"
+                          (keyup.enter)="
+                            simpleSearchUserData($event.target.value)
+                          "
+                        />
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>{{
+                          data ? data.master.user.searchLU : "Search User"
+                        }}</label>
+                        <span
+                          ><i
+                            (click)="fetchUserDataSearch()"
+                            class="fa fa-times"
+                            aria-hidden="true"
+                          ></i
+                        ></span>
+                        <span (click)="showQueryForm()" class="dropdown-form"
+                          ><i class="fa fa-sort-desc" aria-hidden="true"></i
+                        ></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="query1" class="query1" *ngIf="showData">
+                    <div class="form-container">
+                      <form>
+                        <div class="row">
+                          <!-- <div class="col-md-6">
+                            <div class="form-group position-relative">
+                              <label for="userName1"
+                                >{{
+                                  data
+                                    ? data.master.user.username
+                                    : "User Name"
+                                }}<span class="asterisk">*</span>:</label
+                              >
+                              <div class="suggestion_input_wrapper">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                                <input
+                                  [(ngModel)]="name"
+                                  type="text"
+                                  class="form-control suggestionInput"
+                                  id="userName1"
+                                  placeholder="{{
+                                    data
+                                      ? data.master.user.enterusername
+                                      : 'Enter User Name'
+                                  }}"
+                                  name="name"
+                                  autocomplete="off"
+                                  (keyup)="fetchuserNames($event.target.value)"
+                                  (keydown)="onTokenUserInputKeydown($event)"
+                                  #userName
+                                />
+                              </div>
+                              <ul
+                                class="searched-list searchSuggestions"
+                                *ngIf="user.length > 0"
+                              >
+                                <li
+                                  *ngFor="let l of user; let i = index"
+                                  [class.selected]="
+                                    i === tokenUserSuggestionIndex
+                                  "
+                                  (click)="setTokenUser(l)"
+                                >
+                                  {{ l.name }}
+                                </li>
+                              </ul>
+                            </div>
+                          </div> -->
+                          <div class="col-md-6">
+                            <div class="form-group position-relative">
+                              <label for="userName"
+                                >{{
+                                  data
+                                    ? data.master.user.username
+                                    : "User Name"
+                                }}:</label
+                              >
+                              <input
+                                [(ngModel)]="advancesearchname"
+                                type="text"
+                                class="form-control"
+                                id="userName"
+                                placeholder="Enter User Name"
+                                name="advancesearchname"
+                              />
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="userRole"
+                                >{{
+                                  data
+                                    ? data.master.user.userrole
+                                    : "User Role"
+                                }}:</label
+                              >
+                              <select
+                                [(ngModel)]="roles"
+                                name="userrole"
+                                class="custom-select"
+                              >
+                                <option checked value="0">None</option>
+                                <option
+                                  *ngFor="let c of userrole"
+                                  [value]="c._id"
+                                >
+                                  {{ c.roleName }}
+                                </option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="userStatus"
+                                >{{
+                                  data
+                                    ? data.master.user.userstatus
+                                    : "User Status"
+                                }}:</label
+                              >
+                              <select
+                                [(ngModel)]="status"
+                                name="userStatus"
+                                class="custom-select"
+                              >
+                                <!-- <option *ngFor="let c of userData">{{c.status===1 ? "Active":"Inactive"}}</option> -->
+                                <option selected>Active</option>
+                                <option>Inactive</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="userType">{{ "User Type" }}:</label>
+                              <select
+                                name="userType"
+                                class="custom-select"
+                                id="userType"
+                                [(ngModel)]="advancesearchUserType"
+                              >
+                                <option
+                                  *ngFor="let t of UserType"
+                                  [value]="t.keyCode"
+                                >
+                                  {{ t.key1 }}
+                                </option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="query-btn">
+                          <a
+                            (click)="ResetAdvanceSearch()"
+                            class="btn btn-secondary"
+                            ><i class="fa fa-history" aria-hidden="true"></i>
+                            {{ data ? data.buttons.reset : "reset" }}</a
+                          >
+                          <a
+                            (click)="advanceUserDataSearch()"
+                            class="btn btn-info"
+                            ><i class="fa fa-search" aria-hidden="true"></i>
+                            {{ data ? data.buttons.search : "Search" }}</a
+                          >
+                          <a class="btn btn-danger" (click)="showQueryForm()"
+                            ><i class="fa fa-close" aria-hidden="true"></i>
+                            {{ data ? data.admission.close : "Close" }}</a
+                          >
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="property-table-wrapper">
+              <div class="table-responsive">
+                <table
+                  mat-table
+                  [dataSource]="dataSourceUser"
+                  matTableExporter
+                  #exporter="matTableExporter"
+                  [hiddenColumns]="[5]"
+                  class="mat-elevation-z8"
+                  matSort
+                  #actionSort="matSort"
+                >
+                  <ng-container matColumnDef="_id">
+                    <th mat-header-cell *matHeaderCellDef>Partner Id</th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element._id }}
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef=" defaultOutlet">
+                    <th mat-header-cell *matHeaderCellDef>defaultOutlet</th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.defaultOutlet }}
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="name">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{ data ? data.master.user.username : "User Name" }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.name }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="remoteUserID">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{
+                        data ? data.master.user.remoteUserId : "Remote UserId"
+                      }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.remoteUserID }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="mobile">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{ data ? data.master.user.mobileNo : "Mobile No" }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.mobile }}
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="email">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{ data ? data.master.user.email : "Email" }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.email }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="status">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{ data ? data.master.user.status : "Status" }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element?.status === 1 ? "Active" : "Inactive" }}
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="lastModifiedBy">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{
+                        data
+                          ? data.master.product.lastmodifiedby
+                          : "Last Modified By"
+                      }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.lastModifiedBy.name }}
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="lastModifiedOn">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{
+                        data
+                          ? data.master.product.lastmodifiedon
+                          : "Last Modified On"
+                      }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{
+                        element?.lastModifiedOn == "undefined"
+                          ? ""
+                          : cs.formatDateTime(element.lastModifiedOn)
+                      }}
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="action">
+                    <th
+                      mat-header-cell
+                      *matHeaderCellDef
+                      style="text-align: center"
+                    >
+                      {{ data ? data.master.partner.action : "Action" }}
+                    </th>
+                    <td
+                      mat-cell
+                      *matCellDef="let element; let i = index"
+                      style="text-align: center"
+                    >
+                      <i
+                        *ngIf="usertype !== 3"
+                        style="cursor: pointer"
+                        class="fa fa-pencil mr-4"
+                        (click)="getUserById(element._id)"
+                        aria-hidden="true"
+                      ></i>
+                      <i
+                        *ngIf="usertype !== 3"
+                        style="color: red; cursor: pointer"
+                        class="fa fa-trash mr-4"
+                        aria-hidden="true"
+                        (click)="deleteUserData(element._id)"
+                      ></i>
+
+                      <i
+                        style="color: black; cursor: pointer"
+                        data-toggle="tooltip"
+                        [title]="getInfoOfResetPassword()"
+                        class="fa fa-key"
+                        aria-hidden="true"
+                        (click)="
+                          openSharedModel(
+                            element._id,
+                            element.name,
+                            element.defaultOutlet
+                          )
+                        "
+                      ></i>
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr
+                    mat-row
+                    (dblclick)="getUserById(row._id)"
+                    *matRowDef="
+                      let row;
+                      columns: displayedColumns;
+                      let i = index
+                    "
+                  ></tr>
+                  <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell">
+                      {{
+                        data ? data.master.user.nodatafound : "NO Data Found"
+                      }}
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <mat-paginator
+                [pageSizeOptions]="[10, 25, 50, 100]"
+                aria-label="Select page of users"
+              ></mat-paginator>
+            </div>
+          </div>
+
+          <div
+            class="new-property-wrapper"
+            *ngIf="showUserDetails && !showImport"
+          >
+            <p class="main-heading">
+              <span
+                >{{
+                  data ? data.master.user.addnewuser : "Add New User"
+                }} </span
+              >{{
+                data
+                  ? data.master.user.userd
+                  : "Fill the following details to add new user for Outlets."
+              }}<span
+                (click)="hideUserDetails()"
+                class="close1"
+                data-toggle="tooltip"
+                title="Close"
+                >X</span
+              >
+            </p>
+            <form>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group position-relative">
+                    <label for="userName1"
+                      >{{ data ? data.master.user.username : "User Name"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <div class="suggestion_input_wrapper">
+                      <i class="fa fa-search" aria-hidden="true"></i>
+                      <input
+                        [disabled]="disableButton"
+                        [(ngModel)]="name"
+                        type="text"
+                        class="form-control"
+                        id="userName1"
+                        placeholder="{{
+                          data
+                            ? data.master.user.enterusername
+                            : 'Enter User Name'
+                        }}"
+                        name="name"
+                        autocomplete="off"
+                        (keyup)="fetchuserNames($event.target.value)"
+                        (keydown)="onTokenUserInputKeydown($event)"
+                        #userName
+                      />
+                    </div>
+                    <ul class="searched-list" *ngIf="user.length > 0">
+                      <li
+                        *ngFor="let l of user; let i = index"
+                        [class.selected]="i === tokenUserSuggestionIndex"
+                        (click)="setTokenUser(l)"
+                      >
+                        {{ l.name }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="userType1"
+                      >{{ data ? data.master.user.userType : "User Type"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <select
+                      name="userType1"
+                      class="custom-select"
+                      id="userType1"
+                      [(ngModel)]="type"
+                      (click)="emptyUser_Name()"
+                    >
+                      <option *ngFor="let t of UserType" [value]="t.keyCode">
+                        {{ t.key1 }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group position-relative">
+                    <label for="defaultOutlet"
+                      >{{
+                        data
+                          ? data.master.user.defaultLoungeAccess
+                          : "Default Outlet Access"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <div class="suggestion_input_wrapper">
+                      <i class="fa fa-search" aria-hidden="true"></i>
+                      <input
+                        type="text"
+                        class="form-control suggestionInput"
+                        id="defaultOutlet"
+                        [(ngModel)]="defaultOutlet"
+                        placeholder="{{
+                          data
+                            ? data.master.user.defaultLoungeAccess
+                            : 'Default Outlet Access'
+                        }}"
+                        name="defaultOutlet"
+                        autocomplete="off"
+                        (keyup)="fetchLoungeNames($event.target.value)"
+                        (keydown)="onTokenUserLoungeInputKeydown($event)"
+                      />
+                    </div>
+                    <ul
+                      class="searched-list searchSuggestions"
+                      *ngIf="lounge.length > 0"
+                    >
+                      <li
+                        *ngFor="let d of lounge; let i = index"
+                        [class.selected]="i === tokenUserLoungeSuggestionIndex"
+                        (click)="setTokenuserlounge(d)"
+                      >
+                        {{ d.name }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="UserMobile"
+                      >{{ data ? data.master.user.mobileNo : "Mobile Number"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <input
+                      [(ngModel)]="mobile"
+                      type="text"
+                      class="form-control"
+                      id="UserMobile"
+                      placeholder="{{
+                        data
+                          ? data.master.user.enterusermobilenumber
+                          : 'Enter User Mobile No'
+                      }}"
+                      name="UserMobile"
+                      oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="userEmail"
+                      >{{ data ? data.master.user.email : "Email"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <input
+                      [(ngModel)]="email"
+                      type="email"
+                      class="form-control"
+                      id="userEmail"
+                      placeholder="{{
+                        data
+                          ? data.master.user.enteruseremail
+                          : 'Enter User Email'
+                      }}"
+                      name="userEmail"
+                    />
+                  </div>
+                </div>
+              </div>
+              <!-- Password -->
+              <div class="row align-items-center" [hidden]="_id !== ''">
+                <div class="col-md-6 align-self-start">
+                  <div class="form-group">
+                    <label for="UserPassword"
+                      >{{ data ? data.master.user.Password : "Password"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <input
+                      [(ngModel)]="newPassword"
+                      (keyup)="onKeypressEvent($event)"
+                      [ngClass]="{
+                        'is-invalid': submitted && f.password.errors
+                      }"
+                      class="form-control"
+                      type="password"
+                      id="newPassword"
+                      placeholder="{{
+                        data ? data.master.user.Password : 'Password'
+                      }}"
+                      name="newPassword"
+                    />
+                    <div class="d-flex flex-column p-2" *ngIf="!showflag">
+                      <!-- <span *ngIf="!lowerflag" style="color: red;">✖ Password must contain a lower case letter</span>
+                       <span *ngIf="!upperflag" style="color: red;"> ✖ Password must contain an upper case letter</span>
+                      <span  *ngIf="!specialflag" style="color: red;">✖ Password must contain a special character</span> 
+                      <span *ngIf="!numberflag"   style="color: red;">✖ Password must contain a number</span>
+                      <span  *ngIf="!charactersflag" style="color: red;">✖ Password must contain at least 8 characters</span> -->
+
+                      <span *ngIf="!upperflag" style="color: red"
+                        >✖ Password must contain an upper case letter</span
+                      >
+                      <span *ngIf="upperflag" style="color: green"
+                        >✔ Password contains an upper case letter</span
+                      >
+
+                      <span *ngIf="!lowerflag" style="color: red"
+                        >✖ Password must contain a lower case letter</span
+                      >
+                      <span *ngIf="lowerflag" style="color: green"
+                        >✔ Password contains a lower case letter</span
+                      >
+
+                      <!-- <span *ngIf="!specialflag" style="color: red;">✖ Password must contain a special character</span>
+                      <span *ngIf="specialflag" style="color: green;">✔ Password contains a special character</span> -->
+
+                      <span *ngIf="!numberflag" style="color: red"
+                        >✖ Password must contain a number</span
+                      >
+                      <span *ngIf="numberflag" style="color: green"
+                        >✔ Password contains a number</span
+                      >
+
+                      <span *ngIf="!charactersflag" style="color: red"
+                        >✖ Password must contain at least 8 characters</span
+                      >
+                      <span *ngIf="charactersflag" style="color: green"
+                        >✔ Password must contain at least 8 characters</span
+                      >
+                    </div>
+                    <div class="d-flex flex-column p-2" *ngIf="showflagGreen">
+                      <span *ngIf="!lowerflag" style="color: green"
+                        >✓ Password must contain a lower case letter</span
+                      >
+                      <span *ngIf="!upperflag" style="color: green">
+                        ✓ Password must contain an upper case letter</span
+                      >
+                      <!-- <span  *ngIf="!specialflag" style="color: green;">✓ Password must contain a special character</span> -->
+                      <span *ngIf="!numberflag" style="color: green"
+                        >✓ Password must contain a number</span
+                      >
+                      <span *ngIf="!charactersflag" style="color: green"
+                        >✓ Password must contain at least 8 characters</span
+                      >
+                    </div>
+                    <div
+                      *ngIf="submitted && f.password.errors"
+                      class="invalid-feedback"
+                    >
+                      <div
+                        *ngIf="f.password.errors.required"
+                        style="color: red"
+                      >
+                        Password is required
+                      </div>
+                      <div
+                        *ngIf="f.password.errors.minlength"
+                        style="color: red"
+                      >
+                        Password must be at least 8 characters
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 align-self-start">
+                  <div class="form-group">
+                    <label for="reEnterPassword"
+                      >{{
+                        data
+                          ? data.master.user.ReenterPassword
+                          : "Re-enter Password"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <input
+                      [(ngModel)]="reEnterPassword"
+                      (keyup)="onKeypressEvent1($event)"
+                      [ngClass]="{
+                        'is-invalid': submitted && f.confirmpassword.errors
+                      }"
+                      class="form-control"
+                      type="password"
+                      id="reEnterPassword"
+                      placeholder="{{
+                        data
+                          ? data.master.user.ReenterPassword
+                          : 'Re-enter Password'
+                      }}"
+                      name="reEnterPassword"
+                    />
+                    <div class="d-flex flex-column p-2" *ngIf="!showflag1">
+                      <!-- <span *ngIf="!lowerflag1" style="color: red;">✖ Password must contain a lower case letter</span>
+                       <span *ngIf="!upperflag1" style="color: red;"> ✖ Password must contain an upper case letter</span>
+                      <span  *ngIf="!specialflag1" style="color: red;">✖ Password must contain a special character</span> 
+                      <span *ngIf="!numberflag1"   style="color: red;">✖ Password must contain a number</span>
+                      <span  *ngIf="!charactersflag1" style="color: red;">✖ Password must contain at least 8 characters</span> -->
+                      <span *ngIf="!upperflag1" style="color: red"
+                        >✖ Password must contain an upper case letter</span
+                      >
+                      <span *ngIf="upperflag1" style="color: green"
+                        >✔ Password contains an upper case letter</span
+                      >
+
+                      <span *ngIf="!lowerflag1" style="color: red"
+                        >✖ Password must contain a lower case letter</span
+                      >
+                      <span *ngIf="lowerflag1" style="color: green"
+                        >✔ Password contains a lower case letter</span
+                      >
+
+                      <!-- <span *ngIf="!specialflag" style="color: red;">✖ Password must contain a special character</span>
+                      <span *ngIf="specialflag" style="color: green;">✔ Password contains a special character</span> -->
+
+                      <span *ngIf="!numberflag1" style="color: red"
+                        >✖ Password must contain a number</span
+                      >
+                      <span *ngIf="numberflag1" style="color: green"
+                        >✔ Password contains a number</span
+                      >
+
+                      <span *ngIf="!charactersflag1" style="color: red"
+                        >✖ Password must contain at least 8 characters</span
+                      >
+                      <span *ngIf="charactersflag1" style="color: green"
+                        >✔ Password must contain at least 8 characters</span
+                      >
+                    </div>
+                    <div class="d-flex flex-column p-2" *ngIf="showflagGreen1">
+                      <span *ngIf="!lowerflag1" style="color: green"
+                        >✓ Password must contain a lower case letter</span
+                      >
+                      <span *ngIf="!upperflag1" style="color: green">
+                        ✓ Password must contain an upper case letter</span
+                      >
+                      <!-- <span  *ngIf="!specialflag1" style="color: green;">✓ Password must contain a special character</span> -->
+                      <span *ngIf="!numberflag1" style="color: green"
+                        >✓ Password must contain a number</span
+                      >
+                      <span *ngIf="!charactersflag1" style="color: green"
+                        >✓ Password must contain at least 8 characters</span
+                      >
+                    </div>
+                    <div
+                      *ngIf="submitted && f.confirmpassword.errors"
+                      class="invalid-feedback"
+                    >
+                      <div
+                        *ngIf="f.confirmpassword.errors.required"
+                        style="color: red"
+                      >
+                        Password is required
+                      </div>
+                      <div
+                        *ngIf="f.confirmpassword.errors.minlength"
+                        style="color: red"
+                      >
+                        Password must be at least 8 characters
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row align-items-center">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="businessUnit"
+                      >{{
+                        data ? data.master.user.businessUnit : "Business Line "
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <select
+                      name="businessUnit"
+                      class="custom-select"
+                      id="businessUnit"
+                      [(ngModel)]="businessLine"
+                    >
+                      <option
+                        *ngFor="let b of BusinessUnit"
+                        [value]="b.keyCode"
+                      >
+                        {{ b.key1 }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <div class="form-group">
+                      <label for="userId"
+                        >{{
+                          data
+                            ? data.master.user.remoteUserId
+                            : "Remote User ID"
+                        }}<span class="asterisk">*</span>:</label
+                      >
+                      <input
+                        [(ngModel)]="remoteUserID"
+                        type="text"
+                        class="form-control"
+                        id="userId"
+                        placeholder="{{
+                          data
+                            ? data.master.user.enterremoteuserid
+                            : 'Enter RemoteUserId'
+                        }}"
+                        name="userId"
+                        disabled
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div
+                    class="form-group d-flex justify-content-between align-items-center"
+                  >
+                    <label class="mb-0" for="isActive">{{
+                      data ? data.master.user.isActive : "is Active"
+                    }}</label>
+                    <div class="custom-control custom-switch">
+                      <!-- <input type="checkbox" name="isActive" class="custom-control-input" id="customSwitch1" checked
+                        [(ngModel)]="isActive" /> -->
+                      <input
+                        data-toggle="modal"
+                        data-target="#isActiveModal"
+                        data-backdrop="static"
+                        data-keyboard="false"
+                        type="checkbox"
+                        name="isActive"
+                        class="custom-control-input"
+                        id="customSwitch1"
+                        checked
+                        [(ngModel)]="isActive"
+                        (click)="changeStatus()"
+                      />
+                      <label
+                        class="custom-control-label"
+                        for="customSwitch1"
+                      ></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row align-items-center">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="defaultlanguage"
+                      >{{
+                        data
+                          ? data.master.user.defaultlanguage
+                          : "Default Language"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <select
+                      name="defaultlanguage"
+                      class="custom-select"
+                      id="defaultlanguage"
+                      [(ngModel)]="defaultLanguage"
+                    >
+                      <option *ngFor="let b of languages" [value]="b.key1">
+                        {{ b.key1 }}
+                      </option>
+                      <!-- <option selected>Lounge</option> -->
+                    </select>
+                    <!-- <input [(ngModel)]="defaultLanguage" type="text" class="form-control" id="defaultlanguage"
+                    placeholder="Default Language" name="Default Language"> -->
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group position-relative">
+                    <label for="partnerName1"
+                      >{{
+                        data
+                          ? data.master.partner.partnerName
+                          : "Partner
+                      Name"
+                      }}
+                      <span *ngIf="type == 2" class="asterisk">*</span>:</label
+                    >
+                    <div class="suggestion_input_wrapper">
+                      <i class="fa fa-search" aria-hidden="true"></i>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="partnerName1"
+                        [(ngModel)]="pname"
+                        [disabled]="type == 1 || type == 0 || type == 3"
+                        autocomplete="off"
+                        (keyup)="fetchPartnerNames($event.target.value)"
+                        (keydown)="onTokenPartnerInputKeydown($event)"
+                        placeholder="{{
+                          data
+                            ? data.master.partner.partnerP
+                            : 'Enter Partner Name'
+                        }}"
+                        name="partnerName1"
+                        #partnerName
+                      />
+                    </div>
+                    <ul class="searched-list" *ngIf="partners.length > 0">
+                      <li
+                        *ngFor="let partner of partners; let i = index"
+                        [class.selected]="i === tokenPartnerSuggestionIndex"
+                        (click)="setTokenPartner(partner, 'populate')"
+                      >
+                        {{ partner.name }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <ul
+              class="nav nav-tabs mt-4"
+              id="myTab"
+              role="tablist"
+              *ngIf="_id && _id !== ''"
+            >
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  id="roles-tab"
+                  data-toggle="tab"
+                  href="#user-roles"
+                  role="tab"
+                  aria-controls="user-roles"
+                  aria-selected="false"
+                  >{{ data ? data.master.user.roles : "Roles" }}</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="properties-tab"
+                  data-toggle="tab"
+                  href="#properties"
+                  role="tab"
+                  aria-controls="properties"
+                  aria-selected="true"
+                  >{{
+                    data ? data.master.user.outletaccess : "Outlet Access"
+                  }}</a
+                >
+              </li>
+              <li *ngIf="type == 2" class="nav-item">
+                <a
+                  class="nav-link"
+                  id="apikey-tab"
+                  data-toggle="tab"
+                  href="#apikeys"
+                  role="tab"
+                  aria-controls="apikeys"
+                  aria-selected="true"
+                  >{{ "Api Key" }}</a
+                >
+              </li>
+            </ul>
+            <div
+              class="tab-content"
+              id="myTabContent"
+              *ngIf="_id && _id !== ''"
+            >
+              <div
+                class="tab-pane fade"
+                id="properties"
+                role="tabpanel"
+                aria-labelledby="properties-tab"
+              >
+                <div class="properties-data" *ngIf="!addNewProperty">
+                  <p class="main-heading">
+                    <span
+                      >{{
+                        data ? data.master.user.outletaccess : "Outlet Access"
+                      }}:</span
+                    >
+                    {{
+                      data
+                        ? data.master.user.outletd
+                        : "You can view the outlets with its details and can add new one"
+                    }}
+                    <span class="pull-right">
+                      <a
+                        class="btn btn-info"
+                        (click)="addNewProperty = true"
+                        *ngIf="usertype !== 3"
+                        ><i class="fa fa-plus" aria-hidden="true"></i>
+                        {{
+                          data
+                            ? data.master.user.addusertolocation
+                            : "Add User To Outlet"
+                        }}</a
+                      ></span
+                    >
+                  </p>
+                  <div class="table-responsive">
+                    <table
+                      mat-table
+                      [dataSource]="dataSourceOutlet"
+                      class="mat-elevation-z8"
+                      matSort
+                      #OutletSort="matSort"
+                    >
+                      <ng-container matColumnDef="_id">
+                        <th mat-header-cell *matHeaderCellDef>Partner Id</th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element._id }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="name">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data ? data.master.lounge.loungeName : "Outlet Name"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.name }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="region">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ "Outlet Region" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.airport.airportCountry.name }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="status">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ "Outlet Status" }}
+                        </th>
+                        <td
+                          mat-cell
+                          *matCellDef="let element"
+                          [ngStyle]="{
+                            color: element.status == 1 ? 'none' : 'red'
+                          }"
+                        >
+                          {{
+                            element.status == 1
+                              ? "Active"
+                              : element.status == 0
+                              ? "InActive"
+                              : ""
+                          }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="displayCategory">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data
+                              ? data.master.lounge.loungeCategory
+                              : "Outlet Category"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.displayCategory }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="brand">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data
+                              ? data.master.lounge.loungeBrand
+                              : "Outlet Brand"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.displayBrand }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="action">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.partner.action : "Action" }}
+                        </th>
+                        <td
+                          mat-cell
+                          *matCellDef="let element; let i = index"
+                          style="text-align: center"
+                        >
+                          <i
+                            style="color: red; cursor: pointer"
+                            *ngIf="element.status === 0"
+                            (click)="deleteInactiveOutlet(element._id)"
+                            class="fa fa-trash mr-4"
+                            aria-hidden="true"
+                          ></i>
+                        </td>
+                      </ng-container>
+                      <tr mat-header-row *matHeaderRowDef="displayOutlet"></tr>
+                      <tr
+                        mat-row
+                        (dblclick)="getUserById(row._id)"
+                        *matRowDef="
+                          let row;
+                          columns: displayOutlet;
+                          let i = index
+                        "
+                      ></tr>
+                    </table>
+                  </div>
+                  <mat-paginator
+                    [pageSizeOptions]="[10, 25, 50, 100]"
+                    aria-label="Select page of users"
+                  ></mat-paginator>
+                </div>
+                <div class="add-new-user" *ngIf="addNewProperty">
+                  <p class="main-heading">
+                    <span
+                      >{{
+                        data ? data.master.user.addnewoutlet : "Add New Outlet"
+                      }}:
+                    </span>
+                    {{
+                      data
+                        ? data.master.user.newoutletd
+                        : "You can add new outlet by adding its details"
+                    }}
+                    <span
+                      class="close1"
+                      data-toggle="tooltip"
+                      title="Close"
+                      (click)="addNewProperty = false"
+                      >X</span
+                    >
+                  </p>
+                  <app-lounge-selection
+                    [selectedLounges]="selectedBinLounges"
+                    (updateSelectedLoungesEvent)="updateSelectedLounges($event)"
+                  >
+                  </app-lounge-selection>
+                  <div class="result">
+                    <a class="btn btn-secondary"
+                      ><i class="fa fa-history" aria-hidden="true"></i
+                      >{{ data ? data.buttons.reset : "Reset" }}</a
+                    >
+                    <a class="btn btn-info" (click)="AddNewOutlet()"
+                      ><i class="fa fa-plus" aria-hidden="true"></i>
+                      {{
+                        data
+                          ? data.master.user.addusertolocation
+                          : "Add User at Outlet"
+                      }}</a
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="tab-pane fade show active"
+                id="user-roles"
+                role="tabpanel"
+                aria-labelledby="roles-tab"
+              >
+                <div class="userRolesDetails">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <h4 class="location">
+                        {{
+                          data
+                            ? data.master.user.rolesd
+                            : "Available Roles for Users"
+                        }}
+                      </h4>
+                      <table
+                        mat-table
+                        [dataSource]="dataSourceUserRoles"
+                        class="mat-elevation-z8"
+                        matSort
+                        #empTbSort="matSort"
+                      >
+                        <ng-container matColumnDef="_id">
+                          <th mat-header-cell *matHeaderCellDef>Partner Id</th>
+                          <td mat-cell *matCellDef="let element">
+                            {{ element._id }}
+                          </td>
+                        </ng-container>
+                        <ng-container matColumnDef="Select Roles">
+                          <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                            {{
+                              data
+                                ? data.master.user.selectroles
+                                : "Select Roles"
+                            }}
+                          </th>
+                          <td mat-cell *matCellDef="let row">
+                            <mat-checkbox
+                              (click)="$event.stopPropagation()"
+                              (change)="
+                                $event ? selection.toggle(row._id) : null
+                              "
+                              [checked]="selection.isSelected(row._id)"
+                              [aria-label]="checkboxLabel(row._id)"
+                              color="primary"
+                            >
+                            </mat-checkbox>
+                            <!-- <mat-checkbox class="checkbox" (change)="
+                            updateSelectedUsers(
+                              $event.checked,
+                              row._id
+                            )
+                          " [checked]="roleId.includes(row._id)" color="primary"></mat-checkbox> -->
+                            <!-- <input type="checkbox" (change)="
+                                updateSelectedUsers(
+                                  $event.target.checked,
+                                  row._id
+                                )
+                              " [checked]="roleId.includes(row._id)" />  -->
+                          </td>
+                        </ng-container>
+                        <ng-container matColumnDef="name">
+                          <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                            {{
+                              data ? data.master.user.userroles : "User Roles"
+                            }}
+                          </th>
+                          <td mat-cell *matCellDef="let element">
+                            {{ element.roleName }}
+                          </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="description">
+                          <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                            {{
+                              data
+                                ? data.master.user.rolesdescription
+                                : "Roles Description"
+                            }}
+                          </th>
+                          <td mat-cell *matCellDef="let element">
+                            {{ element.roleDescription }}
+                          </td>
+                        </ng-container>
+                        <tr
+                          mat-header-row
+                          *matHeaderRowDef="displayedRoles"
+                        ></tr>
+                        <tr
+                          mat-row
+                          *matRowDef="
+                            let row;
+                            columns: displayedRoles;
+                            let i = index
+                          "
+                          (click)="selection.toggle(row._id)"
+                        ></tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                *ngIf="type == 2"
+                class="tab-pane fade"
+                id="apikeys"
+                role="tabpanel"
+                aria-labelledby="apikeys-tab"
+              >
+                <div class="apikeys-data" *ngIf="!generateApiKey">
+                  <p class="main-heading">
+                    <span>Generate Api Key</span>
+                    <span class="pull-right">
+                      <a
+                        class="btn btn-info"
+                        (click)="generateApiKeys(this.userID)"
+                        ><i class="fa fa-key" aria-hidden="true"></i>
+                        {{ "Generate API Key" }}</a
+                      ></span
+                    >
+                  </p>
+                </div>
+                <div class="table-responsive">
+                  <table
+                    mat-table
+                    [dataSource]="dataSourceGeneratedKey"
+                    class="mat-elevation-z8"
+                    matSort
+                    #generateKeySort="matSort"
+                  >
+                    <ng-container matColumnDef="apikey">
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                        {{ "API key" }}
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element.apiKey }}
+                      </td>
+                    </ng-container>
+                    <ng-container matColumnDef="certificateID">
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                        {{ "Certificate ID" }}
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element.certifiedID }}
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="lastModifiedBy">
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                        {{ "LastModified By" }}
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element.lastModifiedBy.name }}
+                      </td>
+                    </ng-container>
+                    <ng-container matColumnDef="lastModifiedOn">
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                        {{ "LastModified On" }}
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ cs.formatDateTime(element.lastModifiedOn) }}
+                      </td>
+                    </ng-container>
+                    <ng-container matColumnDef="status">
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                        {{ "Status" }}
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element.status === 1 ? "Active" : "Inactive" }}
+                      </td>
+                    </ng-container>
+                    <ng-container matColumnDef="createdBy">
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                        {{ "Created By" }}
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element.createdBy.name }}
+                      </td>
+                    </ng-container>
+                    <ng-container matColumnDef="createdOn">
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                        {{ "Created On" }}
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ cs.formatDateTime(element.createdOn) }}
+                      </td>
+                    </ng-container>
+                    <ng-container matColumnDef="action">
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                        {{ "Action" }}
+                      </th>
+                      <td
+                        mat-cell
+                        *matCellDef="let element; let i = index"
+                        style="text-align: center"
+                      >
+                        <i
+                          style="color: red; cursor: pointer"
+                          *ngIf="element.status === 1"
+                          (click)="deleteGenerateKeyData(element._id)"
+                          class="fa fa-trash mr-4"
+                          aria-hidden="true"
+                        ></i>
+                      </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayApikey"></tr>
+                    <tr
+                      mat-row
+                      *matRowDef="
+                        let row;
+                        columns: displayApikey;
+                        let i = index
+                      "
+                    ></tr>
+                  </table>
+                </div>
+                <mat-paginator
+                  [pageSizeOptions]="[10, 25, 50, 100]"
+                  aria-label="Select page of users"
+                ></mat-paginator>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="properties"
+                role="tabpanel"
+                aria-labelledby="properties-tab"
+              >
+                <div class="properties-data" *ngIf="!addNewProperty">
+                  <p class="main-heading">
+                    <span>Assigned Lounges</span>
+                    <span class="pull-right">
+                      <a class="btn btn-info" (click)="addNewProperty = true"
+                        ><i class="fa fa-plus" aria-hidden="true"></i> Add User
+                        to Lounge</a
+                      ></span
+                    >
+                  </p>
+                  <table datatable class="table table-striped table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Lounge Name</th>
+                        <th>Country</th>
+                        <th>User Role</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>ppg</td>
+                        <td>India</td>
+                        <td>Admin</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="add-new-user" *ngIf="addNewProperty">
+                  <p class="main-heading">
+                    <span>Setup User at Lounge </span>
+                    <span
+                      class="close2"
+                      data-toggle="tooltip"
+                      title="Close"
+                      (click)="addNewProperty = false"
+                      >X</span
+                    >
+                  </p>
+                  <!-- <app-lounge-selection  [selectedLounges]="selectedBinLounges"></app-lounge-selection> -->
+                  <div class="result">
+                    <a class="btn btn-secondary" *ngIf="usertype !== 3"
+                      ><i class="fa fa-history" aria-hidden="true"></i>
+                      {{ data ? data.buttons.reset : "Reset" }}</a
+                    >
+                    <a href="#" class="btn btn-info" *ngIf="usertype !== 3"
+                      ><i class="fa fa-plus" aria-hidden="true"></i> Add User to
+                      Lounge</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="result" *ngIf="usertype !== 3">
+              <a class="btn btn-info" (click)="registerBiomeric()">
+                <div class="d-flex align-items-center">
+                  <img
+                    src="../../../../assets/images/fingerprint-2--identification-password-touch-id-secure-fingerprint-finger-security.png"
+                    height="14px"
+                    alt=""
+                  />
+                  <span class="ml-2">Add Fingerprint</span>
+                </div>
+              </a>
+              <a
+                href="javascript:void(0)"
+                data-toggle="modal"
+                *ngIf="userID && userID !== ''"
+                data-target="#userStatusHistory"
+                class="btn btn-success mr-2"
+              >
+                <i class="fa fa-history" aria-hidden="true"></i>
+                {{ data ? data.buttons.actionhistory : "Action History" }}</a
+              >
+              <a (click)="ResetDoubleClick()" class="btn btn-secondary"
+                ><i class="fa fa-history" aria-hidden="true"></i>
+                {{ data ? data.buttons.reset : "Reset" }}</a
+              >
+              <!-- <a (click)="UserSync()" class="btn btn-info"><i class="fa fa-check"
+              aria-hidden="true"></i>User Sync</a> -->
+              <a (click)="userCreate()" class="btn btn-info"
+                ><i class="fa fa-check" aria-hidden="true"></i>
+                {{ data ? data.buttons.save : "Save" }}</a
+              >
+
+              <a (click)="saveUpsert()" class="btn btn-success"
+                ><i class="fa fa-check" aria-hidden="true"></i>
+                {{ data ? data.buttons.submit : "Submit" }}</a
+              >
+            </div>
+          </div>
+          <div *ngIf="showImport && !showUserDetails">
+            <app-import-data
+              [showNavBar]="false"
+              [showLeftMenu]="false"
+              [validator]="importValidator"
+              (importClose)="backToResults()"
+            ></app-import-data>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #shareModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="shareModalLabel">
+      {{ data ? data.master.user.resetpassword : "Reset Password" }}
+    </h5>
+    <button
+      type="button"
+      class="close"
+      data-dismiss="modal"
+      (click)="closeShareModule()"
+      aria-label="Close"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body py-1">
+    <form [formGroup]="form" autocomplete="off">
+      <div class="form-group">
+        <!-- <ng-select2 [data]="EmailAddressList" [(ngModel)]="selectedTax" (valueChanged)="taxChanged($event)" #emailSelect
+        [ngModelOptions]="{ standalone: true }" placeholder="Enter Email Id" [options]="options">
+      </ng-select2> -->
+
+        <div class="mt-2">
+          <label for="username">{{
+            data ? data.master.user.username : "User Name"
+          }}</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="rusername"
+            autocomplete="off"
+            name="UserName"
+            placeholder="Enter UserName"
+            aria-label="Enter UserName"
+            aria-describedby="basic-addon2"
+            disabled
+          />
+        </div>
+
+        <!-- <div class="mt-2">
+        <label for="New Password">{{ data ? data.master.user.Password : "Password"
+        }}</label>
+        <input type="text" id="newpassword" autocomplete="off" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$" class="form-control" [(ngModel)]="rpassword" name="rpassword" placeholder='{{ data ? data.master.user.Password : "Password"
+      }}' aria-label="Enter New Password"
+        aria-describedby="basic-addon2"/>
+      </div> -->
+        <div class="mt-2">
+          <label for="password"
+            >{{ data ? data.master.user.Password : "Password" }}
+            <span style="color: red">*</span></label
+          >
+          <div class="input-group">
+            <input
+              type="{{ showPassword ? 'text' : 'password' }}"
+              placeholder="{{ data ? data.master.user.Password : 'Password' }}"
+              (keyup)="onKeypressEvent($event)"
+              autocomplete="new-password"
+              formControlName="password"
+              class="form-control"
+              id="password"
+              [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
+            />
+            <div class="input-group-append">
+              <span class="input-group-text">
+                <i
+                  class="fa"
+                  [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'"
+                  (click)="togglePasswordVisibility()"
+                  [ngStyle]="{
+                    cursor: 'pointer',
+                    fontSize: '15px'
+                  }"
+                ></i>
+              </span>
+            </div>
+          </div>
+          <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+            <div *ngIf="f.password.errors.required" style="color: red">
+              Password is required
+            </div>
+            <div *ngIf="f.password.errors.minlength" style="color: red">
+              Password must be at least 8 characters
+            </div>
+          </div>
+        </div>
+        <div class="mt-2">
+          <label for="password"
+            >{{ data ? data.master.user.ReenterPassword : "Re-enter Password"
+            }}<span style="color: red">*</span>
+          </label>
+          <div class="input-group">
+            <input
+              type="{{ showConfirmPassword ? 'text' : 'password' }}"
+              placeholder="{{
+                data ? data.master.user.ReenterPassword : 'Re-enter Password'
+              }}"
+              (keyup)="onKeypressEvent($event)"
+              formControlName="confirmpassword"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid': submitted && f.confirmpassword.errors
+              }"
+            />
+            <div class="input-group-append">
+              <span class="input-group-text">
+                <i
+                  class="fa"
+                  [ngClass]="showConfirmPassword ? 'fa-eye' : 'fa-eye-slash'"
+                  (click)="toggleConfirmPasswordVisibility()"
+                  [ngStyle]="{
+                    cursor: 'pointer',
+                    fontSize: '15px'
+                  }"
+                ></i>
+              </span>
+            </div>
+          </div>
+          <div
+            *ngIf="submitted && f.confirmpassword.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="f.confirmpassword.errors.required" style="color: red">
+              Re-enter Password is required
+            </div>
+          </div>
+          <div *ngIf="confirmpassword" class="invalid-feedback">
+            <div style="color: red">Confirm Password must be same Password</div>
+          </div>
+        </div>
+        <div class="d-flex flex-column pt-3" *ngIf="!showflag">
+          <!-- <span *ngIf="!lowerflag" style="color: red;">✖ Password must contain a lower case letter</span>
+     <span *ngIf="!upperflag" style="color: red;"> ✖ Password must contain an upper case letter</span>
+     <span  *ngIf="!specialflag" style="color: red;">✖ Password must contain a special character</span> 
+    <span *ngIf="!numberflag"   style="color: red;">✖ Password must contain a number</span>
+    <span  *ngIf="!charactersflag" style="color: red;">✖ Password must contain at least 8 characters</span> -->
+
+          <span *ngIf="!upperflag" style="color: red"
+            >✖ Password must contain an upper case letter</span
+          >
+          <span *ngIf="upperflag" style="color: green"
+            >✔ Password contains an upper case letter</span
+          >
+
+          <span *ngIf="!lowerflag" style="color: red"
+            >✖ Password must contain a lower case letter</span
+          >
+          <span *ngIf="lowerflag" style="color: green"
+            >✔ Password contains a lower case letter</span
+          >
+
+          <!-- <span *ngIf="!specialflag" style="color: red;">✖ Password must contain a special character</span>
+    <span *ngIf="specialflag" style="color: green;">✔ Password contains a special character</span> -->
+
+          <span *ngIf="!numberflag" style="color: red"
+            >✖ Password must contain a number</span
+          >
+          <span *ngIf="numberflag" style="color: green"
+            >✔ Password contains a number</span
+          >
+
+          <span *ngIf="!charactersflag" style="color: red"
+            >✖ Password must contain at least 8 characters</span
+          >
+          <span *ngIf="charactersflag" style="color: green"
+            >✔ Password must contain at least 8 characters</span
+          >
+        </div>
+        <div class="d-flex flex-column pt-3" *ngIf="showflagGreen">
+          <span *ngIf="!lowerflag" style="color: green"
+            >✓ Password must contain a lower case letter</span
+          >
+          <span *ngIf="!upperflag" style="color: green">
+            ✓ Password must contain an upper case letter</span
+          >
+          <!-- <span  *ngIf="!specialflag" style="color: green;">✓ Password must contain a special character</span> -->
+          <span *ngIf="!numberflag" style="color: green"
+            >✓ Password must contain a number</span
+          >
+          <span *ngIf="!charactersflag" style="color: green"
+            >✓ Password must contain at least 8 characters</span
+          >
+        </div>
+
+        <!-- <div class="mt-2">
+        <label for="Re-Enter New password">{{ data ? data.master.user.ReenterPassword : "Re-enter Password"
+        }}</label>
+        <input type="text" id="repassword" autocomplete="off" class="form-control" [(ngModel)]="rRepassword" placeholder='{{ data ? data.master.user.ReenterPassword : "Re-enter Password"
+      }}' aria-label="Enter Re-enter New Password"
+        aria-describedby="basic-addon2"/>
+      </div> -->
+
+        <!-- <div class="d-flex pt-3">
+      <div class="p-2">
+        <i class="fas fa-user"></i>
+      </div>
+      <div class="flex-fill">
+        <span class="ml-1">Username</span>
+        <div class="d-flex">
+          <small class="text-muted ml-1">Sample@gmail.com</small>
+          <small class="text-muted ml-auto">Viewer</small>
+        </div>
+      </div>
+    </div> -->
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-secondary"
+      data-dismiss="modal"
+      (click)="closeShareModule()"
+    >
+      {{ data ? data.buttons.close : "Close" }}
+    </button>
+    <button type="button" class="btn btn-success" (click)="resetPassword()">
+      {{ data ? data.buttons.update : "Update" }}
+    </button>
+  </div>
+</ng-template>
+
+// popup to mention reason for active or inactive
+<div
+  class="modal fade"
+  id="isActiveModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="isActiveModalLable"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title mb-0" id="isActiveModalLable">Remarks</h3>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="changeStatus()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="remarks"
+                >Remarks<span class="asterisk">*</span>:</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="remarks"
+                [(ngModel)]="remarkDetails.remarks"
+                autocomplete="off"
+                placeholder="Enter Remarks"
+                name="remarks"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary mr-2"
+          data-dismiss="modal"
+          (click)="changeStatus()"
+        >
+          <i class="fa fa-times" aria-hidden="true"></i>
+          {{ data ? data.buttons.close : "Close" }}
+        </button>
+        <button
+          type="button"
+          id="svbtn"
+          class="btn btn-success"
+          (click)="saveStatusHistory()"
+        >
+          <i class="fa fa-success" aria-hidden="true"></i>
+          {{ data ? data.buttons.save : "Save" }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="userStatusHistory"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="admissionTokenHistoryLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title mb-0" id="admissionTokenHistoryLabel">
+          {{ data ? data.buttons.actionhistory : "Action History" }}
+        </h3>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="admission-token-history-table">
+          <div class="table-responsive">
+            <table
+              mat-table
+              [dataSource]="dataSourceStatusHistory"
+              class="mat-elevation-z8"
+              #actionHistorySort="matSort"
+              matSort
+            >
+              <ng-container matColumnDef="action">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                  {{ data ? data.master.admissionToken.action : "Action" }}
+                </th>
+                <td mat-cell *matCellDef="let element">{{ element.action }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="remarks">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                  {{ dataa ? dataa.master.admissionToken.reason : "Remarks" }}
+                </th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.remarks }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="outlet">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                  {{ data ? data.master.admissionToken.outlet : "Outlet" }}
+                </th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.outlet.name }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="modifiedOn">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                  {{
+                    data ? data.master.admissionToken.modifiedon : "Modified On"
+                  }}
+                </th>
+                <td mat-cell *matCellDef="let element">
+                  {{ cs.formatDateTime(element.modifiedOn) }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="modifiedBy">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                  {{
+                    data ? data.master.admissionToken.modifiedby : "Modified By"
+                  }}
+                </th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.modifiedBy.name }}
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displyedActionColumn"></tr>
+              <tr
+                mat-row
+                *matRowDef="
+                  let row;
+                  columns: displyedActionColumn;
+                  let i = index
+                "
+              ></tr>
+            </table>
+          </div>
+          <mat-paginator
+            #actionHistoryPaginator="matPaginator"
+            [pageSizeOptions]="[10, 25, 50, 100]"
+            class="Select Page for Action Histroy"
+          >
+          </mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+
+  <title>Vendor - PPG LMS Documentation</title>
+  
+  <link
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+    crossorigin="anonymous"
+  />
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="../../assets/css/just-the-docs.css"
+  />
+  <!--Different Browser icon for All Devices -->
+  <link
+    href="../../assets/images/fav_icon.ico"
+    rel="icon"
+    type="image/x-icon"
+  />
+  <!--IE Browser icon for All Devices -->
+  <link
+    href="../../assets/images/fav_icon.ico"
+    rel="shortcut icon"
+    type="image/x-icon"
+  />
+  <!--Icon for Devices -->
+  <link
+    href="../../assets/images/fav_icon.ico"
+    rel="apple-touch-icon"
+  />
+  <!--Icon for Devices -->
+  <link
+    href="../../assets/images/fav_icon.ico"
+    rel="apple-touch-icon-precomposed"
+  />
+
+  <script
+    type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"
+  ></script>
+  <script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"
+  ></script>
+  
+  <script
+    type="text/javascript"
+    src="../../assets/js/vendor/lunr.min.js"
+  ></script>
+  
+
+  <script
+    type="text/javascript"
+    src="../../assets/js/just-the-docs.js"
+  ></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+
+<body>
+  <div class="page-wrap">
+    <div class="side-bar">
+      <div class="site-header">
+        <a href="../.." class="site-title lh-tight">PPG LMS</a>
+        <button class="menu-button fs-3 js-main-nav-trigger" data-text-toggle="Hide" type="button">Menu</button>
+      </div>
+
+      <div class="navigation main-nav js-main-nav">
+        <nav role="navigation" aria-label="Main navigation">
+          <ul class="navigation-list"><li
+              class="navigation-list-item"
+            ><a
+                href="../../index.html"
+                class="navigation-list-link"
+                >Getting Started</a
+              ></li><li
+              class="navigation-list-item"
+            ><a
+                href="../../docs/overview/index.html"
+                class="navigation-list-link"
+                >Overview</a
+              ></li><li
+              class="navigation-list-item"
+            ><a
+                href="../../docs/newLmsUserSetup/index.html"
+                class="navigation-list-link"
+                >New LMS User Setup</a
+              ></li><li
+              class="navigation-list-item"
+            ><a
+                href="../../docs/setUpNewAdmissionToken/index.html"
+                class="navigation-list-link"
+                >Setup New Admission Token</a
+              ></li><li
+              class="navigation-list-item"
+            ><a
+                href="../../docs/guestAdmission/index.html"
+                class="navigation-list-link"
+                >Guest Admission</a
+              ></li><li
+              class="navigation-list-item"
+            ><a
+                href="../../docs/offlineParthnerIntergration/index.html"
+                class="navigation-list-link"
+                >Offline Partner Integration</a
+              ></li><li
+              class="navigation-list-item"
+            ><a
+                href="../../docs/securityMatrix/index.html"
+                class="navigation-list-link"
+                >Security matrix</a
+              ></li><li
+              class="navigation-list-item"
+            ><a
+                href="../../docs/API%20Documentation/index.html"
+                class="navigation-list-link"
+                >API Documentation</a
+              ><ul class="navigation-list-child-list"><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/login/index.html"
+                    class="navigation-list-link"
+                    >Login</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/profile/index.html"
+                    class="navigation-list-link"
+                    >Profile</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/changePassword/index.html"
+                    class="navigation-list-link"
+                    >Change Password</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/certificateList/index.html"
+                    class="navigation-list-link"
+                    >Certificate List</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/cardSave/index.html"
+                    class="navigation-list-link"
+                    >Card Save</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/verifyToken/index.html"
+                    class="navigation-list-link"
+                    >Verify Token</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/boardingPassScan/index.html"
+                    class="navigation-list-link"
+                    >Boarding Pass Scan</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/boardingPassSave/index.html"
+                    class="navigation-list-link"
+                    >Boarding Pass Save</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/boardingPassId/index.html"
+                    class="navigation-list-link"
+                    >Boarding Pass ID</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/corporateTokens/index.html"
+                    class="navigation-list-link"
+                    >Corporates Token</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/corporates/index.html"
+                    class="navigation-list-link"
+                    >Corporates</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/redeemCoupon/index.html"
+                    class="navigation-list-link"
+                    >Redeem Coupon</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getFacilities/index.html"
+                    class="navigation-list-link"
+                    >Get Facilities</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getProducts/index.html"
+                    class="navigation-list-link"
+                    >Get Products</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getOrders/index.html"
+                    class="navigation-list-link"
+                    >Get Orders</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getOutlets/index.html"
+                    class="navigation-list-link"
+                    >Get Outlets</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getEntitlements/index.html"
+                    class="navigation-list-link"
+                    >Get Entitlements</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getadmissions/index.html"
+                    class="navigation-list-link"
+                    >Get Admissions</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/blackListedToken/index.html"
+                    class="navigation-list-link"
+                    >Blacklisted Token</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/whitelistedToken/index.html"
+                    class="navigation-list-link"
+                    >Whitelisted Token</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/mapOutlets/index.html"
+                    class="navigation-list-link"
+                    >Map Outlets</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/mapProducts/index.html"
+                    class="navigation-list-link"
+                    >Map Products</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getToken/index.html"
+                    class="navigation-list-link"
+                    >Get Token</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getCouponCode/index.html"
+                    class="navigation-list-link"
+                    >Coupon Code</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getCouponDetails/index.html"
+                    class="navigation-list-link"
+                    >Coupon Details</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/cancelCoupon/index.html"
+                    class="navigation-list-link"
+                    >Cancel Coupon</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/redeemToken/index.html"
+                    class="navigation-list-link"
+                    >Redeem Token</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/updateCoupon/index.html"
+                    class="navigation-list-link"
+                    >Update Coupon</a
+                  ></li></ul></li><li
+              class="navigation-list-item"
+            ><a
+                href="../../docs/LMSprocessflowdiadram/index.html"
+                class="navigation-list-link"
+                >LMS Process Flow Diagram</a
+              ></li><li
+              class="navigation-list-item active"
+            ><a
+                href="../../docs/features/index.html"
+                class="navigation-list-link"
+                >Features</a
+              ><ul class="navigation-list-child-list"><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/dashboard/index.html"
+                    class="navigation-list-link"
+                    >Dashboard</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/admissions/index.html"
+                    class="navigation-list-link"
+                    >Admissions</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/orders/index.html"
+                    class="navigation-list-link"
+                    >Orders</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/GenerateCoupons/index.html"
+                    class="navigation-list-link"
+                    >Generate Coupons</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/partnerResponse/index.html"
+                    class="navigation-list-link"
+                    >Partner Responses</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/fileImportExport/index.html"
+                    class="navigation-list-link"
+                    >File Import/Export</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/partner/index.html"
+                    class="navigation-list-link"
+                    >Partner</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/outlet/index.html"
+                    class="navigation-list-link"
+                    >Outlet</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/product/index.html"
+                    class="navigation-list-link"
+                    >Product</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/admissionToken/index.html"
+                    class="navigation-list-link"
+                    >Admission Token</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/partnerContract/index.html"
+                    class="navigation-list-link"
+                    >Partner Contract</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/airport/index.html"
+                    class="navigation-list-link"
+                    >Port/Station</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/users/index.html"
+                    class="navigation-list-link"
+                    >Users</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/members/index.html"
+                    class="navigation-list-link"
+                    >Members</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/devices/index.html"
+                    class="navigation-list-link"
+                    >Devices</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/vendor/index.html"
+                    class="navigation-list-link active"
+                    >Vendor</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/tax/index.html"
+                    class="navigation-list-link"
+                    >Tax</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/country/index.html"
+                    class="navigation-list-link"
+                    >Country</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/pincode/index.html"
+                    class="navigation-list-link"
+                    >Pincode</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/receiptTemplate/index.html"
+                    class="navigation-list-link"
+                    >Recipt Template</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/token/index.html"
+                    class="navigation-list-link"
+                    >Token</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/module/index.html"
+                    class="navigation-list-link"
+                    >Module</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/action/index.html"
+                    class="navigation-list-link"
+                    >Action</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/role/index.html"
+                    class="navigation-list-link"
+                    >Role</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/globalSettings/index.html"
+                    class="navigation-list-link"
+                    >Global Settings</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/AdmissionPOS/index.html"
+                    class="navigation-list-link"
+                    >Admission POS</a
+                  ></li><li
+                  class="navigation-list-item  "
+                ><a
+                    href="../../docs/DMR/index.html"
+                    class="navigation-list-link "
+                    >DMR</a
+                  ></li>
+                  <li class="navigation-list-item "><a
+                        href="../../docs/AdmissionflowsviaSunmiDevice/index.html"
+                        class="navigation-list-link"
+                        >Admission flows via Sunmi Device</a
+                      ></li></ul></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/ReleaseLogs/index.html"
+                    class="navigation-list-link"
+                    >Release Logs</a
+                  ><ul class="navigation-list-child-list"><li
+                      class="navigation-list-item "
+                    ><a
+                        href="../../docs/FirstRelease/index.html"
+                        class="navigation-list-link"
+                        >Release Notes - Build 1.1.23.01-07</a
+                      ></li></ul></li></ul>
+      </div>
+      <!-- <footer class="site-footer">
+        <p class="text-small text-grey-dk-000 mb-4">This site is created by <a href="#">C Simplify IT</a>, for Samvad.</p>
+      </footer> -->
+    </div>
+    <div class="main-content-wrap js-main-content" tabindex="0">
+      <div class="main-content">
+        <div class="page-header js-page-header">
+          
+          <div class="search">
+            <div class="search-input-wrap">
+              <input type="text" class="js-search-input search-input" tabindex="0" placeholder="Search PPG LMS Documentation" aria-label="Search PPG LMS Documentation" autocomplete="off">
+              <svg width="14" height="14" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" class="search-icon"><title>Search</title><g fill-rule="nonzero"><path d="M17.332 20.735c-5.537 0-10-4.6-10-10.247 0-5.646 4.463-10.247 10-10.247 5.536 0 10 4.601 10 10.247s-4.464 10.247-10 10.247zm0-4c3.3 0 6-2.783 6-6.247 0-3.463-2.7-6.247-6-6.247s-6 2.784-6 6.247c0 3.464 2.7 6.247 6 6.247z"/><path d="M11.672 13.791L.192 25.271 3.02 28.1 14.5 16.62z"/></g></svg>
+            </div>
+            <div class="js-search-results search-results-wrap"></div>
+          </div>
+          
+        </div>
+        <div class="page">
+          <div id="main-content" class="page-content" role="main">
+          <h2><strong>Vendor</strong></h2>
+<p>
+  User can onboard new vendors manually or import a complete file containing a
+  list of vendors and their details. Also, edit existing vendor's details in the
+  system for further use.
+</p>
+<p>
+  "Vendor" tab is accessible from the sidebar as a "Masters" submenu item. Click
+  on it to get an in-depth data view of all the vendors.
+</p>
+<img
+  src="../../assets/images/vendor1sc.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  User can search for the vendor(s) by entering its details in the search field.
+</p>
+<img
+  src="../../assets/images/vendorSearch.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  Or, User can click on the dropdown icon for advanced search in which options
+  are present as different fields, use those to filter the search.
+</p>
+<img
+  src="../../assets/images/vendorAdScopy.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Reset" button to reset the form values.</p>
+<img
+  src="../../assets/images/vendorResetbutton.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Search" button to search for the result.</p>
+<img
+  src="../../assets/images/vendorAdSsearch.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>User can find vendors list in the table.</p>
+<img
+  src="../../assets/images/vendorTable.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  User can edit/delete the particular vendor from the system by clicking on the
+  respective icons present in the "Action" column of the table.
+</p>
+<img
+  src="../../assets/images/vendorDelIcon.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  If you have clicked on the delete(trash) icon then it will open the popup for
+  you, where you have to click on "Yes' button if you are sure about deleting.
+  Else, click on the "No" button.
+</p>
+<img
+  src="../../assets/images/vendorEditDelIcon.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  If you have clicked on the edit icon then you can see the details of that
+  particular vendor. Or, you can double click on the row of the table to
+  view/edit particular vendors information.
+</p>
+<img
+  src="../../assets/images/vendorEditRow.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  System then populates a screen where you can see the complete detail of that
+  particular vendor including vendor name, type, category, tax identification
+  number, status, vendor short Code ,region etc.
+</p>
+<img
+  src="../../assets/images/vendorEditScreen.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  Also, you can see two horizontal tabs in the details page below the form
+  fields - Vendor Entities and Vendor Contacts.
+</p>
+<img
+  src="../../assets/images/venndorEditTab.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  You can add an entity to the Vendor by clicking on the 'Add Entity' button. A
+  new screen is populated, enter the details of entity to be created.
+</p>
+<img
+  src="../../assets/images/vendorAddEntitynew.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<p>Click on "Reset" button to reset the fields.</p>
+<img
+  src="../../assets/images/VendorResetEntity.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on 'Add Entity' button to create a new entity</p>
+<img
+  src="../../assets/images/vendoraddentitybtn1.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  User can edit/delete the particular entity from the system by clicking on the
+  respective icons present in the "Action" column of the table.
+</p>
+<img
+  src="../../assets/images/vendorEntityAction.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  If you have clicked on delete(trash) icon then it will open the popup for you,
+  where you have to click on "Yes' button if you are sure about deleting. Else,
+  click on the "No" button.
+</p>
+<img
+  src="../../assets/images/vendorEnntityDel.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  If you have clicked on edit icon then you can see the details of that
+  particular entity. Or, you can double click on the row of the table to
+  view/edit particular entities information.
+</p>
+<img
+  src="../../assets/images/vendorEntityEdit.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  The system will populate the new screen for you, where you can view/edit the
+  existing information.
+</p>
+<img
+  src="../../assets/images/vendorAddEntity.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Reset" button to reset the edited fields.</p>
+<img
+  src="../../assets/images/vendorEnntityReset.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Add Entity" to save the edited fields changes.</p>
+<img
+  src="../../assets/images/EditaddEntity.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Vendor Contact" tab to view vendor contact information.</p>
+<img
+  src="../../assets/images/vendorContact.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  You can edit/delete the particular contact from the system by clicking on the
+  respective icons present in the "Action" column of the table.
+</p>
+<img
+  src="../../assets/images/vendorContactAction.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<p>
+  If you have clicked on delete(trash) icon then it will open the popup for you,
+  where you have to click on "Yes' button if you are sure about deleting. Else,
+  click on the "No" button.
+</p>
+<img
+  src="../../assets/images/venndorContactDel.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  If you have clicked on edit icon then you can see the details of that
+  particular contact. Or, you can double click on the row of the table to
+  view/edit particular contact information.
+</p>
+<img
+  src="../../assets/images/vendorContactEdit.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  The system will populate the new screen for you, where you can view/edit the
+  existing information.
+</p>
+<img
+  src="../../assets/images/VendorAddNNewContacScreent.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Reset" button to reset the edited fields.</p>
+<img
+  src="../../assets/images/vendorContactResetButton.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Add Contact" to save the edited fields changes.</p>
+<img
+  src="../../assets/images/venndorContactAddContactbutton.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  You can also add new vendor by clicking on "New" button present on the top
+  right corner on the main screen.
+</p>
+<img
+  src="../../assets/images/AddNewVendor.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Fill the following information to add new vendor in the system.</p>
+<img
+  src="../../assets/images/vendorAddTopScreen.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Reset" button to reset the form.</p>
+<img
+  src="../../assets/images/vendorAddResetbutton.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Save" button to save the filled details in the system.</p>
+<img
+  src="../../assets/images/vendorAddNewSave.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  Click on "Import" button so that you can import the complete file having
+  required data in one go.
+</p>
+<img
+  src="../../assets/images/vendorImportbutton.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on 'Export' button to export the vendor's details in excel sheet.</p>
+<img
+  src="../../assets/images/VendorExportButton.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p><strong>Below are the input fields used in this screen:</strong></p>
+<table class="table-bordered">
+  <tr>
+    <th>Name of the field</th>
+    <th>Entry Mode</th>
+    <th>Mandatory</th>
+    <th>Comments</th>
+  </tr>
+  <tr>
+    <td>Vendor Name</td>
+    <td>Free text with dropdown</td>
+    <td>Yes</td>
+    <td>
+      You have to enter starting three alphabets of the vendor name and it will
+      show you the result based on that. Once you select vendor name it will
+      auto fill some fields like Vendor Type, Vendor Category, Tax
+      Identification number, Vendor Short Code, Status and also open Vendor
+      Entity and contact forms. You have to fill that too.
+    </td>
+  </tr>
+  <tr>
+    <td>Vendor Type</td>
+    <td>Selection</td>
+    <td>Yes</td>
+    <td>
+      System generated once you select vendor name. Also, you can fill it
+      yourself. Type could have following values - Financial Institution,
+      Corporated, Lounge Programs.
+    </td>
+  </tr>
+  <tr>
+    <td>Vendor Category</td>
+    <td>Selection</td>
+    <td>Yes</td>
+    <td>
+      System generated once you select vendor name. Also, you can fill it
+      yourself. Category could have following values - Global,Local and
+      Regional.
+    </td>
+  </tr>
+  <tr>
+    <td>Tax Identification No</td>
+    <td>Free text</td>
+    <td>Yes</td>
+    <td>
+      System generated once you select vendor name. Also, you can fill it
+      yourself.
+    </td>
+  </tr>
+  <tr>
+    <td>Status</td>
+    <td>Selection</td>
+    <td>Yes</td>
+    <td>
+      System generated once you select vendor name. Also, you can fill it
+      yourself. Status could have following values - Active, Inactive
+    </td>
+  </tr>
+  <tr>
+    <td>Vendor Short Code</td>
+    <td>Free text</td>
+    <td>Yes</td>
+    <td>
+      System generated once you select vendor name. Also, you can fill it
+      yourself. Code should be in captial letters always.
+    </td>
+  </tr>
+  <tr>
+    <td>Region</td>
+    <td>Selection</td>
+    <td>No</td>
+    <td>
+      Region could have following values - North America, South America, Europe,
+      Middle East, Asia Pacific.
+    </td>
+  </tr>
+  <tr>
+    <td>ERP Accounting Code</td>
+    <td>Free text</td>
+    <td>No</td>
+    <td>You can enter ERP accounting code for the vendor.</td>
+  </tr>
+  <tr>
+    <td>Uploaded Logo</td>
+    <td>Choose File</td>
+    <td>Yes</td>
+    <td>Vendor can upload logo .</td>
+  </tr>
+  <tr>
+    <td>Vendor Entity Name</td>
+    <td>Free text</td>
+    <td>Yes</td>
+    <td>Enter vendor's entity name.</td>
+  </tr>
+  <tr>
+    <td>Vendor Tin</td>
+    <td>Free text</td>
+    <td>Yes</td>
+    <td>Enter the Tin number for vendor entity's verification.</td>
+  </tr>
+  <tr>
+    <td>Vendor Entity Category</td>
+    <td>Selection</td>
+    <td>Yes</td>
+    <td>Category could have following values - Global,Local and Regional.</td>
+  </tr>
+  <tr>
+    <td>Address Line 1</td>
+    <td>Free text</td>
+    <td>Yes</td>
+    <td>Enter the address of the vendor's entity.</td>
+  </tr>
+  <tr>
+    <td>Address Line 2</td>
+    <td>Free text</td>
+    <td>No</td>
+    <td>Enter the address of the vendor's entity.</td>
+  </tr>
+  <tr>
+    <td>Postal Code</td>
+    <td>Number</td>
+    <td>Yes</td>
+    <td>Enter the area code of the vendor's entity address.</td>
+  </tr>
+  <tr>
+    <td>State</td>
+    <td>Free text</td>
+    <td>Yes</td>
+    <td>Enter the state to which the vendor's entity address belongs to.</td>
+  </tr>
+  <tr>
+    <td>City</td>
+    <td>Free text</td>
+    <td>Yes</td>
+    <td>Enter the city to which the vendor's entity address belongs to.</td>
+  </tr>
+  <tr>
+    <td>Country</td>
+    <td>Selection</td>
+    <td>Yes</td>
+    <td>
+      Zone could have following values - United States of America, Hong Kong.
+    </td>
+  </tr>
+  <tr>
+    <td>Vendor Short Code</td>
+    <td>Free text</td>
+    <td>Yes</td>
+    <td>
+      User should enter a short code that can be used to identify the vendor. It
+      should be in captial letter always.
+    </td>
+  </tr>
+  <tr>
+    <td>Alliance Program</td>
+    <td>Selection</td>
+    <td>No</td>
+    <td>
+      Alliance Program could have following values - Star Alliance, One World,
+      Skyteam.
+    </td>
+  </tr>
+  <tr>
+    <td>Contact Name</td>
+    <td>Free Text</td>
+    <td>Yes</td>
+    <td>Enter the name of the person to whom we have to contact.</td>
+  </tr>
+  <tr>
+    <td>Contact Designation</td>
+    <td>Free text</td>
+    <td>Yes</td>
+    <td>Enter the designation of the contacted person.</td>
+  </tr>
+  <tr>
+    <td>Contact No</td>
+    <td>Number</td>
+    <td>Yes</td>
+    <td>Enter the phone number of the person whom we have to contact.</td>
+  </tr>
+  <tr>
+    <td>Contact Email</td>
+    <td>Email</td>
+    <td>Yes</td>
+    <td>Enter the email id of the person whom we have to contact.</td>
+  </tr>
+  <tr>
+    <td>Vendor Entity</td>
+    <td>Free text</td>
+    <td>Yes</td>
+    <td>
+      You have to enter starting three alphabets of the vendor entity and it
+      will show you the result based on that.
+    </td>
+  </tr>
+  <tr>
+    <td>Contact Role</td>
+    <td>Selection</td>
+    <td>Yes</td>
+    <td>Contact Role could have following values - Partner, Plaza.</td>
+  </tr>
+</table>
+
+
+          </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

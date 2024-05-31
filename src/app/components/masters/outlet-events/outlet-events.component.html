@@ -1,0 +1,701 @@
+<div
+  class="content-wrapper d-flex"
+  [ngClass]="{ 'sidebar-open': isSidebarOpen }"
+>
+  <div class="sidebar-wrapper">
+    <app-sidebar [(sidebarState)]="isSidebarOpen"></app-sidebar>
+  </div>
+  <div class="main-wrapper pt-3 h-100">
+    <div></div>
+    <div *ngIf="loadershow">
+      <app-loader [message]="loaderMessage"></app-loader>
+    </div>
+    <div class="container-fluid h-100">
+      <div class="row h-100">
+        <div class="col-md-12">
+          <div
+            class="property-details-wrapper"
+            style="width: 100%"
+            *ngIf="!showDmrEventsDetails && !showImport"
+          >
+            <div class="row">
+              <div class="col-md-8">
+                <p class="main-heading">
+                  <span
+                    >{{
+                      data
+                        ? data.master.outletevents.outletevents
+                        : "Outlet Events"
+                    }}:</span
+                  >
+                  {{
+                    data
+                      ? data.master.outletevents
+                          .viewandaddnewoutleteventsinsystem
+                      : "View and Add New Outlet Events in System"
+                  }}
+                </p>
+              </div>
+              <div class="col-md-4 text-right">
+                <!-- <a (click)="showImportScreen()" class="btn btn-secondary mr-2"
+                  ><i class="fa fa-upload" aria-hidden="true"></i
+                  >{{ data ? data.buttons.import : "Import" }}</a
+                > -->
+                <a
+                  class="btn btn-info dropdown-form"
+                  (click)="showDmrDownload()"
+                >
+                  {{
+                    data
+                      ? data.master.outletevents.dailyeventreport
+                      : "Daily Event Report"
+                  }}</a
+                >
+                <div class="dmr-download" *ngIf="dmrDownload">
+                  <div class="form-container">
+                    <form>
+                      <div class="row">
+                        <div class="col-12 text-left">
+                          <label for="class2"
+                            >{{
+                              data ? data.master.outletevents.date : "Date"
+                            }}:</label
+                          >
+                          <input
+                            name="class2"
+                            type="date"
+                            class="form-control"
+                            placeholder="Enter Date"
+                            [(ngModel)]="fromdateEVT"
+                            max="{{ todaydateHideMAx }}"
+                          />
+                        </div>
+                        <div class="col-12">
+                          <div class="query-btn text-center">
+                            <a
+                              class="btn btn-info"
+                              href="javascript:void(0)"
+                              (click)="generateEventReportPDf()"
+                              ><i class="fa fa-download" aria-hidden="true"></i>
+                              {{
+                                data
+                                  ? data.master.outletevents.downloadreport
+                                  : "Download Report"
+                              }}</a
+                            >
+                          </div>
+                        </div>
+                      </div>
+                      <span
+                        (click)="hideDmrDownload()"
+                        class="close-dmr-download"
+                        data-toggle="tooltip"
+                        title="Close"
+                        >X</span
+                      >
+                    </form>
+                  </div>
+                </div>
+                <a class="btn btn-info" (click)="addNewDmrEvents(true)"
+                  ><i class="fa fa-plus" aria-hidden="true"></i>
+                  {{ data ? data.buttons.new : "New" }}</a
+                >
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="search-wrapper">
+                  <div class="search-product">
+                    <div class="search_main">
+                      <div class="search-input">
+                        <span
+                          ><i class="fa fa-search" aria-hidden="true"></i
+                        ></span>
+                        <input
+                          type="search"
+                          [(ngModel)]="simpleSearch"
+                          (keyup.enter)="
+                            simpleSearchdmrEventsData($event.target.value)
+                          "
+                        />
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>{{
+                          data
+                            ? data.master.outletevents.searchoutletevents
+                            : "Search Outlet Events"
+                        }}</label>
+                        <span
+                          ><i
+                            (click)="getdmrEvents()"
+                            class="fa fa-times"
+                            aria-hidden="true"
+                          ></i
+                        ></span>
+                        <span (click)="showQueryForm()" class="dropdown-form"
+                          ><i class="fa fa-sort-desc" aria-hidden="true"></i
+                        ></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="query1" class="query1" *ngIf="showData">
+                    <div class="form-container">
+                      <form>
+                        <div class="row">
+                          <!-- <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="outlet"
+                                >Outlet:</label
+                              >
+                              <div class="suggestion_input_wrapper">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  id="outlet"
+                                  placeholder="Enter Outlet"
+                                  name="outlet"
+                                  (keyup)="
+                                    fetchActionNames($event.target.value)
+                                  "
+                                />
+                              </div> -->
+                          <!-- <ul
+                                class="searched-list searchSuggestions"
+                                *ngIf="actions.length > 0"
+                              >
+                                <li
+                                  *ngFor="let action of actions"
+                                  (click)="setTokenAction(action, 'search')"
+                                >
+                                  {{ action.actionName }}
+                                </li>
+                              </ul> -->
+                          <!-- </div>
+                          </div> -->
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="category"
+                                >{{
+                                  data
+                                    ? data.master.outletevents.category
+                                    : "Category"
+                                }}:</label
+                              >
+                              <select
+                                name="category"
+                                class="custom-select"
+                                [(ngModel)]="AdvCategory"
+                                #category
+                              >
+                                <option selected value="0">ALL</option>
+                                <option
+                                  *ngFor="let t of dmrCategory"
+                                  [ngValue]="t.keyCode"
+                                >
+                                  {{ t.key1 }}
+                                </option>
+                              </select>
+                              <!-- <input
+                                type="text"
+                                class="form-control"
+                                id="category"
+                                placeholder="Enter Category"
+                                name="category"
+                                (keyup)="
+                                  $event.target.value =
+                                    $event.target.value.toUpperCase()
+                                "
+                              /> -->
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="class1"
+                                >{{
+                                  data ? data.master.outletevents.date : "Date"
+                                }}:</label
+                              >
+                              <input
+                                name="class1"
+                                type="date"
+                                min="{{ todaydateHideMin }}"
+                                max="{{ todaydateHideMAx }}"
+                                class="form-control"
+                                placeholder="Enter Date"
+                                [(ngModel)]="dateEV"
+                                max="{{ todaydateHideMAx }}"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <!-- <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label for="remarks"
+                                        >Remarks:</label
+                                      >
+                                      <textarea
+                                        [ngModelOptions]="{ standalone: true }"
+                                        [(ngModel)]="AdvRemarks"
+                                        class="form-control"
+                                        id="remarks"
+                                        rows="2"
+                                        #remarks
+                                        placeholder="Enter Remarks"
+                                      ></textarea>
+                                    </div>
+                                  </div>
+                          </div> -->
+                        <div class="query-btn">
+                          <a
+                            class="btn btn-secondary"
+                            (click)="resetAdvanceSearch()"
+                            ><i class="fa fa-history" aria-hidden="true"></i>
+                            {{ data ? data.buttons.reset : "Reset" }}</a
+                          >
+                          <a
+                            class="btn btn-info"
+                            (click)="advancedmrEventsSearch()"
+                            ><i class="fa fa-search" aria-hidden="true"></i>
+                            {{ data ? data.buttons.search : "Search" }}</a
+                          >
+                          <a class="btn btn-danger" (click)="showQueryForm()"
+                            ><i class="fa fa-close" aria-hidden="true"></i>
+                            {{ data ? data.admission.close : "Close" }}</a
+                          >
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <div class="property-table-wrapper" style="width: 100%">
+                  <div class="table-responsive">
+                    <table
+                      mat-table
+                      [dataSource]="dataSourcedmrEvents"
+                      matTableExporter
+                      #exporter="matTableExporter"
+                      class="mat-elevation-z8"
+                      matSort
+                      #dmrEventsSort="matSort"
+                    >
+                      <!-- <ng-container matColumnDef="outlet">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                            Outlet
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.outlet?.name}}
+                        </td>
+                      </ng-container> -->
+
+                      <ng-container matColumnDef="category">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data
+                              ? data.master.outletevents.category
+                              : "Category"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.displayCategory }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="remarks">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data ? data.master.outletevents.remarks : "Remarks"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.remarks }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="date">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.outletevents.date : "Date" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ cs.formatDateTime(element.createdOn) }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="status">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data
+                              ? data.master.outletevents.showinreport
+                              : "Show In Report"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.status === 1 ? "Active" : "Inactive" }}
+                        </td>
+                      </ng-container>
+
+                      <tr
+                        mat-header-row
+                        *matHeaderRowDef="displayeddmrEventsColumn"
+                      ></tr>
+                      <tr
+                        mat-row
+                        (dblclick)="getTableClickData(row._id)"
+                        *matRowDef="
+                          let row;
+                          columns: displayeddmrEventsColumn;
+                          let i = index
+                        "
+                      ></tr>
+
+                      <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell">No data Found!</td>
+                      </tr>
+                    </table>
+                    <!-- <table mat-table [dataSource]="dataSourceComponent" class="mat-elevation-z8" matSort
+                                    #tokenSort="matSort">
+                                    <ng-container matColumnDef="componentName">
+                                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                                          {{data? data.master.tax.componentname: 'Component Name'}}
+                                        </th>
+                                        <td mat-cell *matCellDef="let element">
+                                           {{element?.componentName}}
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="effectiveRate">
+                                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                                          {{data? data.master.tax.effectiverate: 'Effective Rate'}}
+                                        </th>
+                                        <td mat-cell *matCellDef="let element">
+                                            {{element?.effectiveRate}}
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="displayRate">
+                                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                                          {{data? data.master.tax.displayrate: 'Display Rate'}}
+                                        </th>
+                                        <td mat-cell *matCellDef="let element">
+                                            {{element?.displayRate}}
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="status">
+                                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                                          {{data? data.master.tax.status: 'Status'}}
+                                        </th>
+                                        <td mat-cell *matCellDef="let element">
+                                          {{element?.status===1 ? 'Active':'Inactive'}}
+                                        </td>
+                                    </ng-container>
+
+                                    <tr mat-header-row *matHeaderRowDef="displayedComponentColumn"></tr>
+                                    <tr mat-row (dblclick)="getTaxComponentById(row._id)"  *matRowDef="let row; columns: displayedComponentColumn; let i = index">
+                                    </tr>
+                                </table> -->
+                    <!-- <table mat-table [dataSource]="dataSourcePincode" class="mat-elevation-z8" matSort>
+                                    <ng-container matColumnDef="pincode">
+                                        <th mat-header-cell mat-sort-header *matHeaderCellDef>{{data? data.master.pincode.pincode: 'Pincode'}} </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.pincode}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="countryName">
+                                        <th mat-header-cell mat-sort-header *matHeaderCellDef> {{data? data.master.pincode.countryName: 'Country Name'}}</th>
+                                        <td mat-cell *matCellDef="let element"> {{element.countryName}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="countryISOCode">
+                                        <th mat-header-cell mat-sort-header *matHeaderCellDef>{{data? data.master.pincode.countryISOCode: 'Country ISO Code'}}</th>
+                                        <td mat-cell *matCellDef="let element"> {{element.countryISOCode}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="stateName">
+                                        <th mat-header-cell mat-sort-header *matHeaderCellDef>{{data? data.master.pincode.stateName: 'State Name'}}</th>
+                                        <td mat-cell *matCellDef="let element"> {{element.stateName}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="cityName">
+                                        <th mat-header-cell mat-sort-header *matHeaderCellDef>{{data? data.master.pincode.cityName: 'City Name'}}</th>
+                                        <td mat-cell *matCellDef="let element"> {{element.cityName}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="region">
+                                        <th mat-header-cell mat-sort-header *matHeaderCellDef>{{data? data.master.pincode.region: 'Region'}}</th>
+                                        <td mat-cell *matCellDef="let element"> {{element.region}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="status">
+                                        <th mat-header-cell *matHeaderCellDef>{{data? data.master.pincode.status: 'Status'}}
+                                        </th>
+                                        <td mat-cell *matCellDef="let element">{{element?.status===1 ? 'Active':'Inactive'}} </td>
+                                    </ng-container>
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                    <tr mat-row (dblclick)="getPincodeById(row._id)" *matRowDef="let row; columns: displayedColumns; let i = index"></tr>
+
+                                    <tr class="mat-row" *matNoDataRow>
+                                      <td class="mat-cell">No data Found!</td>
+                                  </tr>
+
+                                  </table> -->
+                  </div>
+                  <mat-paginator
+                    [pageSizeOptions]="[10, 25, 50, 100]"
+                    aria-label="Select page of actions"
+                  ></mat-paginator>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="new-property-wrapper"
+            *ngIf="showDmrEventsDetails && !showImport"
+          >
+            <p class="main-heading">
+              <span
+                >{{
+                  data
+                    ? data.master.outletevents.addoutletevents
+                    : "Add Outlet Events"
+                }}: </span
+              >{{
+                data
+                  ? data.master.outletevents
+                      .fillthefollowingdetailstoaddoutletevents
+                  : "Fill the following details to add
+              Outlet events."
+              }}
+              <span
+                (click)="hideDmrEventsDetails()"
+                class="close1"
+                data-toggle="tooltip"
+                title="Close"
+                >X</span
+              >
+            </p>
+            <form>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group position-relative">
+                    <label for="outlet1"
+                      >{{ data ? data.master.outletevents.outlet : "Outlet"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <div class="suggestion_input_wrapper">
+                      <i aria-hidden="true"></i>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="outlet1"
+                        [(ngModel)]="DMRoutlet"
+                        placeholder="{{
+                          data
+                            ? data.master.outletevents.enteroutlet
+                            : 'Enter Outlet'
+                        }}"
+                        name="outlet1"
+                        disabled
+                        #outlet1
+                      />
+                      <!-- <select name="outlet1" class="custom-select" #outlet >
+                        <option 
+                            [selected]="authenticatedOutlet._id">
+                            {{ authenticatedOutlet.name }}
+                        </option>
+                    </select> -->
+                    </div>
+                    <!-- <ul class="searched-list" *ngIf="actions.length > 0">
+                      <li
+                        *ngFor="let action of actions"
+                        (click)="setTokenAction(action, 'populate')"
+                      >
+                        {{ action.actionName }}
+                      </li>
+                    </ul> -->
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="category1"
+                      >{{
+                        data ? data.master.outletevents.category : "Category"
+                      }}
+                      <span class="asterisk">*</span>:</label
+                    >
+                    <select
+                      name="category1"
+                      class="custom-select"
+                      [(ngModel)]="DMRcategory"
+                      #category
+                    >
+                      <option
+                        *ngFor="let t of dmrCategory"
+                        [ngValue]="t.keyCode"
+                      >
+                        {{ t.key1 }}
+                      </option>
+                    </select>
+                    <!-- <input
+                      type="text"
+                      class="form-control"
+                      id="category1"
+                      placeholder="Enter DMR Category"
+                      (keyup)="
+                        $event.target.value = $event.target.value.toUpperCase()
+                      "
+                      name="category1"
+                      #category
+                    /> -->
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <label for="txtBtodate"
+                    >{{ "Event Date" }}<span class="asterisk">*</span>:</label
+                  >
+                  <div class="form-group">
+                    <input
+                      [(ngModel)]="eventDate"
+                      type="date"
+                      class="form-control"
+                      id="txtBtodate"
+                      placeholder="Enter Transaction Date"
+                      name="txtBtodate"
+                      min="{{ todaydateHideMin }}"
+                      max="{{ todaydateHideMAx }}"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <label for="approvalCode"
+                    >{{ "Event Time" }} <span class="asterisk">*</span>:</label
+                  >
+                  <div class="form-group">
+                    <input
+                      type="time"
+                      class="form-control"
+                      [(ngModel)]="startTimeAR"
+                      id="txtstartTimeAR"
+                      ng-reflect-model="00:00"
+                      placeholder="Enter event Time"
+                      name="txtstartTimeAR"
+                      #txtstartTimeAR
+                    />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <label for="txtBtodate">{{ "Event Time" }}:</label>
+                  <div class="form-group">
+                    <input
+                      [(ngModel)]="eventTime"
+                      type="text"
+                      class="form-control"
+                      id="txtBtotime"
+                      placeholder="Event Time"
+                      name="txtBtotime"
+                      disabled
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-9">
+                  <div class="form-group">
+                    <label for="remarks1"
+                      >{{ data ? data.master.outletevents.remarks : "Remarks"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <textarea
+                      [(ngModel)]="DMRremarks"
+                      [ngModelOptions]="{ standalone: true }"
+                      class="form-control"
+                      id="remarks1"
+                      rows="2"
+                      #remarks
+                      placeholder="{{
+                        data
+                          ? data.master.outletevents.enterremarks
+                          : 'Enter Remarks'
+                      }}"
+                    ></textarea>
+                    <!-- <input type="textarea" class="form-control" id="actiondescription" [(ngModel)]="actionToken.actionDescription"
+                                    placeholder="Enter Action Description"
+                                    name="actionDescription" #actionDescription> -->
+                  </div>
+                </div>
+                <div class="col-md-3 align-self-center">
+                  <div
+                    class="form-group d-flex justify-content-between align-items-center"
+                  >
+                    <label class="mb-0" for="isActive"
+                      >{{
+                        data
+                          ? data.master.outletevents.showinreport
+                          : "Show In Report"
+                      }}:
+                      <!-- show in report -->
+                    </label>
+                    <div class="custom-control custom-switch">
+                      <input
+                        type="checkbox"
+                        name="isActive"
+                        [(ngModel)]="isActive"
+                        class="custom-control-input"
+                        id="customSwitch1"
+                        checked
+                      />
+                      <label
+                        class="custom-control-label"
+                        for="customSwitch1"
+                      ></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <!-- <ul class="nav nav-tabs mt-4" id="myTab" role="tablist" >
+                        <li class="nav-item">
+                            <a class="nav-link active" id="properties-tab" data-toggle="tab" href="#properties"
+                                role="tab" aria-controls="properties" aria-selected="true">Action Actions</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent" >
+                      <div class="tab-pane fade show active" id="properties" role="tabpanel"
+                          aria-labelledby="properties-tab">
+                          <div class="properties-data" *ngIf="!addNewProperty">
+                              <p class="main-heading">
+                                  <span>Action Actions </span>
+                              </p>
+                          </div>
+                        </div>
+                      </div> -->
+            <div class="result mt-4">
+              <!-- <a class="btn btn-success"
+                ><i class="fa fa-history" aria-hidden="true"></i>Generate Todays
+                Outlet Events report</a
+              > -->
+              <a class="btn btn-secondary mr-2" (click)="resetdmrEvents()"
+                ><i class="fa fa-history" aria-hidden="true"></i
+                >{{ data ? data.buttons.reset : "Reset" }}</a
+              >
+              <a class="btn btn-success" (click)="savedmrEvents()">
+                <i class="fa fa-check" aria-hidden="true"></i
+                >{{ data ? data.buttons.submit : "Submit" }}</a
+              >
+            </div>
+          </div>
+          <div *ngIf="showImport && !showDmrEventsDetails">
+            <app-import-data
+              [showNavBar]="false"
+              [showLeftMenu]="false"
+              [validator]="importValidator"
+              (importClose)="backToResults()"
+            ></app-import-data>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

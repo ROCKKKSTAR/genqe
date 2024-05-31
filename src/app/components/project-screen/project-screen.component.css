@@ -1,0 +1,50 @@
+a[disabled] {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.5; /* Adjust opacity to indicate disabled state */
+}
+
+.loading-indicator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+.nav-tabs {
+  background-color: #e2e2ff;
+  flex-wrap: nowrap;
+  overflow-y: hidden;
+  overflow-x: auto;
+  white-space: nowrap;
+  border-radius: 4px;
+}
+.nav-tabs::-webkit-scrollbar {
+  height: 4px;
+}
+.nav-tabs::-webkit-scrollbar-track {
+  background-color: #7a5af8;
+}
+.nav-tabs::-webkit-scrollbar-thumb {
+  background-color: #fff;
+}
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-item.show .nav-link {
+  color: #fff;
+  background-color: #7a5af8;
+  border-color: transparent transparent #e2e2ff;
+  border-radius: 4px;
+}
+.nav-tabs .nav-link {
+  padding-block: 6px;
+}
+.team-ng-multiselect .dropdown-list {
+  overflow-y: hidden;
+}
+.interface-image:hover {
+  transform: scale(2.5);
+}
+@media (min-width: 576px) {
+  #commentDetailsModal .modal-dialog {
+    max-width: 80%;
+  }
+}

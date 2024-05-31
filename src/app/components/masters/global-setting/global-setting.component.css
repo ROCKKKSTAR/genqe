@@ -1,0 +1,19 @@
+.example-section {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 60px;
+}
+
+.example-margin {
+  margin: 0 10px;
+}
+li.selected {
+  background-color: #7c0b3c;
+  color: #fff;
+}
+.w-200{
+  overflow-wrap: break-word;
+  columns: 1;
+  column-width: 200px;
+}

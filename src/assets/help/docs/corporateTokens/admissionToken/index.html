@@ -1,0 +1,2410 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+
+  <title>Admission Instruction - PPG LMS Documentation</title>
+  
+  <link
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+    crossorigin="anonymous"
+  />
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="../../assets/css/just-the-docs.css"
+  />
+  <!--Different Browser icon for All Devices -->
+  <link
+    href="../../assets/images/fav_icon.ico"
+    rel="icon"
+    type="image/x-icon"
+  />
+  <!--IE Browser icon for All Devices -->
+  <link
+    href="../../assets/images/fav_icon.ico"
+    rel="shortcut icon"
+    type="image/x-icon"
+  />
+  <!--Icon for Devices -->
+  <link
+    href="../../assets/images/fav_icon.ico"
+    rel="apple-touch-icon"
+  />
+  <!--Icon for Devices -->
+  <link
+    href="../../assets/images/fav_icon.ico"
+    rel="apple-touch-icon-precomposed"
+  />
+
+  <script
+    type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"
+  ></script>
+  <script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"
+  ></script>
+  
+  <script
+    type="text/javascript"
+    src="../../assets/js/vendor/lunr.min.js"
+  ></script>
+  
+
+  <script
+    type="text/javascript"
+    src="../../assets/js/just-the-docs.js"
+  ></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+
+<body>
+  <div class="page-wrap">
+    <div class="side-bar">
+      <div class="site-header">
+        <a href="../.." class="site-title lh-tight">PPG LMS</a>
+        <button class="menu-button fs-3 js-main-nav-trigger" data-text-toggle="Hide" type="button">Menu</button>
+      </div>
+
+      <div class="navigation main-nav js-main-nav">
+        <nav role="navigation" aria-label="Main navigation">
+  <ul class="navigation-list"><li
+      class="navigation-list-item"
+    ><a
+        href="../../index.html"
+        class="navigation-list-link"
+        >Getting Started</a
+      ></li><li
+      class="navigation-list-item"
+    ><a
+        href="../../docs/overview/index.html"
+        class="navigation-list-link"
+        >Overview</a
+      ></li><li
+      class="navigation-list-item"
+    ><a
+        href="../../docs/newLmsUserSetup/index.html"
+        class="navigation-list-link"
+        >New LMS User Setup</a
+      ></li><li
+      class="navigation-list-item"
+    ><a
+        href="../../docs/setUpNewAdmissionToken/index.html"
+        class="navigation-list-link"
+        >Setup New Admission Instruction</a
+      ></li><li
+      class="navigation-list-item"
+    ><a
+        href="../../docs/guestAdmission/index.html"
+        class="navigation-list-link"
+        >Guest Admission</a
+      ></li><li
+      class="navigation-list-item"
+    ><a
+        href="../../docs/securityMatrix/index.html"
+        class="navigation-list-link"
+        >Security matrix</a
+      ></li><li
+      class="navigation-list-item"
+    ><a
+        href="../../docs/offlineParthnerIntergration/index.html"
+        class="navigation-list-link"
+        >Offline Partner Integration</a
+      ></li><li
+      class="navigation-list-item"
+    ><a
+        href="../../docs/API%20Documentation/index.html"
+        class="navigation-list-link"
+        >API Documentation</a
+      ><ul class="navigation-list-child-list"><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/login/index.html"
+            class="navigation-list-link"
+            >Login</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/profile/index.html"
+            class="navigation-list-link"
+            >Profile</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/changePassword/index.html"
+            class="navigation-list-link"
+            >Change Password</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/certificateList/index.html"
+            class="navigation-list-link"
+            >Certificate List</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/cardSave/index.html"
+            class="navigation-list-link"
+            >Card Save</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/verifyToken/index.html"
+            class="navigation-list-link"
+            >Verify Token</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/boardingPassScan/index.html"
+            class="navigation-list-link"
+            >Boarding Pass Scan</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/boardingPassSave/index.html"
+            class="navigation-list-link"
+            >Boarding Pass Save</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/boardingPassId/index.html"
+            class="navigation-list-link"
+            >Boarding Pass ID</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/corporateTokens/index.html"
+            class="navigation-list-link"
+            >Corporates Token</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/corporates/index.html"
+            class="navigation-list-link"
+            >Corporates</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/redeemCoupon/index.html"
+            class="navigation-list-link"
+            >Redeem Coupon</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/getFacilities/index.html"
+            class="navigation-list-link"
+            >Get Facilities</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/getProducts/index.html"
+            class="navigation-list-link"
+            >Get Products</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/getOrders/index.html"
+            class="navigation-list-link"
+            >Get Orders</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/getOutlets/index.html"
+            class="navigation-list-link"
+            >Get Outlets</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/getEntitlements/index.html"
+            class="navigation-list-link"
+            >Get Entitlements</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/getadmissions/index.html"
+            class="navigation-list-link"
+            >Get Admissions</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/blackListedToken/index.html"
+            class="navigation-list-link"
+            >Blacklisted Token</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/whitelistedToken/index.html"
+            class="navigation-list-link"
+            >Whitelisted Token</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/mapOutlets/index.html"
+            class="navigation-list-link"
+            >Map Outlets</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/mapProducts/index.html"
+            class="navigation-list-link"
+            >Map Products</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/getToken/index.html"
+            class="navigation-list-link"
+            >Get Token</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/getCouponCode/index.html"
+            class="navigation-list-link"
+            >Coupon Code</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/getCouponDetails/index.html"
+            class="navigation-list-link"
+            >Coupon Details</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/cancelCoupon/index.html"
+            class="navigation-list-link"
+            >Cancel Coupon</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/redeemToken/index.html"
+            class="navigation-list-link"
+            >Redeem Token</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/updateCoupon/index.html"
+            class="navigation-list-link"
+            >Update Coupon</a
+          ></li></ul></li><li
+      class="navigation-list-item active"
+    ><a
+        href="../../docs/features/index.html"
+        class="navigation-list-link"
+        >Features</a
+      ><ul class="navigation-list-child-list"><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/dashboard/index.html"
+            class="navigation-list-link"
+            >Dashboard</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/admissions/index.html"
+            class="navigation-list-link"
+            >Admissions</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/orders/index.html"
+            class="navigation-list-link"
+            >Orders</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/catalog/index.html"
+            class="navigation-list-link"
+            >Catalog</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/partnerResponse/index.html"
+            class="navigation-list-link"
+            >Partner Responses</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/fileImportExport/index.html"
+            class="navigation-list-link"
+            >File Import/Export</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/partner/index.html"
+            class="navigation-list-link"
+            >Partner</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/outlet/index.html"
+            class="navigation-list-link"
+            >Outlet</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/product/index.html"
+            class="navigation-list-link"
+            >Product</a
+          ></li><li
+          class="navigation-list-item  active"
+        ><a
+            href="../../docs/admissionToken/index.html"
+            class="navigation-list-link active"
+            >Admission Instruction</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/partnerContract/index.html"
+            class="navigation-list-link"
+            >Partner Contract</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/airport/index.html"
+            class="navigation-list-link"
+            >Port/Station</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/users/index.html"
+            class="navigation-list-link"
+            >Users</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/members/index.html"
+            class="navigation-list-link"
+            >Members</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/devices/index.html"
+            class="navigation-list-link"
+            >Devices</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/vendor/index.html"
+            class="navigation-list-link"
+            >Vendor</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/tax/index.html"
+            class="navigation-list-link"
+            >Tax</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/country/index.html"
+            class="navigation-list-link"
+            >Country</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/pincode/index.html"
+            class="navigation-list-link"
+            >Pincode</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/receiptTemplate/index.html"
+            class="navigation-list-link"
+            >Recipt Template</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/token/index.html"
+            class="navigation-list-link"
+            >Token</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/module/index.html"
+            class="navigation-list-link"
+            >Module</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/action/index.html"
+            class="navigation-list-link"
+            >Action</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/role/index.html"
+            class="navigation-list-link"
+            >Role</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/globalSettings/index.html"
+            class="navigation-list-link"
+            >Global Settings</a
+          ></li></ul></li></ul>
+</nav>
+
+      </div>
+      <!-- <footer class="site-footer">
+        <p class="text-small text-grey-dk-000 mb-4">This site is created by <a href="#">C Simplify IT</a>, for Samvad.</p>
+      </footer> -->
+    </div>
+    <div class="main-content-wrap js-main-content" tabindex="0">
+      <div class="main-content">
+        <div class="page-header js-page-header">
+          
+          <div class="search">
+            <div class="search-input-wrap">
+              <input type="text" class="js-search-input search-input" tabindex="0" placeholder="Search PPG LMS Documentation" aria-label="Search PPG LMS Documentation" autocomplete="off">
+              <svg width="14" height="14" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" class="search-icon"><title>Search</title><g fill-rule="nonzero"><path d="M17.332 20.735c-5.537 0-10-4.6-10-10.247 0-5.646 4.463-10.247 10-10.247 5.536 0 10 4.601 10 10.247s-4.464 10.247-10 10.247zm0-4c3.3 0 6-2.783 6-6.247 0-3.463-2.7-6.247-6-6.247s-6 2.784-6 6.247c0 3.464 2.7 6.247 6 6.247z"/><path d="M11.672 13.791L.192 25.271 3.02 28.1 14.5 16.62z"/></g></svg>
+            </div>
+            <div class="js-search-results search-results-wrap"></div>
+          </div>
+          
+        </div>
+        <div class="page">
+          <div id="main-content" class="page-content" role="main">
+          <h2><strong>Admission Instruction</strong></h2>
+<p>
+  You can add new tokens manually or import complete file containing list of
+  Admission Instructions and their details. Also, edit existing Admission Instruction's
+  details in the system for futher use.
+</p>
+
+<h3><strong>Admission Instruction Types</strong></h3>
+<p>
+  <strong>Credit Card</strong> <br />
+  To get airport lounge access customers can bring a credit card that comes with
+  a lounge access feature or lounge access can be at discounted rate .The number
+  of free airport lounge access varies from card to card. Few premium credit
+  cards offer unlimited access to airport lounges along with complimentary
+  guest.<a href="#credit">click here</a>.
+</p>
+<p>
+  <strong>QR Code</strong> <br />
+  To get airport lounge access customers can bring some vouchers or QR-Codes
+  issued by third party. To set up such Admission Instruction
+  <a href="#qr_code">click here</a>
+</p>
+<p>
+  <strong>Airline Invitation</strong> <br />
+  Airline Passengers can get complimentary or discounted lounge access or other
+  facilities, depending upon the Airline Program. The Admission Instruction will be
+  setup by using the boarding pass.
+  <a href="#airline_inv">click here</a>.
+</p>
+<p>
+  <strong>Airline Staff</strong> <br />
+  Airline Crew Members gets complimentry lounge access on the airports .They
+  need to bring the crew ID passes to get lounge access. To set up Airline Staff
+  Token
+
+  <a href="#airline_staff">click here</a>.
+</p>
+<p>
+  <strong>Smart Traveller Voucher</strong> <br />
+  This is a loyality program run by Premium Plaza for members of smart traveller
+  app. ST app API is called to know the membership ID validation. Arrture points
+  can be used to redeem for various rewards.
+</p>
+<p>
+  <strong>Corporate Client Membership</strong> <br />
+  Corporate Client Membership : Corporate Partners provides
+  Coupon/Vouchers/Memberships to their customers, they can access complimentary
+  or discounted lounge access and other facilities on the airport.
+</p>
+<p>
+  <strong>Walk-in</strong><br />
+  A customer can avail lounge access or other facilities without any credit card
+  or coupon.
+</p>
+<h3 id="credit"><strong>Setting up Credit Card Admission Instruction</strong></h3>
+<p>
+  "Admission Instruction" tab is accessiable from the sidebar as a "Masters" submenu
+  item. Click on it to get in-depth data view of all the Admission Instructions.
+</p>
+
+<img
+  src="../../assets/images/admissionTokenTab.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  You can search for the Admission Instruction(s) by entering its details in the
+  search field.
+</p>
+<img
+  src="../../assets/images/searchAdmissionToken.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  Or, you can click on dropdown icon for advance serach in which you are having
+  more option to filter out list.
+</p>
+<img
+  src="../../assets/images/advSearchAdmissionToken.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Reset" button to reset the form values.</p>
+<img
+  src="../../assets/images/resetBtnAdmToken.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Search" button to search for the result.</p>
+<img
+  src="../../assets/images/searchBtnAdmToken.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>You can find Admission Instructions list in the table.</p>
+<img
+  src="../../assets/images/admTokenTable.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  You can download the file of Admission Instructions by clicking on download icon in
+  the "Action" column of table.
+</p>
+<img
+  src="../../assets/images/downloadAdmToken.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  You can view Admission Instruction's details by double click on that row of the
+  table for whose details you want to see.
+</p>
+<img
+  src="../../assets/images/dblClickAdmToken.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<p>
+  System then populates a screen where you can see the complete detail of that
+  particular Admission Instruction including Admission Instruction name, type, category,
+  partner name, etc.
+</p>
+<img
+  src="../../assets/images/editAdmissionToken.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  Also, you can see seven horizontal tabs in the details page below the form
+  fields - Token Identification, Applicable At, Entitlements, Documents
+  Required, Token Samples, Generate/Import Tokens, Localisation.
+</p>
+<img
+  src="../../assets/images/admissionTokenDetailTab.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  By default "Token Identification" data is visible, where you can see the mask
+  patterns, issuing country and other details related to tokens.
+</p>
+<img
+  src="../../assets/images/tokenIdentificationTab.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>You can find the table for exisitng tokens.</p>
+<img
+  src="../../assets/images/tokenIdentificationTable.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  You can also delete the pattern by clicking on trash icon in the particular
+  row of table.
+</p>
+<img
+  src="../../assets/images/deleteAdmToken.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Double click on the any row to view its detailed information.</p>
+<img
+  src="../../assets/images/dblClickTokenIdentification.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  The system will populate the new screen for you, where you can view/edit the
+  existing information.
+</p>
+<img
+  src="../../assets/images/editPattern.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Reset" button to reset the edited fields.</p>
+<img
+  src="../../assets/images/resetPattern.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Add Pattern" to save the edited fields changes.</p>
+<img
+  src="../../assets/images/addPattern.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  You can also add new patterns by clicking on "Add Pattern" button present on
+  the top of the table.
+</p>
+<img
+  src="../../assets/images/addNewPattern.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>In this screen, you can fill the following details to add new pattern.</p>
+<img
+  src="../../assets/images/addNewPatternDetails.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Reset" button to reset form values.</p>
+<img
+  src="../../assets/images/resetPattern1.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Add Pattern" to save the information.</p>
+<img
+  src="../../assets/images/addNewPattern1.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  Click on "Applicable At" tab to view, edit or new add applicable at in the
+  system.
+</p>
+<img
+  src="../../assets/images/applicableAtTab.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>You can find the table of existing bin ranges and outlet details.</p>
+<img
+  src="../../assets/images/applicableAtTable.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Double click on the any row to view its detailed information.</p>
+<img
+  src="../../assets/images/dblClickApplicableAt.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  The system will populate the new screen for you, where you can view/edit the
+  existing information.
+</p>
+<img
+  src="../../assets/images/applicableDetails.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<p>Search can be done on the basis of outlet name, country and continent</p>
+<img
+  src="../../assets/images/searchApplicableAt.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  User can shift all the outlets in one go by clicking on double arrows and vice
+  versa
+</p>
+<img
+  src="../../assets/images/doubleArrows.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  If user want to select it one by one then they can either double click on the
+  outlets or after single click they can press forward arrow and vice versa.
+</p>
+<img
+  src="../../assets/images/singleArrows.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<!-- 
+<p>
+  Click on "Search" button after adding inputs on the basis of which you want to
+  filter out the data.
+</p>
+<img
+  src="../../assets/images/searchApplicableAt.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Reset" button to reset the form fields.</p>
+<img
+  src="../../assets/images/resetApplicableAt.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  You can also select multiple outlets by checking the checkbox(es) at a time.
+</p>
+<img
+  src="../../assets/images/selectOutlet2.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Reset" button to reset the edited fields.</p>
+<img
+  src="../../assets/images/resetApplicableAt1.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/> -->
+<p>Click on "Add Applicable At" to save the edited fields changes.</p>
+<img
+  src="../../assets/images/addApplicableAt.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<!--<p>
+  You can also add new bin range by clicking on "Add Applicable At" button
+  present on the top of the table.
+</p>
+<img
+  src="../../assets/images/addApplicableAt1.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  In this screen, you can click on dropdown arrow to see all the bin ranges.
+</p>
+<img
+  src="../../assets/images/dropdownBinRange.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>you can select the bin range for which the token is applicable at.</p>
+<img
+  src="../../assets/images/checkBinRange.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  After clicking on the bin range, you can see available outlets and selected
+  outlets for which you can search by using outlet name,
+  <img
+    src="../../assets/images/chnageOutletForBin.jpg"
+    alt=""
+    style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+  />
+</p>
+
+<p>
+  After clicking on the bin range, you can see select outlets from available
+  outltes with help of search.</p>
+  <img
+    src="../../assets/images/addApplicableAtBin.jpg"
+    alt=""
+    style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+  />
+  <!-- <p>Click on "Reset" button to reset the fields.</p>
+<img
+  src="../../assets/images/resetApplicableAt2.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Add Applicable At" to save the data.</p>
+<img
+  src="../../assets/images/addApplicableAt2.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/> 
+</p>-->
+
+<p>Click on "Entitlements" tab to view, edit or new entitlements.</p>
+<img
+  src="../../assets/images/entitlementsTab.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>You can find the table of entitlements.</p>
+<img
+  src="../../assets/images/entitlementsTable.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Double click on the any row to view its detailed information.</p>
+<img
+  src="../../assets/images/dblClickEntitlement.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  The system will populate the new screen for you, where you can view/edit the
+  existing information.
+</p>
+<img
+  src="../../assets/images/editEntitlement.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<!-- <p>Click on "Reset" button to reset the edited fields.</p>
+<img
+  src="../../assets/images/resetEntitlement.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/> -->
+<p>Click on "Add Entitlements" to save the edited fields changes.</p>
+<img
+  src="../../assets/images/addEntitlement.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  You can also add new entitlements by clicking on "Add New Entitlements" button
+  present on the top of the table.
+</p>
+<img
+  src="../../assets/images/addNewEntitlement.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  In this screen, you can fill the bin range to add new entitlement in the
+  system.
+</p>
+<img
+  src="../../assets/images/entitlementDetails.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<!-- <p>Click on "Reset" button to reset the fields.</p>
+<img
+  src="../../assets/images/resetEntitlement1.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/> -->
+<p>Click on "Select Outlets" to select outlet.</p>
+<img
+  src="../../assets/images/selectOutletEntitlement.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  Select outlet window will popup from it you can select outlets from available
+  outlets
+</p>
+<img
+  src="../../assets/images/outletEntitlementPopup.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  Once you select the outlet clock on "Close" button to close the popup window.
+</p>
+<img
+  src="../../assets/images/outletEntitlementPopupClose.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  Fill the entitlement for the outlets and click on "Add Entitlement" button.
+  The entitlements will get added to selected outlets.
+</p>
+<img
+  src="../../assets/images/addNewEntitlementAtOutlet.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<!-- 
+<p>Click on "Add Entitlements" to add new entitlements.</p>
+<img
+  src="../../assets/images/addEntitlement1.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/> -->
+<p>
+  Click on "Documents Required" tab to view the existing documents in the
+  system.
+</p>
+<img
+  src="../../assets/images/docsRequiredTab.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>You can find the table for existing documents.</p>
+<img
+  src="../../assets/images/docsRequiredTable.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  Click on checkbox(es) in row of the table which document you want to save for
+  that token.
+</p>
+<img
+  src="../../assets/images/selectDocs.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  Click on "ADD Documents" button to save/update the documents for the token.
+</p>
+<img
+  src="../../assets/images/updateDocs.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Reset" button to reset the selected documents.</p>
+<img
+  src="../../assets/images/resetDocs.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  Click on "Token Samples" tab to view, delete or add new sample images for the
+  token.
+</p>
+<img
+  src="../../assets/images/tokenSamplesTab.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>You can find the sample images for tokens.</p>
+<img
+  src="../../assets/images/sampleImages.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  Hover on any image and you will find the delete(trash) icon, click on it if
+  you want to delete that image.
+</p>
+<img
+  src="../../assets/images/deleteImage.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  You can also add new sample image(s) by clicking on "Add New Token Sample"
+  button present on the top of the table.
+</p>
+<img
+  src="../../assets/images/addNewTokenSample.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  In this screen, you can upload single/multiple image for tokens in the system.
+</p>
+<img
+  src="../../assets/images/uploadSample.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<!-- <p>Click on "Generate/Import Token" tab to view, edit or add new token.</p>
+<img
+  src="../../assets/images/generateToken.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>You can find the table of generated tokens.</p>
+<img
+  src="../../assets/images/generateTokenTable.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/> 
+<p>
+  You can delete token by clicking on the delete icon present in the "Action"
+  column of table.
+</p>
+<img
+  src="../../assets/images/deleteToken.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/> -->
+<!-- <p>Double click on the any row to view its detailed information.</p>
+<img src="../../assets/images/dblClickGenerateToken.jpg" alt="" style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361;">
+<p>The system will populate the new screen for you, where you can view/edit the existing information.</p>
+<img src="../../assets/images/editAdmissionToken.jpg" alt="" style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361;">
+<p>Click on "Reset" button to reset the edited fields.</p>
+<img src="../../assets/images/editAdmissionToken.jpg" alt="" style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361;">
+<p>Click on "Add Token ID" to save the edited fields changes.</p>
+<img src="../../assets/images/editAdmissionToken.jpg" alt="" style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361;"> -->
+<!-- <p>
+  You can also add new token ID by clicking on "Add New Token ID" button present
+  on the top of the table.
+</p>
+<img
+  src="../../assets/images/addNewTokenId.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  In this screen, you can fill the required details to add new token ID in the
+  system.
+</p>
+<img
+  src="../../assets/images/tokenDetails.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Reset" button to reset the fields.</p>
+<img
+  src="../../assets/images/resetTokenId.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Add Token ID" to save the data.</p>
+<img
+  src="../../assets/images/addTokenId.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/> -->
+<p>Click on "Localisation" tab to view the data in different languages.</p>
+<img
+  src="../../assets/images/localisationTab1.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>You can find the table for existing attributes.</p>
+<img
+  src="../../assets/images/localisationTable1.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Enter the token name in Chinese</p>
+<img
+  src="../../assets/images/FillChineseName.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<p>Click on "Save" to save the data.</p>
+<img
+  src="../../assets/images/saveLocalisation1.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>From the header change the language to Chinese</p>
+<img
+  src="../../assets/images/tokenLocalisationChi.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Here we can see the name has changed to Chinese.</p>
+<img
+  src="../../assets/images/TokenChineseName.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>If language Changed back to English</p>
+<img
+  src="../../assets/images/tokenLocalisationEng.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>The token name will be chnaged back to English</p>
+<img
+  src="../../assets/images/TokenEnglishName.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<p>
+  You can also add new token by clicking on "New" button present on the top
+  right corner on the main screen.
+</p>
+<img
+  src="../../assets/images/newAdmToken.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Fill the following information to add new token in the system.</p>
+<img
+  src="../../assets/images/newAdmTokenDetails.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Reset" button to reset the form.</p>
+<img
+  src="../../assets/images/resetAdmToken.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Save Draft" button to save the filled details in the system.</p>
+<img
+  src="../../assets/images/saveDraftAdmToken.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  Click on "Clone Token" button to clone(copy) of the token in draft mode, which
+  you can edit.
+</p>
+<img
+  src="../../assets/images/cloneToken.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  Once you click on it, it will open the popup for you. Click on "Yes" button to
+  make the copy of the token.
+</p>
+<img
+  src="../../assets/images/clonePopup.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Else, click on "No" button.</p>
+<img
+  src="../../assets/images/noClone.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>As shown below, "clone" suffix will appear in front of the token name</p>
+<img
+  src="../../assets/images/CloneTokenAfterYes.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "submit" button to submit the token which you have created</p>
+<img
+  src="../../assets/images/TokenSubmitBTN01.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  As shown below, the status of submitted token should be "approval pending"
+</p>
+<img
+  src="../../assets/images/TokenApprovalPending.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Reject" button to reject the token which you have submitted</p>
+<img
+  src="../../assets/images/TokenRejectBTN.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Approve" button to approve the token which you have submitted.</p>
+<img
+  src="../../assets/images/TokenApproveBTN.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  Once the token is approved, the status should be "Approved" as shown below.
+</p>
+<img
+  src="../../assets/images/TokenApproved.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  Even if the token is in Approved state you can edit Applicable At and
+  Entitlement Tabs. Once the changes are made in these two tabs click on "Update
+  Token" to update approved token
+</p>
+<img
+  src="../../assets/images/TokenUpdateBTN.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>To deactivate the token click on "Deactivate" button</p>
+<img
+  src="../../assets/images/TokenDeactiveBTN.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  Fill the reason, comment fields and click on "Deactivate" button. To make it
+  again active double click on the token.
+</p>
+<img
+  src="../../assets/images/TokenDeactiveReason.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>As shown below, the status of the token is "Deactivated"</p>
+<img
+  src="../../assets/images/TokenDeactiveStatus.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Activate" button</p>
+<img
+  src="../../assets/images/TokenActiveBTN.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Fill the reason,comment Fields and click on "Activate" button.</p>
+<img
+  src="../../assets/images/TokenActiveReason.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>As shown below the status of active token will be "Approved"</p>
+TokenActiveApprove
+<img
+  src="../../assets/images/TokenActiveApprove.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<!-- <p>
+  Click on "Import" button so that you can import the complete file having
+  required data in one go.
+</p>
+<img
+  src="../../assets/images/importToken.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  Follow the steps present in "Import" tab present the sidenav of this
+  documentation.
+</p> -->
+
+<h3 id="qr_code"><strong>QR Code Admission Instruction</strong></h3>
+
+<p>Select "QR Code" from Admission Instruction type.</p>
+<img
+  src="../../assets/images/selectqrcode.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<p>Click on "Reset" button to reset the edited fields.</p>
+<img
+  src="../../assets/images/qrReset2.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<p>Click on "Save Draft" button to Save the details.</p>
+<img
+  src="../../assets/images/qrsavedraft.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<p>
+  After clicking on save draft, horizontal tabs will be visible.you can see in
+  the details page below the form fields - Token Identification, Applicable At,
+  Entitlements, Documents Required, Token Samples, Generate/Import Tokens,
+  Localisation.
+</p>
+<img
+  src="../../assets/images/qrtokenidentificationtab.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>In Token Identification, click on "Add pattern"</p>
+<img
+  src="../../assets/images/qraddpattern.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  Fill the details, Coupon contains will populate the partner short code (but
+  this is editable)
+</p>
+<img
+  src="../../assets/images/qrcouponcontains1.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Add Pattern" to save the pattern</p>
+<img
+  src="../../assets/images/qraddpattern1.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<p>
+  Click on "Applicable At" tab to view, edit or new add applicable at in the
+  system.
+</p>
+<img
+  src="../../assets/images/qrApplicableAt.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<p>Click on "Add Applicable At" to bind outlets to the token.</p>
+<img
+  src="../../assets/images/qrApplicableAtBTN.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<p>Select the bin range for which the token is applicable at.</p>
+<img
+  src="../../assets/images/qrBinRange.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<p>
+  You can search the outlet in the search field on the basis or outlet name,
+  country, continent in available outlets and pass it to selected outlet using
+  single forward arrow or you cab double click on the outlet.
+</p>
+<img
+  src="../../assets/images/qrAvailableoutlet.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<p>
+  You can see in the following screen that the outlet is moved to selected
+  outlet.
+</p>
+<img
+  src="../../assets/images/qrSelectedOutlet.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<p>Once you select all the outlets, Click on "Add Applicable At"</p>
+<img
+  src="../../assets/images/qrClickAddapplicableAt.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<p>
+  Once you click on Add Appplicable at, You can see the details as shown below
+</p>
+<img
+  src="../../assets/images/qrAddApplicableDetails.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<p>Click on "Entitlements" tab to view, edit or new entitlements.</p>
+<img
+  src="../../assets/images/qrentitlementstab.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<p>Click on "Add Entitlement" to add entitlemets to selected outlets.</p>
+<img
+  src="../../assets/images/qraddentitlements.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<p>Select the Bin Range for which toke is created</p>
+<img
+  src="../../assets/images/qrEntitlementSelectBinRange.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<p>
+  After selecting the Bin Range, click on "Select Outlets" to select the outlet
+</p>
+<img
+  src="../../assets/images/qrEntitlementClickSelectOutlet.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<p>
+  After clicking on Select outlets pop up window will appear from which we can
+  select the outlet from available outlet either by doubble clicking on outlet
+  or by selecting outlet and move it to selected outlet with help of single
+  forward arrow.
+</p>
+<img
+  src="../../assets/images/qrEntitlementAvailableOutlet1.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<p>The outlet should be in the "selected outlet" as shown in below</p>
+<img
+  src="../../assets/images/qrEntitlementSelectedOutlet1.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<p>Click on "Close" button to close the pop up window.</p>
+<img
+  src="../../assets/images/qrEntitlementCloseBTN.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<p>
+  Fill the Entitlemnts Details For the selected outlets and click on "Add
+  Entitlement" button
+</p>
+<img
+  src="../../assets/images/qrAddEntitlement.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<p>The entitlments can be seen as shown below table.</p>
+<img
+  src="../../assets/images/qrEntitlementDetails.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<p>
+  Next Tab is "Generate/Import Coupons", in which you can import coupon,
+  generate coupon and view coupon
+</p>
+<img
+  src="../../assets/images/qrGenerateImportCouponTab.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<p>Click on "Import Coupon" to import coupons.</p>
+<img
+  src="../../assets/images/qrImportCoupon.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<p>Follow the steps as mentioned below for "Select file" tab</p>
+<img
+  src="../../assets/images/qrImportSteps.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<p>
+  Click on choose file to select excel file to upload. Then "upload" button will
+  enable. Click on "Upload" for next steps.
+</p>
+<img
+  src="../../assets/images/qrUploadExcel.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<p>Next tab is "Match Headers". If there is no error then click on Continue.</p>
+<img
+  src="../../assets/images/qrMatchHeader.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<p>Next tab is "Confirm Data".Click on "Import" button</p>
+<img
+  src="../../assets/images/qrConfirmData.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<p>Next Tab is "Generate Coupon" to generate a coupon.</p>
+<img
+  src="../../assets/images/qrGenerateCouponbtn.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<p>Select the coupon from "Coupon Contains"</p>
+<img
+  src="../../assets/images/qrSelectGenerateCoupon.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<p>
+  Count will notify how many coupons are generated (Select 1 to create one
+  coupon)
+</p>
+<img
+  src="../../assets/images/qrGenerateCouponCount.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<p>Once you fill all the fields, click on "Generate Coupon"</p>
+<img
+  src="../../assets/images/qrClickGenerateCoupon.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<p>
+  The generated coupon will be shown on Token Screen and one entry will be shown
+  in the table. Also, by clicking on View Coupon the user can view the coupon
+  details
+</p>
+<img
+  src="../../assets/images/qrViewCoupon.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<h3 id="airline_inv"><strong>Setting up Airline Invitation Token :</strong></h3>
+<p>
+  For creating airline invitation token select "Airline invitation" from
+  Admission Instruction Type
+</p>
+<img
+  src="../../assets/images/AirlineTokenType.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>In token identification tab click on "Add Pattern" to add new pattern</p>
+<img
+  src="../../assets/images/AirlineTokenIdenTab.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Fill the all details as shown below</p>
+<img
+  src="../../assets/images/AirlineToeknIdenCouponContain.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  Airline Code and Travel Class will be fetched from the provided Boarding
+  String
+</p>
+<img
+  src="../../assets/images/AirlineCodeAndClass.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Add Pattern" to save the fields</p>
+<img
+  src="../../assets/images/AirlineTokenIdenAddTokenBTN.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  As shown in below table, you can double click on it to see the detailed
+  information.
+</p>
+<img
+  src="../../assets/images/AirlineTokenIdenAppli2Click.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<h3 id="airline_staff"><strong>Setting up Airline Staff Token :</strong></h3>
+<p>
+  Select "Airline Staff" from token identification type, fill all the
+  information and Click on "Save draft" button
+</p>
+<img
+  src="../../assets/images/AirStaffSaveDrft.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  Once you click on "Save draft" you will see all these horizontal tabs. First
+  is "Token Identification".
+</p>
+<img
+  src="../../assets/images/AirStaffTokenIdntab.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Add pattern" to add new pattern</p>
+<img
+  src="../../assets/images/AirStaffaddtoken.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  "Coupon Contains" field will have * as for crew members the Id can be of any
+  type, alphabetical, numeric so set it up as "*". Airline Code and Travel Class
+  will be empty for crew members
+</p>
+
+<img
+  src="../../assets/images/AirStaffCouponContain.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Add Pattern"to save the details.</p>
+<img
+  src="../../assets/images/AirStaffClickAddToken.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p><strong>Below are the input fields used in this screen:</strong></p>
+<div align="left">
+  <table class="table-bordered">
+    <tbody>
+      <tr>
+        <td>
+          <p><strong>Name of the field</strong></p>
+        </td>
+        <td>
+          <p><strong>Entry Mode</strong></p>
+        </td>
+        <td>
+          <p><strong>Mandatory</strong></p>
+        </td>
+        <td>
+          <p><strong>Comments</strong></p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Token Name</p>
+        </td>
+        <td>
+          <p>Free text with dropdown</p>
+        </td>
+        <td>
+          <p>Yes</p>
+        </td>
+        <td>
+          <p>
+            Enter the name of the token you want to create in this field. Also,
+            entering the first three letters of an already created token will
+            populate a dropdown list from which you can choose the token name
+            and all the details related to that token will be reflected in the
+            respective fields.
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Token Short Code</p>
+        </td>
+        <td>
+          <p>Free Text</p>
+        </td>
+        <td>
+          <p>Yes</p>
+        </td>
+        <td>
+          <p>
+            You have to create the Token Short Code in this field and it must be
+            unique.
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Admission Instruction Type</p>
+        </td>
+        <td>
+          <p>Selection</p>
+        </td>
+        <td>
+          <p>Yes</p>
+        </td>
+        <td>
+          <p>
+            Select from the following Token Types :-Airline Invitation, Airline
+            Staff, Credit card, E-Voucher, Online Booking, QR Code , Smart
+            Traveller Voucher, Walk-in
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Partner Name</p>
+        </td>
+        <td>
+          <p>Free text with dropdown</p>
+        </td>
+        <td>
+          <p>Yes</p>
+        </td>
+        <td>
+          <p>
+            In this field you can choose the name of the Partner you want to
+            bind the Admission Instruction to. Entering first three letters of an
+            already created Partner will populate a dropdown list from which you
+            can choose the Partner name.&nbsp;
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Admission Instruction Category</p>
+        </td>
+        <td>
+          <p>Selection</p>
+        </td>
+        <td>
+          <p>Yes</p>
+        </td>
+        <td>
+          <p>
+            Select from the following Token Categories:- Bronze, Gold, Platinum,
+            Silver
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Validation</p>
+        </td>
+        <td>
+          <p>Selection</p>
+        </td>
+        <td>
+          <p>Yes</p>
+        </td>
+        <td>
+          <p>
+            Select from the following Values:-Luhn Algo, Miles Algo, None, Union
+            Pay Card. For Credit Card type of Token the Validation field will
+            Luhn Algo always.
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Color</p>
+        </td>
+        <td>
+          <p>Selection</p>
+        </td>
+        <td>
+          <p>No</p>
+        </td>
+        <td>
+          <p>Click and drag the circle To select Specific color</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Status</p>
+        </td>
+        <td>
+          <p>Disabled Field</p>
+        </td>
+        <td>
+          <p>Yes</p>
+        </td>
+        <td>
+          <p>
+            System generated. It reflects the current status of the token eg. if
+            the token is not submitted it will be in draft status. (Draft,
+            Approved, Approval Pending, Deactivated are some of the statuses)
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Token Identified By</p>
+        </td>
+        <td>
+          <p>Selection</p>
+        </td>
+        <td>
+          <p>Yes</p>
+        </td>
+        <td>
+          <p>
+            This field displays how the token is identified, it depends upon the
+            token type. Eg credit card can be identified by (Chip In, Insert,
+            Manual etc) It is a multi selection field.&nbsp;
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Token Refresh On</p>
+        </td>
+        <td>
+          <p>Selection</p>
+        </td>
+        <td>
+          <p>Yes</p>
+        </td>
+        <td>
+          <p>
+            This displays in which Month and Year the quota of the token is
+            refreshed.&nbsp;
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Terms and Conditions</p>
+        </td>
+        <td>
+          <p>Free text</p>
+        </td>
+        <td>
+          <p>Yes</p>
+        </td>
+        <td>
+          <p>
+            This field displays all the terms and conditions that GSO has to
+            take care of while giving access to the guest. All such important
+            information is mentioned here.
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="4">
+          <p><strong>Token Identification Tab</strong></p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Issuing Country</p>
+        </td>
+        <td>
+          <p>Selection</p>
+        </td>
+        <td>
+          <p>Yes</p>
+        </td>
+        <td>
+          <p>
+            This field displays the name of the country which has issued the
+            token. After entering the first three letters of the country
+            selection list will populate from which you can select the country
+            name.
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Issuing Language</p>
+        </td>
+        <td>
+          <p>System Generated</p>
+        </td>
+        <td>
+          <p>Yes</p>
+        </td>
+        <td>
+          <p>
+            After selecting the Country respective Issuing language will be auto
+            populated
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Base Currency</p>
+        </td>
+        <td>
+          <p>System Generated</p>
+        </td>
+        <td>
+          <p>Yes</p>
+        </td>
+        <td>
+          <p>
+            After selecting the Country respective Base Currency will be auto
+            populated
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Coupon Contains</p>
+        </td>
+        <td>
+          <p>Free text</p>
+        </td>
+        <td>
+          <p>Yes</p>
+        </td>
+        <td>
+          <p>
+            <strong>QR Code token type</strong> :&nbsp;This field will be auto
+            populated as Partner&apos;s Short Code.&nbsp;
+          </p>
+          <p>
+            <strong>For rest all token types (except Credit Card)&nbsp;</strong
+            >the field will be empty and is user entered.&nbsp;
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Airline Code</p>
+        </td>
+        <td>
+          <p>Free Text</p>
+        </td>
+        <td>
+          <p>No</p>
+        </td>
+        <td>
+          <p>
+            <strong>Airline Staff token type :&nbsp;</strong>This field will be
+            empty
+          </p>
+          <p>
+            <strong>Rest all token types :&nbsp;</strong>This field will be
+            fetched from the provided Boarding String
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Travel Class</p>
+        </td>
+        <td>
+          <p>Free Text</p>
+        </td>
+        <td>
+          <p>No</p>
+        </td>
+        <td>
+          <p>
+            <strong>Airline Staff token type :&nbsp;</strong>This field will be
+            empty
+          </p>
+          <p>
+            <strong>Rest all token types except Credit Card:</strong>This field
+            &nbsp;will be fetched from the provided Boarding String
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="4">
+          <p><strong>Applicable To Tab :</strong></p>
+          <br />
+          <p>
+            This tab displays the token is applicable at which of the outlets.
+          </p>
+          <br />
+        </td>
+      </tr>
+      <tr>
+        <td colspan="4">
+          <p><strong>Entitlement Tab :</strong></p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Applicable To</p>
+        </td>
+        <td>
+          <p>selection</p>
+        </td>
+        <td>
+          <p>Yes</p>
+        </td>
+        <td>
+          <p>
+            This field displays the token is applicable to which category of
+            guests.&nbsp;
+          </p>
+          <p>
+            Select from the following Values:-Primary, Accompanying Guest,
+            Child, Fallback, Product, Group
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Entitled product</p>
+        </td>
+        <td>
+          <p>Free text with dropdown</p>
+        </td>
+        <td>
+          <p>Yes</p>
+        </td>
+        <td>
+          <p>
+            This field displays the product(s) which is/are bind to the outlet
+            where the Admission Instruction is setup. Enter first three letters of the
+            product, if it is bind to the outlet in dropdown suggestion will be
+            shown and you will be able to select the product. Pre requite is
+            that the product should be binded to the outlet if not then go to
+            &quot;Product Available At&quot; tab in product screen and make the
+            product available.
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Entitled Quantity</p>
+        </td>
+        <td>
+          <p>Number</p>
+        </td>
+        <td>
+          <p>Yes</p>
+        </td>
+        <td>
+          <p>
+            This is a numeric field, number entered in this field will be
+            multiplied with the binded product&apos;s service time and will
+            eventually denote the duration of the admission. eg &quot;Lounge
+            Usage&quot; is bind to a token and 2 is entered in this field then
+            the duration of this Admission Instruction will be 2*1 hour service time =
+            2 hours
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Quota</p>
+        </td>
+        <td>
+          <p>Checkbox/Number</p>
+        </td>
+        <td>
+          <p>Yes</p>
+        </td>
+        <td>
+          <p>
+            This is field displays the number of time the guest can avail the
+            binded product. Click on checkbox in front of Unlimited if the quota
+            is to be set as unlimited or else select the input the number
+            value.&nbsp;
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Within</p>
+        </td>
+        <td>
+          <p>Selection</p>
+        </td>
+        <td>
+          <p>Yes</p>
+        </td>
+        <td>
+          <p>
+            This field displays for how long the quota is valid for. Select a
+            duration from the selection box.
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Discount Type</p>
+        </td>
+        <td>
+          <p>Selection</p>
+        </td>
+        <td>
+          <p>Yes</p>
+        </td>
+        <td>
+          <p>
+            This field has 2 selections, Absolute and Percentage. If a specific
+            price of the product has to be setup on a token then absolute will
+            be selected and in Discount Price field the price will be given.
+            Else percent will be selected and value of percentage discount will
+            be entered in Discount Price field.&nbsp;
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Currency</p>
+        </td>
+        <td>
+          <p>Selection</p>
+        </td>
+        <td>
+          <p>Yes</p>
+        </td>
+        <td>
+          <p>
+            This is a Selection field where from the menu you can select the
+            currency name which you want to bind on the Admission Instruction
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Discounted percent</p>
+        </td>
+        <td>
+          <p>Number</p>
+        </td>
+        <td>
+          <p>Yes</p>
+        </td>
+        <td>
+          <p>
+            Refer above described Discount Type field. Eg on &nbsp;a product the
+            token is entitled to have 20% discount then in Discount Type percent
+            will be selected and in Discounted Price 20 will be selected.
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Partner Entitlement ID</p>
+        </td>
+        <td>
+          <p>Free text</p>
+        </td>
+        <td>
+          <p>No</p>
+        </td>
+        <td>
+          <p>
+            This field is a non required field, this only comes into picture if
+            there is an integration and the partner has provided entitlement id
+            which is mapped to MAS 3.0&rsquo;s entitlements. Eg Amex has benefit
+            IDs which defines the entitlements of their customers to map those
+            entitlements we bind the benefit id to MAS 3.0&rsquo;s entitlements.
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="4">
+          <p><strong>Generate / Import Coupon Tab</strong></p>
+          <br />
+          <p>
+            For Import Token Flow following are the fields in Import Template
+          </p>
+        </td>
+      </tr>
+      <!-- <tr>
+        <td colspan="4">
+          <p>
+            For Import Token Flow following are the fields in Import Template
+          </p>
+        </td>
+      </tr> -->
+      <tr>
+        <td>
+          <p>Token Name</p>
+        </td>
+        <td>
+          <p>Number</p>
+        </td>
+        <td>
+          <p>Yes</p>
+        </td>
+        <td>
+          <p>This field displays the name of the Admission Instruction</p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Token</p>
+        </td>
+        <td><br />Free Text</td>
+        <td><br />Yes</td>
+        <td>
+          <p>
+            This field displays the coupon id/name. Eg YET001 is entered in this
+            field then the coupon will be imported with the same name/id.&nbsp;
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Partner Tin</p>
+        </td>
+        <td>
+          <p>Free text</p>
+        </td>
+        <td>
+          <p>No</p>
+        </td>
+        <td>
+          <p>
+            Displays the Partner Identification Number of the partner which is
+            bind to this Admission Instruction.
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Product Sku</p>
+        </td>
+        <td>
+          <p>Free text</p>
+        </td>
+        <td>
+          <p>No</p>
+        </td>
+        <td>
+          <p>
+            SKU is a unique number of every product in MAS 3.0, it can be
+            fetched from product screen. Double click on the product name in
+            product screen
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Applicable At</p>
+        </td>
+        <td><br />Free Text</td>
+        <td><br />Yes</td>
+        <td>
+          <p>
+            It displays the outlet code of the outlet where the coupon is
+            applicable at. Outlet code is unique for every outlet &amp; it can
+            be fetched by double clicking the outlet name in outlet screen.
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Start Date</p>
+        </td>
+        <td><br />Number</td>
+        <td><br />Yes</td>
+        <td>
+          <p>
+            It displays the date from which the coupon&rsquo;s validity starts.
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>End Date</p>
+        </td>
+        <td><br />Number</td>
+        <td><br />Yes</td>
+        <td>
+          <p>
+            It displays the date till which the coupon&rsquo;s validity ends.
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Quota</p>
+        </td>
+        <td><br />Number</td>
+        <td><br />Yes</td>
+        <td>
+          <p>It displays the number of times the coupon can be redeemed.</p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="4">
+          <p><strong>Generate Token Tab :&nbsp;</strong></p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Coupon Contains</p>
+        </td>
+        <td><br />Selection</td>
+        <td><br />Yes</td>
+        <td>
+          <p>
+            It displays the partner&rsquo;s short code, which are the initials
+            of the generated token. Eg is Short Code is PA then the coupon will
+            be generated starting as PA.&nbsp;
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Start Date&nbsp;</p>
+        </td>
+        <td><br />Number</td>
+        <td><br />Yes</td>
+        <td>
+          <p>
+            It displays the date from which the coupon&rsquo;s validity starts.
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>End date</p>
+        </td>
+        <td><br />Number</td>
+        <td><br />Yes</td>
+        <td>
+          <p>
+            It displays the date till which the coupon&rsquo;s validity ends.
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Count</p>
+        </td>
+        <td><br />Number</td>
+        <td><br />Yes</td>
+        <td>
+          <p>
+            It displays the number of coupons to be generated. Eg if count is 2
+            then 2 coupons will be generated a
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p><strong>Required Document Tab</strong></p>
+        </td>
+        <td><br />Selection</td>
+        <td><br />Yes</td>
+        <td>
+          <p>
+            It contains a list of options for the documents required for
+            availing the facility. You can choose multiple type documents as
+            well. Eg Boarding Pass &amp; Corporate Letter.
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Token Sample</p>
+        </td>
+        <td><br />Selection</td>
+        <td><br />Yes</td>
+        <td>
+          <p>It displays the images of:</p>
+          <p>
+            Documents required, Credit Card, Declaration Form, Vouchers etc.
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="4">
+          <p><strong>Localisation Tab :&nbsp;</strong></p>
+          <p>
+            This field displays the name of Admission Instruction/ outlet/ product in
+            a specific language eg Chinese and when the language from the header
+            is to chinese then on the respective screen the name will be
+            displayed in Chinese
+          </p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+          </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

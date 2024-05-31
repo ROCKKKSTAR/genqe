@@ -1,0 +1,758 @@
+<div
+  class="content-wrapper d-flex"
+  [ngClass]="{ 'sidebar-open': isSidebarOpen }"
+>
+  <div class="sidebar-wrapper">
+    <app-sidebar [(sidebarState)]="isSidebarOpen"></app-sidebar>
+  </div>
+  <div class="main-wrapper pt-3 h-100">
+    <div></div>
+    <div *ngIf="ExportLoader">
+      <app-loader [message]="exportloaderMessage"></app-loader>
+    </div>
+    <div class="container-fluid h-100">
+      <div class="row h-100">
+        <div class="col-md-12">
+          <div
+            class="property-details-wrapper"
+            style="width: 100%"
+            *ngIf="!showAirlineDetails && !showImport"
+          >
+            <div class="row">
+              <div class="col-md-6">
+                <p class="main-heading">
+                  <span
+                    >{{
+                      data
+                        ? data.master.airlinescodes.airlinescodes
+                        : "Airlines Codes"
+                    }}:</span
+                  >
+                  {{
+                    data
+                      ? data.master.airlinescodes
+                          .viewandaddnewairlinescodesinsystem
+                      : "View and Add New Airlines Codes in System"
+                  }}
+                </p>
+              </div>
+              <div class="col-md-6 text-right">
+                <a
+                  href="javascript:void(0)"
+                  mat-raised-button
+                  (click)="exportReport('Airline')"
+                  style="line-height: 24px !important"
+                  class="btn btn-info"
+                  ><i class="fa fa-file-text-o" aria-hidden="true"></i>
+                  {{ data ? data.buttons.export : "Export" }}</a
+                >
+                <a
+                  (click)="showImportScreen()"
+                  class="btn btn-success text-white mr-2"
+                  ><i class="fa fa-upload" aria-hidden="true"></i>
+                  {{ data ? data.buttons.import : "Import" }}</a
+                >
+                <a class="btn btn-info" (click)="addNewAirlineCode(true)"
+                  ><i class="fa fa-plus" aria-hidden="true"></i>
+                  {{ data ? data.buttons.new : "New" }}</a
+                >
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="search-wrapper">
+                  <div class="search-product">
+                    <div class="search_main">
+                      <div class="search-input">
+                        <span
+                          ><i class="fa fa-search" aria-hidden="true"></i
+                        ></span>
+                        <input
+                          type="search"
+                          [(ngModel)]="simpleSearch"
+                          (keyup.enter)="
+                            simpleSearchAirlineData($event.target.value)
+                          "
+                        />
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>
+                          {{
+                            data
+                              ? data.master.airlinescodes.searchairlinescodes
+                              : "Search Airlines Codes"
+                          }}
+                        </label>
+                        <span
+                          ><i
+                            (click)="getAirline()"
+                            class="fa fa-times"
+                            aria-hidden="true"
+                          ></i
+                        ></span>
+                        <span (click)="showQueryForm()" class="dropdown-form"
+                          ><i class="fa fa-sort-desc" aria-hidden="true"></i
+                        ></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="query1" class="query1" *ngIf="showData">
+                    <div class="form-container">
+                      <form>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="iata"
+                                >{{
+                                  data
+                                    ? data.master.airlinescodes.iata
+                                    : "IATA"
+                                }}:</label
+                              >
+                              <div class="suggestion_input_wrapper">
+                                <i aria-hidden="true"></i>
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  id="iata"
+                                  placeholder="{{
+                                    data
+                                      ? data.master.airlinescodes.enteriata
+                                      : 'Enter IATA'
+                                  }}"
+                                  name="iata"
+                                  [(ngModel)]="airlineTokenAdv.iata"
+                                />
+                              </div>
+                              <!-- <ul
+                                class="searched-list searchSuggestions"
+                                *ngIf="airlines.length > 0"
+                              >
+                                <li
+                                  *ngFor="let airline of airlines"
+                                  (click)="setTokenAirline(airline, 'search')"
+                                >
+                                  {{ airline.airline }}
+                                </li>
+                              </ul> -->
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="icao"
+                                >{{
+                                  data
+                                    ? data.master.airlinescodes.icao
+                                    : "ICAO"
+                                }}:</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="icao"
+                                placeholder="{{
+                                  data
+                                    ? data.master.airlinescodes.entericao
+                                    : 'Enter ICAO'
+                                }}"
+                                name="icao"
+                                [(ngModel)]="airlineTokenAdv.icao"
+                                (keyup)="
+                                  $event.target.value =
+                                    $event.target.value.toUpperCase()
+                                "
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group position-relative">
+                              <label for="airline"
+                                >{{
+                                  data
+                                    ? data.master.airlinescodes.airline
+                                    : "Airline"
+                                }}:</label
+                              >
+                              <div class="suggestion_input_wrapper">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  id="airline"
+                                  [(ngModel)]="airlineTokenAdv.airline"
+                                  placeholder="{{
+                                    data
+                                      ? data.master.airlinescodes.enterairline
+                                      : 'Enter Airline'
+                                  }}"
+                                  name="airline"
+                                  (keyup)="fetchAirline($event.target.value)"
+                                  (keydown)="onTokenAirlineInputKeydown($event)"
+                                />
+                              </div>
+                              <ul
+                                class="searched-list searchSuggestions"
+                                *ngIf="airlines.length > 0"
+                              >
+                                <li
+                                  *ngFor="
+                                    let airline of airlines;
+                                    let i = index
+                                  "
+                                  [class.selected]="
+                                    i === tokenAirlineSuggestionIndex
+                                  "
+                                  (click)="setTokenAirline(airline, 'search')"
+                                >
+                                  {{ airline.airline }}
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="callSign"
+                                >{{
+                                  data
+                                    ? data.master.airlinescodes.callsign
+                                    : "Call Sign"
+                                }}:</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="callSign"
+                                [(ngModel)]="airlineTokenAdv.callSign"
+                                placeholder="{{
+                                  data
+                                    ? data.master.airlinescodes.entercallsign
+                                    : 'Enter Call Sign'
+                                }}"
+                                name="callSign"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group position-relative">
+                              <label for="country"
+                                >{{
+                                  data
+                                    ? data.master.airlinescodes.country
+                                    : "Country"
+                                }}:</label
+                              >
+                              <div class="suggestion_input_wrapper">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  id="country"
+                                  [(ngModel)]="airlineTokenAdv.country"
+                                  placeholder="{{
+                                    data
+                                      ? data.master.airlinescodes.entercountry
+                                      : 'Enter Country'
+                                  }}"
+                                  name="country"
+                                  (keyup)="
+                                    fetchCountryNames($event.target.value)
+                                  "
+                                  (keydown)="onTokenCountryInputKeydown($event)"
+                                />
+                              </div>
+                              <ul
+                                class="searched-list searchSuggestions"
+                                *ngIf="selCountry.length > 0"
+                              >
+                                <li
+                                  *ngFor="let c of selCountry; let i = index"
+                                  [class.selected]="
+                                    i === tokenCountrySuggestionIndex
+                                  "
+                                  (click)="setTokenCountry(c)"
+                                >
+                                  {{ c.name }}
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="comments"
+                                >{{
+                                  data
+                                    ? data.master.airlinescodes.comments
+                                    : "Comments"
+                                }}:</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="comments"
+                                [(ngModel)]="airlineTokenAdv.comments"
+                                placeholder="{{
+                                  data
+                                    ? data.master.airlinescodes.entercomments
+                                    : 'Enter Comments'
+                                }}"
+                                name="comments"
+                              />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="query-btn">
+                          <a
+                            class="btn btn-secondary"
+                            (click)="resetAdvanceSearch()"
+                            ><i class="fa fa-history" aria-hidden="true"></i>
+                            {{ data ? data.buttons.reset : "Reset" }}</a
+                          >
+                          <a class="btn btn-info" (click)="advanceACSearch()"
+                            ><i class="fa fa-search" aria-hidden="true"></i>
+                            {{ data ? data.buttons.search : "Search" }}</a
+                          >
+                          <a class="btn btn-danger" (click)="showQueryForm()"
+                            ><i class="fa fa-close" aria-hidden="true"></i>
+                            {{ data ? data.admission.close : "Close" }}</a
+                          >
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <div class="property-table-wrapper" style="width: 100%">
+                  <div class="table-responsive">
+                    <table
+                      mat-table
+                      [dataSource]="dataSourceAirline"
+                      matTableExporter
+                      #exporter="matTableExporter"
+                      class="mat-elevation-z8"
+                      matSort
+                      #airlineSort="matSort"
+                    >
+                      <ng-container matColumnDef="airline">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data ? data.master.airlinescodes.airline : "Airline"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.airline }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="country">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data ? data.master.airlinescodes.country : "Country"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.country?.name }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="icao">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.airlinescodes.icao : "ICAO" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.icao }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="iata">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.airlinescodes.iata : "IATA" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.iata }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="callSign">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data
+                              ? data.master.airlinescodes.callsign
+                              : "Call Sign"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.callSign }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="comments">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data
+                              ? data.master.airlinescodes.comments
+                              : "Comments"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.comments }}
+                        </td>
+                      </ng-container>
+
+                      <tr
+                        mat-header-row
+                        *matHeaderRowDef="displayedAirlineColumn"
+                      ></tr>
+                      <tr
+                        mat-row
+                        (dblclick)="getTableClickData(row._id)"
+                        *matRowDef="
+                          let row;
+                          columns: displayedAirlineColumn;
+                          let i = index
+                        "
+                      ></tr>
+
+                      <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell">No data Found!</td>
+                      </tr>
+                    </table>
+                    <!-- <table mat-table [dataSource]="dataSourceComponent" class="mat-elevation-z8" matSort
+                                    #tokenSort="matSort">
+                                    <ng-container matColumnDef="componentName">
+                                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                                          {{data? data.master.tax.componentname: 'Component Name'}}
+                                        </th>
+                                        <td mat-cell *matCellDef="let element">
+                                           {{element?.componentName}}
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="effectiveRate">
+                                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                                          {{data? data.master.tax.effectiverate: 'Effective Rate'}}
+                                        </th>
+                                        <td mat-cell *matCellDef="let element">
+                                            {{element?.effectiveRate}}
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="displayRate">
+                                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                                          {{data? data.master.tax.displayrate: 'Display Rate'}}
+                                        </th>
+                                        <td mat-cell *matCellDef="let element">
+                                            {{element?.displayRate}}
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="status">
+                                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                                          {{data? data.master.tax.status: 'Status'}}
+                                        </th>
+                                        <td mat-cell *matCellDef="let element">
+                                          {{element?.status===1 ? 'Active':'Inactive'}}
+                                        </td>
+                                    </ng-container>
+
+                                    <tr mat-header-row *matHeaderRowDef="displayedComponentColumn"></tr>
+                                    <tr mat-row (dblclick)="getTaxComponentById(row._id)"  *matRowDef="let row; columns: displayedComponentColumn; let i = index">
+                                    </tr>
+                                </table> -->
+                    <!-- <table mat-table [dataSource]="dataSourcePincode" class="mat-elevation-z8" matSort>
+                                    <ng-container matColumnDef="pincode">
+                                        <th mat-header-cell mat-sort-header *matHeaderCellDef>{{data? data.master.pincode.pincode: 'Pincode'}} </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.pincode}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="countryName">
+                                        <th mat-header-cell mat-sort-header *matHeaderCellDef> {{data? data.master.pincode.countryName: 'Country Name'}}</th>
+                                        <td mat-cell *matCellDef="let element"> {{element.countryName}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="countryISOCode">
+                                        <th mat-header-cell mat-sort-header *matHeaderCellDef>{{data? data.master.pincode.countryISOCode: 'Country ISO Code'}}</th>
+                                        <td mat-cell *matCellDef="let element"> {{element.countryISOCode}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="stateName">
+                                        <th mat-header-cell mat-sort-header *matHeaderCellDef>{{data? data.master.pincode.stateName: 'State Name'}}</th>
+                                        <td mat-cell *matCellDef="let element"> {{element.stateName}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="cityName">
+                                        <th mat-header-cell mat-sort-header *matHeaderCellDef>{{data? data.master.pincode.cityName: 'City Name'}}</th>
+                                        <td mat-cell *matCellDef="let element"> {{element.cityName}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="region">
+                                        <th mat-header-cell mat-sort-header *matHeaderCellDef>{{data? data.master.pincode.region: 'Region'}}</th>
+                                        <td mat-cell *matCellDef="let element"> {{element.region}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="status">
+                                        <th mat-header-cell *matHeaderCellDef>{{data? data.master.pincode.status: 'Status'}}
+                                        </th>
+                                        <td mat-cell *matCellDef="let element">{{element?.status===1 ? 'Active':'Inactive'}} </td>
+                                    </ng-container>
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                    <tr mat-row (dblclick)="getPincodeById(row._id)" *matRowDef="let row; columns: displayedColumns; let i = index"></tr>
+
+                                    <tr class="mat-row" *matNoDataRow>
+                                      <td class="mat-cell">No data Found!</td>
+                                  </tr>
+
+                                  </table> -->
+                  </div>
+                  <mat-paginator
+                    [pageSizeOptions]="[10, 25, 50, 100]"
+                    aria-label="Select page of airlines codes"
+                  ></mat-paginator>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="new-property-wrapper"
+            *ngIf="showAirlineDetails && !showImport"
+          >
+            <p class="main-heading">
+              <span
+                >{{
+                  data
+                    ? data.master.airlinescodes.addnewairlinescodes
+                    : "Add New Airlines Codes"
+                }}: </span
+              >{{
+                data
+                  ? data.master.airlinescodes
+                      .fillthefollowingdetailstoaddnewairlinescodes
+                  : "Fill the following details to add new airlines codes."
+              }}
+              <span
+                (click)="hideAirlinesDetails()"
+                class="close1"
+                data-toggle="tooltip"
+                title="Close"
+                >X</span
+              >
+            </p>
+            <form>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group position-relative">
+                    <label for="airline1"
+                      >{{ data ? data.master.airlinescodes.airline : "Airline"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <div class="suggestion_input_wrapper">
+                      <i class="fa fa-search" aria-hidden="true"></i>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="airline"
+                        [(ngModel)]="airlineToken.airline"
+                        placeholder="{{
+                          data
+                            ? data.master.airlinescodes.enterairline
+                            : 'Enter Airline'
+                        }}"
+                        name="airline1"
+                        (keyup)="fetchAirline($event.target.value)"
+                        #airline
+                      />
+                    </div>
+                    <ul class="searched-list" *ngIf="airlines.length > 0">
+                      <li
+                        *ngFor="let airline of airlines"
+                        (click)="setTokenAirline(airline, 'populate')"
+                      >
+                        {{ airline.airline }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="icao1"
+                      >{{
+                        data ? data.master.airlinescodes.icao : "ICAO"
+                      }}:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="icao1"
+                      [(ngModel)]="airlineToken.icao"
+                      placeholder="{{
+                        data
+                          ? data.master.airlinescodes.entericao
+                          : 'Enter ICAO'
+                      }}"
+                      (keyup)="
+                        $event.target.value = $event.target.value.toUpperCase()
+                      "
+                      name="icao1"
+                      #icao
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group position-relative">
+                    <label for="iata1"
+                      >{{
+                        data ? data.master.airlinescodes.iata : "IATA"
+                      }}:</label
+                    >
+                    <div class="suggestion_input_wrapper">
+                      <i aria-hidden="true"></i>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="iata"
+                        [(ngModel)]="airlineToken.iata"
+                        placeholder="{{
+                          data
+                            ? data.master.airlinescodes.enteriata
+                            : 'Enter IATA'
+                        }}"
+                        name="iata1"
+                        #iata
+                      />
+                    </div>
+                    <!-- <ul class="searched-list" *ngIf="airlines.length > 0">
+                      <li
+                        *ngFor="let airline of airlines"
+                        (click)="setTokenAirline(airline, 'populate')"
+                      >
+                        {{ airline.iata }}
+                      </li>
+                    </ul> -->
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="callSign1"
+                      >{{
+                        data ? data.master.airlinescodes.callsign : "Call Sign"
+                      }}:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="callSign1"
+                      [(ngModel)]="airlineToken.callSign"
+                      placeholder="{{
+                        data
+                          ? data.master.airlinescodes.entercallsign
+                          : 'Enter Call Sign'
+                      }}"
+                      name="callSign1"
+                      #callSign
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group position-relative">
+                    <label for="country1"
+                      >{{ data ? data.master.airlinescodes.country : "Country"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <div class="suggestion_input_wrapper">
+                      <i class="fa fa-search" aria-hidden="true"></i>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="country1"
+                        [(ngModel)]="airlineToken.country"
+                        placeholder="{{
+                          data
+                            ? data.master.airlinescodes.entercountry
+                            : 'Enter Country'
+                        }}"
+                        name="country1"
+                        #country
+                        (keyup)="fetchCountryNames($event.target.value)"
+                      />
+                    </div>
+                    <ul class="searched-list" *ngIf="selCountry.length > 0">
+                      <li
+                        *ngFor="let c of selCountry"
+                        (click)="setTokenCountry(c)"
+                      >
+                        {{ c.name }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="comments1"
+                      >{{
+                        data ? data.master.airlinescodes.comments : "Comments"
+                      }}:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="comments1"
+                      [(ngModel)]="airlineToken.comments"
+                      placeholder="{{
+                        data
+                          ? data.master.airlinescodes.entercomments
+                          : 'Enter Comments'
+                      }}"
+                      name="comments1"
+                      #comments
+                    />
+                  </div>
+                </div>
+              </div>
+            </form>
+            <!-- <ul class="nav nav-tabs mt-4" id="myTab" role="tablist" >
+                        <li class="nav-item">
+                            <a class="nav-link active" id="properties-tab" data-toggle="tab" href="#properties"
+                                role="tab" aria-controls="properties" aria-selected="true">Action Actions</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent" >
+                      <div class="tab-pane fade show active" id="properties" role="tabpanel"
+                          aria-labelledby="properties-tab">
+                          <div class="properties-data" *ngIf="!addNewProperty">
+                              <p class="main-heading">
+                                  <span>Action Actions </span>
+                              </p>
+                          </div>
+                        </div>
+                      </div> -->
+            <div class="result mt-4">
+              <a class="btn btn-secondary mr-2" (click)="resetAirline()"
+                ><i class="fa fa-history" aria-hidden="true"></i
+                >{{ data ? data.buttons.reset : "Reset" }}</a
+              >
+              <a class="btn btn-success" (click)="saveAirlinesCodes()">
+                <i class="fa fa-check" aria-hidden="true"></i
+                >{{ data ? data.buttons.submit : "Submit" }}</a
+              >
+            </div>
+          </div>
+          <div *ngIf="showImport && !showAirlineDetails">
+            <app-import-data
+              [showNavBar]="false"
+              [showLeftMenu]="false"
+              [validator]="importValidator"
+              (importClose)="backToResults()"
+            ></app-import-data>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

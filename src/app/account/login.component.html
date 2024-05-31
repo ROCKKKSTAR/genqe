@@ -1,0 +1,205 @@
+﻿<section class="login login-page">
+  <div class="login-wrapper h-100">
+    <div class="login-card h-100">
+      <div class="align-items-center d-flex flex-column h-100 login-fields">
+        <!-- <h2>Login to your account</h2>
+        <p>Sign in with your username and password</p> -->
+        <form [formGroup]="form" (keyup.enter)="onSubmit()" class="w-100 mt-auto">
+          <div class="d-flex w-100">
+            <select name="selectLanguage" id="selectLanguage" class="form-select ml-auto mb-2" (change)="translateLanguage($event.target.value)">
+              <option selected>Select Language</option>
+              <option *ngFor="let lang of languages" [value]="lang.keyCode">{{ lang.key2 }}</option>
+            </select>
+                    <!-- <select
+          name="selectLanguage"
+          id="selectLanguage"
+          class="form-select ml-auto mb-2"
+        >
+          <option value="0" selected disabled>Select Language</option>
+          <option value="1">English</option>
+          <option value="2">German</option>
+          <option value="3">Hindi</option>
+          <option value="4">Chinese</option>
+        </select> -->
+          </div>
+          <div class="bg-white">
+            <div class="d-flex">
+              <img src="../../assets/images/Logo.png" width="224px" class="my-3 mx-auto" alt="" />
+            </div>
+            <div class="form-control" *ngIf="
+                currentScreen == 'loginWithPassword' ||
+                currentScreen == 'loginWithCode'
+              ">
+              <label for="username"> {{ data ? data.login.userId : "User ID" }} <span style="color: red">*</span></label>
+
+              <input type="text" formControlName="username" placeholder="{{ data ? data.login.pHuserName : 'User name' }}" class="form-element"
+                [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+              <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                <div *ngIf="f.username.errors.required" style="color: red">
+                  User name is required
+                </div>
+              </div>
+            </div>
+            <div class="form-control" *ngIf="currentScreen == 'loginWithPassword'">
+              <label for="password">{{ data ? data.login.password : "Password" }}<span style="color: red">*</span></label>
+              <div class="input-group">
+                <input autocomplete="new-password" type="{{ showPassword ? 'text' : 'password' }}"
+                  formControlName="password" placeholder="{{ data ? data.login.pHpassword : 'Password' }}" class="form-element"
+                  [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                <span class="input-group-addon">
+                  <i class="fa" [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'"
+                    (click)="togglePasswordVisibility()" [ngStyle]="{
+                      position: 'absolute',
+                      top: '55%',
+                      right: '8px',
+                      transform: 'translateY(-50%)',
+                      cursor: 'pointer',
+                      fontSize: '20px'
+                    }"></i>
+                </span>
+              </div>
+              <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                <div *ngIf="f.password.errors.required" style="color: red">
+                  Password is required
+                </div>
+              </div>
+            </div>
+            <h4 class="font-weight-bold" *ngIf="currentScreen == 'resetPassword'">
+              Reset your password
+            </h4>
+            <div class="form-control" *ngIf="currentScreen == 'resetPassword'">
+              <label for="oldpassword">{{ data ? data.login.oldPassword : 'Old Password' }}<span style="color: red">*</span></label>
+              <div class="input-group">
+                <input type="{{ showOldPassword ? 'text' : 'password' }}" formControlName="oldpassword"
+                  placeholder="Old Password" class="form-element"
+                  [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                <span class="input-group-addon">
+                  <i class="fa" [ngClass]="showOldPassword ? 'fa-eye' : 'fa-eye-slash'"
+                    (click)="toggleOldPasswordVisibility()" [ngStyle]="{
+                      position: 'absolute',
+                      top: '55%',
+                      right: '8px',
+                      transform: 'translateY(-50%)',
+                      cursor: 'pointer',
+                      fontSize: '20px'
+                    }"></i>
+                </span>
+              </div>
+              <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                <div *ngIf="f.password.errors.required" style="color: red">
+                  Password is required
+                </div>
+              </div>
+            </div>
+            <div class="form-control" *ngIf="currentScreen == 'resetPassword'">
+              <label for="newPassword"> {{ data ? data.login.newPassword : 'New Password' }}<span style="color: red">*</span></label>
+              <div class="input-group">
+                <input autocomplete="new-password" type="{{ showNewPassword ? 'text' : 'password' }}"
+                  formControlName="newPassword" placeholder="New Password" class="form-element"
+                  [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                <span class="input-group-addon">
+                  <i class="fa" [ngClass]="showNewPassword ? 'fa-eye' : 'fa-eye-slash'"
+                    (click)="toggleNewPasswordVisibility()" [ngStyle]="{
+                      position: 'absolute',
+                      top: '55%',
+                      right: '8px',
+                      transform: 'translateY(-50%)',
+                      cursor: 'pointer',
+                      fontSize: '20px'
+                    }"></i>
+                </span>
+              </div>
+              <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                <div *ngIf="f.password.errors.required" style="color: red">
+                  New password is required
+                </div>
+              </div>
+            </div>
+            <div class="form-control" *ngIf="currentScreen == 'resetPassword'">
+              <label for="ConfirmnewPassword">{{ data ? data.login.confirmNewPassword : 'Confirm New Password' }}<span style="color: red">*</span></label>
+              <div class="input-group">
+                <input autocomplete="confirm-new-password" type="{{ showConfirmNewPassword ? 'text' : 'password' }}"
+                  formControlName="confirmNewPassword" placeholder="Confirm New Password" class="form-element"
+                  [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                <span class="input-group-addon">
+                  <i class="fa" [ngClass]="
+                      showConfirmNewPassword ? 'fa-eye' : 'fa-eye-slash'
+                    " (click)="toggleConfirmNewPasswordVisibility()" [ngStyle]="{
+                      position: 'absolute',
+                      top: '55%',
+                      right: '8px',
+                      transform: 'translateY(-50%)',
+                      cursor: 'pointer',
+                      fontSize: '20px'
+                    }"></i>
+                </span>
+              </div>
+              <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                <div *ngIf="f.password.errors.required" style="color: red">
+                  New password is required
+                </div>
+              </div>
+            </div>
+            <div class="d-flex">
+              <button class="btn btn-purple mb-3 ml-auto" *ngIf="currentScreen == 'loginWithCode'">
+                Send code
+              </button>
+            </div>
+            <div class="form-control" *ngIf="currentScreen == 'loginWithCode'">
+              <label for="loginCode">{{ data ? data.login.loginWithCode : 'Login with code' }}<span style="color: red">*</span></label>
+
+              <input type="text" formControlName="loginCode" placeholder="Login Code" class="form-element" />
+            </div>
+            <div class="d-flex flex-wrap align-items-center mt-3">
+              <a routerLink="/forget" class="btn btn-link shadow-none">{{ data ? data.login.forgotPassword : 'Forgot password' }}</a>
+              <a routerLink="/register" class="btn btn-link shadow-none">{{ data ? data.login.register : 'Register' }}</a>
+              <a (click)="switchScreen('loginWithCode')" class="btn btn-link shadow-none">{{ data ? data.login.loginWithCode : 'Login with code' }}</a>
+              <div class="action-button d-flex align-items-center">
+                <button type="button" class="btn mr-3" disabled>{{ data ? data.buttons.cancel : 'Cancel' }}</button>
+                <button type="button" class="btn" (click)="onSubmit()" (keyup.enter)="onSubmit()">
+                   {{ data ? data.login.login : 'Login' }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="d-flex align-items-center justify-content-between mt-auto signin-options w-100">
+          <a class="btn btn-link d-flex p-1 align-items-center">
+            <img src="../../assets/images/user-circle-single--circle-geometric-human-person-single-user.png"
+              height="13px" alt="" />
+            <span class="ml-2">{{ data ? data.buttons.rememberMe : 'Remember me' }}</span>
+          </a>
+          <a class="btn btn-link d-flex p-1 align-items-center" (click)="authenticateBiometric()">
+            <img
+              src="../../assets/images/fingerprint-2--identification-password-touch-id-secure-fingerprint-finger-security.png"
+              height="13px" alt="" />
+            <span class="ml-2">{{ data ? data.buttons.enableBiometric : 'Enable bio metric' }}</span>
+          </a>
+          <a class="btn btn-link d-flex p-1 align-items-center">
+            <img
+              src="../../assets/images/user-check-validate--actions-close-checkmark-check-geometric-human-person-single-success-up-user.png"
+              height="13px" alt="" />
+            <span class="ml-2">{{ data ? data.buttons.enableSingleSignIn : 'Enable single sign in' }}</span>
+          </a>
+          <a class="btn btn-link d-flex p-1 align-items-center">
+            <img src="../../assets/images/lock-rotation.png" height="13px" alt="" />
+            <span class="ml-2">{{ data ? data.buttons.resetPassword : 'Reset password' }}</span>
+          </a>
+        </div>
+        <div class="d-flex align-items-center justify-content-center mt-auto w-100">
+          <a class="btn btn-link d-flex p-1 align-items-center border-0 mr-0">
+           {{ data ? data.buttons.termsAndConditions : 'Terms and conditions' }} 
+          </a>
+          <i class="fa fa-circle mx-2" style="color: #a5a6f6; font-size: 6px"></i>
+          <a class="btn btn-link d-flex p-1 align-items-center border-0">
+           {{ data ? data.buttons.privacyPolicy : 'Privacy policy' }} 
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>

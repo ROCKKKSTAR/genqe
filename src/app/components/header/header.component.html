@@ -1,0 +1,819 @@
+<div *ngIf="loadershow">
+  <app-loader [message]="loaderMessage"></app-loader>
+</div>
+<nav
+  id="navbar-main"
+  class="navbar navbar-main navbar-expand-lg navbar-dark headroom navbar-transparent p-0 position-sticky px-2 mb-2"
+>
+  <div class="pb-1 pb-lg-0 h-100 w-100">
+    <div class="d-flex align-items-center h-100 w-100">
+      <a
+        class="navbar-brand d-flex h-100 bg-white mr-5 py-2"
+        href="/applications"
+        ><img
+          class="m-auto"
+          src="../../../assets/images/headerLogo.png"
+          style="height: 40px !important"
+      /></a>
+      <div
+        class="navbar-middle-section px-4 d-flex align-items-center ml-auto mt-2"
+      >
+        <!-- <div
+          class="d-flex align-items-center overflow-hidden mr-4"
+          style="height: 40px; border-radius: 8px"
+        >
+          <div class="bg-white p-2 pr-4">
+            <img
+              src="../../../assets/images/sun-icon.png"
+              height="20px"
+              alt=""
+            />
+          </div>
+          <div class="bg-white">
+            <div
+              class="p-2"
+              style="background-color: #d6d6f8; border-radius: 8px 0 0 8px"
+            >
+              <img
+                src="../../../assets/images/moon-icon.png"
+                height="20px"
+                alt=""
+              />
+            </div>
+          </div>
+        </div> -->
+        <!-- <select
+          name="selectLanguage"
+          id="selectLanguage"
+          class="form-control bg-white ml-5 w-auto"
+        >
+          <option value="0" selected disabled>Select Language</option>
+          <option value="1">English</option>
+          <option value="2">German</option>
+          <option value="3">Hindi</option>
+          <option value="4">Chinese</option>
+        </select> -->
+        <select
+          name="selectLanguage"
+          id="selectLanguage"
+          (change)="translateLanguage($event.target.value)"
+          class="form-control bg-white ml-5 w-auto py-0"
+          style="height: calc(1.5em + 2px + 0.625rem)"
+        >
+          <!-- (change)="translateLanguage($event.target.value)" -->
+          <option selected>Select Language</option>
+          <option *ngFor="let lang of languages" [value]="lang.keyCode">
+            {{ lang.key2 }}
+          </option>
+        </select>
+        <div class="suggestion_input_wrapper ml-4">
+          <i aria-hidden="true" class="fa fa-search"></i>
+          <div class="suggestion_input_wrapper">
+            <i aria-hidden="true" class="fa fa-search"></i
+            ><input
+              type="text"
+              autocomplete="off"
+              class="form-control py-0"
+              placeholder="Quick Search"
+              style="height: calc(1.5em + 2px + 0.625rem)"
+              (keyup.enter)="navigateToprojects($event.target.value)"
+            />
+          </div>
+          <!--bindings={}-->
+        </div>
+      </div>
+      <div class="navbar-account px-4 d-flex align-items-center py-2 mt-2">
+        <!-- <div class="d-flex flex-column align-items-start">
+          <small class="font-weight-700"> 23:11 </small>
+          <span style="font-size: 12px" class="text-uppercase">Wednesday</span>
+          <span
+            style="font-size: 12px; white-space: nowrap"
+            class="text-uppercase"
+            >May 05, 2024</span
+          >
+        </div> -->
+        <div class="notification-icon d-flex mr-3">
+          <img
+            src="../../../assets/images/bell.png"
+            class="m-auto"
+            height="24px"
+            alt=""
+          />
+        </div>
+        <li class="dropdown text-center">
+          <div
+            data-toggle="dropdown"
+            href="javascript:;"
+            role="button"
+            class="d-flex align-itmes"
+          >
+            <img
+              src="../../../assets/images/user-image.png"
+              height="36px"
+              alt=""
+            />
+            <div class="d-flex align-items-start flex-column ml-2">
+              <span
+                style="font-size: 12px"
+                class="font-weight-700 text-capitalize"
+                >{{ authenticatedUser ? authenticatedUser.name : "" }}</span
+              >
+              <span style="font-size: 12px">{{ userEmail }}</span>
+            </div>
+          </div>
+          <div
+            aria-labelledby="navbarDropdownMenuLink"
+            class="dropdown-menu dropdown-menu-right user-profile"
+          >
+            <a class="dropdown-item" (click)="lopoutwithcognito()">Sign Out</a>
+            <a class="dropdown-item" (click)="registerBiomeric()"
+              >Add Fingerprint</a
+            >
+            <a class="dropdown-item" (click)="openSharedModel()"
+              >Change Password</a
+            >
+          </div>
+        </li>
+      </div>
+    </div>
+    <!-- <div
+      id="navbar_global"
+      class="navbar-collapse collapse"
+      aria-expanded="false"
+      aria-hidden="true"
+      style="display: none"
+    >
+      <div class="navbar-collapse-header">
+        <div class="row">
+          <div class="col-6 collapse-brand">
+            <a href="/case"><img src="assets/img/brand/blue.png" /></a>
+          </div>
+          <div class="col-6 collapse-close">
+            <button
+              aria-controls="navbar_global"
+              aria-label="Toggle navigation"
+              id="navbar_global"
+              type="button"
+              class="navbar-toggler"
+              aria-expanded="false"
+            >
+              <span></span><span></span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <ul class="navbar-nav navbar-nav-hover align-items-lg-center mr-lg-auto">
+     </ul>
+      <div class="user-info d-flex align-items-center">
+        <ul
+          class="navbar-nav navbar-nav-hover align-items-lg-center mr-lg-auto"
+        >
+          <li class="nav-item dropdown" *ngIf="userType === 2">
+            <a
+              data-toggle="dropdown"
+              href="javascript:;"
+              role="button"
+              class="nav-link"
+            >
+              <i class="ni ni-app d-lg-none"></i
+              ><span class="nav-link-inner--text">
+                {{ data ? data.header.Partner : "Partner " }}
+                <b>{{ parnterName }}</b>
+              </span>
+            </a>
+          </li>
+          <li
+            class="nav-item dropdown"
+            *ngIf="userType === 3 || userType === 4"
+          >
+            <a
+              data-toggle="dropdown"
+              href="javascript:;"
+              role="button"
+              class="nav-link"
+            >
+              <i class="ni ni-app d-lg-none"></i
+              ><span class="nav-link-inner--text">
+                {{ data ? data.header.User : "User " }}
+                <b>{{ userRole }}</b>
+              </span>
+            </a>
+          </li>
+
+          <li class="nav-item dropdown" *ngIf="userType === 1">
+            <a
+              data-toggle="dropdown"
+              href="javascript:;"
+              role="button"
+              class="nav-link"
+            >
+              <i class="ni ni-app d-lg-none"></i
+              ><span class="nav-link-inner--text">
+                {{ data ? data.header.country : "Country" }}
+                <b>{{ country }}</b>
+              </span>
+            </a>
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              data-toggle="dropdown"
+              href="javascript:;"
+              role="button"
+              class="nav-link"
+            >
+              <i class="ni ni-app d-lg-none"></i
+              ><span class="nav-link-inner--text">
+                {{ data ? data.header.language : "Language "
+                }}<b>{{ selectedLanguage }}</b>
+                <i class="fa fa-angle-down ml-2" aria-hidden="true"></i>
+              </span>
+            </a>
+            <div aria-labelledby="navbarDropdownMenuLink" class="dropdown-menu">
+              <a
+                *ngFor="let lang of languages"
+                (click)="changeLanguage(lang.key2, lang.key1)"
+                class="dropdown-item"
+                >{{ lang.key2 }}</a
+              >
+            </div>
+          </li>
+          <li class="nav-item dropdown d-none" *ngIf="userType === 1">
+            <a
+              data-toggle="dropdown"
+              href="javascript:void(0);"
+              role="button"
+              class="nav-link"
+            >
+              <i class="ni ni-app d-lg-none"></i
+              ><span class="nav-link-inner--text">
+                {{ data ? data.header.outlet : "Outlet" }}
+                <b
+                  ><i
+                    *ngIf="selectedLounge && selectedLounge.type !== 1"
+                    class="fa fa-building"
+                    aria-hidden="true"
+                  ></i>
+                  {{ selectedLounge ? selectedLounge.name : "" }}</b
+                >
+                <i class="fa fa-angle-down ml-2" aria-hidden="true"></i>
+              </span>
+            </a>
+            <div
+              aria-labelledby="navbarDropdownMenuLink"
+              class="dropdown-menu outlet-dropdown-menu"
+            >
+              <input
+                class="dropdown-item"
+                placeholder="Search outlet"
+                style="border: none; outline: none; margin-left: auto"
+                class="form-control suggestionInput"
+                [(ngModel)]="outletName"
+                (keyup)="fetchoutletNames($event.target.value)"
+              />
+
+              <ng-container *ngIf="outletData.length >= 1; else otherScreen">
+                <a
+                  class="dropdown-item"
+                  href="javascript:void(0);"
+                  *ngFor="let outlet of outletData"
+                  (click)="changeCurrentLounge(outlet)"
+                  ><i
+                    [ngStyle]="{
+                      visibility: outlet.type === 2 ? 'visible' : 'hidden'
+                    }"
+                    class="fa fa-building"
+                    aria-hidden="true"
+                  ></i
+                  >{{ outlet.name }}</a
+                >
+              </ng-container>
+
+              <ng-template #otherScreen>
+                <a
+                  class="dropdown-item"
+                  href="javascript:void(0);"
+                  *ngFor="let outlet of auth.getAllLounges()"
+                  (click)="changeCurrentLounge(outlet)"
+                  ><i
+                    [ngStyle]="{
+                      visibility: outlet.type === 2 ? 'visible' : 'hidden'
+                    }"
+                    class="fa fa-building"
+                    aria-hidden="true"
+                  ></i
+                  >{{ outlet.name }}</a
+                >
+              </ng-template>
+            </div>
+          </li>
+          <li class="nav-item d-none">
+            <a
+              href="../../../assets/help/docs/features/index.html"
+              target="_blank"
+              class="nav-link mr-2 header-icons"
+              ><i class="fa fa-question-circle" aria-hidden="true"></i
+            ></a>
+          </li>
+          <li class="nav-item" *ngIf="userType === 1">
+            <a class="position-relative mr-4">
+              <i
+                class="fa fa-bell"
+                aria-hidden="true"
+                (click)="showNotification()"
+              ></i>
+              <span
+                class="position-absolute start-100 translate-middle badge rounded-pill badge-danger numberCount"
+              >
+                {{ eventCount }}
+              </span>
+            </a>
+          </li>
+          <div class="container2 smList" id="myDIV2" *ngIf="notification">
+            <ul
+              class="list-group ScrollStyle resize"
+              id="list2"
+              style="background-color: white"
+            >
+              <div class="d-flex p-2" style="border: 1px solid #c6c6c6">
+                <div class="p-2">
+                  <img
+                    src="https://img.icons8.com/ios/50/null/event-accepted-tentatively.png"
+                    class="eventIcon"
+                  />
+                </div>
+                <div class="p-2 mt-1 flex-fill eventTitle">
+                  Today's Events ({{ eventCount }}) at outlet -
+                  {{ authenticatedUser.userOutlet.name }}
+                </div>
+                <span
+                  (click)="hideNotification()"
+                  class="close-dmr-download"
+                  data-toggle="tooltip"
+                  title="Close"
+                >
+                  <b>X</b></span
+                >
+              </div>
+              <li
+                class="list-group-item contsearch"
+                *ngFor="let event of dmrEvents"
+              >
+                <div class="alert eventText p-2 m-0">
+                  <span class="text-justify">{{ event.remarks }}</span>
+                  <div class="d-flex pt-1">
+                    <div class="p-small">
+                      <small class="text-muted"
+                        ><b>Created By:&nbsp;</b
+                        >{{ event.createdBy.name }}</small
+                      >
+                    </div>
+                    <div class="ml-auto">
+                      <small class="text-muted">{{
+                        cs.formatDateTime(event.lastModifiedOn)
+                      }}</small>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <li class="dropdown text-center">
+            <a
+              data-toggle="dropdown"
+              href="javascript:;"
+              role="button"
+              class="nav-link p-0"
+            >
+              <i class="ni ni-app d-lg-none"></i
+              ><span class="nav-link-inner--text">
+                <img src="/assets/img/tim.png" alt="" style="width: 40px"
+              /></span>
+            </a>
+            <div
+              aria-labelledby="navbarDropdownMenuLink"
+              class="dropdown-menu dropdown-menu-right user-profile"
+            >
+              <a class="dropdown-item" (click)="lopoutwithcognito()"
+                >Sign Out</a
+              >
+              <a class="dropdown-item" (click)="openSharedModel()"
+                >Change Password</a
+              >
+            </div>
+            {{ authenticatedUser ? authenticatedUser.name : "" }}
+          </li>
+        </ul>
+      </div>
+    </div> -->
+  </div>
+
+  <ng-template #shareModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="shareModalLabel">
+        {{ "Change Password" }}
+      </h5>
+      <button
+        type="button"
+        class="close"
+        data-dismiss="modal"
+        (click)="closeShareModule()"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body py-1">
+      <form [formGroup]="form" autocomplete="off">
+        <div class="form-group">
+          <div class="mt-2">
+            <label for="username">{{
+              data ? data.master.user.username : "User Name"
+            }}</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="userName"
+              autocomplete="off"
+              name="UserName"
+              placeholder="Enter UserName"
+              aria-label="Enter UserName"
+              aria-describedby="basic-addon2"
+              disabled
+            />
+          </div>
+
+          <!-- <div class="mt-2">
+        <label for="New Password">{{ data ? data.master.user.Password : "Password"
+        }}</label>
+        <input type="text" id="newpassword" autocomplete="off" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$" class="form-control" [(ngModel)]="rpassword" name="rpassword" placeholder='{{ data ? data.master.user.Password : "Password"
+      }}' aria-label="Enter New Password"
+        aria-describedby="basic-addon2"/>
+      </div> -->
+          <div class="mt-2">
+            <label for="password"
+              >{{ data ? data.master.user.Password : "Password" }}
+              <span style="color: red">*</span></label
+            >
+            <div class="input-group">
+              <input
+                type="{{ showPassword ? 'text' : 'password' }}"
+                placeholder="{{
+                  data ? data.master.user.Password : 'Password'
+                }}"
+                (keyup)="onKeypressEvent($event)"
+                autocomplete="new-password"
+                formControlName="password"
+                class="form-control"
+                id="password"
+                [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
+              />
+              <div class="input-group-append">
+                <span class="input-group-text">
+                  <i
+                    class="fa"
+                    [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'"
+                    (click)="togglePasswordVisibility()"
+                    [ngStyle]="{
+                      cursor: 'pointer',
+                      fontSize: '15px'
+                    }"
+                  ></i>
+                </span>
+              </div>
+            </div>
+            <div
+              *ngIf="submitted && f.password.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f.password.errors.required" style="color: red">
+                Password is required
+              </div>
+              <div *ngIf="f.password.errors.minlength" style="color: red">
+                Password must be at least 8 characters
+              </div>
+            </div>
+          </div>
+          <div class="mt-2">
+            <label for="password"
+              >{{ data ? data.master.user.ReenterPassword : "Re-enter Password"
+              }}<span style="color: red">*</span>
+            </label>
+            <div class="input-group">
+              <input
+                type="{{ showConfirmPassword ? 'text' : 'password' }}"
+                placeholder="{{
+                  data ? data.master.user.ReenterPassword : 'Re-enter Password'
+                }}"
+                (keyup)="onKeypressEvent($event)"
+                autocomplete="new-password"
+                formControlName="confirmpassword"
+                class="form-control"
+                [ngClass]="{
+                  'is-invalid': submitted && f.confirmpassword.errors
+                }"
+              />
+              <div class="input-group-append">
+                <span class="input-group-text">
+                  <i
+                    class="fa"
+                    [ngClass]="showConfirmPassword ? 'fa-eye' : 'fa-eye-slash'"
+                    (click)="toggleConfirmPasswordVisibility()"
+                    [ngStyle]="{
+                      cursor: 'pointer',
+                      fontSize: '15px'
+                    }"
+                  ></i>
+                </span>
+              </div>
+            </div>
+            <div
+              *ngIf="submitted && f.confirmpassword.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f.confirmpassword.errors.required" style="color: red">
+                Re-enter Password is required
+              </div>
+            </div>
+            <div *ngIf="confirmpassword" class="invalid-feedback">
+              <div style="color: red">
+                Confirm Password must be same Password
+              </div>
+            </div>
+          </div>
+          <div class="d-flex flex-column pt-3" *ngIf="!showflag">
+            <!-- <span *ngIf="!lowerflag" style="color: red;">✖ Password must contain a lower case letter</span>
+     <span *ngIf="!upperflag" style="color: red;"> ✖ Password must contain an upper case letter</span>
+     <span  *ngIf="!specialflag" style="color: red;">✖ Password must contain a special character</span> 
+    <span *ngIf="!numberflag"   style="color: red;">✖ Password must contain a number</span>
+    <span  *ngIf="!charactersflag" style="color: red;">✖ Password must contain at least 8 characters</span> -->
+
+            <span *ngIf="!upperflag" style="color: red"
+              >✖ Password must contain an upper case letter</span
+            >
+            <span *ngIf="upperflag" style="color: green"
+              >✔ Password contains an upper case letter</span
+            >
+
+            <span *ngIf="!lowerflag" style="color: red"
+              >✖ Password must contain a lower case letter</span
+            >
+            <span *ngIf="lowerflag" style="color: green"
+              >✔ Password contains a lower case letter</span
+            >
+
+            <!-- <span *ngIf="!specialflag" style="color: red;">✖ Password must contain a special character</span>
+    <span *ngIf="specialflag" style="color: green;">✔ Password contains a special character</span> -->
+
+            <span *ngIf="!numberflag" style="color: red"
+              >✖ Password must contain a number</span
+            >
+            <span *ngIf="numberflag" style="color: green"
+              >✔ Password contains a number</span
+            >
+
+            <span *ngIf="!charactersflag" style="color: red"
+              >✖ Password must contain at least 8 characters</span
+            >
+            <span *ngIf="charactersflag" style="color: green"
+              >✔ Password must contain at least 8 characters</span
+            >
+          </div>
+          <div class="d-flex flex-column pt-3" *ngIf="showflagGreen">
+            <span *ngIf="!lowerflag" style="color: green"
+              >✓ Password must contain a lower case letter</span
+            >
+            <span *ngIf="!upperflag" style="color: green">
+              ✓ Password must contain an upper case letter</span
+            >
+            <!-- <span  *ngIf="!specialflag" style="color: green;">✓ Password must contain a special character</span> -->
+            <span *ngIf="!numberflag" style="color: green"
+              >✓ Password must contain a number</span
+            >
+            <span *ngIf="!charactersflag" style="color: green"
+              >✓ Password must contain at least 8 characters</span
+            >
+          </div>
+
+          <!-- <div class="mt-2">
+        <label for="Re-Enter New password">{{ data ? data.master.user.ReenterPassword : "Re-enter Password"
+        }}</label>
+        <input type="text" id="repassword" autocomplete="off" class="form-control" [(ngModel)]="rRepassword" placeholder='{{ data ? data.master.user.ReenterPassword : "Re-enter Password"
+      }}' aria-label="Enter Re-enter New Password"
+        aria-describedby="basic-addon2"/>
+      </div> -->
+
+          <!-- <div class="d-flex pt-3">
+      <div class="p-2">
+        <i class="fas fa-user"></i>
+      </div>
+      <div class="flex-fill">
+        <span class="ml-1">Username</span>
+        <div class="d-flex">
+          <small class="text-muted ml-1">Sample@gmail.com</small>
+          <small class="text-muted ml-auto">Viewer</small>
+        </div>
+      </div>
+    </div> -->
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        data-dismiss="modal"
+        (click)="closeShareModule()"
+      >
+        {{ data ? data.buttons.close : "Close" }}
+      </button>
+      <button type="button" class="btn btn-success" (click)="resetPassword()">
+        {{ data ? data.buttons.update : "Update" }}
+      </button>
+    </div>
+  </ng-template>
+  <ng-template #changePasswordModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="changePasswordModalLabel">
+        {{ "Change Password" }}
+      </h5>
+    </div>
+    <div class="modal-body py-1">
+      <p class="text-justify">
+        Your account security is our top priority. As you've requested a
+        password reset vis 'forget password' and logged in with temporary code
+        provided, we kindly ask you to create a new password to continue safety
+        of your account. Thank you for helping us keep your account safe!
+      </p>
+      <form [formGroup]="form" autocomplete="off">
+        <div class="form-group">
+          <div class="mt-2">
+            <label for="username">{{
+              data ? data.master.user.username : "User Name"
+            }}</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="userName"
+              autocomplete="off"
+              name="UserName"
+              placeholder="Enter UserName"
+              aria-label="Enter UserName"
+              aria-describedby="basic-addon2"
+              disabled
+            />
+          </div>
+
+          <div class="mt-2">
+            <label for="password"
+              >{{ data ? data.master.user.Password : "Password" }}
+              <span style="color: red">*</span></label
+            >
+            <div class="input-group">
+              <input
+                type="{{ showPassword ? 'text' : 'password' }}"
+                placeholder="{{
+                  data ? data.master.user.Password : 'Password'
+                }}"
+                (keyup)="onKeypressEvent($event)"
+                autocomplete="new-password"
+                formControlName="password"
+                class="form-control"
+                id="password"
+                [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
+              />
+              <div class="input-group-append">
+                <span class="input-group-text">
+                  <i
+                    class="fa"
+                    [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'"
+                    (click)="togglePasswordVisibility()"
+                    [ngStyle]="{
+                      cursor: 'pointer',
+                      fontSize: '15px'
+                    }"
+                  ></i>
+                </span>
+              </div>
+            </div>
+            <div
+              *ngIf="submitted && f.password.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f.password.errors.required" style="color: red">
+                Password is required
+              </div>
+              <div *ngIf="f.password.errors.minlength" style="color: red">
+                Password must be at least 8 characters
+              </div>
+            </div>
+          </div>
+          <div class="mt-2">
+            <label for="password"
+              >{{ data ? data.master.user.ReenterPassword : "Re-enter Password"
+              }}<span style="color: red">*</span>
+            </label>
+            <div class="input-group">
+              <input
+                type="{{ showConfirmPassword ? 'text' : 'password' }}"
+                placeholder="{{
+                  data ? data.master.user.ReenterPassword : 'Re-enter Password'
+                }}"
+                (keyup)="onKeypressEvent($event)"
+                autocomplete="new-password"
+                formControlName="confirmpassword"
+                class="form-control"
+                [ngClass]="{
+                  'is-invalid': submitted && f.confirmpassword.errors
+                }"
+              />
+              <div class="input-group-append">
+                <span class="input-group-text">
+                  <i
+                    class="fa"
+                    [ngClass]="showConfirmPassword ? 'fa-eye' : 'fa-eye-slash'"
+                    (click)="toggleConfirmPasswordVisibility()"
+                    [ngStyle]="{
+                      cursor: 'pointer',
+                      fontSize: '15px'
+                    }"
+                  ></i>
+                </span>
+              </div>
+            </div>
+            <div
+              *ngIf="submitted && f.confirmpassword.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f.confirmpassword.errors.required" style="color: red">
+                Re-enter Password is required
+              </div>
+            </div>
+            <div *ngIf="confirmpassword" class="invalid-feedback">
+              <div style="color: red">
+                Confirm Password must be same Password
+              </div>
+            </div>
+          </div>
+          <div class="d-flex flex-column pt-3" *ngIf="!showflag">
+            <span *ngIf="!upperflag" style="color: red"
+              >✖ Password must contain an upper case letter</span
+            >
+            <span *ngIf="upperflag" style="color: green"
+              >✔ Password contains an upper case letter</span
+            >
+
+            <span *ngIf="!lowerflag" style="color: red"
+              >✖ Password must contain a lower case letter</span
+            >
+            <span *ngIf="lowerflag" style="color: green"
+              >✔ Password contains a lower case letter</span
+            >
+
+            <span *ngIf="!numberflag" style="color: red"
+              >✖ Password must contain a number</span
+            >
+            <span *ngIf="numberflag" style="color: green"
+              >✔ Password contains a number</span
+            >
+
+            <span *ngIf="!charactersflag" style="color: red"
+              >✖ Password must contain at least 8 characters</span
+            >
+            <span *ngIf="charactersflag" style="color: green"
+              >✔ Password must contain at least 8 characters</span
+            >
+          </div>
+          <div class="d-flex flex-column pt-3" *ngIf="showflagGreen">
+            <span *ngIf="!lowerflag" style="color: green"
+              >✓ Password must contain a lower case letter</span
+            >
+            <span *ngIf="!upperflag" style="color: green">
+              ✓ Password must contain an upper case letter</span
+            >
+            <span *ngIf="!numberflag" style="color: green"
+              >✓ Password must contain a number</span
+            >
+            <span *ngIf="!charactersflag" style="color: green"
+              >✓ Password must contain at least 8 characters</span
+            >
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <!-- <button
+        type="button"
+        class="btn btn-secondary"
+        data-dismiss="modal"
+        (click)="closeChangePasswordModal()"
+      >
+        {{ data ? data.buttons.close : "Close" }}
+      </button> -->
+      <button type="button" class="btn btn-success" (click)="resetPassword()">
+        {{ data ? data.buttons.update : "Update" }}
+      </button>
+    </div>
+  </ng-template>
+</nav>

@@ -1,0 +1,8 @@
+:host /deep/ .mat-chip-list-wrapper {
+    border: 1px solid #cad1d7 !important;
+    border-radius: 0.25rem !important;
+    min-height: calc( 1.5em + 1.25rem + 2px );
+}
+:host /deep/ .mat-form-field-underline {
+    display: none !important;
+}

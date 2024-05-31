@@ -1,0 +1,84 @@
+.input-group-text {
+  background-color: #e9ecef;
+}
+.fa-info-circle {
+  color: #3d55df;
+}
+.input-group .form-control:not(:first-child) {
+  padding-left: 10px;
+}
+.table-responsive {
+  max-height: 170vh;
+}
+.receipt-data-tb table th:first-child {
+  width: 10%;
+}
+.receipt-data-tb table th:nth-child(2) {
+  width: 30%;
+}
+.receipt-data-tb table th:nth-child(3) {
+  width: 60%;
+}
+
+li.selected {
+  background-color: #7c0b3c;
+  color: #fff;
+}
+
+.button_outer {
+  /* background: #83ccd3;
+    border-radius: 30px;
+    text-align: center;
+    display: inline-block;
+    transition: 0.2s; */
+  position: relative;
+  overflow: hidden;
+}
+
+.btn_upload {
+  /* padding: 10px 20px; */
+  color: #fff;
+  text-align: center;
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  z-index: 3;
+  white-space: nowrap;
+}
+
+.btn_upload input {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 105%;
+  cursor: pointer;
+  opacity: 0;
+}
+
+.file_uploading {
+  width: 100%;
+  height: 10px;
+  margin-top: 20px;
+  background: #ccc;
+}
+
+.file_uploading .btn_upload {
+  /* display: none; */
+}
+
+.processing_bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 100%;
+  border-radius: 30px;
+  background: #83ccd3;
+  transition: 3s;
+}
+
+.file_uploading .processing_bar {
+  width: 100%;
+}

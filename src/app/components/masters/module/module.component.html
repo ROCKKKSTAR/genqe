@@ -1,0 +1,912 @@
+<div
+  class="content-wrapper d-flex"
+  [ngClass]="{ 'sidebar-open': isSidebarOpen }"
+>
+  <div class="sidebar-wrapper">
+    <app-sidebar [(sidebarState)]="isSidebarOpen"></app-sidebar>
+  </div>
+  <div class="main-wrapper pt-3 h-100">
+    <div *ngIf="ExportLoader">
+      <app-loader [message]="exportloaderMessage"></app-loader>
+    </div>
+    <div class="container-fluid h-100">
+      <div class="row h-100">
+        <div class="col-md-12">
+          <div
+            class="property-details-wrapper"
+            style="width: 100%"
+            *ngIf="!showModuleDetails && !showImport"
+          >
+            <div class="row">
+              <div class="col-md-9">
+                <p class="main-heading">
+                  <span
+                    >{{ data ? data.master.module.module : "Module" }}:</span
+                  >
+                  {{
+                    data
+                      ? data.master.module.viewandaddnewmoduleinsystem
+                      : "View and Add New Module in System"
+                  }}
+                </p>
+              </div>
+              <div class="col-md-3 text-right">
+                <a
+                  href="javascript:void(0)"
+                  mat-raised-button
+                  (click)="exportReport('Module')"
+                  style="line-height: 24px !important"
+                  class="btn btn-info"
+                  ><i class="fa fa-file-text-o" aria-hidden="true"></i>
+                  {{ data ? data.buttons.export : "Export" }}</a
+                >
+                <!-- <a (click)="showImportScreen()" class="btn btn-secondary mr-2"
+                  ><i class="fa fa-upload" aria-hidden="true"></i
+                  >{{ data ? data.buttons.import : "Import" }}</a
+                > -->
+                <a
+                  moduleToken._id=""
+                  class="btn btn-info"
+                  (click)="addNewModule(true)"
+                  ><i class="fa fa-plus" aria-hidden="true"></i>
+                  {{ data ? data.buttons.new : "New" }}</a
+                >
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="search-wrapper">
+                  <div class="search-product">
+                    <div class="search_main">
+                      <div class="search-input">
+                        <span
+                          ><i class="fa fa-search" aria-hidden="true"></i
+                        ></span>
+                        <input
+                          type="search"
+                          [(ngModel)]="simpleSearch"
+                          (keyup.enter)="
+                            simpleSearchModuleData($event.target.value)
+                          "
+                        />
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>{{
+                          data
+                            ? data.master.module.searchmodule
+                            : "Search Module"
+                        }}</label>
+                        <span
+                          ><i
+                            (click)="getModule()"
+                            class="fa fa-times"
+                            aria-hidden="true"
+                          ></i
+                        ></span>
+                        <span (click)="showQueryForm()" class="dropdown-form"
+                          ><i class="fa fa-sort-desc" aria-hidden="true"></i
+                        ></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="query1" class="query1" *ngIf="showData">
+                    <div class="form-container">
+                      <form>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="Module"
+                                >{{
+                                  data
+                                    ? data.master.module.modulename
+                                    : "Module Name"
+                                }}:</label
+                              >
+                              <div class="suggestion_input_wrapper">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  id="module"
+                                  placeholder="{{
+                                    data
+                                      ? data.master.module.entermodulename
+                                      : 'Enter Module Name'
+                                  }}"
+                                  name="module"
+                                  [(ngModel)]="moduleAdvanceSearch.moduleName"
+                                  (keyup)="
+                                    fetchModuleNames($event.target.value)
+                                  "
+                                  (keydown)="
+                                    onTokenModuleSearchInputKeydown($event)
+                                  "
+                                />
+                              </div>
+                              <ul
+                                class="searched-list searchSuggestions"
+                                *ngIf="modules.length > 0"
+                              >
+                                <li
+                                  *ngFor="let module of modules; let i = index"
+                                  [class.selected]="
+                                    i === tokenModuleSearchSuggestionIndex
+                                  "
+                                  (click)="setTokenModule(module, 'search')"
+                                >
+                                  {{ module.moduleName }}
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="moduleShortname"
+                                >{{
+                                  data
+                                    ? data.master.module.moduleshortname
+                                    : "Module Short Name"
+                                }}:</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="countryName"
+                                placeholder="{{
+                                  data
+                                    ? data.master.module.entermoduleshortname
+                                    : 'Enter Module Short Name'
+                                }}"
+                                name="moduleShortname"
+                                (keyup)="
+                                  $event.target.value =
+                                    $event.target.value.toUpperCase()
+                                "
+                                [(ngModel)]="
+                                  moduleAdvanceSearch.moduleShortName
+                                "
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="status"
+                                >{{
+                                  data ? data.master.module.status : "Status"
+                                }}:</label
+                              >
+                              <select
+                                name="status"
+                                class="custom-select"
+                                [(ngModel)]="moduleAdvanceSearch.status"
+                              >
+                                <option selected>Active</option>
+                                <option value="2">Inactive</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="query-btn">
+                          <a class="btn btn-secondary"
+                            ><i
+                              class="fa fa-history"
+                              aria-hidden="true"
+                              (click)="resetAdvanceSearch()"
+                            ></i>
+                            {{ data ? data.buttons.reset : "Reset" }}</a
+                          >
+                          <a
+                            class="btn btn-info"
+                            (click)="advanceModuleSearch()"
+                            ><i class="fa fa-search" aria-hidden="true"></i>
+                            {{ data ? data.buttons.search : "Search" }}</a
+                          >
+                          <a class="btn btn-danger" (click)="showQueryForm()"
+                            ><i class="fa fa-close" aria-hidden="true"></i>
+                            {{ data ? data.admission.close : "Close" }}</a
+                          >
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <div class="property-table-wrapper" style="width: 100%">
+                  <div class="table-responsive">
+                    <table
+                      mat-table
+                      [dataSource]="dataSourceModule"
+                      matTableExporter
+                      #exporter="matTableExporter"
+                      [hiddenColumns]="[4]"
+                      class="mat-elevation-z8"
+                      matSort
+                      #moduleSort="matSort"
+                    >
+                      <ng-container matColumnDef="moduleName">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data ? data.master.module.modulename : "Module Name"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.moduleName }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="moduleShortName">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data
+                              ? data.master.module.moduleshortname
+                              : "Module Short Name"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.moduleShortName }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="moduleDescription">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data
+                              ? data.master.module.moduledescription
+                              : "Module Description"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.moduleDescription }}
+                        </td>
+                      </ng-container>
+
+                      <!-- <ng-container matColumnDef="helpUrl">
+                                <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                                  Help Url
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element?.helpUrl}}
+                                </td>
+                            </ng-container> -->
+
+                      <ng-container matColumnDef="status">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.module.status : "Status" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.status === 1 ? "Active" : "Inactive" }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="action">
+                        <th
+                          mat-header-cell
+                          *matHeaderCellDef
+                          style="text-align: center"
+                        >
+                          {{ data ? data.master.action.action : "Action" }}
+                        </th>
+                        <td
+                          mat-cell
+                          *matCellDef="let element; let i = index"
+                          style="text-align: center"
+                        >
+                          <i
+                            class="fa fa-pencil mr-3 mr-lg-4"
+                            (click)="getTableClickData(element._id)"
+                            aria-hidden="true"
+                          ></i>
+                          <i
+                            style="color: red; cursor: pointer"
+                            class="fa fa-trash"
+                            aria-hidden="true"
+                            (click)="deleteModule(element._id)"
+                          ></i>
+                        </td>
+                      </ng-container>
+                      <tr
+                        mat-header-row
+                        *matHeaderRowDef="displayedModuleColumn"
+                      ></tr>
+                      <tr
+                        mat-row
+                        (dblclick)="getTableClickData(row._id)"
+                        *matRowDef="
+                          let row;
+                          columns: displayedModuleColumn;
+                          let i = index
+                        "
+                      ></tr>
+
+                      <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell">No data Found!</td>
+                      </tr>
+                    </table>
+                  </div>
+                  <mat-paginator
+                    [pageSizeOptions]="[10, 25, 50, 100]"
+                    aria-label="Select page of users"
+                  ></mat-paginator>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="new-property-wrapper"
+            *ngIf="showModuleDetails && !showImport"
+          >
+            <p class="main-heading">
+              <span
+                >{{
+                  data ? data.master.module.addnewmodule : "Add New Module"
+                }}: </span
+              >{{
+                data
+                  ? data.master.module.fillthefollowingdetailstoaddnewmodule
+                  : "Fill the following details to add new module."
+              }}
+              <span
+                (click)="hideModuleDetails()"
+                class="close1"
+                data-toggle="tooltip"
+                title="Close"
+                >X</span
+              >
+            </p>
+            <form>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group position-relative">
+                    <label for="moduleName1"
+                      >{{
+                        data ? data.master.module.modulename : "Module Name"
+                      }}
+                      <span class="asterisk">*</span>:</label
+                    >
+                    <div class="suggestion_input_wrapper">
+                      <i class="fa fa-search" aria-hidden="true"></i>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="modulename1"
+                        [(ngModel)]="moduleToken.moduleName"
+                        placeholder="{{
+                          data
+                            ? data.master.module.entermodulename
+                            : 'Enter Module Name'
+                        }}"
+                        name="moduleName1"
+                        (keydown)="onTokenModulePopulateInputKeydown($event)"
+                        (keyup)="fetchModuleNames($event.target.value)"
+                        #moduleName
+                      />
+                    </div>
+                    <ul class="searched-list" *ngIf="modules.length > 0">
+                      <li
+                        *ngFor="let module of modules; let i = index"
+                        [class.selected]="
+                          i === tokenModulePopulateSuggestionIndex
+                        "
+                        (click)="setTokenModule(module, 'populate')"
+                      >
+                        {{ module.moduleName }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="moduleShortname1"
+                      >{{
+                        data
+                          ? data.master.module.moduleshortname
+                          : "Module Short Name"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="moduleShortname1"
+                      [(ngModel)]="moduleToken.moduleShortName"
+                      placeholder="{{
+                        data
+                          ? data.master.module.entermoduleshortname
+                          : 'Enter Module Short Name'
+                      }}"
+                      (keyup)="
+                        $event.target.value = $event.target.value.toUpperCase()
+                      "
+                      name="moduleShortname1"
+                      #moduleShortName
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="moduledescription"
+                      >{{
+                        data
+                          ? data.master.module.moduledescription
+                          : "Module Description"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <textarea
+                      [(ngModel)]="moduleToken.moduleDescription"
+                      [ngModelOptions]="{ standalone: true }"
+                      class="form-control"
+                      id="moduledescription"
+                      rows="2"
+                      #moduleDescription
+                      placeholder="{{
+                        data
+                          ? data.master.module.entermoduledescription
+                          : 'Enter Module Description'
+                      }}"
+                    ></textarea>
+                    <!-- <input type="textarea" class="form-control" id="moduledescription" [(ngModel)]="moduleToken.moduleDescription"
+                                        placeholder="Enter Module Description"
+                                        name="moduleDescription" #moduleDescription> -->
+                  </div>
+                </div>
+              </div>
+              <div class="row align-items-center">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="helpUrl"
+                      >{{ data ? data.master.module.helpurl : "Help Url"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="helpUrl"
+                      [(ngModel)]="moduleToken.helpUrl"
+                      placeholder="{{
+                        data
+                          ? data.master.module.enterhelpurl
+                          : 'Enter Help Url'
+                      }}"
+                      name="helpUrl"
+                      #helpUrl
+                    />
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div
+                    class="form-group d-flex justify-content-between align-items-center"
+                  >
+                    <label class="mb-0" for="isActive"
+                      >{{
+                        data ? data.master.module.isactive : "Is Active"
+                      }}:</label
+                    >
+                    <div class="custom-control custom-switch">
+                      <input
+                        type="checkbox"
+                        name="isActive"
+                        [(ngModel)]="moduleToken.status"
+                        class="custom-control-input"
+                        id="customSwitch1"
+                        checked
+                      />
+                      <label
+                        class="custom-control-label"
+                        for="customSwitch1"
+                      ></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <ul
+              class="nav nav-tabs mt-4"
+              id="myTab"
+              role="tablist"
+              *ngIf="moduleToken._id && moduleToken._id !== ''"
+            >
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  id="properties-tab"
+                  data-toggle="tab"
+                  href="#properties"
+                  role="tab"
+                  aria-controls="properties"
+                  aria-selected="true"
+                  >{{
+                    data ? data.master.module.moduleaction : "Module Action"
+                  }}</a
+                >
+              </li>
+            </ul>
+            <div
+              class="tab-content"
+              id="myTabContent"
+              *ngIf="moduleToken._id && moduleToken._id !== ''"
+            >
+              <div
+                class="tab-pane fade show active"
+                id="properties"
+                role="tabpanel"
+                aria-labelledby="properties-tab"
+              >
+                <div class="properties-data" *ngIf="!addNewAction">
+                  <p class="main-heading">
+                    <span>{{
+                      data ? data.master.module.moduleaction : "Module Action"
+                    }}</span>
+                    <span
+                      class="pull-right"
+                      [title]="
+                        !moduleToken._id || moduleToken._id === ''
+                          ? 'Save Module to add new Action'
+                          : ''
+                      "
+                    >
+                      <a
+                        class="btn btn-info"
+                        [class.disabled]="
+                          !moduleToken._id || moduleToken._id === ''
+                        "
+                        (click)="addNewAction = true"
+                        ><i class="fa fa-plus" aria-hidden="true"></i
+                        >{{
+                          data ? data.master.module.addaction : "Add Action"
+                        }}
+                      </a></span
+                    >
+                  </p>
+                  <div class="row align-items-center mb-2">
+                    <div class="col-md-5">
+                      <div class="form-group position-relative">
+                        <label for="actionName1"
+                          >{{
+                            data ? data.master.action.actionname : "Action Name"
+                          }}
+                          <span class="asterisk">*</span>:</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="actionName2"
+                          [(ngModel)]="actionToken.actionName"
+                          placeholder="{{
+                            data
+                              ? data.master.action.enteractionname
+                              : 'Enter Action Name'
+                          }}"
+                          name="actionName2"
+                          (keydown)="onTokenActionSearchInputKeydown($event)"
+                          (keyup)="fetchActionNames($event.target.value)"
+                          #actionName2
+                        />
+                        <ul class="searched-list" *ngIf="actions.length > 0">
+                          <li
+                            *ngFor="let action of actions; let i = index"
+                            [class.selected]="
+                              i === tokenActionSearchSuggestionIndex
+                            "
+                            (click)="setTokenAction(action, 'search')"
+                          >
+                            {{ action.actionName }}
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <!-- <div class="col-5">
+                       <input
+                        type="text"
+                        class="form-control"
+                        placeholder="search"
+                      />
+                    </div> -->
+                    <!-- <div class="col-md-5">
+                      <div class="form-group">
+                        <label for="moduleShortname"
+                          >{{
+                            data
+                              ? data.master.module.moduleshortname
+                              : "Module Short Name"
+                          }}:</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="countryName"
+                          placeholder="{{
+                            data
+                              ? data.master.module.entermoduleshortname
+                              : 'Enter Module Short Name'
+                          }}"
+                          name="moduleShortname"
+                          (keyup)="
+                            $event.target.value =
+                              $event.target.value.toUpperCase()
+                          "
+                          [(ngModel)]="moduleAdvanceSearch.moduleShortName"
+                        />
+                      </div>
+                    </div> -->
+                    <!-- <div class="col-5">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="search"
+                      />
+                    </div> -->
+                    <div class="col-2 text-right">
+                      <a class="btn btn-info" (click)="filterActionSearch()">{{
+                        data ? data.buttons.search : "Search"
+                      }}</a>
+                    </div>
+                  </div>
+                  <table
+                    mat-table
+                    [dataSource]="dataSourceAction"
+                    class="mat-elevation-z8"
+                    matSort
+                    #actionSort="matSort"
+                  >
+                    <ng-container matColumnDef="actionName">
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                        {{
+                          data ? data.master.action.actionname : "Action Name"
+                        }}
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element.actionName }}
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="actionShortName">
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                        {{
+                          data
+                            ? data.master.action.actionshortname
+                            : "Action Short Name"
+                        }}
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element.actionShortName }}
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="actionDescription">
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                        {{
+                          data
+                            ? data.master.action.actiondescription
+                            : "Action Description"
+                        }}
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element.actionDescription }}
+                      </td>
+                    </ng-container>
+                    <ng-container matColumnDef="action">
+                      <th mat-header-cell *matHeaderCellDef>
+                        {{ data ? data.master.action.action : "Action" }}
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        <a
+                          href="javascript:void(null)"
+                          style="color: red"
+                          (click)="deleteAction(element._id)"
+                        >
+                          <i class="fa fa-trash" aria-hidden="true"></i>
+                        </a>
+                      </td>
+                    </ng-container>
+                    <!-- <ng-container matColumnDef="actionUrl">
+                                <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                                  Action Url
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.actionUrl}}
+                                </td>
+                            </ng-container> -->
+
+                    <tr
+                      mat-header-row
+                      *matHeaderRowDef="displayedActionColumn"
+                    ></tr>
+                    <tr
+                      mat-row
+                      (dblclick)="editAction(row)"
+                      *matRowDef="
+                        let row;
+                        columns: displayedActionColumn;
+                        let i = index
+                      "
+                    ></tr>
+
+                    <tr class="mat-row" *matNoDataRow>
+                      <td class="mat-cell">No data Found!</td>
+                    </tr>
+                  </table>
+                  <mat-paginator
+                    [pageSizeOptions]="[10, 25, 50, 100]"
+                    aria-label="Select page of actions"
+                  ></mat-paginator>
+                </div>
+                <div class="add-new-property" *ngIf="addNewAction">
+                  <p class="main-heading">
+                    <span>{{
+                      data ? data.master.module.addnewaction : "Add New Action"
+                    }}</span>
+                    <span
+                      class="close1"
+                      data-toggle="tooltip"
+                      title="Close"
+                      (click)="addNewAction = false"
+                      >X</span
+                    >
+                  </p>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group position-relative">
+                        <label for="actionName1"
+                          >{{
+                            data ? data.master.action.actionname : "Action Name"
+                          }}
+                          <span class="asterisk">*</span>:</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="actionName1"
+                          [(ngModel)]="actionToken.actionName"
+                          placeholder="{{
+                            data
+                              ? data.master.action.enteractionname
+                              : 'Enter Action Name'
+                          }}"
+                          name="actionName1"
+                          (keyup)="fetchActionNames($event.target.value)"
+                          (keydown)="onTokenActionPopulateInputKeydown($event)"
+                          #actionName
+                        />
+                        <ul class="searched-list" *ngIf="actions.length > 0">
+                          <li
+                            *ngFor="let action of actions; let i = index"
+                            [class.selected]="
+                              i === tokenActionPopulateSuggestionIndex
+                            "
+                            (click)="setTokenAction(action, 'populate')"
+                          >
+                            {{ action.actionName }}
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="actionShortname1"
+                          >{{
+                            data
+                              ? data.master.action.actionshortname
+                              : "Action Short Name"
+                          }}<span class="asterisk">*</span>:</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="actionShortname1"
+                          [(ngModel)]="actionToken.actionShortName"
+                          placeholder="{{
+                            data
+                              ? data.master.action.enteractionshortname
+                              : 'Enter Action Short Name'
+                          }}"
+                          (keyup)="
+                            $event.target.value =
+                              $event.target.value.toUpperCase()
+                          "
+                          name="actionShortname1"
+                          disabled
+                          #actionShortName
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label for="actiondescription"
+                          >{{
+                            data
+                              ? data.master.action.actiondescription
+                              : "Action Description"
+                          }}<span class="asterisk">*</span>:</label
+                        >
+                        <textarea
+                          [(ngModel)]="actionToken.actionDescription"
+                          [ngModelOptions]="{ standalone: true }"
+                          class="form-control"
+                          id="actiondescription"
+                          disabled
+                          rows="2"
+                          #actionDescription
+                          placeholder="{{
+                            data
+                              ? data.master.action.enteractiondescription
+                              : 'Enter Action Description'
+                          }}"
+                        ></textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row align-items-center">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="actionUrl"
+                          >{{
+                            data ? data.master.action.actionurl : "Action Url"
+                          }}<span class="asterisk">*</span>:</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          disabled
+                          id="actionUrl"
+                          [(ngModel)]="actionToken.actionUrl"
+                          placeholder="{{
+                            data
+                              ? data.master.action.enteractionurl
+                              : 'Enter Action Url'
+                          }}"
+                          name="actionUrl"
+                          #actionUrl
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="result">
+                    <a class="btn btn-secondary" (click)="resetActionMoudule()"
+                      ><i class="fa fa-history" aria-hidden="true"></i
+                      >{{ data ? data.buttons.reset : "Reset" }}</a
+                    >
+                    <a class="btn btn-info" (click)="addAction()"
+                      ><i class="fa fa-plus" aria-hidden="true"></i
+                      >{{
+                        data ? data.master.module.addaction : "Add Action"
+                      }}</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="result mt-4">
+              <a class="btn btn-secondary mr-2" (click)="resetModule()"
+                ><i class="fa fa-history" aria-hidden="true"></i
+                >{{ data ? data.buttons.reset : "Reset" }}</a
+              >
+              <a class="btn btn-info mr-2" (click)="saveModule()">
+                <i class="fa fa-check" aria-hidden="true"></i
+                >{{ data ? data.buttons.saveDraft : "Save Draft" }}</a
+              >
+              <a
+                class="btn btn-success"
+                [hidden]="!moduleToken._id || moduleToken._id === ''"
+                (click)="submitModuleDetails()"
+                ><i class="fa fa-check" aria-hidden="true"></i
+                >{{ data ? data.buttons.submit : "Submit" }}</a
+              >
+            </div>
+          </div>
+
+          <div *ngIf="showImport && !showModuleDetails">
+            <app-import-data
+              [showNavBar]="false"
+              [showLeftMenu]="false"
+              [validator]="importValidator"
+              (importClose)="backToResults()"
+            ></app-import-data>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

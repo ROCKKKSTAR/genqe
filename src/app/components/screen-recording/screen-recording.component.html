@@ -1,0 +1,29 @@
+<h3>Screen Sharing & Recording</h3>
+
+<!-- <button id="startSharingScreen" (click)="startSharingScreen()" [hidden]="isScreenSharing">
+    <i class="fa fa-tv"></i> Share Screen
+  </button> -->
+
+<div *ngIf="showScreenRecord">
+  <button
+    id="startRecording"
+    (click)="startRecording()"
+    [disabled]="isRecording"
+  >
+    <i class="fa fa-dot-circle text-danger"></i> Record
+  </button>
+  <button
+    id="pauseRecording"
+    (click)="pauseRecording()"
+    [disabled]="!isRecording"
+  >
+    <i class="fa" [ngClass]="isPaused ? 'fa-play' : 'fa-pause'"></i>
+    {{ pauseButtonText }}
+  </button>
+  <button id="stop" (click)="stopRecording()" [disabled]="!isRecording">
+    <i class="fa fa-stop text-danger"></i> Stop
+  </button>
+  <div *ngIf="isRecording">
+    <p>{{ formatDuration(recordingDuration) }}</p>
+  </div>
+</div>

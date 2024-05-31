@@ -1,0 +1,89 @@
+<div
+  class="content-wrapper d-flex"
+  [ngClass]="{ 'sidebar-open': isSidebarOpen }"
+>
+  <div class="sidebar-wrapper">
+    <app-sidebar [(sidebarState)]="isSidebarOpen"></app-sidebar>
+  </div>
+  <div *ngIf="loadershow">
+    <app-loader [message]="loaderMessage"></app-loader>
+  </div>
+  <div class="main-wrapper pt-3 h-100">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="d-flex justify-content-between align-items-center">
+            <p class="main-heading mb-0">
+              <span>Test Planning:</span> View and Edit data for all test
+              planning.
+            </p>
+            <div class="col-md-3 text-right">
+              <a
+                href="javascript:void(0)"
+                style="line-height: 24px !important"
+                class="btn btn-success"
+                ><i class="fa fa-upload" aria-hidden="true"></i> Import</a
+              >
+              <a href="javascript:void(0)" class="btn btn-info"
+                ><i class="fa fa-plus" aria-hidden="true"></i>
+                New
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="search-wrapper">
+            <div class="search-product">
+              <div class="search_main">
+                <div class="search-input">
+                  <span><i class="fa fa-search" aria-hidden="true"></i></span>
+                  <input type="search" />
+                  <span class="highlight"></span>
+                  <span class="bar"></span>
+                  <label>Search</label>
+                  <span><i class="fa fa-times" aria-hidden="true"></i></span>
+                  <span (click)="showQueryForm()" class="dropdown-form"
+                    ><i class="fa fa-sort-desc" aria-hidden="true"></i
+                  ></span>
+                </div>
+              </div>
+            </div>
+            <div id="query1" class="query1" *ngIf="showData">
+              <div class="form-container">
+                <form>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="testplanningNameSearch"
+                          >Test Planning Name:</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="testplanningNameSearch"
+                          placeholder="Enter Test Planning Name"
+                          name="testplanningNameSearch"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="query-btn">
+                    <a class="btn btn-secondary"
+                      ><i class="fa fa-history" aria-hidden="true"></i> Reset</a
+                    >
+                    <a class="btn btn-info"
+                      ><i class="fa fa-search" aria-hidden="true"></i> Search</a
+                    >
+                    <a class="btn btn-danger" (click)="showQueryForm()"
+                      ><i class="fa fa-close" aria-hidden="true"></i> Close</a
+                    >
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

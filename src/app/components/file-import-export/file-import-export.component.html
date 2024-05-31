@@ -1,0 +1,713 @@
+<div
+  class="content-wrapper d-flex"
+  [ngClass]="{ 'sidebar-open': isSidebarOpen }"
+>
+  <div class="sidebar-wrapper">
+    <app-sidebar [(sidebarState)]="isSidebarOpen"></app-sidebar>
+  </div>
+  <div class="main-wrapper pt-3">
+    <div *ngIf="loadershow">
+      <app-loader
+        [message]="'Loading File Import Export Data.....'"
+      ></app-loader>
+    </div>
+    <div class="container-fluid h-100">
+      <div class="row h-100">
+        <div class="col-md-12">
+          <div
+            class="property-details-wrapper"
+            *ngIf="!showImportScreen && !hideErrorDetail && !showImport"
+          >
+            <div class="row">
+              <div class="col-md-9">
+                <p class="main-heading">
+                  <span
+                    >{{
+                      data
+                        ? data.fileImportExport.fileH
+                        : "File
+                    Import/Export"
+                    }}:</span
+                  >
+                  {{
+                    data
+                      ? data.fileImportExport.fileTxt
+                      : "View, import
+                  and export files
+                  for lounge"
+                  }}.
+                </p>
+              </div>
+              <div class="col-md-3 text-right">
+                <a
+                  href="javascript:void(0)"
+                  mat-raised-button
+                  (click)="exportReport('fileImportExport')"
+                  style="line-height: 25px !important"
+                  class="btn btn-info"
+                  ><i class="fa fa-file-text-o" aria-hidden="true"></i>
+                  {{ data ? data.master.possalesreport.export : "Export" }}</a
+                >
+                <a (click)="showFilesImport()" class="btn btn-info"
+                  ><i class="fa fa-plus" aria-hidden="true"></i>
+                  {{ data ? data.buttons.new : "New" }}</a
+                >
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="search-wrapper">
+                  <div class="search-product">
+                    <div class="search_main">
+                      <div class="search-input">
+                        <span
+                          ><i class="fa fa-search" aria-hidden="true"></i
+                        ></span>
+                        <input
+                          type="search"
+                          [(ngModel)]="simpleSearch"
+                          (keyup.enter)="simpleSearchData($event.target.value)"
+                        />
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>{{
+                          data
+                            ? data.fileImportExport.searchFile
+                            : "Search File"
+                        }}</label>
+                        <span
+                          ><i
+                            (click)="fetchFIleImportExport()"
+                            class="fa fa-times"
+                            aria-hidden="true"
+                          ></i
+                        ></span>
+                        <span (click)="showQueryForm()" class="dropdown-form"
+                          ><i class="fa fa-sort-desc" aria-hidden="true"></i
+                        ></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="query1" class="query1" *ngIf="showData">
+                    <div class="form-container">
+                      <form>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="fileName"
+                                >{{
+                                  data
+                                    ? data.fileImportExport.fileName
+                                    : "File Name"
+                                }}:</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="fileName"
+                                placeholder="{{
+                                  data
+                                    ? data.fileImportExport.fileNameP
+                                    : 'Enter File Name'
+                                }}"
+                                name="fileName"
+                                [(ngModel)]="searchToken.fileName"
+                              />
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="fileType"
+                                >{{
+                                  data
+                                    ? data.fileImportExport.fileFormatType
+                                    : "File Format Type"
+                                }}:</label
+                              >
+                              <select
+                                name="fileType"
+                                class="custom-select"
+                                [(ngModel)]="searchToken.type"
+                              >
+                                <option selected>Import</option>
+                                <option value="1">Export</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="fromDate"
+                                >{{
+                                  data
+                                    ? data.fileImportExport.fromDate
+                                    : "From Date"
+                                }}:</label
+                              >
+                              <input
+                                type="date"
+                                class="form-control"
+                                id="fromDate"
+                                placeholder="{{
+                                  data
+                                    ? data.fileImportExport.fromDateP
+                                    : 'Enter From Date'
+                                }}"
+                                name="fromDate"
+                                [(ngModel)]="searchToken.fromDate"
+                              />
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="toDate"
+                                >{{
+                                  data
+                                    ? data.fileImportExport.toDate
+                                    : "To Date"
+                                }}:</label
+                              >
+                              <input
+                                type="date"
+                                class="form-control"
+                                id="toDate"
+                                placeholder="{{
+                                  data
+                                    ? data.fileImportExport.toDateP
+                                    : 'Enter To Date'
+                                }}"
+                                name="toDate"
+                                [(ngModel)]="searchToken.toDate"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="fileStatus"
+                                >{{
+                                  data ? data.master.partner.status : "Status"
+                                }}:</label
+                              >
+                              <select
+                                name="fileStatus"
+                                class="custom-select"
+                                [(ngModel)]="searchToken.status"
+                              >
+                                <option value="0">Failure</option>
+                                <option selected value="1">Success</option>
+                                <option value="2">Partial Success</option>
+                                <option value="3">In Process</option>
+                              </select>
+                            </div>
+                          </div>
+
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="partnerName"
+                                >{{
+                                  data
+                                    ? data.master.partner.partnerName
+                                    : "Partner Name"
+                                }}:</label
+                              >
+                              <div class="suggestion_input_wrapper">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                                <input
+                                  type="text"
+                                  class="form-control suggestionInput"
+                                  id="partnerName"
+                                  autocomplete="off"
+                                  (keyup)="
+                                    fetchPartnerNames($event.target.value)
+                                  "
+                                  (keydown)="onTokenPartnerInputKeydown($event)"
+                                  placeholder="{{
+                                    data
+                                      ? data.master.partner.partnerP
+                                      : 'Enter Partner Name'
+                                  }}"
+                                  name="partnerName"
+                                  [(ngModel)]="searchToken.partner.name"
+                                />
+                              </div>
+                              <ul
+                                class="searched-list searchSuggestions"
+                                *ngIf="partners.length > 0"
+                              >
+                                <li
+                                  *ngFor="
+                                    let partner of partners;
+                                    let i = index
+                                  "
+                                  [class.selected]="
+                                    i === tokenPartnerSuggestionIndex
+                                  "
+                                  (click)="setTokenPartner(partner, 'search')"
+                                >
+                                  {{ partner.name }}
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="query-btn">
+                          <a class="btn btn-secondary" (click)="resetSearch()"
+                            ><i class="fa fa-history" aria-hidden="true"></i>
+                            {{ data ? data.buttons.reset : "Reset" }}</a
+                          >
+                          <a class="btn btn-info" (click)="advanceSearch()"
+                            ><i class="fa fa-search" aria-hidden="true"></i>
+                            {{ data ? data.buttons.search : "Search" }}</a
+                          >
+                          <a class="btn btn-danger" (click)="showQueryForm()"
+                            ><i class="fa fa-close" aria-hidden="true"></i>
+                            {{ data ? data.admission.close : "Close" }}</a
+                          >
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="property-table-wrapper">
+              <div class="table-responsive">
+                <table
+                  mat-table
+                  [dataSource]="dataSource"
+                  matTableExporter
+                  #exporter="matTableExporter"
+                  [hiddenColumns]="[11]"
+                  class="mat-elevation-z8"
+                  matSort
+                  #sort="matSort"
+                >
+                  <ng-container matColumnDef="_id">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{
+                        data ? data.fileImportExport.requestNo : "Request No"
+                      }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element._id }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="entity">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{
+                        data ? data.fileImportExport.entityname : "Entity Name"
+                      }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.entity }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="fileName">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{ data ? data.fileImportExport.filename : "File Name" }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.fileName }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="partnerName">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{
+                        data ? data.master.partner.partnerName : "Partner Name"
+                      }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element?.partnerId?.name || "" }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="fileFormatType">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{
+                        data
+                          ? data.fileImportExport.fileFormatType
+                          : "File Format Type"
+                      }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.fileFormatType }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="activity">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{ data ? data.fileImportExport.activity : "Activity" }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.activity }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="recordProcessed">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{
+                        data
+                          ? data.fileImportExport.recordProcessed
+                          : "Record Processed"
+                      }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.recordProcessed }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="recordSuccess">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{
+                        data
+                          ? data.fileImportExport.recordSuccess
+                          : "Record Success"
+                      }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.recordSuccess }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="email">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{
+                        data
+                          ? data.fileImportExport.performedBy
+                          : "Activity Performed By"
+                      }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{
+                        element.lastModifiedBy == null
+                          ? "N/A"
+                          : element.lastModifiedBy.email
+                      }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="lastModifiedOn">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{
+                        data
+                          ? data.fileImportExport.activityDate
+                          : "Activity Date"
+                      }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ cs.formatDateTime(element.lastModifiedOn) }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="status">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{ data ? data.master.partner.status : "Status" }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ statusMap[element.status] }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="action">
+                    <th
+                      mat-header-cell
+                      *matHeaderCellDef
+                      style="text-align: center"
+                    >
+                      {{ data ? data.master.partner.action : "Action" }}
+                    </th>
+                    <td
+                      mat-cell
+                      *matCellDef="let element; let i = index"
+                      style="text-align: center"
+                    >
+                      <i
+                        (click)="downloadFile(element.url)"
+                        class="fa fa-download"
+                        aria-hidden="true"
+                      ></i>
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumn"></tr>
+                  <tr
+                    mat-row
+                    (dblclick)="getErrorImportData(row._id)"
+                    *matRowDef="
+                      let row;
+                      columns: displayedColumn;
+                      let i = index
+                    "
+                  ></tr>
+                  <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell">No data Found!</td>
+                  </tr>
+                </table>
+              </div>
+              <mat-paginator
+                #paginator
+                [pageSizeOptions]="[10, 25, 50, 100]"
+              ></mat-paginator>
+            </div>
+          </div>
+          <div class="file-error-wrapper" *ngIf="hideErrorDetail">
+            <p class="main-heading">
+              <span
+                >{{
+                  data ? data.fileImportExport.fileError : "File Error"
+                }}: </span
+              >{{
+                data
+                  ? data.fileImportExport.fileErrorTxt
+                  : "Here you can see the import/export file
+              errors"
+              }}.<span
+                (click)="hideErrorDetails()"
+                class="close1"
+                data-toggle="tooltip"
+                title="Close"
+                >X</span
+              >
+            </p>
+
+            <div class="table-responsive">
+              <table
+                mat-table
+                [dataSource]="dataSourceError"
+                class="mat-elevation-z8"
+                matSort
+                #errorSort="matSort"
+              >
+                <ng-container matColumnDef="columnName">
+                  <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                    {{
+                      data ? data.fileImportExport.columnName : "Column Name"
+                    }}
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.columnName }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="rowNo">
+                  <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                    {{ data ? data.fileImportExport.rowNo : "Row No" }}
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.rowNo }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="columnNo">
+                  <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                    {{ data ? data.fileImportExport.columnNo : "Column No" }}
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.columnNo }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="columnData">
+                  <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                    {{ data ? data.fileImportExport.colData : "Column Data" }}
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.columnData }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="createdOn">
+                  <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                    {{ data ? data.fileImportExport.createdOn : "Created On" }}
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ cs.formatDateTime(element.createdOn) }}
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedErrorColumn"></tr>
+                <tr
+                  mat-row
+                  (dblclick)="getErrorImportData(row._id)"
+                  *matRowDef="
+                    let row;
+                    columns: displayedErrorColumn;
+                    let i = index
+                  "
+                ></tr>
+              </table>
+              <mat-paginator
+                #errorpaginator
+                [pageSizeOptions]="[10, 25, 50, 100]"
+              ></mat-paginator>
+            </div>
+          </div>
+          <div *ngIf="showImportScreen && !showImport">
+            <!-- <app-import-data [showNavBar]="false" [showLeftMenu]="false" [validator]="importValidator"
+                            (importClose)="backToResults()"></app-import-data> -->
+            <p class="main-heading">
+              <span
+                >{{
+                  data ? data.fileImportExport.importfile : "Import File"
+                }}: </span
+              >{{
+                data
+                  ? data.fileImportExport
+                      .fillthefollowingdetailstoimportfileinthesystem
+                  : "Fill the following details to import file in the system."
+              }}<span
+                (click)="hideImportFileDetails()"
+                class="close1"
+                data-toggle="tooltip"
+                title="Close"
+                >X</span
+              >
+            </p>
+
+            <form>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="partnerName1"
+                      >{{
+                        data
+                          ? data.master.partner.partnerName
+                          : "Partner
+                      Name"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <div class="suggestion_input_wrapper">
+                      <i class="fa fa-search" aria-hidden="true"></i>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="partnerName1"
+                        [(ngModel)]="partnerToken.name"
+                        autocomplete="off"
+                        (keyup)="fetchPartnerNames($event.target.value)"
+                        (keydown)="onTokenPartnerInputKeydown($event)"
+                        placeholder="{{
+                          data
+                            ? data.master.partner.partnerP
+                            : 'Enter Partner Name'
+                        }}"
+                        name="partnerName1"
+                        #partnerName
+                      />
+                    </div>
+                    <ul class="searched-list" *ngIf="partners.length > 0">
+                      <li
+                        *ngFor="let partner of partners; let i = index"
+                        [class.selected]="i === tokenPartnerSuggestionIndex"
+                        (click)="setTokenPartner(partner)"
+                      >
+                        {{ partner.name }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="fileImport"
+                      >{{
+                        data
+                          ? data.fileImportExport.filetoimport
+                          : "File to Import"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <select
+                      name="fileImport"
+                      id="fileImport"
+                      [(ngModel)]="importfileType"
+                      class="custom-select"
+                    >
+                      <option
+                        *ngFor="let file of importFileList"
+                        [value]="file.keyCode"
+                      >
+                        {{ file.key1 }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <!-- <label for="uploadFile">Upload File:</label>
+                                        <input type="file" class="form-control-file" id="uploadFile"> -->
+                  </div>
+                </div>
+              </div>
+              <div class="result">
+                <a (click)="resetImport()" class="btn btn-secondary"
+                  ><i class="fa fa-history" aria-hidden="true"></i>
+                  {{ data ? data.buttons.reset : "Reset" }}</a
+                >
+                <a
+                  (click)="selectFileToImport(importfileType)"
+                  class="btn btn-success"
+                  ><i class="fa fa-upload" aria-hidden="true"></i>
+                  {{ data ? data.buttons.import : "Import" }}</a
+                >
+              </div>
+            </form>
+            <!-- <div class="result">
+                            <a (click)="resetImport()" class="btn btn-secondary"><i class="fa fa-history"
+                                    aria-hidden="true"></i> Reset</a>
+                            <a (click)="selectFileToImport()" class="btn btn-info"><i class="fa fa-check"
+                                    aria-hidden="true"></i> Submit</a>
+                        </div> -->
+
+            <!-- <div class="file-import-table-wrapper mt-3">
+                            <table mat-table [dataSource]="dataSourceFiles" class="mat-elevation-z8" matSort
+                                #sort="matSort">
+                                <ng-container matColumnDef="rowNo">
+                                    <th mat-header-cell mat-sort-header *matHeaderCellDef>Row No</th>
+                                    <td mat-cell *matCellDef="let element"> {{element.rowNo}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="columnNo">
+                                    <th mat-header-cell mat-sort-header *matHeaderCellDef>Column No</th>
+                                    <td mat-cell *matCellDef="let element"> {{element.columnNo}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="columnName">
+                                    <th mat-header-cell mat-sort-header *matHeaderCellDef>Column Name
+                                    </th>
+                                    <td mat-cell *matCellDef="let element">{{element.columnName}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="columnData">
+                                    <th mat-header-cell mat-sort-header *matHeaderCellDef>Column Data</th>
+                                    <td mat-cell *matCellDef="let element"> {{element.columnData}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="errorDescription">
+                                    <th mat-header-cell mat-sort-header *matHeaderCellDef>Error Description</th>
+                                    <td mat-cell *matCellDef="let element"> {{element.errorDescription}} </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedFilesColumn"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedFilesColumn; let i = index"></tr>
+                            </table>
+                            <mat-paginator #paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+                        </div> -->
+          </div>
+          <div *ngIf="showImport">
+            <app-import-data
+              [showNavBar]="false"
+              [showLeftMenu]="false"
+              [validator]="importValidator"
+              (importClose)="backToResults()"
+            ></app-import-data>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

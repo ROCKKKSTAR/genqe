@@ -1,0 +1,700 @@
+<!-- <app-header></app-header> -->
+<div
+  class="content-wrapper d-flex"
+  [ngClass]="{ 'sidebar-open': isSidebarOpen }"
+>
+  <div class="sidebar-wrapper">
+    <app-sidebar [(sidebarState)]="isSidebarOpen"></app-sidebar>
+  </div>
+  <div *ngIf="loadershow">
+    <app-loader [message]="loaderMessage"></app-loader>
+  </div>
+  <div class="main-wrapper pt-3">
+    <div *ngIf="ExportLoader">
+      <app-loader [message]="exportloaderMessage"></app-loader>
+    </div>
+    <div class="container-fluid h-100">
+      <div class="row h-100">
+        <div class="col-md-12">
+          <div
+            class="invoice-details-wrapper"
+            *ngIf="!showTemplateDetails && !showImport"
+          >
+            <div class="row">
+              <div class="col-md-9">
+                <p class="main-heading">
+                  <span>{{ data ? data.documentTemp.documentTemplate : 'Document Template' }}:</span>
+                  {{ data ? data.documentTemp.vewEdit : 'View, edit and add new document template' }}
+                </p>
+              </div>
+              <div class="col-md-3 text-right">
+                <a
+                  href="javascript:void(0)"
+                  mat-raised-button
+                  (click)="exportReport('DocxTemplate')"
+                  style="line-height: 24px !important"
+                  class="btn btn-info"
+                  ><i class="fa fa-file-text-o" aria-hidden="true"></i> {{ data ? data.documentTemp.export : 'Export' }}
+                  </a
+                >
+                <!-- <a
+                  href="javascript:void(0)"
+                  
+                  (click)="showDocxImport()"
+                  style="line-height: 24px !important"
+                  class="btn btn-success"
+                  ><i class="fa fa-upload" aria-hidden="true"></i>
+                  Import</a
+                > -->
+                <a
+                  href="javascript:void(0)"
+                  class="btn btn-info"
+                  (click)="addNewTemplate(true)"
+                  ><i class="fa fa-plus" aria-hidden="true"></i>{{ data ? data.documentTemp.new : 'New' }}
+                  
+                </a>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="search-wrapper">
+                  <div class="search-product">
+                    <div class="search_main">
+                      <div class="search-input">
+                        <span
+                          ><i class="fa fa-search" aria-hidden="true"></i
+                        ></span>
+                        <input
+                          type="search"
+                          [(ngModel)]="simpleSearch"
+                          (keyup.enter)="
+                            templateSimpleSearch($event.target.value)
+                          "
+                        />
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>{{ data ? data.documentTemp.searchDocument : 'Search Document Template' }}</label>
+                        <span
+                          ><i class="fa fa-times" aria-hidden="true"></i
+                        ></span>
+                        <span (click)="showQueryForm()" class="dropdown-form"
+                          ><i class="fa fa-sort-desc" aria-hidden="true"></i
+                        ></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="query1" class="query1" *ngIf="showData">
+                    <div class="form-container">
+                      <form>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="name2">{{ data ? data.documentTemp.documentTemplateName : 'Document Template Name' }}:</label>
+                              <div class="suggestion_input_wrapper">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                                <input
+                                  type="text"
+                                  [(ngModel)]="docTempName"
+                                  (input)="
+                                    fetchTemplateByNames($event.target.value)
+                                  "
+                                  (keydown)="onTemplateNameInputKeydown($event)"
+                                  autocomplete="off"
+                                  class="form-control suggestionInput"
+                                  placeholder="{{ data ? data.documentTemp.phEnterDTN : 'Enter Document Template Name' }}"
+                                  name="name2"
+                                />
+                              </div>
+                              <ul
+                                class="searched-list searchSuggestions"
+                                *ngIf="templates.length > 0"
+                              >
+                                <li
+                                  *ngFor="
+                                    let template of templates;
+                                    let i = index
+                                  "
+                                  [class.selected]="
+                                    i === tokenReceiptSuggestionIndex
+                                  "
+                                  (click)="setTokenReceipt(template, 'search')"
+                                >
+                                  {{ template.docTempName }}
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="tshortcode2"
+                                >{{ data ? data.documentTemp.documentShortCode : 'Document Short Code' }}:</label
+                              >
+                              <input
+                                type="text"
+                                [(ngModel)]="docShortCode"
+                                autocomplete="off"
+                                class="form-control"
+                                id="tshortcode"
+                                placeholder="{{ data ? data.documentTemp.phEDSC : 'Enter Document Short Code' }}"
+                                name="tshortcode2"
+                              />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row align-items-center">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="status2">{{ data ? data.documentTemp.status : 'Status' }}:</label>
+                              <select
+                                name="status2"
+                                class="custom-select"
+                                [(ngModel)]="selectedStatus"
+                              >
+                                <option
+                                  *ngFor="let item of docTemplateStatus"
+                                  [value]="item.keyCode"
+                                >
+                                  {{ item.key1 }}
+                                </option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-md-6"></div>
+                        </div>
+                        <div class="query-btn">
+                          <a
+                            class="btn btn-secondary"
+                            (click)="resetAdvanceSearch()"
+                            ><i class="fa fa-history" aria-hidden="true"></i>{{ data ? data.documentTemp.reset : 'Reset' }}
+                            </a
+                          >
+                          <a
+                            class="btn btn-info"
+                            (click)="advanceTemplateSearch()"
+                            ><i class="fa fa-search" aria-hidden="true"></i>{{ data ? data.documentTemp.search : 'Search' }}
+                            </a
+                          >
+                          <a class="btn btn-danger" (click)="showQueryForm()"
+                            ><i class="fa fa-close" aria-hidden="true"></i>{{ data ? data.documentTemp.close : 'Close' }}
+                            </a
+                          >
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="property-table-wrapper" style="width: 100%">
+              <div class="table-responsive">
+                <table
+                  mat-table
+                  [dataSource]="dataSourceTemplate"
+                  matTableExporter
+                  #exporter="matTableExporter"
+                  class="mat-elevation-z8"
+                  matSort
+                  #itemSort="matSort"
+                >
+                  <ng-container matColumnDef="tname">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>{{ data ? data.documentTemp.documentTemplateName : 'Document Template Name' }}
+                      
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.docTempName }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="tshortcode">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>{{ data ? data.documentTemp.documentShortCode : 'Document Short Code' }}
+                      
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.docShortCode }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="templateDesc">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>{{ data ? data.documentTemp. documentDescription : ' Document Description' }}
+                     
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.docDesc }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="status">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>{{ data ? data.documentTemp.status : 'Status' }}
+                      
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element?.status === 1 ? "Active" : "Inactive" }}
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef>{{ data ? data.documentTemp.action : 'Action' }}</th>
+                    <td mat-cell *matCellDef="let element">
+                      <a (click)="downloadDocTemplate(element.s3DocsId)">
+                        <i
+                          style="
+                            margin-left: 16px;
+                            cursor: pointer;
+                            align-items: center;
+                          "
+                          class="fa fa-download"
+                          aria-hidden="true"
+                        ></i
+                      ></a>
+                    </td>
+                  </ng-container>
+                  <tr
+                    mat-header-row
+                    *matHeaderRowDef="displayedTemplateColumn"
+                  ></tr>
+                  <tr
+                    mat-row
+                    (dblclick)="getTemplateById(row._id)"
+                    *matRowDef="
+                      let row;
+                      columns: displayedTemplateColumn;
+                      let i = index
+                    "
+                  ></tr>
+                </table>
+              </div>
+              <mat-paginator
+                #documentTemplatePagination
+                [pageSizeOptions]="[10, 25, 50, 100]"
+                aria-label="Select page of Document"
+              ></mat-paginator>
+            </div>
+          </div>
+          <div *ngIf="showImport && !showTemplateDetails">
+            <app-import-data
+              [showNavBar]="false"
+              [showLeftMenu]="false"
+              [validator]="importCommonValidator"
+              (importClose)="backToResults()"
+            ></app-import-data>
+          </div>
+          <div
+            class="new-invoice-wrapper"
+            *ngIf="showTemplateDetails && !showImport"
+          >
+            <p class="main-heading">
+              <span>{{ data ? data.documentTemp.addNewDocumentTemplate : 'Add New Document Template' }}: </span>{{ data ? data.documentTemp.fillthefollowingdetails: 'Fill the following details to add new document template' }}
+              <span
+                (click)="hideTemplateDetails()"
+                class="close1"
+                data-toggle="tooltip"
+                title="Close"
+                >X</span
+              >
+            </p>
+            <form>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="name"
+                      >{{ data ? data.documentTemp.documentTemplateName : 'Document Template Name' }}<span class="asterisk">*</span
+                      >:</label
+                    >
+                    <div class="suggestion_input_wrapper">
+                      <input
+                        type="text"
+                        [(ngModel)]="templateObject.templatename"
+                        autocomplete="off"
+                        class="form-control"
+                        placeholder="{{ data ? data.documentTemp.phEnterDTN : 'Enter Document Template Name' }}"
+                        name="name"
+                        #templateName
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="tshortcode">{{ data ? data.documentTemp. documentShortCode : ' Document Short Code' }}
+                     <span class="asterisk">*</span>:</label
+                    >
+                    <!-- <input
+                      type="text"
+                      [(ngModel)]="templateObject.templateshortcode"
+                      autocomplete="off"
+                      class="form-control"
+                      id="tshortcode"
+                      placeholder="Enter Document Short Code"
+                      name="tshortcode"
+                      #tShortCode
+                    /> -->
+
+                    <div class="suggestion_input_wrapper">
+                      <i class="fa fa-search" aria-hidden="true"></i>
+                      <input
+                        type="text"
+                        [(ngModel)]="templateObject.templateshortcode"
+                        autocomplete="off"
+                        class="form-control"
+                        id="tshortcode"
+                        placeholder="{{ data ? data.documentTemp.phEDSC : 'Enter Document Short Code' }}"
+                        name="tshortcode"
+                        #tShortCode
+                        [value]="templateObject.templateshortcode"
+                        class="form-control suggestionInput"
+                        (keyup)="searchExistingTemplates($event.target.value)"
+                        (keydown)="onTemplateNameInputKeydown($event)"
+                      />
+                    </div>
+                    <ul class="searched-list searchSuggestions">
+                      <li
+                        *ngFor="let code of existingDocTemplates; let i = index"
+                        [class.selected]="i === templateNameSuggestionIndex"
+                        (click)="setTemplateToSearch(code)"
+                      >
+                        {{ code.docShortCode }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="category"
+                      >{{ data ? data.documentTemp.documentStatus : 'Document Status' }}<span class="asterisk">*</span>:</label
+                    >
+                    <select
+                      name="category"
+                      class="custom-select"
+                      [(ngModel)]="templateObject.status"
+                      #status
+                    >
+                      <option
+                        *ngFor="let item of docTemplateStatus"
+                        [value]="item.keyCode"
+                      >
+                        {{ item.key1 }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="documentType"
+                      >{{ data ? data.documentTemp.documentType : 'Document Type' }}<span class="asterisk">*</span>:</label
+                    >
+                    <select
+                      name="documentType"
+                      id="documentType"
+                      #documentType
+                      class="custom-select"
+                      [(ngModel)]="templateObject.type"
+                    >
+                      <option
+                        *ngFor="let item of docTemplateTypes"
+                        [value]="item.key1"
+                      >
+                        {{ item.key1 }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="documentType"
+                      >{{ data ? data.documentTemp.templateDescription : 'Template Description' }}<span class="asterisk">*</span
+                      >:</label
+                    >
+                    <input
+                      type="text"
+                      [(ngModel)]="templateObject.docDesc"
+                      autocomplete="off"
+                      class="form-control"
+                      id="templateDesc"
+                      placeholder="{{ data ? data.documentTemp.phEnterTemplateDescription : 'Enter Template Description' }}"
+                      name="templateDesc"
+                      #templateDesc
+                    />
+                  </div>
+                </div>
+                <div class="col-md-4 align-self-end">
+                  <div *ngIf="!templateObject._id" class="form-group">
+                    <label for="uploadFile"
+                      >{{ data ? data.documentTemp.uploadDocument : 'Upload Document' }}<span class="asterisk">*</span>:</label
+                    >
+                    <input
+                      [disabled]="!templateObject.type"
+                      type="file"
+                      class="form-control-file"
+                      #fileInput
+                      id="uploadFile"
+                      accept=".docx,.xlsx"
+                      (change)="onFileChange($event.target.files)"
+                    />
+                  </div>
+                  <div *ngIf="templateObject._id" class="form-group">
+                    <label for="uploadFile"
+                      >{{ data ? data.documentTemp.uploadDocument : 'Uploaded Document' }}<span class="asterisk">*</span>:</label
+                    >
+                    <a (click)="downloadDocTemplate(templateObject.s3DocsId)">
+                      <i
+                        style="
+                          margin-left: 16px;
+                          cursor: pointer;
+                          align-items: center;
+                        "
+                        class="fa fa-download"
+                        aria-hidden="true"
+                      ></i
+                    ></a>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group position-relative">
+                    <label for="loungeCode" class="w-100"
+                      >{{ data ? data.documentTemp.partner : 'Partner' }}<span class="asterisk">*</span>:<span
+                        class="pull-right"
+                        data-toggle="tooltip"
+                        data-placement="bottom"
+                        data-html="true"
+                        id="port-tooltip"
+                      >
+                        <!-- <i
+                          class="fa fa-info-circle"
+                          aria-hidden="true"
+                          style="font-size: 16px; color: #5e72e4"
+                        ></i> -->
+                      </span></label
+                    >
+                    <div class="suggestion_input_wrapper">
+                      <i class="fa fa-search" aria-hidden="true"></i>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="outletOwnedBy"
+                        placeholder="{{ data ? data.documentTemp.partnerName : 'Partner Name' }}"
+                        name="outletOwnedBy"
+                        [(ngModel)]="templateObject.partnerName"
+                        autocomplete="off"
+                        [value]="templateObject.partnerId"
+                        (keyup)="fetchPartners($event.target.value)"
+                      />
+                    </div>
+                    <ul class="searched-list" *ngIf="partners">
+                      <li
+                        *ngFor="let partner of partners"
+                        (click)="setPartner(partner)"
+                      >
+                        {{ partner.name }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </form>
+
+            <div class="row" *ngIf="templateObject.fieldDetails?.length > 0">
+              <div class="col-12">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link active"
+                      id="field-details-tab"
+                      data-toggle="tab"
+                      data-target="#field-details"
+                      type="button"
+                      role="tab"
+                      aria-controls="field-details"
+                      aria-selected="true"
+                    >{{ data ? data.documentTemp.fieldDetails : 'Field Details' }}
+                      
+                    </button>
+                  </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                  <div
+                    class="tab-pane fade active show"
+                    id="field-details"
+                    role="tabpanel"
+                    aria-labelledby="field-details-tab"
+                  >
+                    <div class="row">
+                      <div class="col-12">
+                        <p class="main-heading">
+                          <span>{{ data ? data.documentTemp.fieldDetails : 'Field Details' }}</span>
+                          <!-- <span class="close1" data-toggle="tooltip" title="Close" (click)="newIncludeDocuments = false"
+                            *ngIf="newIncludeDocuments">X</span>
+                          <span class="pull-right" *ngIf="!newIncludeDocuments">
+                            <button class="btn btn-primary" (click)="addNewIncludeDocuments()">
+                              <i class="fa fa-plus"></i> Add
+                            </button>
+                          </span> -->
+                        </p>
+                      </div>
+
+                      <div class="col-12">
+                        <div class="search-wrapper">
+                          <div class="search-product">
+                            <div class="search_main">
+                              <div class="search-input">
+                                <span
+                                  ><i
+                                    class="fa fa-search"
+                                    aria-hidden="true"
+                                  ></i
+                                ></span>
+                                <input type="search" />
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>{{ data ? data.documentTemp.search : 'Search' }}</label>
+                                <span
+                                  ><i class="fa fa-times" aria-hidden="true"></i
+                                ></span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="table-responsive">
+                          <table
+                            mat-table
+                            [dataSource]="dataSourceFieldDetails"
+                            class="mat-elevation-z8"
+                          >
+                            <ng-container matColumnDef="fieldName">
+                              <th mat-header-cell *matHeaderCellDef>
+                                {{ data ? data.documentTemp.fieldName : 'Field Name' }} 
+                              </th>
+                              <td mat-cell *matCellDef="let element">
+                                {{ element.fieldName }}
+                              </td>
+                            </ng-container>
+                            <ng-container matColumnDef="fieldType">
+                              <th mat-header-cell *matHeaderCellDef>
+                                {{ data ? data.documentTemp.fieldType : 'Field Type' }}
+                              </th>
+                              <td mat-cell *matCellDef="let element">
+                                {{ element.fieldType }}
+                              </td>
+                            </ng-container>
+                            <ng-container matColumnDef="promptId">
+                              <th mat-header-cell *matHeaderCellDef>
+                                {{ data ? data.documentTemp.promptTemplateID : 'Prompt Template ID' }} 
+                              </th>
+                              <td mat-cell *matCellDef="let element">
+                                {{ element.promptTemplateID }}
+                              </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="description">
+                              <th mat-header-cell *matHeaderCellDef>
+                                {{ data ? data.documentTemp.description : 'Description' }} 
+                              </th>
+                              <td mat-cell *matCellDef="let element">
+                                {{ element.description }}
+                              </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="status">
+                              <th mat-header-cell *matHeaderCellDef>{{ data ? data.documentTemp.status : 'Status' }}</th>
+                              <td mat-cell *matCellDef="let element">
+                                {{ element.status }}
+                              </td>
+                            </ng-container>
+
+                            <!--  <ng-container matColumnDef="IncludePrompt">
+                              <th mat-header-cell *matHeaderCellDef>
+                                Include Prompt
+                              </th>
+                              <td mat-cell *matCellDef="let element">
+                                {{ element.includePrompt }}
+                              </td>
+                            </ng-container> -->
+
+                            <tr
+                              mat-header-row
+                              *matHeaderRowDef="displayedFieldDetailsColumn"
+                            ></tr>
+                            <tr
+                              mat-row
+                              *matRowDef="
+                                let row;
+                                columns: displayedFieldDetailsColumn;
+                                let i = index
+                              "
+                            ></tr>
+                          </table>
+                        </div>
+                        <mat-paginator
+                          [pageSizeOptions]="[10, 25, 50, 100]"
+                          aria-label="Select page of Research Document"
+                        >
+                        </mat-paginator>
+                      </div>
+                    </div>
+                    <!-- <div class="row" *ngIf="newIncludeDocuments"> -->
+                    <!-- <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="documentType">Document Type<span class="asterisk">*</span>:</label>
+                          <select name="documentType" id="documentType" class="custom-select"
+                            [(ngModel)]="document.docType">
+                            <option *ngFor="let t of documentTypes" [value]="t.keyCode" [selected]="t.keyCode === 1">
+                              {{ t.key1 }}
+                            </option>
+                          </select>
+                        </div>
+                      </div> -->
+                    <!-- <div class="col-md-4">
+                        <label for="uploadFile">File Type<span class="asterisk">*</span></label>
+                        <div class="input-group">
+                          <select name="fileType" id="uploadFile" class="custom-select"
+                            [(ngModel)]="document.fileType">
+                            <option *ngFor="let t of fileTypes" [value]="t.keyCode" [selected]="t.keyCode === 1">
+                              {{ t.key1 }}
+                            </option>
+                          </select>
+                        </div>
+                      </div> -->
+                    <!-- <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="criteria">Criteria<span class="asterisk">*</span>:</label>
+                          <input type="text" class="form-control" [(ngModel)]="document.criteria" placeholder="Enter Criteria" />
+                        </div>
+                      </div> -->
+                    <!-- <div class="col-12">
+                        <div class="result mt-4 d-flex justify-content-end">
+                          <a class="btn btn-secondary mr-2" (click)="resetDocument()">
+                            <i class="fa fa-history" aria-hidden="true"></i>
+                            Reset</a>
+                          <a class="btn btn-success" (click)="saveDocument()">
+                            <i class="fa fa-check" aria-hidden="true"></i>
+                            Save</a>
+                        </div>
+                      </div> -->
+                    <!-- </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="result mt-4" style="padding-left: 230px">
+                  <a class="btn btn-secondary mr-2" (click)="resetReceipt()">
+                    <i class="fa fa-history" aria-hidden="true"></i>
+                    {{ data ? data.documentTemp.reset : 'Reset' }} </a
+                  >
+                  <a class="btn btn-success" (click)="saveTemplate()">
+                    <i class="fa fa-check" aria-hidden="true"></i>
+                    {{ data ? data.documentTemp.submit : 'Submit' }}</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

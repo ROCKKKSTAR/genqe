@@ -1,0 +1,4081 @@
+<div
+  class="content-wrapper d-flex"
+  [ngClass]="{ 'sidebar-open': isSidebarOpen }"
+>
+  <div class="sidebar-wrapper">
+    <app-sidebar [(sidebarState)]="isSidebarOpen"></app-sidebar>
+  </div>
+  <div class="main-wrapper pt-3 h-100">
+    <div *ngIf="loadershow">
+      <app-loader [message]="'Generating PDF...'"></app-loader>
+    </div>
+    <div *ngIf="outletLoaderShow">
+      <app-loader [message]="loaderMessage"></app-loader>
+    </div>
+
+    <div class="container-fluid h-100">
+      <div class="row h-100">
+        <div class="col-md-12">
+          <div
+            class="property-details-wrapper"
+            style="width: 100%"
+            *ngIf="!showLoungeDetails && !showImport && !showPriceImport"
+          >
+            <div class="row">
+              <div class="col-md-6">
+                <p class="main-heading">
+                  <span
+                    >{{
+                      data ? data.master.lounge.txtHeading : "Outlet"
+                    }}:</span
+                  >
+                  {{
+                    data
+                      ? data.master.lounge.txtDes
+                      : "View and add new Outlet in system."
+                  }}
+                </p>
+              </div>
+              <div class="col-md-6 text-right">
+                <a
+                  href="javascript:void(0)"
+                  mat-raised-button
+                  (click)="exportReport('Outlet')"
+                  style="line-height: 25px !important"
+                  class="btn btn-info"
+                  ><i class="fa fa-file-text-o" aria-hidden="true"></i>
+                  {{ data ? data.master.possalesreport.export : "Export" }}</a
+                >
+                <a
+                  (click)="showImportScreen()"
+                  class="btn btn-success text-white mr-2"
+                  ><i class="fa fa-upload" aria-hidden="true"></i>
+                  {{ data ? data.buttons.import : "Import" }}</a
+                >
+                <a
+                  (click)="showContractPriceImportScreen()"
+                  class="btn btn-info text-white mr-2"
+                  ><i class="fa fa-upload" aria-hidden="true"></i> Outlet Price
+                  Import</a
+                >
+                <a class="btn btn-info" (click)="addNewLounge(true)"
+                  ><i class="fa fa-plus" aria-hidden="true"></i>
+                  {{ data ? data.buttons.new : "New" }}</a
+                >
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="search-wrapper">
+                  <div class="search-product">
+                    <div class="search_main">
+                      <div class="search-input">
+                        <span
+                          ><i class="fa fa-search" aria-hidden="true"></i
+                        ></span>
+                        <input
+                          type="search"
+                          [(ngModel)]="simplesearch"
+                          (keyup.enter)="
+                            simpleSearchLoungeData($event.target.value)
+                          "
+                        />
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>{{
+                          data ? data.master.lounge.searchL : "Search Outlet"
+                        }}</label>
+                        <span
+                          ><i
+                            (click)="getLoungeSearch()"
+                            class="fa fa-times"
+                            aria-hidden="true"
+                          ></i
+                        ></span>
+                        <span (click)="showQueryForm()" class="dropdown-form"
+                          ><i class="fa fa-sort-desc" aria-hidden="true"></i
+                        ></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="query1" class="query1" *ngIf="showData">
+                    <div class="form-container">
+                      <form>
+                        <div class="row">
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label for="loungeName"
+                                >{{
+                                  data
+                                    ? data.master.lounge.loungeName
+                                    : "Outlet Name"
+                                }}:</label
+                              >
+                              <div class="suggestion_input_wrapper">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                                <input
+                                  type="text"
+                                  class="form-control suggestionInput"
+                                  (keyup)="
+                                    fetchLoungeNames($event.target.value)
+                                  "
+                                  autocomplete="off"
+                                  id="loungeName"
+                                  placeholder="{{
+                                    data
+                                      ? data.master.lounge.enterLoungeName
+                                      : 'Enter Outlet Name'
+                                  }}"
+                                  [(ngModel)]="loungeName"
+                                  (keydown)="onTokenSearchInputKeydown($event)"
+                                  name="loungeName"
+                                />
+                              </div>
+                              <ul
+                                class="searched-list searchSuggestions"
+                                *ngIf="lounge.length > 0"
+                              >
+                                <li
+                                  *ngFor="let l of lounge; let i = index"
+                                  [class.selected]="
+                                    i === tokenSearchSuggestionIndex
+                                  "
+                                  (click)="setTokenSearchLounge(l)"
+                                >
+                                  {{ l.name }}
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label for="outletcode"
+                                >{{ "Outlet Code" }}:</label
+                              >
+                              <input
+                                type="text"
+                                id="outletcode"
+                                name="outletcode"
+                                placeholder="Enter Outlet Code"
+                                class="form-control"
+                                [(ngModel)]="loungeCode"
+                              />
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label for="loungeType"
+                                >{{
+                                  data
+                                    ? data.master.lounge.loungeType
+                                    : "Outlet Type"
+                                }}:</label
+                              >
+                              <select
+                                name="loungeType"
+                                class="custom-select"
+                                #loungeType
+                              >
+                                <option checked value="0">None</option>
+                                <option
+                                  *ngFor="let l of LoungeType"
+                                  [value]="l.keyCode"
+                                >
+                                  {{ l.key1 }}
+                                </option>
+                                <!-- <option selected>Lounge</option>
+                                                                <option value="1">Spa Center</option>
+                                                                <option value="2">Massage Center</option>
+                                                                <option value="3">Kids Area</option>
+                                                                <option value="4">Meeting Room</option>
+                                                                <option value="5">Dining</option> -->
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label for="loungeCategory"
+                                >{{
+                                  data
+                                    ? data.master.lounge.loungeCategory
+                                    : "Outlet
+                                Category"
+                                }}:</label
+                              >
+                              <select
+                                name="loungeCategory"
+                                class="custom-select"
+                                #loungeCategory
+                              >
+                                <option checked value="0">None</option>
+                                <option
+                                  *ngFor="let l of LoungeCategory"
+                                  [value]="l.keyCode"
+                                >
+                                  {{ l.key1 }}
+                                </option>
+                                <!-- <option selected>Arrival</option>
+                                                                <option value="1">Departure</option>
+                                                                <option value="2">Outside Airport</option> -->
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <!-- <div class="col-md-6"> -->
+                            <div class="form-group">
+                              <label for="portCode"
+                                >{{
+                                  data
+                                    ? data.master.airport.airportCode
+                                    : "Port Code"
+                                }}:</label
+                              >
+                              <div class="suggestion_input_wrapper">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                                <input
+                                  type="text"
+                                  id="portCode"
+                                  name="portCode"
+                                  class="form-control"
+                                  placeholder="{{
+                                    data
+                                      ? data.master.airport.enterAirportCode
+                                      : 'Enter Port Code'
+                                  }}"
+                                  [(ngModel)]="portCode"
+                                  (keyup)="fetchPortNames($event.target.value)"
+                                  (keydown)="onTokenAdvPortInputKeydown($event)"
+                                  autocomplete="off"
+                                />
+                              </div>
+                              <ul
+                                class="searched-list searchSuggestions"
+                                *ngIf="airport.length > 0"
+                              >
+                                <li
+                                  *ngFor="let a of airport; let i = index"
+                                  [class.selected]="
+                                    i === tokenAdvPortSuggestionIndex
+                                  "
+                                  (click)="setTokenAdvancePort(a)"
+                                >
+                                  {{ a.airportName }}
+                                </li>
+                              </ul>
+                            </div>
+                            <!-- </div> -->
+                            <!-- <div class="form-group">
+                              <label for="address1"
+                                >{{
+                                  data
+                                    ? data.master.lounge.addressLine1
+                                    : "Address Line
+                                1"
+                                }}:</label
+                              >
+                              <input
+                                type="text"
+                                id="address1"
+                                name="address1"
+                                class="form-control"
+                                placeholder="{{
+                                  data
+                                    ? data.master.lounge.enterAddressLine1
+                                    : 'Enter Address Line 1'
+                                }}"
+                                [(ngModel)]="addressLine1"
+                              />
+                            </div> -->
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label for="country"
+                                >{{
+                                  data
+                                    ? data.master.airlinescodes.country
+                                    : "Country"
+                                }}:</label
+                              >
+                              <div class="suggestion_input_wrapper">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                                <input
+                                  type="text"
+                                  id="country"
+                                  name="country"
+                                  class="form-control"
+                                  placeholder="Enter Country"
+                                  [(ngModel)]="name"
+                                  (keyup)="
+                                    fetchCountryNames($event.target.value)
+                                  "
+                                  (keydown)="onTokenCountryInputKeydown($event)"
+                                  autocomplete="off"
+                                />
+                              </div>
+                              <ul
+                                class="searched-list searchSuggestions"
+                                *ngIf="Country.length > 0"
+                              >
+                                <li
+                                  *ngFor="let c of Country; let i = index"
+                                  [class.selected]="
+                                    i === tokenCountrySuggestionIndex
+                                  "
+                                  (click)="setTokenAdvanceCountry(c)"
+                                >
+                                  {{ c.name }}
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <!-- <div class="col-md-4">
+                            <div class="form-group">
+                              <label for="address2"
+                                >{{
+                                  data
+                                    ? data.master.lounge.addressLine2
+                                    : "Address Line
+                                2"
+                                }}:</label
+                              >
+                              <input
+                                type="text"
+                                id="address2"
+                                name="address2"
+                                class="form-control"
+                                placeholder="{{
+                                  data
+                                    ? data.master.lounge.enterAddressLine2
+                                    : 'Enter Address Line 2'
+                                }}"
+                                [(ngModel)]="addressLine2"
+                              />
+                            </div>
+                          </div> -->
+                          <!-- <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="portCode"
+                                >{{
+                                  data
+                                    ? data.master.airport.airportCode
+                                    : "Port Code"
+                                }}:</label
+                              >
+                              <input
+                                type="text"
+                                id="portCode"
+                                name="portCode"
+                                class="form-control"
+                                placeholder="{{
+                                  data
+                                    ? data.master.airport.enterAirportCode
+                                    : 'Enter Port Code'
+                                }}"
+                                [(ngModel)]="portCode"
+                                (keyup)="fetchPortNames($event.target.value)"
+                                (keydown)="onTokenAdvPortInputKeydown($event)"
+                                autocomplete="off"
+                              />
+                              <ul
+                                class="searched-list searchSuggestions"
+                                *ngIf="airport.length > 0"
+                              >
+                                <li
+                                  *ngFor="let a of airport; let i = index"
+                                  [class.selected]="
+                                    i === tokenAdvPortSuggestionIndex
+                                  "
+                                  (click)="setTokenAdvancePort(a)"
+                                >
+                                  {{ a.airportName }}
+                                </li>
+                              </ul>
+                            </div>
+                          </div> -->
+                        </div>
+                        <div class="row">
+                          <div class="col-md-4">
+                            <div class="form-group">
+                              <label for="status"
+                                >{{
+                                  data ? data.master.partner.status : "Status"
+                                }}:</label
+                              >
+                              <select
+                                name="status"
+                                class="custom-select"
+                                [(ngModel)]="status"
+                              >
+                                <option selected>Active</option>
+                                <option value="2">Inactive</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <!-- <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="country">{{data? data.master.lounge.country: 'Country'}}:</label>
+                                                            <select name="country" class="custom-select" [(ngModel)]='country'>
+                                                              <option *ngFor="let c of countries"[value]="c.name">{{c.name}}</option>
+                                                                <option selected>India</option>
+                                                                <option value="1">US</option>
+                                                                <option value="2">Sri Lanka</option>
+                                                                <option value="3">Canda</option> -->
+                          <!-- </select> -->
+                          <!-- </div> -->
+                          <!-- </div> -->
+                          <!-- <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="facilities">{{data? data.master.lounge.facilities: 'Facilities'}}</label>
+                                                            <select name="facilities" class="custom-select" [(ngModel)]='facilities'>
+                                                              <option *ngFor="let f of facility"[value]="f.name">{{f.name}}</option>
+                                                                <option selected>Spa Service</option>
+                                                                <option value="1">Dining</option>
+                                                                <option value="1">Masssage Service</option> -->
+                          <!-- </select> -->
+                          <!-- </div> -->
+                          <!-- </div> -->
+                        </div>
+                        <div class="query-btn">
+                          <a
+                            class="btn btn-secondary"
+                            (click)="
+                              loungeType.value = 0;
+                              loungeCategory.value = 0;
+                              addressLine1 = '';
+                              addressLine2 = '';
+                              loungeName = '';
+                              portCode = '';
+                              name = '';
+                              status = ''
+                            "
+                            ><i class="fa fa-history" aria-hidden="true"></i>
+                            {{ data ? data.buttons.reset : "Reset" }}</a
+                          >
+                          <a
+                            class="btn btn-info"
+                            (click)="
+                              advanceLoungeDataSearch(
+                                loungeType.value,
+                                loungeCategory.value
+                              )
+                            "
+                            ><i class="fa fa-search" aria-hidden="true"></i>
+                            {{ data ? data.buttons.search : "Search" }}</a
+                          >
+                          <a class="btn btn-danger" (click)="showQueryForm()"
+                            ><i class="fa fa-close" aria-hidden="true"></i>
+                            {{ data ? data.admission.close : "Close" }}</a
+                          >
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <div class="property-table-wrapper" style="width: 100%">
+                  <div class="table-responsive">
+                    <table
+                      id="loungetable"
+                      matTableExporter
+                      mat-table
+                      [dataSource]="dataSourceLounge"
+                      #exporter="matTableExporter"
+                      [hiddenColumns]="[7]"
+                      class="mat-elevation-z8"
+                      matSort
+                    >
+                      <ng-container matColumnDef="_id">
+                        <th mat-header-cell *matHeaderCellDef>Partner Id</th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element._id }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="name">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data ? data.master.lounge.loungeName : "Outlet Name"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.code }}-{{ element.name }}
+                        </td>
+                      </ng-container>
+
+                      <!-- <ng-container matColumnDef="displayCategory">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data
+                              ? data.master.lounge.loungeCategory
+                              : "Outlet Category"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.displayCategory }}
+                        </td>
+                      </ng-container> -->
+
+                      <ng-container matColumnDef="displayZone">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.lounge.zone : "zone" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.displayZone }}
+                        </td>
+                      </ng-container>
+
+                      <!-- <ng-container matColumnDef="brand">
+                        <th mat-header-cell *matHeaderCellDef>
+                          {{
+                          data
+                          ? data.master.lounge.loungeBrand
+                          : "Outlet Brand"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.brand }}
+                        </td>
+                      </ng-container> -->
+
+                      <!-- <ng-container matColumnDef="displayBusiness">
+                        <th mat-header-cell *matHeaderCellDef>
+                          {{
+                          data
+                          ? data.master.lounge.businessLine
+                          : "Business Line"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.displayBusiness }}
+                        </td>
+                      </ng-container> -->
+
+                      <!-- <ng-container matColumnDef="addressLine1">
+                        <th mat-header-cell *matHeaderCellDef>
+                          {{
+                          data
+                          ? data.master.lounge.addressLine1
+                          : "Address Line 1"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.addressLine1 }}
+                        </td>
+                      </ng-container> -->
+
+                      <ng-container matColumnDef="area">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.lounge.area : "Area(Sq.m)" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.area }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="port">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.lounge.port : "Port" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.airport.airportCode }}-{{
+                            element?.airport.airportName
+                          }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="country">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.lounge.country : "Country" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.airport.airportCountry.name }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="capacity">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.lounge.capacity : "Capacity" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.capacity }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="status">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.lounge.status : "Status" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.status === 1 ? "Active" : "Inactive" }}
+                        </td>
+                      </ng-container>
+                      <!-- <ng-container matColumnDef="generateAI">
+                        <th
+                          mat-header-cell
+                          *matHeaderCellDef
+                          style="text-align: center"
+                        >
+                          {{
+                            data ? data.master.lounge.generateAI : "Generate AI"
+                          }}
+                        </th>
+                        <td
+                          mat-cell
+                          *matCellDef="let element; let i = index"
+                          style="text-align: center"
+                        >
+                          <i
+                            style="color: black; cursor: pointer"
+                            class="fa fa-download mr-4"
+                            aria-hidden="true"
+                            (click)="downloadOutletToken(element._id,element.code)"
+                          >AI1</i>
+                          <i
+                          style="color: black; cursor: pointer"
+                          class="fa fa-download mr-4"
+                          aria-hidden="true"
+                          (click)="downloadOutletTokenNew(element._id,element.code)"
+                        >AI2</i>
+                        </td>
+                      </ng-container> -->
+
+                      <tr
+                        mat-header-row
+                        *matHeaderRowDef="displayedColumns"
+                      ></tr>
+                      <tr
+                        mat-row
+                        (dblclick)="getLoungeById(row._id)"
+                        *matRowDef="
+                          let row;
+                          columns: displayedColumns;
+                          let i = index
+                        "
+                      ></tr>
+
+                      <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell">
+                          {{
+                            data
+                              ? data.master.lounge.nodatafound
+                              : "No Data Found"
+                          }}
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                  <mat-paginator
+                    [pageSizeOptions]="[10, 25, 50, 100]"
+                    aria-label="Select page of users"
+                  >
+                  </mat-paginator>
+                  <!-- <table datatable class="table table-striped table-bordered">
+                                            <thead>
+                                                <tr>
+                                                  <th>{{data? data.master.lounge.loungeName: 'Outlet Name'}}</th>
+                                                  <th>{{data? data.master.lounge.loungeCategory: 'Outlet Category'}}</th>
+                                                  <th>{{data? data.master.lounge.loungeType: 'Outlet Type'}}</th>
+                                                  <th>{{data? data.master.lounge.loungeBrand: 'Outlet Brand'}}</th>
+                                                  <th>{{data? data.master.lounge.businessLine: 'Business Line'}}</th>
+                                                  <th>{{data? data.master.lounge.addressLine1: 'Address Line 1'}}</th>
+                                                  <th>{{data? data.master.lounge.addressLine2: 'Address Line 2'}}</th>
+                                                  <th>{{data? data.master.lounge.country: 'Country'}}</th>
+                                                  <th>{{data? data.master.lounge.port: 'Port'}}</th>
+                                                  <th>{{data? data.master.lounge.facilities: 'Facilities'}}</th>
+                                                  <th>{{data? data.master.lounge.capacity: 'Capacity'}}</th>
+                                                  <th>{{data? data.master.lounge.status: 'Status'}}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr (dblclick)="getLoungeById(lounge._id)" *ngFor="let lounge of loungeData">
+                                                    <td>{{lounge.name}} </td>
+                                                    <td>{{lounge.displayCategory}}</td>
+                                                    <td>{{lounge.displayType}}</td>
+                                                    <td>{{lounge.brand}}</td>
+                                                    <td>{{lounge.businessLine}}</td>
+                                                    <td>{{lounge.addressLine1}}</td>
+                                                    <td>{{lounge.addressLine2}}</td>
+                                                    <td>{{lounge.country}}</td>
+                                                    <td>{{lounge.airport[0].airportName}}</td>
+                                                    <td>{{lounge.facilities[0].name}}</td>
+                                                    <td>{{lounge.capacity}}</td>
+                                                    <td>{{lounge.status===1 ? 'Active':'Inactive'}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table> -->
+                </div>
+              </div>
+            </div>
+            <!-- <div class="property-table-wrapper" style="width: 100%;">
+                            <div class="table-responsive">
+                                <table datatable class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Lounge Name</th>
+                                            <th>Lounge Type</th>
+                                            <th>Lounge Category</th>
+                                            <th>Country</th>
+                                            <th>Nearest Airport</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let property of propertyData">
+                                            <td>IGI T3 </td>
+                                            <td>Lounge</td>
+                                            <td>Arrival</td>
+                                            <td>India</td>
+                                            <td> Indira Gandhi International</td>
+                                            <td>Active</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div> -->
+          </div>
+          <div *ngIf="showImport && !showLoungeDetails">
+            <app-import-data
+              [showNavBar]="false"
+              [showLeftMenu]="false"
+              [validator]="importValidator"
+              (importClose)="backToResults()"
+            ></app-import-data>
+          </div>
+          <div *ngIf="showPriceImport && !showLoungeDetails">
+            <app-import-data
+              [showNavBar]="false"
+              [showLeftMenu]="false"
+              [validator]="importPriceValidator"
+              (importClose)="backToLoungeResults()"
+            ></app-import-data>
+          </div>
+          <div
+            class="new-property-wrapper"
+            *ngIf="showLoungeDetails && !showImport"
+          >
+            <p class="main-heading">
+              <span
+                >{{
+                  data ? data.master.lounge.addNewLounge : "Add New Outlet:"
+                }} </span
+              >{{
+                data
+                  ? data.master.lounge.newLoungeDes
+                  : "Fill the following details to add new
+              Outlet for Outlets."
+              }}<span
+                (click)="hideLoungeDetails()"
+                class="close1"
+                data-toggle="tooltip"
+                title="Close"
+                >X</span
+              >
+            </p>
+            <form>
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="form-group position-relative">
+                    <label for="loungeName1"
+                      >{{
+                        data
+                          ? data.master.lounge.loungeName
+                          : "Outlet
+                      Name"
+                      }}<span class="asterisk">*</span>:
+                      <span style="cursor: pointer">
+                        <a
+                          data-toggle="tooltip"
+                          data-placement="bottom"
+                          title="{{
+                            data
+                              ? data.master.partner.clicktocopy
+                              : 'Click to Copy'
+                          }}"
+                          (click)="copiedMessage()"
+                          cdkCopyToClipboard="{{ clipboardid }}"
+                        >
+                          <i class="fa fa-clipboard" aria-hidden="true"></i>
+                        </a>
+                      </span>
+                      <!-- <span>
+                        {{clipboardid}}
+                      </span> -->
+                    </label>
+                    <div class="suggestion_input_wrapper">
+                      <i class="fa fa-search" aria-hidden="true"></i>
+                      <input
+                        [(ngModel)]="name"
+                        type="text"
+                        class="form-control"
+                        id="loungeName1"
+                        placeholder="{{
+                          data
+                            ? data.master.lounge.enterLoungeName
+                            : 'Enter Outlet Name'
+                        }}"
+                        name="loungeName1"
+                        autocomplete="off"
+                        (keyup)="fetchLoungeNames($event.target.value)"
+                      />
+                    </div>
+                    <ul class="searched-list" *ngIf="lounge.length > 0">
+                      <li *ngFor="let l of lounge" (click)="setTokenLounge(l)">
+                        {{ l.name }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group position-relative">
+                    <label for="displayName1"
+                      >{{
+                        data
+                          ? data.master.lounge.loungeDisplayName
+                          : "Display Name"
+                      }}<span class="asterisk">*</span>:
+                      <!-- <span style="cursor: pointer">
+                        <a data-toggle="tooltip" data-placement="bottom" title="{{
+                            data
+                              ? data.master.partner.clicktocopy
+                              : 'Click to Copy'
+                          }}" (click)="copiedMessage()" cdkCopyToClipboard="{{ clipboardid }}">
+                          <i class="fa fa-clipboard" aria-hidden="true"></i>
+                        </a>
+                      </span> -->
+                      <!-- <span>
+                        {{clipboardid}}
+                      </span> -->
+                    </label>
+                    <div class="suggestion_input_wrapper">
+                      <i class="fa fa-search" aria-hidden="true"></i>
+                      <input
+                        [(ngModel)]="displayName"
+                        type="text"
+                        class="form-control"
+                        id="displayName1"
+                        placeholder="{{
+                          data
+                            ? data.master.lounge.enterLoungeDisplayName
+                            : 'Enter Display Name'
+                        }}"
+                        name="displayName1"
+                        autocomplete="off"
+                        (keyup)="fetchLoungeDisplayNames($event.target.value)"
+                      />
+                    </div>
+                    <ul class="searched-list" *ngIf="lounge.length > 0">
+                      <li *ngFor="let l of displayLounge">
+                        {{ l.displayName }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="loungeCategory1"
+                      >{{
+                        data
+                          ? data.master.lounge.loungeCategory
+                          : "Lounge
+                      Category"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <select
+                      name="loungeCategory1"
+                      class="custom-select"
+                      id="loungeCategory1"
+                      [(ngModel)]="category"
+                    >
+                      <option
+                        *ngFor="let l of LoungeCategory"
+                        [value]="l.keyCode"
+                      >
+                        {{ l.key1 }}
+                      </option>
+                      <!-- <option selected>Arrival</option>
+                                                <option value="1">Departure</option>
+                                                <option value="2">Outside Airport</option> -->
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="loungeCode"
+                      >{{
+                        data ? data.master.lounge.loungeCode : "Outlet Code"
+                      }}
+                      <span class="asterisk">*</span>:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="loungeCode"
+                      placeholder="{{
+                        data
+                          ? data.master.lounge.enterLoungeCode
+                          : 'Enter Outlet Code'
+                      }}"
+                      name="loungeCode"
+                      [(ngModel)]="code"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="loungeType1"
+                      >{{
+                        data
+                          ? data.master.lounge.loungeType
+                          : "Outlet
+                      Type"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <select
+                      name="loungeType1"
+                      class="custom-select"
+                      id="loungeType1"
+                      #loungeType1
+                      [(ngModel)]="type"
+                    >
+                      <option *ngFor="let l of LoungeType" [value]="l.keyCode">
+                        {{ l.key1 }}
+                      </option>
+                      <!-- <option selected>Lounge</option>
+                                                <option value="1">Spa Center</option>
+                                                <option value="2">Massage Center</option>
+                                                <option value="3">Kids Area</option>
+                                                <option value="4">Meeting Room</option>
+                                                <option value="5">Dining</option> -->
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="loungeCode1"
+                      >{{
+                        data
+                          ? data.master.lounge.loungeBrand
+                          : "Outlet
+                      Brand"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <!-- <input
+                      type="text"
+                      class="form-control"
+                      id="loungeCode1"
+                      placeholder="{{
+                        data
+                          ? data.master.lounge.enterOutletBrand
+                          : 'Enter Outlet Brand'
+                      }}" name="loungeBrand" [(ngModel)]="brand" autocomplete="off" (keyup)="
+                        $event.target.value = $event.target.value.toUpperCase()
+                      "
+                    /> -->
+                    <select
+                      name="loungeCode1"
+                      class="custom-select"
+                      id="loungeCode1"
+                      [(ngModel)]="brand"
+                    >
+                      <option *ngFor="let l of LoungeBrand" [value]="l.keyCode">
+                        {{ l.key1 }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group position-relative">
+                    <label for="loungeCode" class="w-100"
+                      >{{
+                        data
+                          ? data.master.lounge.outletOwnedBy
+                          : "Outlet Owned By (Partner)"
+                      }}<span class="asterisk">*</span>:<span
+                        class="pull-right"
+                        data-toggle="tooltip"
+                        [title]="getInfoOfOutletOwnedBy()"
+                        data-placement="bottom"
+                        data-html="true"
+                        id="port-tooltip"
+                        ><i
+                          class="fa fa-info-circle"
+                          aria-hidden="true"
+                          style="font-size: 16px; color: #5e72e4"
+                        ></i></span
+                    ></label>
+                    <div class="suggestion_input_wrapper">
+                      <i class="fa fa-search" aria-hidden="true"></i>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="outletOwnedBy"
+                        placeholder="{{
+                          data
+                            ? data.master.lounge.enterOutletOwnedBy
+                            : 'Enter Outlet Owned By (Partner)'
+                        }}"
+                        name="outletOwnedBy"
+                        [(ngModel)]="outletOwnedBy"
+                        autocomplete="off"
+                        (keyup)="fetchOutletOwnedNames($event.target.value)"
+                      />
+                    </div>
+                    <ul class="searched-list" *ngIf="partners.length > 0">
+                      <li
+                        *ngFor="let partner of partners"
+                        (click)="setTokenOutletOwned(partner)"
+                      >
+                        {{ partner.name }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group position-relative">
+                    <label for="loungeCode" class="w-100"
+                      >{{
+                        data
+                          ? data.master.lounge.outletOperatedBy
+                          : "Outlet Operated By (Vendor)"
+                      }}<span class="asterisk">*</span>:<span
+                        class="pull-right"
+                        data-toggle="tooltip"
+                        [title]="getInfoOfOutletOperatedBy()"
+                        data-placement="bottom"
+                        data-html="true"
+                        id="port-tooltip"
+                        ><i
+                          class="fa fa-info-circle"
+                          aria-hidden="true"
+                          style="font-size: 16px; color: #5e72e4"
+                        ></i></span
+                    ></label>
+                    <div class="suggestion_input_wrapper">
+                      <i class="fa fa-search" aria-hidden="true"></i>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="outletOperatedBy"
+                        placeholder="{{
+                          data
+                            ? data.master.lounge.enterOutletOperatedby
+                            : 'Enter Outlet Operated By (Vendor)'
+                        }}"
+                        name="outletOperatedBy"
+                        [(ngModel)]="outletOperatedBy"
+                        autocomplete="off"
+                        (keyup)="fetchOutletOperatedNames($event.target.value)"
+                      />
+                    </div>
+                    <ul class="searched-list" *ngIf="vendors.length > 0">
+                      <li
+                        *ngFor="let vendor of vendors"
+                        (click)="setTokenVendor(vendor)"
+                      >
+                        {{ vendor.name }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group position-relative">
+                    <label for="loungeType"
+                      >{{
+                        data
+                          ? data.master.lounge.parentLounge
+                          : "Parent Outlet"
+                      }}:</label
+                    >
+                    <!-- <input [(ngModel)]='name' type="text" class="form-control" id="parentLounge" placeholder="Enter Lounge Name" name="loungeName1"  autocomplete="off" (keyup)="fetchLoungeNames($event.target.value)" #parentLounge>
+                                            <ul *ngIf="lounge.length > 0">
+                                              <li *ngFor="let l of lounge" (click)="setTokenLounge(lounge)">
+                                                  {{l.name}}</li>
+                                          </ul> -->
+                    <div class="suggestion_input_wrapper">
+                      <i class="fa fa-search" aria-hidden="true"></i>
+                      <input
+                        type="text"
+                        id="parentLounge"
+                        name="parentLounge"
+                        class="form-control"
+                        placeholder="{{
+                          data
+                            ? data.master.lounge.enterParentLounge
+                            : 'Enter Parent Outlet'
+                        }}"
+                        [(ngModel)]="parentLounge"
+                        [disabled]="type == 1 || type == 0"
+                        autocomplete="off"
+                        (keyup)="fetchParentLoungeNames($event.target.value)"
+                      />
+                    </div>
+                    <ul
+                      class="searched-list"
+                      *ngIf="newParentLounge.length > 0"
+                    >
+                      <li
+                        *ngFor="let parent of newParentLounge"
+                        (click)="setTokenParentLounge(parent)"
+                      >
+                        {{ parent.name }}
+                      </li>
+                    </ul>
+                    <!-- <select name="loungeType" class="custom-select">
+                                                <option selected>000</option>
+                                                <option value="1">001</option>
+                                                <option value="2">002</option>
+                                                <option value="3">003</option>
+                                            </select> -->
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="businessLine" class="w-100"
+                      >{{
+                        data
+                          ? data.master.lounge.businessLine
+                          : "Business
+                      Line"
+                      }}<span class="asterisk">*</span>:<span
+                        class="pull-right"
+                        data-toggle="tooltip"
+                        [title]="getInfoOfBusinessLine()"
+                        data-placement="bottom"
+                        data-html="true"
+                        id="port-tooltip"
+                        ><i
+                          class="fa fa-info-circle"
+                          aria-hidden="true"
+                          style="font-size: 16px; color: #5e72e4"
+                        ></i></span
+                    ></label>
+                    <select
+                      name="businessLine"
+                      class="custom-select"
+                      id="businessLine"
+                      [(ngModel)]="businessLine"
+                    >
+                      <option
+                        *ngFor="let l of BusinessLine"
+                        [value]="l.keyCode"
+                      >
+                        {{ l.key1 }}
+                      </option>
+                      <!-- <option selected>Lounge</option> -->
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group position-relative">
+                    <label for="loungeReciept" class="w-100"
+                      >{{
+                        data
+                          ? data.master.lounge.outletReciept
+                          : "Use Receipt Template"
+                      }}
+                      <span class="asterisk">*</span>:<span
+                        class="pull-right"
+                        data-toggle="tooltip"
+                        [title]="getInfoOfReceipt()"
+                        data-placement="bottom"
+                        data-html="true"
+                        id="port-tooltip"
+                        ><i
+                          class="fa fa-info-circle"
+                          aria-hidden="true"
+                          style="font-size: 16px; color: #5e72e4"
+                        ></i></span
+                    ></label>
+                    <div class="suggestion_input_wrapper">
+                      <i class="fa fa-search" aria-hidden="true"></i>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="outletReciept"
+                        placeholder="{{
+                          data
+                            ? data.master.lounge.enterOutletReciept
+                            : 'Enter Outlet Receipt Template'
+                        }}"
+                        name="outletReciept"
+                        [(ngModel)]="outletReciept"
+                        autocomplete="off"
+                        (keyup)="fetchReceiptNames($event.target.value)"
+                      />
+                    </div>
+                    <ul class="searched-list" *ngIf="invoices.length > 0">
+                      <li
+                        *ngFor="let invoice of invoices"
+                        (click)="setTokenReceipt(invoice)"
+                      >
+                        {{ invoice.tname }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="address1"
+                      >{{
+                        data
+                          ? data.master.lounge.addressLine1
+                          : "Address Line
+                      1"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <input
+                      type="text"
+                      id="address1"
+                      name="address1"
+                      class="form-control"
+                      placeholder="{{
+                        data
+                          ? data.master.lounge.enterAddressLine1
+                          : 'Enter Address Line 1'
+                      }}"
+                      [(ngModel)]="addressLine1"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="address2"
+                      >{{
+                        data ? data.master.lounge.addressLine2 : "Level/Floor"
+                      }}:</label
+                    >
+                    <input
+                      type="text"
+                      id="address2"
+                      name="address2"
+                      class="form-control"
+                      placeholder="{{
+                        data
+                          ? data.master.lounge.enterAddressLine2
+                          : 'Enter Level/Floor'
+                      }}"
+                      [(ngModel)]="addressLine2"
+                    />
+                  </div>
+                </div>
+                <!-- <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="shard"
+                      >{{ data ? data.master.lounge.shard : "Shard Key"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <select
+                      name="shard"
+                      class="custom-select"
+                      id="shard"
+                      [(ngModel)]="shard"
+                    >
+                      <option *ngFor="let s of ShardKey" [value]="s.key1">
+                        {{ s.key1 }}
+                      </option>
+                    </select>
+                  </div>
+                </div> -->
+              </div>
+              <div class="row">
+                <!-- <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="port">{{data? data.master.lounge.port: 'Port'}}<span class="asterisk">*</span>:</label>
+                                            <select name="port" class="custom-select" id="port" [(ngModel)]='port'>
+                                              <option  *ngFor="let a of airport" [value]='a._id'>{{a.airportName}}</option>
+                                                <option selected>Delhi Airport</option>
+                                                <option value="1">Chandigarh Airport</option>
+                                            </select>
+                                        </div>
+                                    </div> -->
+                <div class="col-md-4">
+                  <div class="form-group position-relative">
+                    <label for="port" class="w-100"
+                      >{{ data ? data.master.lounge.port : "Port"
+                      }}<span class="asterisk">*</span>:<span
+                        class="pull-right"
+                        data-toggle="tooltip"
+                        [title]="getInfo()"
+                        data-placement="bottom"
+                        data-html="true"
+                        id="port-tooltip"
+                        ><i
+                          class="fa fa-info-circle"
+                          aria-hidden="true"
+                          style="font-size: 16px; color: #5e72e4"
+                        ></i></span
+                    ></label>
+                    <div class="suggestion_input_wrapper">
+                      <i class="fa fa-search" aria-hidden="true"></i>
+                      <input
+                        [(ngModel)]="port"
+                        type="text"
+                        class="form-control"
+                        id="airport"
+                        placeholder="{{
+                          data
+                            ? data.master.lounge.enterThePort
+                            : 'Enter The Port'
+                        }}"
+                        name="port"
+                        autocomplete="off"
+                        (keyup)="fetchPortNames($event.target.value)"
+                      />
+                    </div>
+                    <ul class="searched-list" *ngIf="airport.length > 0">
+                      <li *ngFor="let a of airport" (click)="setTokenPort(a)">
+                        {{ a.airportCode }}-{{ a.airportName }}
+                      </li>
+                    </ul>
+                  </div>
+                  <!-- <div class="form-group position-relative">
+                                            <label for="port">{{data? data.master.lounge.port: 'Port'}}<span class="asterisk">*</span>:</label>
+                                            <input type="text" class="form-control" placeholder="Enter the Port" id="airport" name="port" [(ngModel)]='port' autocomplete="off" (keyup)="fetchPortNames($event.target.value)">
+                                            <ul class="searched-list" *ngIf="airport.length > 0">
+                                              <li *ngFor="let a of airport" >
+                                                  {{a.airportName}}</li>
+                                          </ul>
+
+                                        </div> -->
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group position-relative">
+                    <label for="location">Location:</label>
+                    <span
+                      (click)="openGoogleMaps()"
+                      class="ml-2"
+                      style="cursor: pointer; font-size: 12px"
+                      ><i
+                        class="fa fa-map-marker"
+                        style="font-size: 18px; color: blue; cursor: pointer"
+                        title="Open In Maps"
+                      ></i
+                    ></span>
+                    <input
+                      [disabled]="true"
+                      type="text"
+                      name="location"
+                      class="form-control"
+                      id="location"
+                      [(ngModel)]="pointLocation"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="journeyType"
+                      >{{
+                        data
+                          ? data.master.lounge.journeyType
+                          : "Journey
+                      Type"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <select
+                      name="journeyType"
+                      class="custom-select"
+                      id="journeyType"
+                      [(ngModel)]="journeyType"
+                    >
+                      <option *ngFor="let l of JourneyType" [value]="l.keyCode">
+                        {{ l.key1 }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <!-- <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="travelDirection"
+                      >{{
+                        data
+                          ? data.master.lounge.travelDirection
+                          : "Travel
+                      Direction"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <select
+                      name="travelDirection"
+                      class="custom-select"
+                      id="travelDirection"
+                      [(ngModel)]="travelDirection"
+                    >
+                      <option
+                        *ngFor="let l of TravelDirection"
+                        [value]="l.keyCode"
+                      >
+                        {{ l.key1 }}
+                      </option>
+                    </select>
+                  </div>
+                </div> -->
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="terminalCode"
+                      >{{
+                        data
+                          ? data.master.lounge.terminalCode
+                          : "Terminal
+                      Code"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <input
+                      type="text"
+                      placeholder="{{
+                        data
+                          ? data.master.lounge.enterTerminalCode
+                          : 'Enter Terminal Code'
+                      }}"
+                      class="form-control"
+                      id="terminalCode"
+                      name="terminalCode"
+                      [(ngModel)]="terminalCode"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="subTerminal"
+                      >{{
+                        data
+                          ? data.master.lounge.subTerminal
+                          : "Sub
+                      Terminal"
+                      }}:</label
+                    >
+                    <input
+                      type="text"
+                      placeholder="{{
+                        data
+                          ? data.master.lounge.enterSubTerminal
+                          : 'Enter Sub Terminal'
+                      }}"
+                      class="form-control"
+                      id="subTerminal"
+                      name="subTerminal"
+                      [(ngModel)]="subTerminal"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row align-items-center">
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="zone"
+                      >{{ data ? data.master.lounge.zone : "Zone"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <select
+                      name="zone"
+                      class="custom-select"
+                      id="zone"
+                      [(ngModel)]="zone"
+                    >
+                      <option *ngFor="let l of Zone" [value]="l.keyCode">
+                        {{ l.key1 }}
+                      </option>
+                      <!-- <option selected>Before Security</option>
+                                                <option value="1">After Security</option>
+                                                <option value="1">In Transit</option> -->
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="loungeArea"
+                      >{{
+                        data ? data.master.lounge.loungeArea : "Area(sq meter)"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <input
+                      type="number"
+                      min="0"
+                      value="50"
+                      class="form-control"
+                      id="loungeArea"
+                      name="loungeArea"
+                      [(ngModel)]="loungeArea"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="capacity"
+                      >{{ data ? data.master.lounge.capacity : "Capacity"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <input
+                      type="number"
+                      min="0"
+                      value="50"
+                      class="form-control"
+                      id="capacity"
+                      name="capacity"
+                      [(ngModel)]="capacity"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div
+                    class="form-group d-flex justify-content-between align-items-center"
+                  >
+                    <label class="mb-0" for="isActive"
+                      >{{
+                        data
+                          ? data.master.lounge.isActive
+                          : "Is
+                      Active"
+                      }}:</label
+                    >
+                    <div class="custom-control custom-switch">
+                      <input
+                        data-toggle="modal"
+                        data-target="#isActiveModal"
+                        data-backdrop="static"
+                        data-keyboard="false"
+                        type="checkbox"
+                        name="isActive"
+                        class="custom-control-input"
+                        id="customSwitch1"
+                        checked
+                        [(ngModel)]="isActive"
+                      />
+                      <label
+                        class="custom-control-label"
+                        for="customSwitch1"
+                      ></label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div
+                    class="form-group d-flex justify-content-between align-items-center"
+                  >
+                    <label class="mb-0" for="isSecured"
+                      >{{
+                        data
+                          ? data.master.lounge.isSecured
+                          : "Is
+                      Secured"
+                      }}:</label
+                    >
+                    <div class="custom-control custom-switch">
+                      <input
+                        type="checkbox"
+                        class="custom-control-input"
+                        name="isSecured"
+                        id="customSwitch9"
+                        checked
+                        [(ngModel)]="isSecured"
+                      />
+                      <label
+                        class="custom-control-label"
+                        for="customSwitch9"
+                      ></label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="securedBy"
+                      >{{ data ? data.master.lounge.securedBy : "Secured By"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <select
+                      name="securedBy"
+                      class="custom-select"
+                      id="securedBy"
+                      [(ngModel)]="securedBy"
+                      [disabled]="isSecured === false"
+                    >
+                      <option *ngFor="let l of SecuredBy" [value]="l.keyCode">
+                        {{ l.key1 }}
+                      </option>
+                      <!-- <option selected>Lock and Key</option>
+                                                <option value="1">Admission Instruction</option>
+                                                <option value="1">E-gate pass</option>
+                                                <option value="1">None</option> -->
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="baseCurrency"
+                      >{{
+                        data
+                          ? data.master.lounge.baseCurrency
+                          : "Base
+                      Currency"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <select
+                      name="currency"
+                      class="custom-select"
+                      id="currency"
+                      [(ngModel)]="currency"
+                    >
+                      <option *ngFor="let c of currencies" [value]="c">
+                        {{ c }}
+                        {{ c.currency }}
+                      </option>
+                      <!-- <option *ngFor="let l of BaseCurrency" [value]='l.key1'>{{l.key1}}</option> -->
+                      <!-- <option selected>INR</option>
+                                                <option value="1">$</option> -->
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="openingDate"
+                      >{{
+                        data
+                          ? data.master.lounge.dateOfOpening
+                          : "Date Of
+                      Opening"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <input
+                      type="date"
+                      placeholder="Enter Date of Opening"
+                      class="form-control"
+                      id="openingDate"
+                      name="openingDate"
+                      [ngModel]="dateOfOpening | date : 'yyyy-MM-dd'"
+                      (ngModelChange)="dateOfOpening = $event"
+                    />
+                  </div>
+                </div>
+
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="currentUseStatus"
+                      >{{
+                        data
+                          ? data.master.lounge.currentUseStatus
+                          : "Current Use Status"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <select
+                      name="currentUseStatus"
+                      class="custom-select"
+                      id="currentUseStatus"
+                      [(ngModel)]="currentUseStatus"
+                    >
+                      <option
+                        *ngFor="let l of CurrentUseStatus"
+                        [value]="l.keyCode"
+                        [disabled]="l.key1 !== 'Ready'"
+                        [selected]="l.key1 === 'Ready'"
+                      >
+                        {{ l.key1 }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="phoneNo"
+                      >{{ data ? data.master.lounge.phoneNo : "Phone No."
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <input
+                      type="number"
+                      pattern="[6789][0-9]{9}"
+                      placeholder="{{
+                        data
+                          ? data.master.lounge.enterPhoneNo
+                          : 'Enter Phone No.'
+                      }}"
+                      class="form-control"
+                      id="phoneNo"
+                      name="phoneNo"
+                      [(ngModel)]="phoneNo"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="email"
+                      >{{ data ? data.master.lounge.email : "Email"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <input
+                      type="email"
+                      placeholder="Enter Email"
+                      class="form-control"
+                      id="email"
+                      name="email"
+                      [(ngModel)]="email"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="loungeDescription"
+                      >{{
+                        data
+                          ? data.master.lounge.loungeDescription
+                          : "Outlet Description"
+                      }}:</label
+                    >
+                    <textarea
+                      [(ngModel)]="loungeDescription"
+                      [ngModelOptions]="{ standalone: true }"
+                      class="form-control"
+                      id="loungeDescription"
+                      rows="2"
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <ul
+              class="nav nav-tabs mt-4"
+              id="myTab"
+              role="tablist"
+              *ngIf="_id && _id !== ''"
+            >
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  id="samples-tab"
+                  data-toggle="tab"
+                  href="#property-sample"
+                  role="tab"
+                  aria-controls="property-sample"
+                  aria-selected="false"
+                  >{{ data ? data.master.lounge.loungePhotosTab : "Photos" }}</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="users-tab"
+                  data-toggle="tab"
+                  href="#users"
+                  role="tab"
+                  aria-controls="users"
+                  aria-selected="true"
+                  >{{ data ? data.master.lounge.users : "Users" }}</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="users-tab"
+                  data-toggle="tab"
+                  href="#loungeShifts"
+                  role="tab"
+                  aria-controls="loungeShifts"
+                  aria-selected="true"
+                  >{{ data ? data.master.lounge.loungeShiftsTab : "Shifts" }}</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="users-tab"
+                  data-toggle="tab"
+                  href="#loungetimings"
+                  role="tab"
+                  aria-controls="loungetimings"
+                  aria-selected="true"
+                  >{{
+                    data ? data.master.lounge.loungeTimings : "Opening Hours"
+                  }}</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="users-tab"
+                  data-toggle="tab"
+                  href="#localisation"
+                  role="tab"
+                  aria-controls="users"
+                  aria-selected="true"
+                  >{{
+                    data ? data.master.lounge.localisation : "Localisation"
+                  }}</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="users-tab"
+                  data-toggle="tab"
+                  href="#loungeProductLink"
+                  role="tab"
+                  aria-controls="users"
+                  aria-selected="true"
+                  >{{
+                    data
+                      ? data.master.lounge.outletpartnerlinkTab
+                      : "Partner Link"
+                  }}</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="products-tab"
+                  data-toggle="tab"
+                  href="#productsTab"
+                  role="tab"
+                  aria-controls="productsTab"
+                  aria-selected="true"
+                  >{{ data ? data.master.lounge.products : "Products" }}</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="subOutlets-tab"
+                  data-toggle="tab"
+                  href="#subOutletsTab"
+                  role="tab"
+                  aria-controls="subOutletsTab"
+                  aria-selected="true"
+                  >{{ data ? data.master.lounge.facilities : "Facilities" }}</a
+                >
+              </li>
+              <!-- <li class="nav-item">
+                <a class="nav-link" id="service-tab" data-toggle="tab" href="#Services" role="tab"
+                  aria-controls="Services" aria-selected="true">Services</a>
+              </li> -->
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="tokens-tab"
+                  data-toggle="tab"
+                  href="#tokens"
+                  role="tab"
+                  aria-controls="tokens"
+                  aria-selected="true"
+                  >{{ data ? data.master.lounge.configure : "Configure" }}</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="features-tab"
+                  data-toggle="tab"
+                  href="#loungeFeatures"
+                  role="tab"
+                  aria-controls="loungeFeatures"
+                  aria-selected="true"
+                  >Features</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="use-historyStatus"
+                  data-toggle="tab"
+                  href="#loungeUseHistory"
+                  role="tab"
+                  aria-controls="loungeUseHistory"
+                  aria-selected="true"
+                  >{{
+                    data
+                      ? data.master.lounge.outletUseHistoryLabel
+                      : "Use History"
+                  }}</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="documen-tab"
+                  data-toggle="tab"
+                  href="#documen"
+                  role="tab"
+                  [class.disabled]="isFromCC"
+                  aria-controls="documen"
+                  aria-selected="true"
+                  >{{ data ? data.buttons.document : "Document" }}</a
+                >
+              </li>
+            </ul>
+            <div
+              class="tab-content"
+              id="myTabContent"
+              *ngIf="_id && _id !== ''"
+            >
+              <div
+                class="tab-pane fade show active"
+                id="property-sample"
+                role="tabpanel"
+                aria-labelledby="property-sample-tab"
+              >
+                <div class="token-sample-data" *ngIf="!addNewLoungePhotos">
+                  <p class="main-heading">
+                    <span>{{
+                      data ? data.master.lounge.loungePhotos : "LoungePhotos"
+                    }}</span>
+                    <span
+                      class="pull-right"
+                      [title]="
+                        !_id || _id === ''
+                          ? 'Save Lounges to add new Photos'
+                          : ''
+                      "
+                    >
+                      <a
+                        (click)="addNewLoungePhotos = true"
+                        class="btn btn-info"
+                        [class.disabled]="!_id || _id === '' || isFromCC"
+                        ><i class="fa fa-plus" aria-hidden="true"></i
+                        >{{
+                          data
+                            ? data.master.lounge.addNewLoungePhotos
+                            : "Add Outlet
+                        Photos"
+                        }}</a
+                      ></span
+                    >
+                  </p>
+                  <div class="sample-images">
+                    <div class="row">
+                      <div
+                        class="col-md-4 col-lg-3 mb-3"
+                        *ngFor="let img of photos"
+                      >
+                        <img [src]="img" alt="" class="img-fluid" />
+                        <i
+                          style="color: red"
+                          class="fa fa-trash position-absolute delete-sample-image"
+                          aria-hidden="true"
+                          (click)="deleteSample(img)"
+                        ></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="add-new-token-sample" *ngIf="addNewLoungePhotos">
+                  <p class="main-heading">
+                    <span>{{
+                      data
+                        ? data.master.lounge.addnewoutletphotos
+                        : "Add New Outlet Photos"
+                    }}</span>
+                    <span
+                      class="close1"
+                      data-toggle="tooltip"
+                      title="Close"
+                      (click)="addNewLoungePhotos = false"
+                      >X</span
+                    >
+                  </p>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="uploadToken"
+                          >{{
+                            data
+                              ? data.master.lounge.uploadphoto
+                              : "Upload Photo"
+                          }}: {{ OutletPhotos[0].key1 }}</label
+                        >
+                        <input
+                          type="file"
+                          class="form-control-file"
+                          id="uploadToken"
+                          accept="image/*"
+                          multiple
+                          (change)="saveNewLoungePhotos($event.target.files)"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="result">
+                    <a class="btn btn-secondary" [class.disabled]="isFromCC"
+                      ><i class="fa fa-history" aria-hidden="true"></i>
+                      {{ data ? data.buttons.reset : "reset" }}</a
+                    >
+                    <a class="btn btn-info" [class.disabled]="isFromCC"
+                      ><i
+                        class="fa fa-plus"
+                        aria-hidden="true"
+                        (click)="saveNewLoungePhotos($event.target.files)"
+                      ></i>
+                      {{
+                        data
+                          ? data.master.lounge.addoutletphotos
+                          : "Add Outlet Photos"
+                      }}</a
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="users"
+                role="tabpanel"
+                aria-labelledby="users-tab"
+              >
+                <div class="users-data" *ngIf="!addNewUser">
+                  <!-- <p class="main-heading">
+                             <span>{{data? data.master.lounge.users: 'Users'}}</span>
+                             <span class="pull-right"> <a class="btn btn-info" (click)="addNewUser = true;userid=''"><i class="fa fa-plus" aria-hidden="true"></i> {{data? data.master.lounge.addNewUser : 'Add New User'}}</a></span>
+                      </p> -->
+                  <div class="table-responsive">
+                    <p class="main-heading">
+                      <span>{{
+                        data ? data.master.user.userroles : "User Roles"
+                      }}</span>
+                    </p>
+                    <input
+                      type="text"
+                      class="form-control"
+                      (input)="filterUserRoles($event.target.value)"
+                      placeholder="Search User Roles..."
+                    />
+                    <table
+                      mat-table
+                      [dataSource]="dataSourceUserLounge"
+                      style="margin-top: 2%"
+                      class="mat-elevation-z8"
+                      matSort
+                    >
+                      <ng-container matColumnDef="name">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.lounge.name : "Name" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.name }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="role">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.lounge.role : "Role" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          <span *ngFor="let role of element.roles">
+                            {{ role.roleName }},
+                          </span>
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="mobileNo">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.lounge.mobileNo : "Mobile No" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.mobile }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="emailId">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.lounge.emailId : "Email Id" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.email }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="status">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.lounge.status : "Status" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.status === 1 ? "Active" : "Inactive" }}
+                        </td>
+                      </ng-container>
+
+                      <tr
+                        mat-header-row
+                        *matHeaderRowDef="displayedUserLoungeColumns"
+                      ></tr>
+                      <tr
+                        mat-row
+                        *matRowDef="
+                          let row;
+                          columns: displayedUserLoungeColumns;
+                          let i = index
+                        "
+                      ></tr>
+                    </table>
+                    <mat-paginator
+                      [pageSizeOptions]="[10, 25, 50, 100]"
+                      aria-label="Select page of users"
+                    >
+                    </mat-paginator>
+                  </div>
+                  <!-- <table datatable class="table table-striped table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th>Role</th>
+                                                    <th>Mobile No</th>
+                                                    <th>Email</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr (dblclick)="getUserLoungeById(u._id)" *ngFor="let u of userLoungeData">
+                                                    <td>{{u.name}}</td>
+                                                    <td>{{u.role}}</td>
+                                                    <td>{{u.mobileNo}}</td>
+                                                    <td>{{u.emailId}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table> -->
+                </div>
+                <div class="add-new-user" *ngIf="addNewUser">
+                  <p class="main-heading">
+                    <span>{{
+                      data ? data.master.user.addNewUser : "Add New User"
+                    }}</span>
+                    <span
+                      class="close1"
+                      data-toggle="tooltip"
+                      title="Close"
+                      (click)="resetUserLoungeData()"
+                      >X</span
+                    >
+                  </p>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group position-relative">
+                        <label for="userName"
+                          >{{
+                            data
+                              ? data.master.user.username
+                              : "User
+                          Name"
+                          }}<span class="asterisk">*</span>:</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="userName"
+                          autocomplete="off"
+                          placeholder="{{
+                            data
+                              ? data.master.lounge.enterUserName
+                              : 'Enter User Name'
+                          }}"
+                          name="userName"
+                          [(ngModel)]="userName"
+                          (keyup)="fetchUserLoungeNames($event.target.value)"
+                          #userLoungeName
+                        />
+                        <ul class="searched-list" *ngIf="user.length > 0">
+                          <li
+                            *ngFor="let u of user"
+                            (click)="setTokenUserLounge(u)"
+                          >
+                            {{ u.name }}
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="userRole"
+                          >{{
+                            data
+                              ? data.master.user.userroles
+                              : "User
+                          Roles"
+                          }}<span class="asterisk">*</span>:</label
+                        >
+                        <select
+                          name="userRole"
+                          class="custom-select"
+                          id="userRole"
+                          [(ngModel)]="role"
+                        >
+                          <option *ngFor="let r of roles">{{ r.name }}</option>
+                          <!-- <option selected>Manager</option>
+                                                        <option value="1">Sales</option> -->
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="contactNo"
+                          >{{
+                            data
+                              ? data.master.user.mobileNo
+                              : "Mobile
+                          No"
+                          }}<span class="asterisk">*</span>:</label
+                        >
+                        <input
+                          type="number"
+                          class="form-control"
+                          id="contactNo"
+                          placeholder="{{
+                            data
+                              ? data.master.lounge.enterMobileNo
+                              : 'Enter Mobile No'
+                          }}"
+                          name="contactNo"
+                          [(ngModel)]="mobileNo"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="contactEmail"
+                          >{{ data ? data.master.user.email : "Email"
+                          }}<span class="asterisk">*</span>:</label
+                        >
+                        <input
+                          type="email"
+                          class="form-control"
+                          id="contactEmail"
+                          placeholder="{{
+                            data ? data.master.lounge.enterEmail : 'Enter Email'
+                          }}"
+                          name="contactEmail"
+                          [(ngModel)]="emailId"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="result">
+                    <a (click)="resetUserLoungeData()" class="btn btn-secondary"
+                      ><i class="fa fa-history" aria-hidden="true"></i>
+                      {{ data ? data.buttons.reset : "reset" }}</a
+                    >
+                    <a (click)="saveUserDetails()" class="btn btn-info"
+                      ><i class="fa fa-plus" aria-hidden="true"></i>
+                      {{
+                        data
+                          ? data.buttons.addNewUser
+                          : "Add New
+                      User"
+                      }}</a
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="loungetimings"
+                role="tabpanel"
+                aria-labelledby="loungetimings-tab"
+              >
+                <div class="users-data" *ngIf="!addNewTiming">
+                  <p class="main-heading">
+                    <span>{{
+                      data ? data.master.lounge.loungeTimings : "Opening Hours"
+                    }}</span>
+                    <span class="pull-right">
+                      <a
+                        class="btn btn-info"
+                        (click)="addNewTiming = true"
+                        [class.disabled]="isFromCC"
+                      >
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                        {{ data ? data.buttons.addNewTimings : "Add Timings" }}
+                      </a>
+                    </span>
+                  </p>
+                  <div class="table-responsive">
+                    <table
+                      mat-table
+                      [dataSource]="dataSourceTimings"
+                      class="mat-elevation-z8"
+                      matSort
+                    >
+                      <ng-container matColumnDef="days">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.lounge.days : "DAYS" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.displayDay }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="closed">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.lounge.closed : "CLOSED" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.isClosed ? "Yes" : "No" }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="timings">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.lounge.timings : "TIMINGS" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.isClosed ? "" : element.displayInterval }}
+                        </td>
+                      </ng-container>
+
+                      <tr
+                        mat-header-row
+                        *matHeaderRowDef="displayedColumnsTimings"
+                      ></tr>
+                      <tr
+                        mat-row
+                        (dblclick)="getLoungeByTimings()"
+                        *matRowDef="
+                          let row;
+                          columns: displayedColumnsTimings;
+                          let i = index
+                        "
+                      ></tr>
+                    </table>
+                  </div>
+                </div>
+                <div class="add-new-timings" *ngIf="addNewTiming">
+                  <p class="main-heading">
+                    <span
+                      >{{
+                        data ? data.master.lounge.addNewTimings : "Add Timings"
+                      }}
+                      - </span
+                    ><label style="font-size: 15px">
+                      {{
+                        data
+                          ? data.master.lounge.localstdtime
+                          : "Local standard time"
+                      }}</label
+                    >
+                    <span
+                      class="close1"
+                      data-toggle="tooltip"
+                      title="Close"
+                      (click)="addNewTiming = false"
+                      >X</span
+                    >
+                  </p>
+                  <div
+                    class="row mb-2 d-flex"
+                    *ngFor="let day of displayLoungeTime; let dayIndex = index"
+                  >
+                    <div class="col-md-2 pt-2">
+                      <p class="font-weight-bold">{{ day.displayDay }}</p>
+                    </div>
+                    <div class="col-md-2 pt-3">
+                      <div
+                        class="custom-switch mb-2"
+                        (click)="toggleClosed(dayIndex)"
+                      >
+                        <input
+                          type="checkbox"
+                          class="custom-control-input"
+                          [checked]="day.isClosed"
+                        />
+                        <label
+                          class="custom-control-label"
+                          for="customSwitch2"
+                          >{{
+                            data ? data.master.lounge.closed : "CLOSED"
+                          }}</label
+                        >
+                      </div>
+                    </div>
+                    <div class="col-md-6" *ngIf="!day.isClosed">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <ul class="list-unstyled mb-0 pl-0">
+                            <li
+                              *ngFor="
+                                let interval of day.intervals;
+                                let index = index
+                              "
+                            >
+                              <div class="row">
+                                <div
+                                  class="col-md-8 d-flex align-items-center justify-content-between"
+                                >
+                                  <div
+                                    class="form-group"
+                                    style="flex-basis: 45%"
+                                  >
+                                    <input
+                                      type="time"
+                                      class="form-control"
+                                      [(ngModel)]="interval.openingTime"
+                                      placeholder="Enter Opening Time"
+                                    />
+                                  </div>
+                                  <span class="mb-3">-</span>
+                                  <div
+                                    class="form-group"
+                                    style="flex-basis: 45%"
+                                  >
+                                    <input
+                                      type="time"
+                                      class="form-control"
+                                      [(ngModel)]="interval.closingTime"
+                                      placeholder="Enter Closing Time"
+                                    />
+                                  </div>
+                                </div>
+                                <div
+                                  class="col-md-3 mb-3 d-flex align-items-center"
+                                  *ngIf="index === day.intervals.length - 1"
+                                >
+                                  <a
+                                    class="add-hours-action"
+                                    (click)="addHours(dayIndex)"
+                                    >{{
+                                      data
+                                        ? data.master.lounge.addHours
+                                        : "Add Hours"
+                                    }}</a
+                                  >
+                                </div>
+                                <div
+                                  class="col-md-1 mb-3 d-flex align-items-center"
+                                  *ngIf="index > 0"
+                                >
+                                  <a
+                                    class="add-hours-action"
+                                    (click)="removeHours(dayIndex, index)"
+                                    ><i
+                                      class="fa fa-times"
+                                      aria-hidden="true"
+                                    ></i
+                                  ></a>
+                                </div>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="result">
+                    <a href="#" class="btn btn-secondary"
+                      ><i class="fa fa-history" aria-hidden="true"></i>
+                      {{ data ? data.buttons.reset : "reset" }}</a
+                    >
+                    <a class="btn btn-info" (click)="saveLoungeTimings()"
+                      ><i class="fa fa-plus" aria-hidden="true"></i>
+                      {{
+                        data
+                          ? data.buttons.addTimings
+                          : "Add
+                      Timings"
+                      }}</a
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="loungeShifts"
+                role="tabpanel"
+                aria-labelledby="loungeShifts-tab"
+              >
+                <div class="users-data" *ngIf="!addNewShifts">
+                  <p class="main-heading">
+                    <span>{{
+                      data ? data.master.lounge.loungeShifts : "Outlet Shifts"
+                    }}</span>
+                    <span class="pull-right">
+                      <a
+                        class="btn btn-info"
+                        (click)="addNewShifts = true"
+                        [class.disabled]="isFromCC"
+                      >
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                        {{ data ? data.buttons.addNewShifts : "Add Shifts" }}
+                      </a>
+                    </span>
+                  </p>
+                  <div class="table-responsive">
+                    <table
+                      mat-table
+                      [dataSource]="dataSourceShifts"
+                      class="mat-elevation-z8"
+                      matSort
+                    >
+                      <ng-container matColumnDef="shifts">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.lounge.shifts : "SHIFTS" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.shiftName }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="openingTime">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data
+                              ? data.master.lounge.openingtime
+                              : "Opening Time"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.openingTime }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="closingTime">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data
+                              ? data.master.lounge.closingtime
+                              : "Closing Time"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.closingTime }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="firstShift">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data ? data.master.lounge.firstShift : "First Shift"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          <input
+                            type="radio"
+                            id="firstShift"
+                            name="firstShift"
+                            [value]="element.firstShift"
+                            [checked]="element.firstShift"
+                            (change)="
+                              onRadioChange(element, 'firstShift', $event)
+                            "
+                          />
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="desk">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.lounge.desk : "Desk" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          <input
+                            type="number"
+                            id="desk"
+                            style="width: 45px"
+                            name="desk"
+                            min="0"
+                            [value]="2"
+                            onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))"
+                            [(ngModel)]="element.deskCount"
+                            pattern="[0-9]*"
+                            (change)="
+                              onRadioChange(element, 'deskCount', $event)
+                            "
+                          />
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="queue">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data ? data.master.lounge.queue : "Queue Managment"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          <input
+                            type="checkbox"
+                            id="queue"
+                            name="queue"
+                            [value]="false"
+                            [(ngModel)]="element.queueManagement"
+                            [checked]="element.queueManagement"
+                            (change)="
+                              onRadioChange(element, 'queueManagement', $event)
+                            "
+                          />
+                        </td>
+                      </ng-container>
+
+                      <tr
+                        mat-header-row
+                        *matHeaderRowDef="displayedColumnsShifts"
+                      ></tr>
+                      <tr
+                        mat-row
+                        (dblclick)="getLoungeByShifts()"
+                        *matRowDef="
+                          let row;
+                          columns: displayedColumnsShifts;
+                          let i = index
+                        "
+                      ></tr>
+                    </table>
+                  </div>
+                </div>
+                <div class="add-new-timings" *ngIf="addNewShifts">
+                  <p class="main-heading">
+                    <span
+                      >{{
+                        data ? data.master.lounge.addNewShifts : "Add Shifts"
+                      }}
+                      - </span
+                    ><label style="font-size: 15px">{{
+                      data
+                        ? data.master.lounge.localstdtime
+                        : "Local standard time"
+                    }}</label>
+                    <span
+                      class="close1"
+                      data-toggle="tooltip"
+                      title="Close"
+                      (click)="addNewShifts = false"
+                      >X</span
+                    >
+                  </p>
+                  <div class="row mb-2 d-flex">
+                    <div class="col-md-6">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="dayShift1"
+                              name="dayShift1"
+                              [(ngModel)]="dayShift1"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-group">
+                            <input
+                              type="time"
+                              class="form-control"
+                              [(ngModel)]="openingTime1"
+                              placeholder="Enter Opening Time"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-group">
+                            <input
+                              type="time"
+                              class="form-control"
+                              [(ngModel)]="closingTime1"
+                              placeholder="Enter Closing Time"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mb-2 d-flex">
+                    <div class="col-md-6">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="dayShift2"
+                              name="dayShift2"
+                              [(ngModel)]="dayShift2"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-group">
+                            <input
+                              type="time"
+                              class="form-control"
+                              id="openingTime2"
+                              [(ngModel)]="openingTime2"
+                              placeholder="Enter Opening Time"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-group">
+                            <input
+                              type="time"
+                              class="form-control"
+                              [(ngModel)]="closingTime2"
+                              placeholder="Enter Closing Time"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mb-2 d-flex">
+                    <div class="col-md-6">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="dayShift3"
+                              name="dayShift3"
+                              [(ngModel)]="dayShift3"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-group">
+                            <input
+                              type="time"
+                              class="form-control"
+                              [(ngModel)]="openingTime3"
+                              placeholder="Enter Opening Time"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="form-group">
+                            <input
+                              type="time"
+                              class="form-control"
+                              [(ngModel)]="closingTime3"
+                              placeholder="Enter Closing Time"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="result">
+                    <a href="#" class="btn btn-secondary"
+                      ><i class="fa fa-history" aria-hidden="true"></i
+                      >{{ data ? data.buttons.reset : "Reset" }}
+                    </a>
+                    <a class="btn btn-info" (click)="saveLoungeShifts()"
+                      ><i class="fa fa-plus" aria-hidden="true"></i>
+                      {{ data ? data.buttons.addNewShifts : "Add Shifts" }}</a
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="tab-pane fade"
+                id="localisation"
+                role="tabpanel"
+                aria-labelledby="localisation-tab"
+              >
+                <div class="users-data">
+                  <p class="main-heading">
+                    <span>{{
+                      data ? data.master.lounge.localisation : "Localisation"
+                    }}</span>
+                  </p>
+
+                  <div class="table-responsive">
+                    <table
+                      mat-table
+                      [dataSource]="dataSourceLocalisation"
+                      class="mat-elevation-z8"
+                      matSort
+                    >
+                      <ng-container matColumnDef="attribute">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data ? data.master.lounge.attribute : "Attribute"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container
+                        [matColumnDef]="l.key2"
+                        *ngFor="let l of availLanguages"
+                      >
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ l.key2 }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          <input
+                            type="text"
+                            placeholder="Enter outlet name in {{ l.key2 }}"
+                            class="form-control"
+                            [(ngModel)]="localisation[element][l.key1]"
+                          />
+                        </td>
+                      </ng-container>
+
+                      <tr
+                        mat-header-row
+                        *matHeaderRowDef="displayedColumnsLocalisation"
+                      ></tr>
+                      <tr
+                        mat-row
+                        *matRowDef="
+                          let row;
+                          columns: displayedColumnsLocalisation;
+                          let i = index
+                        "
+                      ></tr>
+                    </table>
+                  </div>
+                </div>
+                <div class="result">
+                  <a
+                    class="btn btn-info"
+                    (click)="updateLoungeLocalisation()"
+                    [class.disabled]="isFromCC"
+                    ><i class="fa fa-check" aria-hidden="true"></i>
+                    {{ data ? data.buttons.save : "Save" }}</a
+                  >
+                </div>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="loungeProductLink"
+                role="tabpanel"
+                aria-labelledby="loungeProductLink-tab"
+              >
+                <div
+                  class="loungeProductLink-data"
+                  *ngIf="!addNewPartnerLoungeLink"
+                >
+                  <p class="main-heading">
+                    <span>{{
+                      data
+                        ? data.master.lounge.txtHeadingpartnerlink
+                        : "Outlet Partner Link"
+                    }}</span>
+                    <span
+                      class="pull-right"
+                      [title]="!_id || _id === '' ? 'Outlet Partner Link' : ''"
+                    >
+                      <a
+                        class="btn btn-info"
+                        (click)="addNewPartnerLoungeLink = true"
+                        [class.disabled]="!_id || _id === '' || isFromCC"
+                        ><i class="fa fa-plus" aria-hidden="true"></i>
+                        {{
+                          data
+                            ? data.master.lounge.addoutletpartnerlink
+                            : "Add Outlet Partner Link"
+                        }}</a
+                      ></span
+                    >
+                  </p>
+                  <div class="table-responsive">
+                    <table
+                      mat-table
+                      [dataSource]="dataPartnerLink"
+                      class="mat-elevation-z8"
+                      matSort
+                      #productAvailableSort="matSort"
+                    >
+                      <ng-container matColumnDef="name">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data
+                              ? data.master.partner.partnerName
+                              : "Partner
+                          Name"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{
+                            element.partnerID == null
+                              ? ""
+                              : element.partnerID.name
+                          }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="loungeId">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data
+                              ? data.master.lounge.partneroutletID
+                              : "Partner Outlet ID"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.partnerLoungeID }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="modifiedOn">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data
+                              ? data.master.lounge.lastModifiedOn
+                              : "last Modified On"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ cs.formatDateTime(element.lastModifiedOn) }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="modifiedBy">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data
+                              ? data.master.lounge.lastModifiedBy
+                              : "last Modified By"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.lastModifiedBy.name }}
+                        </td>
+                      </ng-container>
+
+                      <tr
+                        mat-header-row
+                        *matHeaderRowDef="displayedPartnerColumns"
+                      ></tr>
+                      <tr
+                        mat-row
+                        (dblclick)="editLoungePartner(row)"
+                        *matRowDef="
+                          let row;
+                          columns: displayedPartnerColumns;
+                          let i = index
+                        "
+                      ></tr>
+                    </table>
+                    <mat-paginator
+                      #productAtPaginator
+                      [pageSizeOptions]="[10, 25, 50, 100]"
+                      [length]="loungeProductData.length"
+                      aria-label="Select page of Partner Lounge Link"
+                    >
+                    </mat-paginator>
+                  </div>
+                </div>
+                <div class="add-new-user" *ngIf="addNewPartnerLoungeLink">
+                  <p class="main-heading">
+                    <span>{{
+                      data
+                        ? data.master.lounge.outletpartnerlink
+                        : "Outlet Partner Link"
+                    }}</span>
+                    <span
+                      class="close1"
+                      data-toggle="tooltip"
+                      title="Close"
+                      (click)="resetLoungePartner()"
+                      >X</span
+                    >
+                  </p>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group position-relative">
+                        <label for="partnerName"
+                          >{{
+                            data
+                              ? data.master.partner.partnerName
+                              : "Partner
+                          Name"
+                          }}<span class="asterisk">*</span>:</label
+                        >
+                        <div class="suggestion_input_wrapper">
+                          <i class="fa fa-search" aria-hidden="true"></i>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="partnerName"
+                            [(ngModel)]="partner.name"
+                            autocomplete="off"
+                            (keyup)="fetchPartnerNames($event.target.value)"
+                            placeholder="{{
+                              data
+                                ? data.master.partner.partnerP
+                                : 'Enter Partner Name'
+                            }}"
+                            name="partnerName"
+                          />
+                        </div>
+                        <ul
+                          class="searched-list"
+                          *ngIf="partnersLink.length > 0"
+                        >
+                          <li
+                            *ngFor="let partner of partnersLink"
+                            (click)="setTokenPartner(partner)"
+                          >
+                            {{ partner.name }}
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="foreignLoungeId"
+                          >{{
+                            data
+                              ? data.master.lounge.partneroutletID
+                              : "Partner Outlet ID"
+                          }}<span class="asterisk">*</span>:</label
+                        >
+                        <input
+                          type="text"
+                          [(ngModel)]="foreignLoungeId"
+                          class="form-control"
+                          id="foreignLoungeId"
+                          placeholder="{{
+                            data
+                              ? data.master.lounge.partneroutletID
+                              : 'Partner Outlet ID'
+                          }}"
+                          name="foreignLoungeId"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="result">
+                    <a class="btn btn-secondary" (click)="resetLoungePartner()"
+                      ><i class="fa fa-history" aria-hidden="true"></i>
+                      {{ data ? data.master.product.reset : "Reset" }}</a
+                    >
+                    <a class="btn btn-info" (click)="newLoungePartner()">
+                      {{
+                        data
+                          ? data.master.lounge.addpartnerlink
+                          : "Add Partner Link"
+                      }}
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="productsTab"
+                role="tabpanel"
+                aria-labelledby="products-tab"
+              >
+                <div class="users-data" *ngIf="!addNewUser">
+                  <p class="main-heading">
+                    <span>{{
+                      data ? data.master.lounge.products : "Products"
+                    }}</span>
+                  </p>
+                  <div class="table-responsive">
+                    <table
+                      mat-table
+                      [dataSource]="dataSourceProductLounge"
+                      class="mat-elevation-z8"
+                      matSort
+                    >
+                      <ng-container matColumnDef="productSKU">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data ? data.master.lounge.productsku : "Product SKU"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          <span
+                            data-toggle="tooltip"
+                            title="{{ element.loungeID.name }}"
+                            ><i
+                              class="fa fa-info-circle"
+                              aria-hidden="true"
+                              style="font-size: 16px; color: #5e72e4"
+                            ></i>
+                            {{ element.lpsku }}
+                          </span>
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="name">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.lounge.name : "Name" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.lname }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="type">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.lounge.type : "Type" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.displayType }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="currency">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.lounge.currency : "Currency" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.listCurrency }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="price">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.lounge.price : "Price" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.listPrice }}
+                        </td>
+                      </ng-container>
+
+                      <tr
+                        mat-header-row
+                        *matHeaderRowDef="displayedProductLoungeColumns"
+                      ></tr>
+                      <tr
+                        mat-row
+                        *matRowDef="
+                          let row;
+                          columns: displayedProductLoungeColumns;
+                          let i = index
+                        "
+                      ></tr>
+                      <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell">No Products Found</td>
+                      </tr>
+                    </table>
+                  </div>
+                  <mat-paginator
+                    #productPagination
+                    [pageSizeOptions]="[10, 25, 50, 100]"
+                    [length]="productLoungeData.length"
+                    aria-label="Select page of products"
+                  >
+                  </mat-paginator>
+                </div>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="subOutletsTab"
+                role="tabpanel"
+                aria-labelledby="subOutlets-tab"
+              >
+                <div class="users-data" *ngIf="!addNewUser">
+                  <p class="main-heading">
+                    <span>{{
+                      data ? data.master.lounge.facilities : "Facilities"
+                    }}</span>
+                  </p>
+                  <div class="table-responsive">
+                    <table
+                      mat-table
+                      [dataSource]="dataSourceSubOutlets"
+                      class="mat-elevation-z8"
+                      matSort
+                    >
+                      <ng-container matColumnDef="name">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data ? data.master.lounge.loungeName : "Outlet Name"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.name }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="displayCategory">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data
+                              ? data.master.lounge.loungeCategory
+                              : "Outlet Category"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.displayCategory }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="displayZone">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.lounge.zone : "Zone" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.displayZone }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="area">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.lounge.area : "Area(Sq.m)" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.area }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="port">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.lounge.port : "Port" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.airport.airportCode }}-{{
+                            element?.airport.airportName
+                          }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="country">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.lounge.country : "Country" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.airport.airportCountry.name }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="capacity">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.lounge.capacity : "Capacity" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.capacity }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="status">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.lounge.status : "Status" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.status === 1 ? "Active" : "Inactive" }}
+                        </td>
+                      </ng-container>
+
+                      <tr
+                        mat-header-row
+                        *matHeaderRowDef="displayedSubOutletsColumns"
+                      ></tr>
+                      <tr
+                        mat-row
+                        (dblclick)="getLoungeById(row._id)"
+                        *matRowDef="
+                          let row;
+                          columns: displayedSubOutletsColumns;
+                          let i = index
+                        "
+                      ></tr>
+
+                      <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell">No Facilities Found</td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="tokens"
+                role="tabpanel"
+                aria-labelledby="service-tab"
+              >
+                <div class="users-data" *ngIf="!toggleCloneEntitlement">
+                  <p class="main-heading">
+                    <span>{{ data ? data.master.lounge.clone : "Clone" }}</span>
+                  </p>
+                  <a
+                    (click)="toggleCloneEntitlement = true"
+                    class="btn btn-info"
+                    [class.disabled]="isFromCC"
+                    ><i class="fa fa-copy" aria-hidden="true"></i>
+                    {{
+                      data
+                        ? data.master.lounge.cloneExt
+                        : "Clone From Existing Outlet"
+                    }}
+                  </a>
+                  <a
+                    [routerLink]="['/admission-token']"
+                    [queryParams]="{ outlet: _id }"
+                    class="btn btn-info"
+                    [class.disabled]="isFromCC"
+                    ><i class="fa fa-plus" aria-hidden="true"></i>
+                    {{
+                      data
+                        ? data.master.admissionToken.appTokens
+                        : "Applicable Admission Instructions"
+                    }}
+                  </a>
+                </div>
+                <div class="add-new-entitlement" *ngIf="toggleCloneEntitlement">
+                  <p class="main-heading">
+                    <span>{{
+                      data
+                        ? data.master.lounge.cloneEnt
+                        : "Clone From Existing Outlet"
+                    }}</span>
+                    <span
+                      class="close1"
+                      data-toggle="tooltip"
+                      title="Close"
+                      (click)="toggleCloneEntitlement = false"
+                      >X</span
+                    >
+                  </p>
+                  <p>
+                    <span
+                      ><i>{{
+                        data
+                          ? data.master.admissionToken.cloneEntSamOutlet
+                          : "*Entitlements from source outlet will be cloned to this outlet for all Admission Instructions
+                        where
+                        source outlet is applicable"
+                      }}</i></span
+                    >
+                  </p>
+                  <br />
+                  <div class="row">
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label for="sourceOutlet"
+                          >{{
+                            data
+                              ? data.master.lounge.sourceoutlet
+                              : "Source Outlet"
+                          }}
+                          <span class="asterisk">*</span>:
+                        </label>
+                        <div class="suggestion_input_wrapper">
+                          <i class="fa fa-search" aria-hidden="true"></i>
+                          <input
+                            [(ngModel)]="cloneFrom.name"
+                            type="text"
+                            class="form-control"
+                            id="cloneFromOutlet"
+                            placeholder="{{
+                              data
+                                ? data.master.lounge.enterLoungeName
+                                : 'Enter Outlet Name'
+                            }}"
+                            name="cloneFromOutlet"
+                            autocomplete="off"
+                            (keyup)="fetchLoungeNamesClone($event.target.value)"
+                          />
+                        </div>
+                        <ul
+                          class="searched-list"
+                          *ngIf="cloneSourceLounge.length > 0"
+                        >
+                          <li
+                            *ngFor="let l of cloneSourceLounge"
+                            (click)="setCloneFromLounge(l)"
+                          >
+                            {{ l.name }}
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-md-7">
+                      <div class="form-group">
+                        <label for="outletTokens">
+                          {{ data ? data.master.lounge.partners : "Partners" }}
+                        </label>
+                        <ng-select2
+                          [data]="tokenPartner"
+                          [(ngModel)]="selectedPartners"
+                          placeholder="{{
+                            data
+                              ? data.master.lounge.selectpartner
+                              : 'Select partner(s)'
+                          }}"
+                          [options]="options"
+                        >
+                        </ng-select2>
+                      </div>
+                    </div>
+                    <div
+                      class="col-md-2"
+                      style="
+                        display: flex;
+                        justify-content: space-evenly;
+                        align-items: center;
+                      "
+                    >
+                      <input
+                        type="checkbox"
+                        (click)="selectAllTokenPartners($event.target.checked)"
+                      />{{
+                        data
+                          ? data.master.lounge.selectallpartner
+                          : "Select all partners"
+                      }}
+                    </div>
+                  </div>
+                  <div class="result">
+                    <a
+                      href="javascript:void(null)"
+                      class="btn btn-secondary"
+                      [class.disabled]="
+                        cloneFrom._id === '' || !selectedPartners.length
+                      "
+                      (click)="cloneEntitlemets(1)"
+                    >
+                      <i class="fa fa-history" aria-hidden="true"></i>
+                      {{
+                        data ? data.buttons.cloneEnt : "Clone Entitlements"
+                      }}</a
+                    >
+
+                    <a
+                      href="javascript:void(null)"
+                      class="btn btn-secondary"
+                      [class.disabled]="cloneFrom._id === ''"
+                      (click)="cloneEntitlemets(2)"
+                    >
+                      <i class="fa fa-history" aria-hidden="true"></i>
+                      {{ data ? data.buttons.cloneProd : "Clone Products" }}</a
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="loungeFeatures"
+                role="tabpanel"
+                aria-labelledby="features-tab"
+              >
+                <div class="users-data">
+                  <p class="main-heading d-flex">
+                    <span>Lounge Features</span
+                    ><a
+                      class="btn btn-success ml-3"
+                      (click)="activateAllFeatures()"
+                      [class.disabled]="isFromCC"
+                      ><i class="fa fa-check" aria-hidden="true"></i> Activate
+                      All</a
+                    >
+                  </p>
+                  <div class="row">
+                    <div
+                      class="col-xl-3 col-lg-4 col-md-6 mb-3 d-flex"
+                      [class.disabled]="isFromCC"
+                      *ngFor="
+                        let features of displayLoungeFeatures;
+                        let featureIndex = index
+                      "
+                    >
+                      <img
+                        class="rounded lounge-features-img"
+                        src="{{ features.imgUrl }}"
+                        width="64"
+                        height="64"
+                        alt=""
+                      />
+                      <div class="px-2 py-1 d-flex flex-column">
+                        <span>
+                          {{ features.name }}
+                        </span>
+                        <div
+                          class="custom-switch pt-2"
+                          (click)="toggleFeature(featureIndex)"
+                        >
+                          <input
+                            type="checkbox"
+                            class="custom-control-input"
+                            [checked]="features.isActive"
+                          />
+                          <label class="custom-control-label"></label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="tab-pane fade"
+                id="loungeUseHistory"
+                role="tabpanel"
+                aria-labelledby="use-historyStatus"
+              >
+                <div class="loungeUseHistory">
+                  <p class="main-heading">
+                    <span>{{
+                      data
+                        ? data.master.lounge.outletUseHistory
+                        : "Today's Outlet Use History"
+                    }}</span>
+                  </p>
+                </div>
+                <div class="table-responsive">
+                  <table
+                    mat-table
+                    [dataSource]="dataSourceLoungeUseHistory"
+                    class="mat-elevation-z8"
+                    matSort
+                  >
+                    <ng-container matColumnDef="currentUseStatus">
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                        {{
+                          data
+                            ? data.master.lounge.loungeStatus
+                            : "Lounge Use Status"
+                        }}
+                      </th>
+                      <td mat-cell *matCellDef="let element" class="table-cell">
+                        <span [class]="getBadgeClass(element.currentUseStatus)">
+                          <div
+                            class="table-cell-content table-cell-text-size table-cell-left-align table-cell-normal-weight"
+                          >
+                            {{ element.currentUseStatus }}
+                          </div>
+                        </span>
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="createdBy">
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                        {{
+                          data
+                            ? data.master.lounge.userModifiedStatus
+                            : "Modified By"
+                        }}
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element.createdBy }}
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="createdOn">
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                        {{
+                          data
+                            ? data.master.lounge.statusModifiedOn
+                            : "Modified On"
+                        }}
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element.createdOn }}
+                      </td>
+                    </ng-container>
+
+                    <tr
+                      mat-header-row
+                      *matHeaderRowDef="displayedLoungeUseHistoryColumns"
+                    ></tr>
+                    <tr
+                      mat-row
+                      *matRowDef="
+                        let row;
+                        columns: displayedLoungeUseHistoryColumns;
+                        let i = index
+                      "
+                    ></tr>
+                  </table>
+                  <!-- <mat-paginator
+                    [pageSizeOptions]="[10, 25, 50, 100]"
+                    [length]="totalItems"
+                    (page)="onPageChange($event)"
+                    aria-label="Select page of users"
+                  >
+                  </mat-paginator> -->
+                </div>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="documen"
+                role="tabpanel"
+                aria-labelledby="documen-tab"
+              >
+                <app-upload-document
+                  (browseFile)="browseFile($event)"
+                  [showFiles]="showFiles"
+                  [filleTypes]="filleTypes"
+                  [dataSourceDocuments]="dataSourceDocuments"
+                  (changeDocumentStatus)="changeDocumentStatus($event)"
+                  (fetchDocuments)="fetchAIDocuments(tokenRowid)"
+                ></app-upload-document>
+              </div>
+            </div>
+            <div class="result mt-4">
+              <a
+                href="javascript:void(0)"
+                data-toggle="modal"
+                data-target="#partnerStatusHistory"
+                [class.disabled]="isFromCC"
+                class="btn btn-success mr-2"
+              >
+                <i class="fa fa-history" aria-hidden="true"></i>
+                {{ data ? data.buttons.actionhistory : "Action History" }}</a
+              >
+              <a
+                href="javascript:void(0)"
+                data-toggle="modal"
+                [hidden]="!_id || _id === ''"
+                [class.disabled]="isFromCC"
+                data-target="#outletSettingsModal"
+                class="btn btn-success mr-2"
+                ><i class="fa fa-cog" aria-hidden="true"></i>
+                {{
+                  data ? data.master.lounge.outletsettings : "Outlet Settings"
+                }}
+              </a>
+              <!-- <a
+                class="btn btn-primary"
+                style="color: white"
+                [hidden]="!_id || _id === ''"
+                (click)="downloadOutletToken(_id)"
+                ><i class="fa fa-download" aria-hidden="true"></i>
+                {{ data ? data.buttons.generateai : "Generate AI" }}</a
+              > -->
+              <a
+                class="btn btn-secondary"
+                (click)="resetOutletDetails()"
+                [class.disabled]="isFromCC"
+                ><i class="fa fa-history" aria-hidden="true"></i>
+                {{ data ? data.buttons.reset : "Reset" }}</a
+              >
+              <a
+                class="btn btn-info"
+                (click)="saveLoungeDetails()"
+                [class.disabled]="isFromCC"
+                ><i class="fa fa-check" aria-hidden="true"></i>
+                {{ data ? data.buttons.save : "Save" }}</a
+              >
+              <a
+                class="btn btn-success"
+                [hidden]="!_id || _id === ''"
+                (click)="submitOutletDetails()"
+                [class.disabled]="isFromCC"
+                ><i class="fa fa-check" aria-hidden="true"></i>
+                {{ data ? data.buttons.submit : "Submit" }}</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="outletSettingsModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="outletSettingsModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title mb-0" id="outletSettingsModalLabel">
+          {{ data ? data.master.lounge.outletsettings : "Outlet Settings" }}
+        </h3>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="outlet-settings-table" *ngIf="!editOutletSettings">
+          <div class="table-responsive">
+            <table
+              mat-table
+              [dataSource]="dataSourceSetting"
+              class="mat-elevation-z8"
+              matSort
+              #outletSettingsort="matSort"
+            >
+              <ng-container matColumnDef="name">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                  {{ data ? data.master.partner.settingName : "Setting Name" }}
+                </th>
+                <td mat-cell *matCellDef="let element">{{ element.lkCode }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="key1">
+                <th
+                  mat-header-cell
+                  mat-sort-header
+                  *matHeaderCellDef
+                  width="200px"
+                >
+                  {{ data ? data.master.partner.key1 : "Key 1" }}
+                </th>
+                <td mat-cell *matCellDef="let element">{{ element.key1 }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="key2">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                  {{ data ? data.master.partner.key2 : "Key 2" }}
+                </th>
+                <td mat-cell *matCellDef="let element">{{ element.key2 }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="key3">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                  {{ data ? data.master.partner.key3 : "Key 3" }}
+                </th>
+                <td mat-cell *matCellDef="let element">{{ element.key3 }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="key4">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                  {{ data ? data.master.partner.key4 : "Key 4" }}
+                </th>
+                <td mat-cell *matCellDef="let element">{{ element.key4 }}</td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displyedSettingColumn"></tr>
+              <tr
+                mat-row
+                (dblclick)="editOutletSetting(row)"
+                *matRowDef="
+                  let row;
+                  columns: displyedSettingColumn;
+                  let i = index
+                "
+              ></tr>
+              <!-- <tr *ngIf="!dataSourceContact" mat-row>Currently no Data is Available</tr> -->
+            </table>
+            <mat-paginator
+              #outletSettingPagination
+              [pageSizeOptions]="[10, 25, 50, 100]"
+              class="hello"
+            >
+            </mat-paginator>
+          </div>
+        </div>
+
+        <div class="partner-settings-edit" *ngIf="editOutletSettings">
+          <p class="main-heading">
+            <span>Edit Outlet Setting</span>
+            <span
+              class="close1"
+              data-toggle="tooltip"
+              title="Close"
+              (click)="hideEditOutletSetting()"
+              >X</span
+            >
+          </p>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="lkCode"
+                  >LookUp Code:<span class="asterisk">*</span></label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="lkCode"
+                  [(ngModel)]="outletSettings.lkCode"
+                  autocomplete="off"
+                  placeholder="Enter Look Up Code"
+                  name="lkCode"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="keyCode"
+                  >Key Code<span class="asterisk">*</span>:</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="keyCode"
+                  [(ngModel)]="outletSettings.keyCode"
+                  autocomplete="off"
+                  placeholder="Enter Key Code"
+                  name="keyCode"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="setting1"
+                  >Key 1<span class="asterisk">*</span>:</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="setting1"
+                  [(ngModel)]="outletSettings.key1"
+                  autocomplete="off"
+                  placeholder="Enter Key 1"
+                  name="setting1"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="setting2"
+                  >Key 2<span class="asterisk">*</span>:</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="setting2"
+                  [(ngModel)]="outletSettings.key2"
+                  autocomplete="off"
+                  placeholder="Enter Key 2"
+                  name="setting2"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="setting3"
+                  >Key 3<span class="asterisk">*</span>:</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="setting3"
+                  [(ngModel)]="outletSettings.key3"
+                  autocomplete="off"
+                  placeholder="Enter Key 3"
+                  name="setting3"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="setting4"
+                  >Key 4<span class="asterisk">*</span>:</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="setting4"
+                  [(ngModel)]="outletSettings.key4"
+                  autocomplete="off"
+                  placeholder="Enter Key 4"
+                  name="setting4"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          *ngIf="!editOutletSettings"
+          type="button"
+          class="btn btn-secondary mr-2"
+          data-dismiss="modal"
+        >
+          <i class="fa fa-times" aria-hidden="true"></i>
+          {{ data ? data.buttons.close : "Close" }}
+        </button>
+        <button
+          *ngIf="!editOutletSettings"
+          type="button"
+          (click)="editOutletSettings = true; resetOutletSettings()"
+          class="btn btn-info mr-2"
+          data-dismiss="modal"
+        >
+          <i class="fa fa-plus" aria-hidden="true"></i>
+          {{
+            data ? data.master.lounge.addoutletsetting : "Add Outlet Setting"
+          }}
+        </button>
+        <button
+          *ngIf="editOutletSettings"
+          (click)="outletSettingUpsert()"
+          type="button"
+          class="btn btn-success"
+          [class.disabled]="isFromCC"
+        >
+          <i class="fa fa-success" aria-hidden="true"></i>
+          {{ data ? data.buttons.save : "Save" }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="isActiveModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="isActiveModalLable"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title mb-0" id="isActiveModalLable">Remarks</h3>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="changeStatus()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="remarks"
+                >Remarks<span class="asterisk">*</span>:</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="remarks"
+                [(ngModel)]="remarkDetails.remarks"
+                autocomplete="off"
+                placeholder="Enter Remarks"
+                name="remarks"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary mr-2"
+          data-dismiss="modal"
+          (click)="changeStatus()"
+          [class.disabled]="isFromCC"
+        >
+          <i class="fa fa-times" aria-hidden="true"></i>
+          {{ data ? data.buttons.close : "Close" }}
+        </button>
+        <button
+          type="button"
+          id="svbtn"
+          class="btn btn-success"
+          (click)="saveStatusHistory()"
+          [class.disabled]="isFromCC"
+        >
+          <i class="fa fa-success" aria-hidden="true"></i>
+          {{ data ? data.buttons.save : "Save" }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--  -->
+<div
+  class="modal fade"
+  id="partnerStatusHistory"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="admissionTokenHistoryLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title mb-0" id="admissionTokenHistoryLabel">
+          {{ data ? data.buttons.actionhistory : "Action History" }}
+        </h3>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="admission-token-history-table">
+          <div class="table-responsive">
+            <table
+              mat-table
+              [dataSource]="dataSourceStatusHistory"
+              class="mat-elevation-z8"
+              matSort
+              #partnerSettingSort="matSort"
+            >
+              <ng-container matColumnDef="action">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                  {{ data ? data.master.admissionToken.action : "Action" }}
+                </th>
+                <td mat-cell *matCellDef="let element">{{ element.action }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="remarks">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                  {{ dataa ? dataa.master.admissionToken.reason : "Remarks" }}
+                </th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.remarks }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="outlet">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                  {{ data ? data.master.admissionToken.outlet : "Outlet" }}
+                </th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.outlet.name }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="modifiedOn">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                  {{
+                    data ? data.master.admissionToken.modifiedon : "Modified On"
+                  }}
+                </th>
+                <td mat-cell *matCellDef="let element">
+                  {{ cs.formatDateTime(element.modifiedOn) }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="modifiedBy">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                  {{
+                    data ? data.master.admissionToken.modifiedby : "Modified By"
+                  }}
+                </th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.modifiedBy.name }}
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displyedActionColumn"></tr>
+              <tr
+                mat-row
+                *matRowDef="
+                  let row;
+                  columns: displyedActionColumn;
+                  let i = index
+                "
+              ></tr>
+            </table>
+          </div>
+          <mat-paginator
+            #parnterSettingPagination
+            [pageSizeOptions]="[10, 25, 50, 100]"
+            class="Select Page for Action Histroy"
+          >
+          </mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

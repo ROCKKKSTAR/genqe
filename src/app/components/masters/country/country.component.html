@@ -1,0 +1,598 @@
+<div
+  class="content-wrapper d-flex"
+  [ngClass]="{ 'sidebar-open': isSidebarOpen }"
+>
+  <div class="sidebar-wrapper">
+    <app-sidebar [(sidebarState)]="isSidebarOpen"></app-sidebar>
+  </div>
+  <div class="main-wrapper pt-3 h-100">
+    <div *ngIf="countryLoaderShow">
+      <app-loader [message]="'Loading Countries...'"></app-loader>
+    </div>
+    <div *ngIf="ExportLoader">
+      <app-loader [message]="exportloaderMessage"></app-loader>
+    </div>
+    <div class="container-fluid h-100">
+      <div class="row h-100">
+        <div class="col-md-12">
+          <div
+            class="property-details-wrapper"
+            style="width: 100%"
+            *ngIf="!showCountryDetails && !showImport"
+          >
+            <div class="row">
+              <div class="col-md-6">
+                <p class="main-heading">
+                  <span
+                    >{{
+                      data ? data.master.country.txtHeading : "Country:"
+                    }}: </span
+                  >{{
+                    data
+                      ? data.master.country.txtDes
+                      : "View and Add New Country in System."
+                  }}
+                </p>
+              </div>
+              <div class="col-md-6 text-right">
+                <a
+                  href="javascript:void(0)"
+                  mat-raised-button
+                  (click)="exportReport('Country')"
+                  style="line-height: 24px !important"
+                  class="btn btn-info"
+                  ><i class="fa fa-file-text-o" aria-hidden="true"></i>
+                  {{ data ? data.buttons.export : "Export" }}</a
+                >
+                <a
+                  (click)="showImportScreen()"
+                  class="btn btn-success text-white mr-2"
+                  ><i class="fa fa-upload" aria-hidden="true"></i
+                  >{{ data ? data.buttons.import : "Import" }}</a
+                >
+                <a class="btn btn-info" (click)="addNewCountry(true)"
+                  ><i class="fa fa-plus" aria-hidden="true"></i>
+                  {{ data ? data.buttons.new : "New" }}</a
+                >
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="search-wrapper">
+                  <div class="search-product">
+                    <div class="search_main">
+                      <div class="search-input">
+                        <span
+                          ><i class="fa fa-search" aria-hidden="true"></i
+                        ></span>
+                        <input
+                          type="search"
+                          [(ngModel)]="simpleSearch"
+                          (keyup.enter)="
+                            simpleSearchCountryData($event.target.value)
+                          "
+                        />
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>{{
+                          data
+                            ? data.master.country.searchCountry
+                            : "Search Country"
+                        }}</label>
+                        <span
+                          ><i
+                            (click)="getCountrySearch()"
+                            class="fa fa-times"
+                            aria-hidden="true"
+                          ></i
+                        ></span>
+                        <span (click)="showQueryForm()" class="dropdown-form"
+                          ><i class="fa fa-sort-desc" aria-hidden="true"></i
+                        ></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="query1" class="query1" *ngIf="showData">
+                    <div class="form-container">
+                      <form>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="Name"
+                                >{{
+                                  data ? data.master.country.name : "Name"
+                                }}:</label
+                              >
+                              <div class="suggestion_input_wrapper">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  id="countryname"
+                                  placeholder="{{
+                                    data
+                                      ? data.master.country.enterCountryName
+                                      : 'Enter Country Name'
+                                  }}"
+                                  name="countryName"
+                                  [(ngModel)]="countryName"
+                                  autocomplete="off"
+                                  (keyup)="
+                                    fetchCountryNames($event.target.value)
+                                  "
+                                  (keydown)="
+                                    onTokenAdvancedCountryInputKeydown($event)
+                                  "
+                                />
+                              </div>
+                              <ul
+                                class="searched-list searchSuggestions"
+                                *ngIf="country.length > 0"
+                              >
+                                <li
+                                  *ngFor="let c of country; let i = index"
+                                  [class.selected]="
+                                    i === tokenAdvancedCountrySuggestionIndex
+                                  "
+                                  (click)="setTokenAdvancedCountry(c)"
+                                >
+                                  {{ c.name }}
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="Language"
+                                >{{
+                                  data
+                                    ? data.master.country.language
+                                    : "Language"
+                                }}:</label
+                              >
+                              <div class="suggestion_input_wrapper">
+                                <!-- <i class="fa fa-search" aria-hidden="true"></i> -->
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  id="language"
+                                  placeholder="{{
+                                    data
+                                      ? data.master.country.enterCountryLanguage
+                                      : 'Enter Country Language'
+                                  }}"
+                                  name="Language"
+                                  [(ngModel)]="language"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="Currency"
+                                >{{
+                                  data
+                                    ? data.master.country.currency
+                                    : "Currency"
+                                }}:</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="currency"
+                                placeholder="{{
+                                  data
+                                    ? data.master.country.enterCountryCurrency
+                                    : 'Enter Country Currency'
+                                }}"
+                                name="Currency"
+                                [(ngModel)]="currency"
+                              />
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="region"
+                                >{{
+                                  data
+                                    ? data.master.country.txtregion
+                                    : "Region"
+                                }}:</label
+                              >
+                              <select
+                                name="region"
+                                class="custom-select"
+                                [(ngModel)]="partnerRegion"
+                                id="region"
+                              >
+                                <option
+                                  *ngFor="let t of partnerRegions"
+                                  [ngValue]="t.keyCode"
+                                >
+                                  {{ t.key1 }}
+                                </option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="query-btn">
+                          <a class="btn btn-secondary"
+                            ><i
+                              class="fa fa-history"
+                              aria-hidden="true"
+                              (click)="
+                                countryName = ''; language = ''; currency = ''
+                              "
+                            ></i>
+                            {{ data ? data.buttons.reset : "Reset" }}</a
+                          >
+                          <a
+                            class="btn btn-info"
+                            (click)="advanceCountryDataSearch()"
+                            ><i
+                              class="fa fa-search"
+                              aria-hidden="true"
+                              (click)="advanceCountryDataSearch()"
+                            ></i>
+                            {{ data ? data.buttons.search : "Search" }}</a
+                          >
+                          <a class="btn btn-danger" (click)="showQueryForm()"
+                            ><i class="fa fa-close" aria-hidden="true"></i>
+                            {{ data ? data.admission.close : "Close" }}</a
+                          >
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <div class="property-table-wrapper" style="width: 100%">
+                  <div class="table-responsive">
+                    <table
+                      mat-table
+                      [dataSource]="dataSourceCountry"
+                      matTableExporter
+                      #exporter="matTableExporter"
+                      class="mat-elevation-z8"
+                      matSort
+                    >
+                      <!-- <ng-container matColumnDef="_id">
+                                        <th mat-header-cell *matHeaderCellDef> Partner Id </th>
+                                        <td mat-cell *matCellDef="let element"> {{element._id}} </td>
+                                    </ng-container> -->
+                      <ng-container matColumnDef="name">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.country.name : "Name" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.name }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="region">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.country.txtregion : "Region" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.region }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="language">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.country.language : "Language" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.language }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="currency">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.country.currency : "Currency" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.currency }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="countryCode">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data
+                              ? data.master.country.countryISOCode
+                              : "Country Code"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.countryCode }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="orders">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          Orders
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.orders }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="status">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.country.status : "Status" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.status === 1 ? "Active" : "Inactive" }}
+                        </td>
+                      </ng-container>
+                      <tr
+                        mat-header-row
+                        *matHeaderRowDef="displayedColumns"
+                      ></tr>
+                      <tr
+                        mat-row
+                        (dblclick)="getCountryById(row._id)"
+                        *matRowDef="
+                          let row;
+                          columns: displayedColumns;
+                          let i = index
+                        "
+                      ></tr>
+                      <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell">No data Found!</td>
+                      </tr>
+                    </table>
+                  </div>
+                  <mat-paginator
+                    [pageSizeOptions]="[10, 25, 50, 100]"
+                    aria-label="Select page of users"
+                  ></mat-paginator>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="new-property-wrapper"
+            *ngIf="showCountryDetails && !showImport"
+          >
+            <p class="main-heading">
+              <span
+                >{{
+                  data ? data.master.country.countryHeading : "Add New Country"
+                }}: </span
+              >{{
+                data
+                  ? data.master.country.countryDes
+                  : "Fill the following details to add new Country"
+              }}.
+              <span
+                (click)="hideCountryDetails()"
+                class="close1"
+                data-toggle="tooltip"
+                title="Close"
+                >X</span
+              >
+            </p>
+            <form>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group position-relative">
+                    <label for="countryName"
+                      >{{ data ? data.master.country.name : "Name"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <div class="suggestion_input_wrapper">
+                      <i class="fa fa-search" aria-hidden="true"></i>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="countryName"
+                        placeholder="{{
+                          data
+                            ? data.master.country.enterCountryName
+                            : 'Enter Country Name'
+                        }}"
+                        name="name"
+                        [(ngModel)]="name"
+                        autocomplete="off"
+                        (keyup)="fetchCountryNames($event.target.value)"
+                      />
+                    </div>
+                    <ul class="searched-list" *ngIf="country.length > 0">
+                      <li
+                        *ngFor="let c of country"
+                        (click)="setTokenCountry(c)"
+                      >
+                        {{ c.name }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="region"
+                      >{{
+                        data ? data.master.country.txtregion : "Region"
+                      }}:</label
+                    >
+                    <select
+                      name="region"
+                      class="custom-select"
+                      [(ngModel)]="Region"
+                    >
+                      <option
+                        *ngFor="let t of partnerRegions"
+                        [ngValue]="t.keyCode"
+                      >
+                        {{ t.key1 }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="language"
+                      >{{ data ? data.master.country.language : "Language"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <div class="suggestion_input_wrapper">
+                      <!-- <i class="fa fa-search" aria-hidden="true"></i> -->
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="language"
+                        placeholder="{{
+                          data
+                            ? data.master.country.enterCountryLanguage
+                            : 'Enter Country Language'
+                        }}"
+                        name="language"
+                        [(ngModel)]="language"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="currency"
+                      >{{ data ? data.master.country.currency : "Currency"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="currency"
+                      placeholder="{{
+                        data
+                          ? data.master.country.enterCountryCurrency
+                          : 'Enter Country Currency'
+                      }}"
+                      name="currency"
+                      [(ngModel)]="currency"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="countryISOCode"
+                      >{{
+                        data
+                          ? data.master.country.countryISOCode
+                          : "Country Code"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="countryCode"
+                      placeholder="{{
+                        data
+                          ? data.master.country.enterCountryISOCode
+                          : 'Enter Country Code'
+                      }}"
+                      name="countryCode"
+                      [(ngModel)]="countryCode"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="orders">Orders:</label>
+                    <input
+                      [disabled]="true"
+                      type="text"
+                      class="form-control"
+                      id="orders"
+                      placeholder="Orders"
+                      name="orders"
+                      [(ngModel)]="orders"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2">
+                  <div
+                    class="form-group d-flex justify-content-between align-items-center"
+                  >
+                    <label class="mb-0" for="isActive"
+                      >{{
+                        data ? data.master.country.isActive : "Is Active"
+                      }}:</label
+                    >
+                    <div class="custom-control custom-switch">
+                      <input
+                        type="checkbox"
+                        name="isActive"
+                        class="custom-control-input"
+                        id="customSwitch1"
+                        checked
+                        [(ngModel)]="isActive"
+                      />
+                      <label
+                        class="custom-control-label"
+                        for="customSwitch1"
+                      ></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row"></div>
+            </form>
+
+            <ul
+              class="nav nav-tabs mt-4"
+              id="myTab"
+              role="tablist"
+              *ngIf="showCountryDetails && !showImport"
+            >
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  id="documen-tab"
+                  data-toggle="tab"
+                  href="#documen"
+                  role="tab"
+                  aria-controls="documen"
+                  aria-selected="true"
+                  >{{ data ? data.buttons.document : "Document" }}</a
+                >
+              </li>
+            </ul>
+            <div
+              class="tab-pane show active"
+              id="documen"
+              role="tabpanel"
+              aria-labelledby="documen-tab"
+              *ngIf="showCountryDetails && !showImport"
+            >
+              <app-upload-document
+                (browseFile)="browseFile($event)"
+                [showFiles]="showFiles"
+                [filleTypes]="filleTypes"
+                [dataSourceDocuments]="dataSourceDocuments"
+                (changeDocumentStatus)="changeDocumentStatus($event)"
+                (fetchDocuments)="fetchAIDocuments(tokenRowid)"
+              ></app-upload-document>
+            </div>
+            <div class="result mt-4">
+              <a class="btn btn-secondary mr-2" (click)="resetCountryData()"
+                ><i class="fa fa-history" aria-hidden="true"></i
+                >{{ data ? data.buttons.reset : "Reset" }}</a
+              >
+              <a class="btn btn-success" (click)="upsertCountryDetails()">
+                <i class="fa fa-check" aria-hidden="true"></i
+                >{{ data ? data.buttons.submit : "Submit" }}</a
+              >
+            </div>
+          </div>
+          <div *ngIf="showImport && !showCountryDetails">
+            <app-import-data
+              [showNavBar]="false"
+              [showLeftMenu]="false"
+              [validator]="importValidator"
+              (importClose)="backToResults()"
+            ></app-import-data>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

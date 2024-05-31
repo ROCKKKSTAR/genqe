@@ -1,0 +1,1580 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+
+  <title>Admission flows via Sunmi Device - PPG LMS Documentation</title>
+
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+  <link rel="stylesheet" type="text/css"
+    href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="../../assets/css/just-the-docs.css" />
+  <!--Different Browser icon for All Devices -->
+  <link href="../../assets/images/fav_icon.ico" rel="icon" type="image/x-icon" />
+  <!--IE Browser icon for All Devices -->
+  <link href="../../assets/images/fav_icon.ico" rel="shortcut icon" type="image/x-icon" />
+  <!--Icon for Devices -->
+  <link href="../../assets/images/fav_icon.ico" rel="apple-touch-icon" />
+  <!--Icon for Devices -->
+  <link href="../../assets/images/fav_icon.ico" rel="apple-touch-icon-precomposed" />
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+
+  <script type="text/javascript" src="../../assets/js/vendor/lunr.min.js"></script>
+
+
+  <script type="text/javascript" src="../../assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+
+<body>
+  <div class="page-wrap">
+    <div class="side-bar">
+      <div class="site-header">
+        <a href="../.." class="site-title lh-tight">PPG LMS</a>
+        <button class="menu-button fs-3 js-main-nav-trigger" data-text-toggle="Hide" type="button">Menu</button>
+      </div>
+
+      <div class="navigation main-nav js-main-nav">
+        <nav role="navigation" aria-label="Main navigation">
+          <ul class="navigation-list"><li
+              class="navigation-list-item"
+            ><a
+                href="../../index.html"
+                class="navigation-list-link"
+                >Getting Started</a
+              ></li><li
+              class="navigation-list-item"
+            ><a
+                href="../../docs/overview/index.html"
+                class="navigation-list-link"
+                >Overview</a
+              ></li><li
+              class="navigation-list-item"
+            ><a
+                href="../../docs/newLmsUserSetup/index.html"
+                class="navigation-list-link"
+                >New LMS User Setup</a
+              ></li><li
+              class="navigation-list-item"
+            ><a
+                href="../../docs/setUpNewAdmissionToken/index.html"
+                class="navigation-list-link"
+                >Setup New Admission Token</a
+              ></li><li
+              class="navigation-list-item"
+            ><a
+                href="../../docs/guestAdmission/index.html"
+                class="navigation-list-link"
+                >Guest Admission</a
+              ></li><li
+              class="navigation-list-item"
+            ><a
+                href="../../docs/offlineParthnerIntergration/index.html"
+                class="navigation-list-link"
+                >Offline Partner Integration</a
+              ></li><li
+              class="navigation-list-item"
+            ><a
+                href="../../docs/securityMatrix/index.html"
+                class="navigation-list-link"
+                >Security matrix</a
+              ></li><li
+              class="navigation-list-item"
+            ><a
+                href="../../docs/API%20Documentation/index.html"
+                class="navigation-list-link"
+                >API Documentation</a
+              ><ul class="navigation-list-child-list"><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/login/index.html"
+                    class="navigation-list-link"
+                    >Login</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/profile/index.html"
+                    class="navigation-list-link"
+                    >Profile</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/changePassword/index.html"
+                    class="navigation-list-link"
+                    >Change Password</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/certificateList/index.html"
+                    class="navigation-list-link"
+                    >Certificate List</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/cardSave/index.html"
+                    class="navigation-list-link"
+                    >Card Save</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/verifyToken/index.html"
+                    class="navigation-list-link"
+                    >Verify Token</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/boardingPassScan/index.html"
+                    class="navigation-list-link"
+                    >Boarding Pass Scan</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/boardingPassSave/index.html"
+                    class="navigation-list-link"
+                    >Boarding Pass Save</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/boardingPassId/index.html"
+                    class="navigation-list-link"
+                    >Boarding Pass ID</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/corporateTokens/index.html"
+                    class="navigation-list-link"
+                    >Corporates Token</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/corporates/index.html"
+                    class="navigation-list-link"
+                    >Corporates</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/redeemCoupon/index.html"
+                    class="navigation-list-link"
+                    >Redeem Coupon</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getFacilities/index.html"
+                    class="navigation-list-link"
+                    >Get Facilities</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getProducts/index.html"
+                    class="navigation-list-link"
+                    >Get Products</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getOrders/index.html"
+                    class="navigation-list-link"
+                    >Get Orders</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getOutlets/index.html"
+                    class="navigation-list-link"
+                    >Get Outlets</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getEntitlements/index.html"
+                    class="navigation-list-link"
+                    >Get Entitlements</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getadmissions/index.html"
+                    class="navigation-list-link"
+                    >Get Admissions</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/blackListedToken/index.html"
+                    class="navigation-list-link"
+                    >Blacklisted Token</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/whitelistedToken/index.html"
+                    class="navigation-list-link"
+                    >Whitelisted Token</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/mapOutlets/index.html"
+                    class="navigation-list-link"
+                    >Map Outlets</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/mapProducts/index.html"
+                    class="navigation-list-link"
+                    >Map Products</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getToken/index.html"
+                    class="navigation-list-link"
+                    >Get Token</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getCouponCode/index.html"
+                    class="navigation-list-link"
+                    >Coupon Code</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getCouponDetails/index.html"
+                    class="navigation-list-link"
+                    >Coupon Details</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/cancelCoupon/index.html"
+                    class="navigation-list-link"
+                    >Cancel Coupon</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/redeemToken/index.html"
+                    class="navigation-list-link"
+                    >Redeem Token</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/updateCoupon/index.html"
+                    class="navigation-list-link"
+                    >Update Coupon</a
+                  ></li></ul></li><li
+              class="navigation-list-item"
+            ><a
+                href="../../docs/LMSprocessflowdiadram/index.html"
+                class="navigation-list-link"
+                >LMS Process Flow Diagram</a
+              ></li><li
+              class="navigation-list-item active"
+            ><a
+                href="../../docs/features/index.html"
+                class="navigation-list-link"
+                >Features</a
+              ><ul class="navigation-list-child-list"><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/dashboard/index.html"
+                    class="navigation-list-link"
+                    >Dashboard</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/admissions/index.html"
+                    class="navigation-list-link"
+                    >Admissions</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/orders/index.html"
+                    class="navigation-list-link"
+                    >Orders</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/GenerateCoupons/index.html"
+                    class="navigation-list-link"
+                    >Generate Coupons</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/partnerResponse/index.html"
+                    class="navigation-list-link"
+                    >Partner Responses</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/fileImportExport/index.html"
+                    class="navigation-list-link"
+                    >File Import/Export</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/partner/index.html"
+                    class="navigation-list-link"
+                    >Partner</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/outlet/index.html"
+                    class="navigation-list-link"
+                    >Outlet</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/product/index.html"
+                    class="navigation-list-link"
+                    >Product</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/admissionToken/index.html"
+                    class="navigation-list-link"
+                    >Admission Token</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/partnerContract/index.html"
+                    class="navigation-list-link"
+                    >Partner Contract</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/airport/index.html"
+                    class="navigation-list-link"
+                    >Port/Station</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/users/index.html"
+                    class="navigation-list-link"
+                    >Users</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/members/index.html"
+                    class="navigation-list-link"
+                    >Members</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/devices/index.html"
+                    class="navigation-list-link"
+                    >Devices</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/vendor/index.html"
+                    class="navigation-list-link"
+                    >Vendor</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/tax/index.html"
+                    class="navigation-list-link"
+                    >Tax</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/country/index.html"
+                    class="navigation-list-link"
+                    >Country</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/pincode/index.html"
+                    class="navigation-list-link"
+                    >Pincode</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/receiptTemplate/index.html"
+                    class="navigation-list-link"
+                    >Recipt Template</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/token/index.html"
+                    class="navigation-list-link"
+                    >Token</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/module/index.html"
+                    class="navigation-list-link"
+                    >Module</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/action/index.html"
+                    class="navigation-list-link"
+                    >Action</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/role/index.html"
+                    class="navigation-list-link"
+                    >Role</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/globalSettings/index.html"
+                    class="navigation-list-link"
+                    >Global Settings</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/AdmissionPOS/index.html"
+                    class="navigation-list-link"
+                    >Admission POS</a
+                  ></li><li
+                  class="navigation-list-item  "
+                ><a
+                    href="../../docs/DMR/index.html"
+                    class="navigation-list-link "
+                    >DMR</a
+                  ></li>
+                  <li class="navigation-list-item "><a
+                        href="../../docs/AdmissionflowsviaSunmiDevice/index.html"
+                        class="navigation-list-link active"
+                        >Admission flows via Sunmi Device</a
+                      ></li></ul></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/ReleaseLogs/index.html"
+                    class="navigation-list-link"
+                    >Release Logs</a
+                  ><ul class="navigation-list-child-list"><li
+                      class="navigation-list-item "
+                    ><a
+                        href="../../docs/FirstRelease/index.html"
+                        class="navigation-list-link"
+                        >Release Notes - Build 1.1.23.01-07</a
+                      ></li></ul></li></ul>
+
+      </div>
+      <!-- <footer class="site-footer">
+        <p class="text-small text-grey-dk-000 mb-4">This site is created by <a href="#">C Simplify IT</a>, for Samvad.</p>
+      </footer> -->
+    </div>
+    <div class="main-content-wrap js-main-content" tabindex="0">
+      <div class="main-content">
+        <div class="page-header js-page-header">
+
+          <div class="search">
+            <div class="search-input-wrap">
+              <input type="text" class="js-search-input search-input" tabindex="0"
+                placeholder="Search PPG LMS Documentation" aria-label="Search PPG LMS Documentation" autocomplete="off">
+              <svg width="14" height="14" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" class="search-icon">
+                <title>Search</title>
+                <g fill-rule="nonzero">
+                  <path
+                    d="M17.332 20.735c-5.537 0-10-4.6-10-10.247 0-5.646 4.463-10.247 10-10.247 5.536 0 10 4.601 10 10.247s-4.464 10.247-10 10.247zm0-4c3.3 0 6-2.783 6-6.247 0-3.463-2.7-6.247-6-6.247s-6 2.784-6 6.247c0 3.464 2.7 6.247 6 6.247z" />
+                  <path d="M11.672 13.791L.192 25.271 3.02 28.1 14.5 16.62z" />
+                </g>
+              </svg>
+            </div>
+            <div class="js-search-results search-results-wrap"></div>
+          </div>
+
+        </div>
+        <div class="page">
+          <div id="main-content" class="page-content" role="main">
+            <h2><strong>Admission flows via Sunmi Device</strong></h2>
+            <p>User needs to enter the credentials to log in to the device.</p>
+            <img src="../../assets/images/APKloginflow.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>When you enter you are redirected to a screen to select the outlet name.</p>
+            <img src="../../assets/images/APKselectoutlet.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              The a screen appears where all the flows are visible to the user and you can
+              select one. E.g. if the guest is showing you credit card for the lounge access
+              then select credit card option amongst the nine options.
+            </p>
+            <img src="../../assets/images/APKselecttokentype.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <h3><strong>Admission Token Types</strong></h3>
+            <p>
+              <strong>Credit Card</strong> <br />To get airport lounge access customers can
+              bring a credit card that comes with a lounge access feature or lounge access
+              can be at discounted rate .The number of free airport lounge access varies
+              from card to card. Few premium credit cards offer unlimited access to airport
+              lounges along with complimentary guest. <a href="#credit">click here</a>.
+            </p>
+            <p>
+              <strong>QR Code</strong> <br />To get airport lounge access customers can
+              bring some vouchers or QR-Codes issued by third party. To set up such
+              admission Token. <a href="#qr_code">click here</a>
+            </p>
+            <p>
+              <strong>Smart Traveller Voucher</strong> <br />This is a loyality program run
+              by Premium Plaza for members of smart traveller app. ST app API is called to
+              know the membership ID validation. Arrture points can be used to redeem for
+              various rewards.<a href="#Smart_Traveller">click here</a>
+            </p>
+            <p>
+              <strong>Airline Invitation</strong> <br />Airline Passengers can get
+              complimentary or discounted lounge access or other facilities, depending upon
+              the Airline Program. The Admission Token will be setup by using the boarding
+              pass. <a href="#airline_inv">click here</a>.
+            </p>
+            <p>
+              <strong>Airline Staff</strong> <br />Airline Crew Members gets complimentary
+              lounge access on the airports .They need to bring the crew ID passes to get
+              lounge access. To set up Airline Staff Token.
+              <a href="#airline_staff">click here</a>.
+            </p>
+            <p>
+              <strong>Corporate Client Membership</strong> <br />Corporate Partners provides
+              Coupon/Vouchers/Memberships to their customers, they can access complimentary
+              or discounted lounge access and other facilities on the airport.
+              <a href="#Client_Mem">click here</a>
+            </p>
+            <p>
+              <strong>Walk-in</strong><br />A customer can avail lounge access or other
+              facilities without any credit card or coupon.
+              <a href="#Walk_in">click here</a>
+            </p>
+            <p>
+              <strong>Online Booking</strong><br />In this flow guest brings the third party
+              voucher which is generated online and gets lounge access or other facilities
+              with that voucher. Partners like Evoucher, IBE etc generate these vouchers and
+              distribute it to the guests to avail the services.<a href="#Online_booking">click here</a>
+            </p>
+
+            <p id="credit"><strong>Credit Card Flow:</strong></p>
+
+            <p>Click on Credit Card option.</p>
+            <img src="../../assets/images/APKselectcreditcard.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              User is then redirected to the next screen where the device asks to enter the
+              following details : Name, Credit card number and its expiry date. Click on
+              Next button once the details are filled.
+            </p>
+            <img src="../../assets/images/APKcardDetails.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              If more than one type of credit card is following the same BIN then you will
+              see more than one option to choose from (else you will be redirected to the
+              entitlements directly). Here two cards are possessing the same BIN so user
+              needs to choose the one where the image on the device for the card name
+              matches the credit card which guest has shown.
+            </p>
+            <img src="../../assets/images/APKchooseone.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              Upon selecting the same, in the next screen all the entitlements are shown to
+              the user which are binded to the credit card. By default the primary
+              entitlement is selected with quantity as '1', ans you can increase the
+              quantity of type of guest which is coming along with the primary card holder
+              (if any). In this screen you will see the terms and conditions also which is
+              very important to be taken care of at the time of admission. Click on 'Next'.
+            </p>
+            <img src="../../assets/images/APKentitlement.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              User can now enter the boarding pass details bought by the guest by either
+              scanning the boarding pass or entering the details manually. (Scanning should
+              be preferred). You need to choose one out of 'Use Camera' or 'Manual Entry'.
+            </p>
+            <img src="../../assets/images/APKmanualentry.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              If 'Manual Entry' was chosen then add the details of the boarding pass .(if
+              three guests are coming along then this process will be repeated thrice).
+              Click on 'Next'.
+            </p>
+            <img src="../../assets/images/APKGuestDetails.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              On the next screen you can recheck the details, click on 'Confirm' if no
+              changes are required else click on back.
+            </p>
+            <img src="../../assets/images/APKconfirmdetails.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p id="Arrture">
+              If the guest is entitled to have 'Arrture Points' then click on 'Sign in'
+              button else click on 'Confirm'.
+            </p>
+            <img src="../../assets/images/APKartureSignin.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              If the guest is eligible for 'Arrture points' then you are redirected to this
+              screen where you need to click on 'Scan my membership card'.
+            </p>
+            <img src="../../assets/images/APKscanCard.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              Here you get two options either to scan or manually enter the membership id.
+              After entering the membership id click on 'Next button'.
+            </p>
+            <img src="../../assets/images/APKfillSTID.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>Click on 'Confirm' button.</p>
+            <img src="../../assets/images/APKstconfirm.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p id="Payment">
+              If any payment is to be paid then this screen appears. Click on the Payment
+              type (Choose either Cash or Bank Terminal and click on 'Confirm'.
+            </p>
+            <img src="../../assets/images/APKPaymentType.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              If Bank terminal was clicked you need to click on the type of card used for
+              the payment.
+            </p>
+            <img src="../../assets/images/APKcardType.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              Here in this screen, Currency will be auto-selected, you need to enter the
+              total amount to be paid and Payment code (this can be the reference number).
+              Click on 'OK' button.
+            </p>
+            <img src="../../assets/images/APKPaymentclickOK.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>Once the details are entered, click on 'Confirm'.</p>
+            <img src="../../assets/images/APKfinalconfirm.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              In the next screen, take the signature from the guest and click on 'Complete'.
+            </p>
+            <img src="../../assets/images/APKsignature.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              You can now send the receipt to the guest on email id provided by the guest by
+              entering the email address and clicking on send icon on the right side of the
+              field.
+            </p>
+            <img src="../../assets/images/APKsendEmail.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>Click on 'Print Receipt' or 'Complete'.</p>
+            <img src="../../assets/images/APKprintreceipt.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p id="qr_code"><strong>QR Code flow: </strong></p>
+            <p>Select QR code amongst the flows visible on the device after login.</p>
+            <img src="../../assets/images/APKqrflow.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              In this screen choose either to scan the qr code or manually enter the code.
+            </p>
+            <img src="../../assets/images/APKqrManually.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>Enter the QR code presented by the guest and click on 'Next' button.</p>
+            <img src="../../assets/images/APKenterQRcode.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              In the next screen all the entitlements are shown to the user which are binded
+              to the qr code. By default the primary entitlement is selected with quantity
+              as '1', and you can increase the quantity of type of guest which is coming
+              along with the primary guest (if any). In this screen you will see the terms
+              and conditions also which is very important to be taken care of at the time of
+              admission. Click on 'Next'.
+            </p>
+            <img src="../../assets/images/APKqrEntitlement.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              User can now enter the boarding pass details bought by the guest by either
+              scanning the boarding pass or entering the details manually. (Scanning should
+              be preferred). You need to choose one out of 'Use Camera' or 'Manual Entry'.
+            </p>
+            <img src="../../assets/images/APKqrboardingpass.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              If 'Manual Entry' was chosen then add the details of the boarding pass .(if
+              three guests are coming along then this process will be repeated thrice).
+              Click on 'Next'.
+            </p>
+            <img src="../../assets/images/APKqrguestdetails.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              On the next screen you can recheck the details, click on 'Confirm' if no
+              changes are required else click on back.
+            </p>
+            <img src="../../assets/images/APKqrConfirm.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              In the next screen, take the signature from the guest and click on 'Complete'.
+            </p>
+            <img src="../../assets/images/APKqrsignature.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              You can now send the receipt to the guest on email id provided by the guest by
+              entering the email address and clicking on send icon on the right side of the
+              field.
+            </p>
+            <img src="../../assets/images/APKqrsndEmail.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>Click on 'Print Receipt' or 'Complete'.</p>
+            <img src="../../assets/images/APKqrPrintreceipt.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p id="Online_booking"><strong>Online Booking Flow :</strong></p>
+            <p>
+              When the guest brings a coupon from IBE partner, select 'Online Booking'
+              amongst the flows visible on the device after login.
+            </p>
+            <img src="../../assets/images/apkIBEflow.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              In this screen choose either to scan the qr code (by clicking on use camera)
+              or manually enter the coupon code. In 48 Hours Booking you can see the
+              bookings which are valid for next 48 hours.
+            </p>
+            <img src="../../assets/images/apkIBEselectone.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              If Manual Entry is clicked GSO has to enter the coupon code presented by the
+              guest and click on 'Next' button.
+            </p>
+            <img src="../../assets/images/apkIBEenterno..jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              Choose the correct Token name (If more than one token exists) else directly
+              the entitlements are fetched on the screen.
+            </p>
+            <img src="../../assets/images/apkIBEchoosecardface.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              In the next screen all the entitlements are shown to the user which are binded
+              to the coupon code. By default the primary entitlement is selected with
+              quantity as '1', and you can increase the quantity of type of guest which is
+              coming along with the primary guest (if any). In this screen you will see the
+              terms and conditions also which is very important to be taken care of at the
+              time of admission. Click on 'Next'.
+            </p>
+            <img src="../../assets/images/apkIBEentitlement.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              Note : If the guest is eligible to avail Arrture points
+              <a href="#Arrture">CLICK HERE to know the steps.</a>
+            </p>
+            <p>
+              On the next screen you can recheck the details, click on 'Confirm' if no
+              changes are required else click on back.
+            </p>
+            <img src="../../assets/images/apkIBEconfirm.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              Note : If the guest is eligible to for payment
+              <a href="#Payment">CLICK HERE to know the steps.</a>
+            </p>
+            <p>
+              In the next screen, take the signature from the guest If the signature is good
+              to go click on 'Complete'. Else Click on 'Re-Signature'.
+            </p>
+            <img src="../../assets/images/apkIBEsignature.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              You can now send the receipt to the guest on email id provided by the guest by
+              entering the email address and clicking on send icon on the right side of the
+              field,
+            </p>
+            <img src="../../assets/images/APKsendEmail.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>Click on 'Print Receipt' or 'Complete'.</p>
+            <img src="../../assets/images/APKprintreceipt.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p id="Smart_Traveller"><strong>Smart Traveller Flow : </strong></p>
+            <p>
+              If a guest presents 'Smart Traveller' voucher/coupon, select 'Smart Traveller'
+              amongst the flows visible on the device after login.
+            </p>
+            <img src="../../assets/images/APKSTflow.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              In this screen choose either to scan the qr code or manually enter the code.
+            </p>
+            <img src="../../assets/images/APKSTscanQR.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              If Manual Entry is clicked GSO has to enter the coupon code presented by the
+              guest and click on 'Next' button.
+            </p>
+            <img src="../../assets/images/APKSTentervoucher.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              In the next screen all the entitlements are shown to the user which are binded
+              to the qr code. By default the primary entitlement is selected with quantity
+              as '1', and you can increase the quantity of type of guest which is coming
+              along with the primary guest (if any). In this screen you will see the terms
+              and conditions also which is very important to be taken care of at the time of
+              admission. Click on 'Next'.
+            </p>
+            <img src="../../assets/images/APKSTentitlement.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              User can now enter the boarding pass details bought by the guest by either
+              scanning the boarding pass or entering the details manually. (Scanning should
+              be preferred). You need to choose one out of 'Use Camera' or 'Manual Entry'.
+            </p>
+            <img src="../../assets/images/APKSTscanpass.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              If 'Manual Entry' was chosen then add the details of the boarding pass .(if
+              three guests are coming along then this process will be repeated thrice).
+            </p>
+            <img src="../../assets/images/APKSTpassdetails.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              Recheck the details and click on 'Next' if the details are correct else click
+              on back icon.
+            </p>
+            <img src="../../assets/images/APKSTrecheckdetails.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              Note : If the guest is eligible to avail Arrture points
+              <a href="#Arrture">CLICK HERE to know the steps.</a>
+            </p>
+            <p>
+              On the next screen you can recheck the details, click on 'Confirm' if no
+              changes are required else click on back.
+            </p>
+            <img src="../../assets/images/APKSTclickconfirm.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              Note : If the guest is eligible to for payment
+              <a href="#Payment">CLICK HERE to know the steps.</a>
+            </p>
+            <p>
+              In the next screen, take the signature from the guest If the signature is good
+              to go click on 'Complete'. Else Click on 'Re-Signature'.
+            </p>
+            <img src="../../assets/images/apkIBEsignature.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              You can now send the receipt to the guest on email id provided by the guest by
+              entering the email address and clicking on send icon on the right side of the
+              field,
+            </p>
+            <img src="../../assets/images/APKsendEmail.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>Click on 'Print Receipt' or 'Complete'.</p>
+            <img src="../../assets/images/APKprintreceipt.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p id="Client_Mem"><strong>Corporate Client Membership Flow : </strong></p>
+            <p>
+              If a guest presents voucher/coupon provided by corporate clients, select
+              'Corporate Client Membership' amongst the flows visible on the device after
+              login.
+            </p>
+            <img src="../../assets/images/APKCMflow.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              As soon as you click on this menu option, you will see some all the Partners
+              for which Admission Instruction is defined as 'Corporate Client Membership'.
+              GSO needs to select the partner name first whose coupon/voucher is provided by
+              the guest.
+            </p>
+            <img src="../../assets/images/APKCMselectpartner.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              Once the Partner name is selected, all the associated token name will be
+              displayed on the screen (If more than one token is defined else the
+              entitlements are shown directly).Click on the token name based on type of
+              token provided by the guest (Coupon/ Voucher/ Membership Card etc.)
+            </p>
+            <img src="../../assets/images/APKCMcardface.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              In this screen choose either to scan the coupon/membership card or manually
+              enter the code.
+            </p>
+            <img src="../../assets/images/APKCMcardno.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              If Manual Entry is clicked GSO has to enter the 'Code' presented by the guest,
+              No. of primary guests, No. of accompany guests, Expiry date and click on
+              'Next' button.
+            </p>
+            <img src="../../assets/images/APKCMentercode.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              Note : Manual Input field at the bottom left corner should always be 'Checked'
+              in order to add the information manually.
+            </p>
+            <p>
+              In the next screen all the entitlements are shown to the user which are binded
+              to the qr code. By default the primary entitlement is selected with quantity
+              as '1', and you can increase the quantity of type of guest which is coming
+              along with the primary guest (if any). In this screen you will see the terms
+              and conditions also which is very important to be taken care of at the time of
+              admission. Click on 'Next'.
+            </p>
+            <img src="../../assets/images/APKCMentitlement.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              GSO can now enter the boarding pass details bought by the guest by either
+              scanning the boarding pass or entering the details manually. (Scanning should
+              be preferred). You need to choose one out of 'Use Camera' or 'Manual Entry'.
+            </p>
+            <img src="../../assets/images/APKCMscanPass.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              If 'Manual Entry' was chosen then add the details of the boarding pass .(if
+              three guests are coming along then this process will be repeated thrice).
+            </p>
+            <img src="../../assets/images/APKCMpassdetails.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              Recheck the details and click on 'Next' if the details are correct else click
+              on back icon.
+            </p>
+            <img src="../../assets/images/APKCMrecheckdetails.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              Note : If the guest is eligible to avail Arrture points
+              <a href="#Arrture">CLICK HERE to know the steps.</a>
+            </p>
+            <p>
+              On the next screen you can recheck the details, click on 'Confirm' if no
+              changes are required else click on back.
+            </p>
+            <img src="../../assets/images/APKCMconfirm.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              Note : If the guest is eligible to for payment
+              <a href="#Payment">CLICK HERE to know the steps.</a>
+            </p>
+            <p>
+              In the next screen, take the signature from the guest If the signature is good
+              to go click on 'Complete'. Else Click on 'Re-Signature'.
+            </p>
+            <img src="../../assets/images/apkIBEsignature.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              You can now send the receipt to the guest on email id provided by the guest by
+              entering the email address and clicking on send icon on the right side of the
+              field,
+            </p>
+            <img src="../../assets/images/APKsendEmail.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>Click on 'Print Receipt' or 'Complete'.</p>
+            <img src="../../assets/images/APKprintreceipt.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p id="airline_inv"><strong>Airline Invitation flow : </strong></p>
+            <p>
+              If the guest has entitlement to use the lounge and other facilities provided
+              by the Airlines, select the 'Airline Invitation' amongst the flows visible on
+              the device after login.
+            </p>
+            <img src="../../assets/images/APKairlineInvitation.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>In this case guest will provides the boarding pass to the GSO.</p>
+            <img src="../../assets/images/APKairlineInvitation.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              As soon as GSO clicks on 'Airline Invitation' GSO can now enter the boarding
+              pass details bought by the guest by either scanning the boarding pass or
+              entering the details manually. (Scanning should be preferred). You need to
+              choose one out of 'Use Camera' or 'Manual Entry'.
+            </p>
+            <img src="../../assets/images/APKAIselectone.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              If 'Manual Entry' was chosen then add the details of the boarding pass
+              manually.
+            </p>
+            <img src="../../assets/images/APKAIpassdetails.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              In the next screen all the entitlements are shown to the user which are binded
+              to the qr code. By default the primary entitlement is selected with quantity
+              as '1', and you can increase the quantity of type of guest which is coming
+              along with the primary guest (if any). In this screen you will see the terms
+              and conditions also which is very important to be taken care of at the time of
+              admission. Click on 'Next'.
+            </p>
+            <img src="../../assets/images/APKAIentitlement.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              Recheck the details and click on 'Next' if the details are correct else click
+              on back icon.
+            </p>
+            <img src="../../assets/images/APKAIrecheckdetails.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              Note : If the guest is eligible to avail Arrture points
+              <a href="#Arrture">CLICK HERE to know the steps.</a>
+            </p>
+            <p>
+              On the next screen you can recheck the details, click on 'Confirm' if no
+              changes are required else click on back.
+            </p>
+            <img src="../../assets/images/APKAIconfirmdetails.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              Note : If the guest is eligible to for payment
+              <a href="#Payment">CLICK HERE to know the steps.</a>
+            </p>
+            <p>
+              In the next screen, take the signature from the guest If the signature is good
+              to go click on 'Complete'. Else Click on 'Re-Signature'.
+            </p>
+            <img src="../../assets/images/apkIBEsignature.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              You can now send the receipt to the guest on email id provided by the guest by
+              entering the email address and clicking on send icon on the right side of the
+              field,
+            </p>
+            <img src="../../assets/images/APKsendEmail.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>Click on 'Print Receipt' or 'Complete'.</p>
+            <img src="../../assets/images/APKprintreceipt.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+
+            <p id="airline_staff"><strong>Airline Crew Flow :</strong></p>
+
+            <p>
+              If the guest has entitlement to use the lounge and other facilities provided
+              by the Airlines as the guest is a crew member, select the 'Airline Crew'
+              amongst the flows visible on the device after login.
+            </p>
+            <img src="../../assets/images/APKAirlineCrewflow.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              In this case guest will provides the Identification of being a crew member to
+              the GSO.
+            </p>
+            <p>
+              As soon as GSO clicks on 'Airline Crew' GSO can now enter theAirline Crew Id
+              bought by the 'crew member' and click on 'Next' button.
+            </p>
+            <img src="../../assets/images/APKArlnCrewID.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              In the next screen the entitlements are shown. By default the primary
+              entitlement is selected with quantity as '1'. In this screen you will see the
+              terms and conditions also which is very important to be taken care of at the
+              time of admission. Click on 'Next'.
+            </p>
+            <img src="../../assets/images/APKACentitlement.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              Note : If the guest is eligible to avail Arrture points
+              <a href="#Arrture">CLICK HERE to know the steps.</a>
+            </p>
+            <p>
+              On the next screen you can recheck the details, click on 'Confirm' if no
+              changes are required else click on back.
+            </p>
+            <img src="../../assets/images/APKACconfirmdetails.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              Note : If the guest is eligible to for payment
+              <a href="#Payment">CLICK HERE to know the steps.</a>
+            </p>
+            <p>
+              In the next screen, take the signature from the guest If the signature is good
+              to go click on 'Complete'. Else Click on 'Re-Signature'.
+            </p>
+            <img src="../../assets/images/apkIBEsignature.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              You can now send the receipt to the guest on email id provided by the guest by
+              entering the email address and clicking on send icon on the right side of the
+              field,
+            </p>
+            <img src="../../assets/images/APKsendEmail.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>Click on 'Print Receipt' or 'Complete'.</p>
+            <img src="../../assets/images/APKprintreceipt.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+
+            <p id="Walk_in"><strong>Walk-In Flow : </strong></p>
+            <p>
+              If a guest wants to have lounge access and other facilities but is not
+              entitled to have a free access (by any bank, corporate partner etc), the guest
+              can still avail the same by 'Walk-in' and paying the amount for the service on
+              the spot. Select the 'Walk-In' amongst the flows visible on the device after
+              login.
+            </p>
+            <img src="../../assets/images/APKwalkinflow.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              As soon as GSO selects the 'Walk-In', next screen appears which displays the
+              name of the Partners which has an Admission Instruction bind on that partner.
+              GSO needs to select the Partner name.
+            </p>
+            <img src="../../assets/images/APKWIpartnername.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              Once selected, the Admission Instruction(s) is/are then displayed in the next
+              screen for the GSO to choose. Click on the name of the AI.
+            </p>
+            <img src="../../assets/images/APKWIselectAI.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              In the next screen all the entitlements are shown to the user which are binded
+              to the qr code. By default the primary entitlement is selected with quantity
+              as '1', and you can increase the quantity of type of guest which is coming
+              along with the primary guest (if any). In this screen you will see the terms
+              and conditions also which is very important to be taken care of at the time of
+              admission. Click on 'Next'.
+            </p>
+            <img src="../../assets/images/APKWIentitlement.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              GSO can now enter the boarding pass details bought by the guest by either
+              scanning the boarding pass or entering the details manually. (Scanning should
+              be preferred). You need to choose one out of 'Use Camera' or 'Manual Entry'.
+            </p>
+            <img src="../../assets/images/APKWIscanpass.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              If 'Manual Entry' was chosen then add the details of the boarding pass
+              manually. Click on 'Next'.
+            </p>
+            <img src="../../assets/images/APKWIpassdetails.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              Recheck the details and click on 'Confirm' if the details are correct else
+              click on back icon.
+            </p>
+            <img src="../../assets/images/APKWIrecheckdetails.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              Note : If the guest is eligible to avail Arrture points
+              <a href="#Arrture">CLICK HERE to know the steps.</a>
+            </p>
+            <p>
+              On the next screen you can recheck the details, click on 'Confirm' if no
+              changes are required else click on back.
+            </p>
+            <img src="../../assets/images/APKWIconfirm.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              If any payment is to be paid then this screen appears. Click on the Payment
+              type (Choose either Cash or Bank Terminal and click on 'Confirm'.
+            </p>
+            <img src="../../assets/images/APKWIpaymentType.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              If Bank terminal was clicked you need to click on the type of card used for
+              the payment.
+            </p>
+            <img src="../../assets/images/APKWIcardType.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              Here in this screen, Currency will be auto-selected, you need to enter the
+              total amount to be paid and Payment code (this can be the reference number).
+              Click on 'OK' button.
+            </p>
+            <img src="../../assets/images/APKWIpaymentcode.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>Once the details are entered, click on 'Confirm'.</p>
+            <img src="../../assets/images/APKWIpaymentDone.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              In the next screen, take the signature from the guest If the signature is good
+              to go click on 'Complete'. Else Click on 'Re-Signature'.
+            </p>
+            <img src="../../assets/images/apkIBEsignature.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>
+              You can now send the receipt to the guest on email id provided by the guest by
+              entering the email address and clicking on send icon on the right side of the
+              field,
+            </p>
+            <img src="../../assets/images/APKsendEmail.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+            <p>Click on 'Print Receipt' or 'Complete'.</p>
+            <img src="../../assets/images/APKprintreceipt.jpg" alt="" style="
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 5px 8px 12px #33333361;
+    margin-left: 30%;
+  " />
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+</body>
+
+</html>

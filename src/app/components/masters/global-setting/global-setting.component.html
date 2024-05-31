@@ -1,0 +1,810 @@
+<div
+  class="content-wrapper d-flex"
+  [ngClass]="{ 'sidebar-open': isSidebarOpen }"
+>
+  <div class="sidebar-wrapper">
+    <app-sidebar [(sidebarState)]="isSidebarOpen"></app-sidebar>
+  </div>
+
+  <div class="main-wrapper pt-3 h-100">
+    <div *ngIf="globalSettingloadershow">
+      <app-loader [message]="'Loading...'"></app-loader>
+    </div>
+    <div *ngIf="ExportLoader">
+      <app-loader [message]="exportloaderMessage"></app-loader>
+    </div>
+    <div class="container-fluid h-100">
+      <div class="row h-100">
+        <div class="col-md-12">
+          <div
+            class="property-details-wrapper"
+            style="width: 100%"
+            *ngIf="!showGlobalSettings && !showImport"
+          >
+            <div class="row">
+              <div class="col-md-9">
+                <p class="main-heading">
+                  <span
+                    >{{
+                      data
+                        ? data.master.GlobalSettings.txtHeading
+                        : "GlobalSettings"
+                    }}:
+                  </span>
+                  {{
+                    data
+                      ? data.master.GlobalSettings.txtdes
+                      : "View existing and add new Global Settings"
+                  }}
+                </p>
+              </div>
+              <div class="col-md-3 text-right">
+                <a
+                  href="javascript:void(0)"
+                  mat-raised-button
+                  (click)="exportReport('GlobalSettings')"
+                  style="line-height: 24px !important"
+                  class="btn btn-info"
+                  ><i class="fa fa-file-text-o" aria-hidden="true"></i>
+                  {{ data ? data.buttons.export : "Export" }}</a
+                >
+                <a class="btn btn-info" (click)="addNewGlobalSetting(true)"
+                  ><i class="fa fa-plus" aria-hidden="true"></i>
+                  {{ data ? data.buttons.new : "New" }}</a
+                >
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="search-wrapper">
+                  <div class="search-product">
+                    <div class="search_main">
+                      <div class="search-input">
+                        <span
+                          ><i class="fa fa-search" aria-hidden="true"></i
+                        ></span>
+                        <input
+                          type="search"
+                          [(ngModel)]="simplesearch"
+                          id="txtSearch"
+                          (keyup.enter)="
+                            simpleSearchGSData($event.target.value)
+                          "
+                        />
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>{{
+                          data
+                            ? data.master.GlobalSettings.searchglobalsettings
+                            : "Search Global Settings"
+                        }}</label>
+                        <span
+                          ><i
+                            (click)="fetchDataSearch()"
+                            class="fa fa-times"
+                            aria-hidden="true"
+                          ></i
+                        ></span>
+                        <span (click)="showQueryForm()" class="dropdown-form"
+                          ><i class="fa fa-sort-desc" aria-hidden="true"></i
+                        ></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="query1" class="query1" *ngIf="showData">
+                    <div class="form-container">
+                      <form>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group position-relative">
+                              <label for="LkCode"
+                                >{{
+                                  data
+                                    ? data.master.GlobalSettings.lkCode
+                                    : "Lk Code"
+                                }}:<span class="asterisk">*</span>:</label
+                              >
+                              <div class="suggestion_input_wrapper">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                                <input
+                                  [(ngModel)]="globalSetting1.lkCode"
+                                  type="text"
+                                  class="form-control suggestionInput"
+                                  id="lkCode"
+                                  placeholder="{{
+                                    data
+                                      ? data.master.GlobalSettings.lkCode
+                                      : 'Lk Code'
+                                  }}"
+                                  name="lkCode"
+                                  autocomplete="off"
+                                  (keyup)="fetchGSNames($event.target.value)"
+                                  (keydown)="onTokenGSAdvInputKeydown($event)"
+                                  #userName
+                                />
+                              </div>
+                              <ul
+                                class="searched-list searchSuggestions"
+                                *ngIf="GSData.length > 0"
+                              >
+                                <li
+                                  *ngFor="let l of GSData; let i = index"
+                                  [class.selected]="
+                                    i === tokenGSAdvSuggestionIndex
+                                  "
+                                  (click)="setTokenGSadvance(l)"
+                                >
+                                  {{ l }}
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                          <!-- <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="LkCode"
+                                >{{
+                                  data
+                                    ? data.master.GlobalSettings.lkCode
+                                    : "Lk Code"
+                                }}:</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="lkCode"
+                                placeholder="{{
+                                  data
+                                    ? data.master.GlobalSettings.lkCode
+                                    : 'Lk Code'
+                                }}"
+                                name="lkCode"
+                                [(ngModel)]="lkCode"
+                              />
+                            </div>
+                          </div> -->
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="status">{{
+                                data
+                                  ? data.master.GlobalSettings.status
+                                  : "Status"
+                              }}</label>
+                              <select
+                                [(ngModel)]="status"
+                                name="status"
+                                class="custom-select"
+                              >
+                                <!-- <option *ngFor="let c of userData">{{c.status===1 ? "Active":"Inactive"}}</option> -->
+                                <option selected>Active</option>
+                                <option>Inactive</option>
+                              </select>
+                            </div>
+                          </div>
+                          <!-- <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="parameterValue"
+                                >Parameter Value:</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="ParameterValue"
+                                placeholder=" Enter Parameter Value"
+                                name="parameterValue"
+                                [(ngModel)]="ParameterValue"
+                              />
+                            </div>
+                          </div> -->
+                          <!-- <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="displayValue">Display Value:</label>
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="DisplayValue"
+                                placeholder=" Enter Display Value"
+                                name="displayValue"
+                                [(ngModel)]="DisplayValue"
+                              />
+                            </div>
+                          </div> -->
+                        </div>
+                        <div class="query-btn">
+                          <a
+                            class="btn btn-secondary"
+                            (click)="ResetAdvanceSearch()"
+                            ><i class="fa fa-history" aria-hidden="true"></i>
+                            {{ data ? data.buttons.reset : "Reset" }}</a
+                          >
+                          <a
+                            (click)="advanceGlobalSettingsDataSearch()"
+                            class="btn btn-info"
+                            ><i class="fa fa-search" aria-hidden="true"></i>
+                            {{ data ? data.buttons.search : "Search" }}</a
+                          >
+                          <a class="btn btn-danger" (click)="showQueryForm()"
+                            ><i class="fa fa-close" aria-hidden="true"></i>
+                            {{ data ? data.admission.close : "Close" }}</a
+                          >
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <div class="property-table-wrapper" style="width: 100%">
+                  <div class="table-responsive">
+                    <table
+                      mat-table
+                      [dataSource]="dataSourceGlobalSetting"
+                      matTableExporter
+                      #exporter="matTableExporter"
+                      class="mat-elevation-z8"
+                      matSort
+                    >
+                      <!-- <ng-container matColumnDef="_id">
+                        <th mat-header-cell *matHeaderCellDef>Partner Id</th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element._id }}
+                        </td>
+                      </ng-container> -->
+                      <ng-container matColumnDef="lkCode">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data ? data.master.GlobalSettings.lkCode : "Lk Code"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.lkCode }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="keyCode">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data
+                              ? data.master.GlobalSettings.keyCode
+                              : "Key Code"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.keyCode }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="key1">
+                        <th
+                          mat-header-cell
+                          mat-sort-header
+                          *matHeaderCellDef
+                          [ngClass]="'w-200'"
+                        >
+                          {{ data ? data.master.GlobalSettings.key1 : "Key1" }}
+                        </th>
+                        <td
+                          mat-cell
+                          *matCellDef="let element"
+                          [ngClass]="'w-200'"
+                        >
+                          {{ element.key1 }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="key2">
+                        <th
+                          mat-header-cell
+                          mat-sort-header
+                          *matHeaderCellDef
+                          [ngClass]="'w-200'"
+                        >
+                          {{ data ? data.master.GlobalSettings.key2 : "Key2" }}
+                        </th>
+                        <td
+                          mat-cell
+                          *matCellDef="let element"
+                          [ngClass]="'w-200'"
+                        >
+                          {{ element.key2 }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="key3">
+                        <th
+                          mat-header-cell
+                          mat-sort-header
+                          *matHeaderCellDef
+                          [ngClass]="'w-200'"
+                        >
+                          {{ data ? data.master.GlobalSettings.key3 : "Key3" }}
+                        </th>
+                        <td
+                          mat-cell
+                          *matCellDef="let element"
+                          [ngClass]="'w-200'"
+                        >
+                          {{ element.key3 }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="key4">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.GlobalSettings.key4 : "Key4" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.key4 }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="key5">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.GlobalSettings.key5 : "Key5" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.key5 }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                          {{
+                            data ? data.master.GlobalSettings.status : "Status"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.status === 1 ? "Active" : "Inactive" }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="lastModifiedOn">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                          lastmodifiedOn
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ this.cs.formatDateTime(element.lastModifiedOn) }}
+                        </td>
+                      </ng-container>
+
+                      <tr
+                        mat-header-row
+                        *matHeaderRowDef="displayedParameterColumn"
+                      ></tr>
+                      <tr
+                        mat-row
+                        (dblclick)="getglobalsettingsById(row._id)"
+                        *matRowDef="
+                          let row;
+                          columns: displayedParameterColumn;
+                          let i = index
+                        "
+                      ></tr>
+                      <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell">
+                          {{
+                            data
+                              ? data.master.user.nodatafound
+                              : "NO Data Found"
+                          }}
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                  <mat-paginator
+                    #globalPaginator
+                    [pageSizeOptions]="[10, 25, 50, 100]"
+                    aria-label="Select page of users"
+                  >
+                  </mat-paginator>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="new-property-wrapper"
+            *ngIf="showGlobalSettings && !showImport"
+          >
+            <p class="main-heading">
+              <span>{{
+                data ? data.master.GlobalSettings.txtHeading : "GlobalSettings"
+              }}</span
+              >{{
+                data
+                  ? data.master.GlobalSettings.txtdes
+                  : "View existing and add new Global Settings"
+              }}
+              <span
+                (click)="hideGlobalSettings()"
+                class="close1"
+                data-toggle="tooltip"
+                title="Close"
+                >X</span
+              >
+            </p>
+            <form>
+              <!-- <section class="example-section">
+                <div class="ml-1 mr-3">
+                  <input type="checkbox" />
+                  <span>
+                    {{
+                      data ? data.master.GlobalSettings.group : "Group"
+                    }}</span
+                  >
+                </div>
+                <div class="ml-1 mr-3">
+                  <input type="checkbox" />
+                  <span>
+                    {{
+                      data ? data.master.GlobalSettings.child : "Child"
+                    }}</span
+                  >
+                </div>
+              </section> -->
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group position-relative">
+                    <label for="lkCode"
+                      >{{
+                        data ? data.master.GlobalSettings.lkCode : "Lk Code"
+                      }}:<span class="asterisk">*</span>:</label
+                    >
+                    <input
+                      [(ngModel)]="globalSetting1.lkCode"
+                      type="text"
+                      class="form-control"
+                      id="lkCode"
+                      placeholder="{{
+                        data
+                          ? data.master.GlobalSettings.EnterlkCode
+                          : 'Enter lkCode'
+                      }}"
+                      name="name"
+                      autocomplete="off"
+                      (keyup)="fetchGSNames($event.target.value)"
+                    />
+                    <ul class="searched-list" *ngIf="GSData.length > 0">
+                      <li *ngFor="let l of GSData" (click)="setTokenGS(l)">
+                        {{ l }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="keyCode"
+                      >{{
+                        data ? data.master.GlobalSettings.keyCode : "Key Code"
+                      }}:<span class="asterisk">*</span>:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="keyCode"
+                      placeholder="{{
+                        data
+                          ? data.master.GlobalSettings.EnterkeyCode
+                          : 'Enter KeyCode'
+                      }}"
+                      name="keyCode"
+                      [(ngModel)]="globalSetting1.keyCode"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="key1"
+                      >{{
+                        data ? data.master.GlobalSettings.key1 : "Key1"
+                      }}:<span class="asterisk">*</span>:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="key1"
+                      placeholder="{{
+                        data
+                          ? data.master.GlobalSettings.Enterkey1
+                          : 'Enter Key1'
+                      }}"
+                      name="key1"
+                      [(ngModel)]="globalSetting1.key1"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="key2"
+                      >{{
+                        data ? data.master.GlobalSettings.key2 : "Key2"
+                      }}:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="key2"
+                      placeholder="{{
+                        data
+                          ? data.master.GlobalSettings.Enterkey2
+                          : 'Enter Key2'
+                      }}"
+                      name="key2"
+                      [(ngModel)]="globalSetting1.key2"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="key3"
+                      >{{
+                        data ? data.master.GlobalSettings.key3 : "Key3"
+                      }}:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="key3"
+                      placeholder="{{
+                        data
+                          ? data.master.GlobalSettings.Enterkey3
+                          : 'Enter Key3'
+                      }}"
+                      name="key3"
+                      [(ngModel)]="globalSetting1.key3"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="key4"
+                      >{{
+                        data ? data.master.GlobalSettings.key4 : "Key4"
+                      }}:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="key4"
+                      placeholder="{{
+                        data
+                          ? data.master.GlobalSettings.Enterkey4
+                          : 'Enter Key4'
+                      }}"
+                      name="key4"
+                      [(ngModel)]="globalSetting1.key4"
+                    />
+                  </div>
+                </div>
+              </div>
+              <!--This Row below will remain hidden until user choose child checkbox-->
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="key4"
+                      >{{
+                        data ? data.master.GlobalSettings.key5 : "Key5"
+                      }}:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="key5"
+                      placeholder="{{
+                        data
+                          ? data.master.GlobalSettings.Enterkey5
+                          : 'Enter Key5'
+                      }}"
+                      name="key5"
+                      [(ngModel)]="globalSetting1.key5"
+                    />
+                  </div>
+                </div>
+                <!-- <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="groupType">Group Type:</label>
+                    <select name="groupType" class="custom-select">
+                      <option selected value="1">Select</option>
+                      <option value="2">Group 1</option>
+                      <option value="3">Group 2</option>
+                    </select>
+                  </div>
+                </div> -->
+                <!-- <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="groupName">Group Name:</label>
+                    <select name="groupName" class="custom-select">
+                      <option selected value="1">Select</option>
+                      <option value="2">Group Alpha</option>
+                      <option value="3">Group Gamma</option>
+                    </select>
+                  </div>
+                </div> -->
+              </div>
+              <!-- <div class="col-md-6">
+                              <div class="form-group">
+                                  <label for="status">Status:</label>
+                                  <select name="status" class="custom-select"
+                                      [(ngModel)]="selectedStatus">
+                                      <option selected>Active</option>
+                                      <option value="2">Inactive</option>
+                                  </select>
+                              </div>
+                          </div> -->
+              <!-- <div class="col-md-2">
+                                <div class="form-group d-flex justify-content-between align-items-center">
+                                    <label class="mb-0" for="isActive">{{data? data.master.pincode.isActive: 'Is Active'}}:</label>
+                                    <div class="custom-control custom-switch">
+                                        <input type="checkbox" name="isActive" class="custom-control-input" id="customSwitch1" checked >
+                                        <label class="custom-control-label" for="customSwitch1"></label>
+                                      </div>
+                                </div>
+                            </div> -->
+            </form>
+            <div class="result mt-4">
+              <a
+                class="btn btn-secondary mr-2"
+                (click)="ResetGlobalSettingsTable()"
+                ><i class="fa fa-history" aria-hidden="true"></i>
+                {{ data ? data.buttons.reset : "Reset" }}</a
+              >
+              <a
+                class="btn btn-success mr-2"
+                (click)="upsertGlobalSettingsDetails()"
+              >
+                <i class="fa fa-check" aria-hidden="true"> </i>
+                {{ data ? data.buttons.submit : "Submit" }}</a
+              >
+            </div>
+            <!-- <div class="property-table-wrapper" style="width: 100%">
+              <div class="table-responsive">
+                <table mat-table [dataSource]="dataSourceGlobalSetting" class="mat-elevation-z8" matSort>
+                  <ng-container matColumnDef="_id">
+                      <th mat-header-cell *matHeaderCellDef> Partner Id </th>
+                      <td mat-cell *matCellDef="let element"> {{element._id}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="lkCode">
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef>lkCode
+                           </th>
+                      <td mat-cell *matCellDef="let element"> {{element.lkCode}} </td>
+                  </ng-container>
+    
+                  <ng-container matColumnDef="keyCode">
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef>keyCode
+                          </th>
+                      <td mat-cell *matCellDef="let element"> {{element.keyCode}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="key1">
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef>key1</th>
+                      <td mat-cell *matCellDef="let element"> {{element.key1}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="key2">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>key2</th>
+                    <td mat-cell *matCellDef="let element"> {{element.key2}} </td>
+                </ng-container>
+                 <ng-container matColumnDef="key3">
+                  <th mat-header-cell mat-sort-header *matHeaderCellDef>key3</th>
+                  <td mat-cell *matCellDef="let element"> {{element.key3}} </td>
+              </ng-container>
+               <ng-container matColumnDef="key4">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef>key4</th>
+                <td mat-cell *matCellDef="let element"> {{element.key4}} </td>
+            </ng-container> 
+            <ng-container matColumnDef="key5">
+              <th mat-header-cell mat-sort-header *matHeaderCellDef>key5</th>
+              <td mat-cell *matCellDef="let element"> {{element.key5}} </td>
+          </ng-container>
+                  <ng-container matColumnDef="status">
+                      <th mat-header-cell *matHeaderCellDef>Status
+                      </th>
+                      <td mat-cell *matCellDef="let element">{{element?.status === 1? 'Active':
+                          'Inactive'}} </td>
+                  </ng-container>
+    
+                  <tr mat-header-row *matHeaderRowDef="displayedParameterColumn"></tr>
+                  <tr mat-row (dblclick)=" getpartnerById(row._id)" *matRowDef="let row; columns: displayedParameterColumn; let i = index"></tr>
+                  <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell">No data Found!</td>
+                </tr>
+              </table>
+                <!-- <table mat-table [dataSource]="dataSourceComponent" class="mat-elevation-z8" matSort
+                                #tokenSort="matSort">
+                                <ng-container matColumnDef="componentName">
+                                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                                      {{data? data.master.tax.componentname: 'Component Name'}}
+                                    </th>
+                                    <td mat-cell *matCellDef="let element">
+                                       {{element?.componentName}}
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="effectiveRate">
+                                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                                      {{data? data.master.tax.effectiverate: 'Effective Rate'}}
+                                    </th>
+                                    <td mat-cell *matCellDef="let element">
+                                        {{element?.effectiveRate}}
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="displayRate">
+                                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                                      {{data? data.master.tax.displayrate: 'Display Rate'}}
+                                    </th>
+                                    <td mat-cell *matCellDef="let element">
+                                        {{element?.displayRate}}
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="status">
+                                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                                      {{data? data.master.tax.status: 'Status'}}
+                                    </th>
+                                    <td mat-cell *matCellDef="let element">
+                                      {{element?.status===1 ? 'Active':'Inactive'}}
+                                    </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedComponentColumn"></tr>
+                                <tr mat-row (dblclick)="getTaxComponentById(row._id)"  *matRowDef="let row; columns: displayedComponentColumn; let i = index">
+                                </tr>
+                            </table> -->
+            <!-- <table mat-table [dataSource]="dataSourcePincode" class="mat-elevation-z8" matSort>
+                                <ng-container matColumnDef="pincode">
+                                    <th mat-header-cell mat-sort-header *matHeaderCellDef>{{data? data.master.pincode.pincode: 'Pincode'}} </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.pincode}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="countryName">
+                                    <th mat-header-cell mat-sort-header *matHeaderCellDef> {{data? data.master.pincode.countryName: 'Country Name'}}</th>
+                                    <td mat-cell *matCellDef="let element"> {{element.countryName}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="countryISOCode">
+                                    <th mat-header-cell mat-sort-header *matHeaderCellDef>{{data? data.master.pincode.countryISOCode: 'Country ISO Code'}}</th>
+                                    <td mat-cell *matCellDef="let element"> {{element.countryISOCode}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="stateName">
+                                    <th mat-header-cell mat-sort-header *matHeaderCellDef>{{data? data.master.pincode.stateName: 'State Name'}}</th>
+                                    <td mat-cell *matCellDef="let element"> {{element.stateName}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="cityName">
+                                    <th mat-header-cell mat-sort-header *matHeaderCellDef>{{data? data.master.pincode.cityName: 'City Name'}}</th>
+                                    <td mat-cell *matCellDef="let element"> {{element.cityName}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="region">
+                                    <th mat-header-cell mat-sort-header *matHeaderCellDef>{{data? data.master.pincode.region: 'Region'}}</th>
+                                    <td mat-cell *matCellDef="let element"> {{element.region}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="status">
+                                    <th mat-header-cell *matHeaderCellDef>{{data? data.master.pincode.status: 'Status'}}
+                                    </th>
+                                    <td mat-cell *matCellDef="let element">{{element?.status===1 ? 'Active':'Inactive'}} </td>
+                                </ng-container>
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row (dblclick)="getPincodeById(row._id)" *matRowDef="let row; columns: displayedColumns; let i = index"></tr>
+
+                                <tr class="mat-row" *matNoDataRow>
+                                  <td class="mat-cell">No data Found!</td>
+                              </tr>
+
+                              </table> 
+                <mat-paginator
+                  [pageSizeOptions]="[10, 25, 50, 100]"
+                  aria-label="Select page of users"
+                ></mat-paginator>
+              </div>
+            </div> -->
+          </div>
+          <div *ngIf="showImport && !showGlobalSettings">
+            <app-import-data
+              [showNavBar]="false"
+              [showLeftMenu]="false"
+              [validator]="importValidator"
+              (importClose)="backToResults()"
+            ></app-import-data>
+             
+          </div>
+            
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

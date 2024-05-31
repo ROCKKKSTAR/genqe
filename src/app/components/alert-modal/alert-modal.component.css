@@ -1,0 +1,47 @@
+.mat-typography h2 {
+  color: #575757;
+  font-size: 26px;
+  text-align: center;
+  font-weight: 600;
+}
+.mat-dialog-content {
+  color: #797979;
+  font-size: 16px;
+  text-align: center;
+  margin: 0;
+  padding: 10px;
+}
+.mat-dialog-actions {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 0 10px;
+}
+button {
+  min-height: 40px;
+  min-width: 60px;
+  color: white;
+}
+button:first-child {
+  margin-right: 10px;
+}
+.close-btn {
+  background-color: #5aa469;
+  border: 1px solid #5aa469;
+  box-shadow: rgb(221 107 85 / 80%) 0px 0px 2px,
+    rgb(0 0 0 / 5%) 0px 0px 0px 1px inset;
+}
+.close-btnred {
+  background-color: #fb0707a8;
+  border: 1px solid #fb0707a8;
+  box-shadow: rgb(221 107 85 / 80%) 0px 0px 2px,
+    rgb(0 0 0 / 5%) 0px 0px 0px 1px inset;
+}
+.cancel-btn {
+  background-color: #777777;
+  border: 1px solid #777777;
+  box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%),
+    0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+}

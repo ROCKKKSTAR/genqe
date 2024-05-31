@@ -1,0 +1,815 @@
+<!-- <app-header></app-header> -->
+<div
+  class="content-wrapper d-flex"
+  [ngClass]="{ 'sidebar-open': isSidebarOpen }"
+>
+  <div class="sidebar-wrapper">
+    <app-sidebar [(sidebarState)]="isSidebarOpen"></app-sidebar>
+  </div>
+  <div *ngIf="loadershow">
+    <app-loader [message]="loaderMessage"></app-loader>
+  </div>
+  <div class="main-wrapper pt-3">
+    <div *ngIf="ExportLoader">
+      <app-loader [message]="exportloaderMessage"></app-loader>
+    </div>
+    <div *ngIf="loaderShow">
+      <app-loader [message]="loaderMessage"></app-loader>
+    </div>
+    <div class="container-fluid h-100">
+      <div class="row h-100">
+        <div class="col-md-12">
+          <div
+            class="invoice-details-wrapper"
+            *ngIf="!showTemplateDetails && !showImport"
+          >
+            <div class="d-flex justify-content-between">
+              <div>
+                <p class="main-heading">
+                  <span>{{ data ? data.promtTemp.promptTemplate : 'Prompt Template' }}:</span>
+                  {{ data ? data.promtTemp.viewedit : 'View, edit and add new prompt template' }}
+                </p>
+              </div>
+              <div>
+                <a
+                  href="javascript:void(0)"
+                  mat-raised-button
+                  (click)="exportReport('PromptTemplate')"
+                  style="line-height: 24px !important"
+                  class="btn btn-info"
+                  ><i class="fa fa-file-text-o" aria-hidden="true"></i>
+                  {{ data ? data.promtTemp.export : 'Export' }}</a
+                >
+                <a
+                  (click)="showImports()"
+                  href="javascript:void(0)"
+                  class="btn btn-success ml-2"
+                  ><i class="fa fa-upload" aria-hidden="true"></i>
+                  {{ data ? data.buttons.import : "Import" }}</a
+                >
+                <a
+                  href="javascript:void(0)"
+                  class="btn btn-info"
+                  (click)="addNewTemplate(true)"
+                  ><i class="fa fa-plus" aria-hidden="true"></i>
+                  {{ data ? data.promtTemp.new : 'New' }}
+                </a>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="search-wrapper">
+                  <div class="search-product">
+                    <div class="search_main">
+                      <div class="search-input">
+                        <span
+                          ><i class="fa fa-search" aria-hidden="true"></i
+                        ></span>
+                        <input
+                          type="search"
+                          [(ngModel)]="simpleSearch"
+                          (keyup.enter)="
+                            templateSimpleSearch($event.target.value)
+                          "
+                        />
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>{{ data ? data.promtTemp.searchPromptTemplate : 'Search Prompt Template' }}</label>
+                        <span
+                          ><i
+                            class="fa fa-times"
+                            (click)="fetchTemplates()"
+                            aria-hidden="true"
+                          ></i
+                        ></span>
+                        <span (click)="showQueryForm()" class="dropdown-form"
+                          ><i class="fa fa-sort-desc" aria-hidden="true"></i
+                        ></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="query1" class="query1" *ngIf="showData">
+                    <div class="form-container">
+                      <form>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="name2">{{ data ? data.promtTemp.partnerName : 'Partner Name' }}:</label>
+                              <div class="suggestion_input_wrapper">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  id="outletOwnedBy"
+                                  placeholder="{{ data ? data.promtTemp.phPartnerName : 'Partner Name' }}"
+                                  name="outletOwnedBy"
+                                  [(ngModel)]="partnerName"
+                                  autocomplete="off"
+                                  (keyup)="fetchPartners($event.target.value)"
+                                />
+                              </div>
+                              <ul class="searched-list" *ngIf="partners">
+                                <li
+                                  *ngFor="let partner of partners"
+                                  (click)="setPartner(partner)"
+                                >
+                                  {{ partner.name }}
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="tshortcode2"
+                                >{{ data ? data.promtTemp.promptShortCode : 'Prompt Short Code' }}:</label
+                              >
+                              <input
+                                type="text"
+                                [(ngModel)]="tScodeA"
+                                autocomplete="off"
+                                class="form-control"
+                                id="tshortcode"
+                                placeholder="{{ data ? data.promtTemp.phEnterPromptShortCode : 'Enter Prompt Short Code' }}"
+                                name="tshortcode2"
+                              />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row align-items-center">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="status2">{{ data ? data.promtTemp.promptStatus : 'Prompt Status' }}:</label>
+                              <select
+                                name="status2"
+                                class="custom-select"
+                                [(ngModel)]="selectedStatus"
+                              >
+                                <option
+                                  *ngFor="let t of templateStatus"
+                                  [value]="t.keyCode"
+                                  [selected]="t.keyCode === 1"
+                                >
+                                  {{ t.key1 }}
+                                </option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-md-6"></div>
+                        </div>
+                        <div class="query-btn">
+                          <a
+                            class="btn btn-secondary"
+                            (click)="resetAdvanceSearch()"
+                            ><i class="fa fa-history" aria-hidden="true"></i>
+                            {{ data ? data.promtTemp.reset : 'Reset' }} </a
+                          >
+                          <a
+                            class="btn btn-info"
+                            (click)="advanceTemplateSearch()"
+                            ><i class="fa fa-search" aria-hidden="true"></i>
+                            {{ data ? data.promtTemp.search : 'Search' }}</a
+                          >
+                          <a class="btn btn-danger" (click)="showQueryForm()"
+                            ><i class="fa fa-close" aria-hidden="true"></i>
+                            {{ data ? data.promtTemp.close : 'Close' }}</a
+                          >
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="property-table-wrapper" style="width: 100%">
+              <div class="table-responsive">
+                <table
+                  mat-table
+                  [dataSource]="dataSourceTemplate"
+                  matTableExporter
+                  #exporter="matTableExporter"
+                  class="mat-elevation-z8"
+                  matSort
+                  #itemSort="matSort"
+                >
+                  <ng-container matColumnDef="tname">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{ data ? data.promtTemp.promptTemplateName : 'Prompt Template Name' }} 
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.promptTempName }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="tshortcode">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{ data ? data.promtTemp.promptShortCode : 'Prompt Short Code' }} 
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.promptShortCode }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="prompt">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{ data ? data.promtTemp.prompt : 'Prompt' }} 
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.promptDescription }}
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="status">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{ data ? data.promtTemp.status : 'Status' }} 
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element?.status === 1 ? "Active" : "Inactive" }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="lastModifiedOn">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{ data ? data.promtTemp.lastModifiedOn : 'Last Modified On' }} 
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{
+                        datePipe.transform(
+                          element.lastModifiedOn,
+                          "dd-MMM-yyyy hh:mm:ss"
+                        )
+                      }}
+                    </td>
+                  </ng-container>
+                  <tr
+                    mat-header-row
+                    *matHeaderRowDef="displayedTemplateColumn"
+                  ></tr>
+                  <tr
+                    mat-row
+                    (dblclick)="getTableClickData(row._id)"
+                    *matRowDef="
+                      let row;
+                      columns: displayedTemplateColumn;
+                      let i = index
+                    "
+                  ></tr>
+                </table>
+              </div>
+              <mat-paginator
+                #contactpaginator
+                [pageSizeOptions]="[10, 25, 50, 100]"
+                aria-label="Select page of Contract"
+              ></mat-paginator>
+            </div>
+          </div>
+          <div
+            class="new-invoice-wrapper"
+            *ngIf="showTemplateDetails && !showImport"
+          >
+            <p class="main-heading">
+              <span>{{ data ? data.promtTemp.addNewPromptTemplate : 'Add New Prompt Template' }}: </span>{{ data ? data.promtTemp.fillthefollowingdetails : 'Fill the following details to add new prompt template' }}
+              <span
+                (click)="hideTemplateDetails()"
+                class="close1"
+                data-toggle="tooltip"
+                title="Close"
+                >X</span
+              >
+            </p>
+            <form>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="name"
+                      >{{ data ? data.promtTemp.promptTemplateName : 'Prompt Template Name' }}<span class="asterisk">*</span
+                      >:</label
+                    >
+                    <div class="suggestion_input_wrapper">
+                      <input
+                        type="text"
+                        [(ngModel)]="templateObject.templatename"
+                        [disabled]="templateObject.isSystemPrompt"
+                        autocomplete="off"
+                        class="form-control"
+                        placeholder="{{ data ? data.promtTemp.phEnterPromptTemplateName : 'Enter Prompt Template Name' }}"
+                        name="name"
+                        #templateName
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="tshortcode"
+                      >{{ data ? data.promtTemp.promptShortCode : 'Prompt Short Code' }}<span class="asterisk">*</span>:</label
+                    >
+                    <input
+                      type="text"
+                      [disabled]="editMode && templateObject.isSystemPrompt"
+                      [(ngModel)]="templateObject.templateshortcode"
+                      autocomplete="off"
+                      class="form-control"
+                      id="tshortcode"
+                      placeholder="{{ data ? data.promtTemp.phEnterPromptShortCode : 'Enter Prompt Short Code' }}"
+                      name="tshortcode"
+                      #tShortCode
+                    />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="category"
+                      >{{ data ? data.promtTemp.promptStatus : 'Prompt Status' }}<span class="asterisk">*</span>:</label
+                    >
+                    <select
+                      name="category"
+                      class="custom-select"
+                      [disabled]="templateObject.isSystemPrompt"
+                      [(ngModel)]="templateObject.templatecategory"
+                      #templatecategory
+                    >
+                      <option
+                        *ngFor="let t of templateStatus"
+                        [value]="t.keyCode"
+                        [selected]="t.keyCode === 1"
+                      >
+                        {{ t.key1 }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-group">
+                    <label for="prompt"
+                      >{{ data ? data.promtTemp.prompt : 'Prompt' }}<span class="asterisk">*</span>:</label
+                    >
+                    <textarea
+                      name="prompt"
+                      rows="2"
+                      class="form-control"
+                      [disabled]="templateObject.isSystemPrompt"
+                      [(ngModel)]="templateObject.desc"
+                      placeholder="{{ data ? data.promtTemp.enterPrompt : 'Enter Prompt' }}"
+                    ></textarea>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="category"
+                      >{{ data ? data.promtTemp.promptCategory : 'Prompt Category' }}<span class="asterisk">*</span>:</label
+                    >
+                    <select
+                      name="category"
+                      [disabled]="templateObject.isSystemPrompt"
+                      class="custom-select"
+                      [(ngModel)]="templateObject.category"
+                      (ngModelChange)="onCategoryChange($event)"
+                      #templatecategory
+                    >
+                      <option *ngFor="let t of categories" [value]="t.keyCode">
+                        {{ t.key1 }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group position-relative">
+                    <label for="loungeCode" class="w-100"
+                      >{{ data ? data.promtTemp.partner : 'Partner' }}<span class="asterisk">*</span>:<span
+                        class="pull-right"
+                        data-toggle="tooltip"
+                        data-placement="bottom"
+                        data-html="true"
+                        id="port-tooltip"
+                      >
+                        <!-- <i
+                          class="fa fa-info-circle"
+                          aria-hidden="true"
+                          style="font-size: 16px; color: #5e72e4"
+                        ></i> -->
+                      </span></label
+                    >
+                    <div class="suggestion_input_wrapper">
+                      <i class="fa fa-search" aria-hidden="true"></i>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="outletOwnedBy"
+                        [disabled]="templateObject.isSystemPrompt"
+                        placeholder="{{ data ? data.promtTemp.phPartnerName : 'Partner Name' }}"
+                        name="outletOwnedBy"
+                        [(ngModel)]="partnerName"
+                        autocomplete="off"
+                        (keyup)="fetchPartners($event.target.value)"
+                      />
+                    </div>
+                    <ul class="searched-list" *ngIf="partners">
+                      <li
+                        *ngFor="let partner of partners"
+                        (click)="setPartner(partner)"
+                      >
+                        {{ partner.name }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-auto">
+                  <div class="form-group position-relative">
+                    <label for="loungeCode" class="w-100"
+                      >{{ data ? data.promtTemp.filterDocument : 'Filter Document to Run Prompt' }}<span
+                        class="asterisk"
+                      ></span
+                      >:<span
+                        class="pull-right"
+                        data-toggle="tooltip"
+                        data-placement="bottom"
+                        data-html="true"
+                        id="port-tooltip"
+                      >
+                      </span
+                    ></label>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        name="defaultType"
+                        id="defaultType"
+                        type="checkbox"
+                        [disabled]="templateObject.isSystemPrompt"
+                        [(ngModel)]="templateObject.filterDocumentType"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-auto">
+                  <div class="form-group position-relative">
+                    <label for="loungeCode" class="w-100"
+                      >{{ data ? data.promtTemp.isSystemPrompt : 'IsSystemPrompt' }}<span class="asterisk"></span>:<span
+                        class="pull-right"
+                        data-toggle="tooltip"
+                        data-placement="bottom"
+                        data-html="true"
+                        id="port-tooltip"
+                      >
+                      </span
+                    ></label>
+                    <div class="form-check">
+                      <input
+                        class="form-check-input"
+                        name="isSystemPrompt"
+                        id="isSystemPrompt"
+                        type="checkbox"
+                        [(ngModel)]="templateObject.isSystemPrompt"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-group">
+                    <label for="promptSample"
+                      >{{ data ? data.promtTemp.samplePromptOutput : 'Sample Prompt Output' }}<span class="asterisk"></span
+                      >:</label
+                    >
+                    <textarea
+                      name="promptSample"
+                      class="form-control"
+                      [disabled]="templateObject.isSystemPrompt"
+                      [(ngModel)]="templateObject.samplePrompt"
+                      placeholder="{{ data ? data.promtTemp.phEnterSamplePrompt : 'Enter Sample Prompt Output' }}"
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div class="row" *ngIf="templateObject.filterDocumentType">
+              <div class="col-12">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link active"
+                      id="include-documents-tab"
+                      data-toggle="tab"
+                      data-target="#include-documents"
+                      type="button"
+                      role="tab"
+                      aria-controls="include-documents"
+                      aria-selected="true"
+                    >
+                    {{ data ? data.promtTemp.includeDocuments : 'Include Documents' }}
+                    </button>
+                  </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                  <div
+                    class="tab-pane fade active show"
+                    id="include-documents"
+                    role="tabpanel"
+                    aria-labelledby="include-documents-tab"
+                  >
+                    <div class="row">
+                      <div class="col-12">
+                        <p class="main-heading">
+                          <span>{{ data ? data.promtTemp.includeDocuments : 'Include Documents' }}</span>
+                          <span
+                            class="close1"
+                            data-toggle="tooltip"
+                            title="Close"
+                            (click)="newIncludeDocuments = false"
+                            *ngIf="newIncludeDocuments"
+                            >X</span
+                          >
+                          <span class="pull-right" *ngIf="!newIncludeDocuments">
+                            <button
+                              class="btn btn-primary"
+                              (click)="addNewIncludeDocuments()"
+                            >
+                              <i class="fa fa-plus"></i> {{ data ? data.promtTemp.add : 'Add' }}
+                            </button>
+                          </span>
+                        </p>
+                      </div>
+
+                      <div class="col-12" *ngIf="!newIncludeDocuments">
+                        <div class="search-wrapper">
+                          <div class="search-product">
+                            <div class="search_main">
+                              <div class="search-input">
+                                <span
+                                  ><i
+                                    class="fa fa-search"
+                                    aria-hidden="true"
+                                  ></i
+                                ></span>
+                                <input type="search" />
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>{{ data ? data.promtTemp.search : 'Search' }}</label>
+                                <span
+                                  ><i class="fa fa-times" aria-hidden="true"></i
+                                ></span>
+                                <!-- <span
+                                (click)="showIncludeDocumentQueryForm()"
+                                class="dropdown-form"
+                                ><i
+                                  class="fa fa-sort-desc"
+                                  aria-hidden="true"
+                                ></i
+                              ></span> -->
+                              </div>
+                            </div>
+                          </div>
+                          <!-- <div
+                          id="query1"
+                          class="query1"
+                          *ngIf="showIncludeDocumentQueryData"
+                        >
+                          <div class="form-container">
+                            <form>
+                              <div class="row">
+                                <div class="col-md-6">
+                                  <div class="form-group">
+                                    <label for="documentNameSearch"
+                                      >Prom Name:</label
+                                    >
+                                    <input
+                                      type="text"
+                                      class="form-control"
+                                      id="documentNameSearch"
+                                      placeholder="Enter Document Name"
+                                      name="documentNameSearch"
+                                    />
+                                  </div>
+                                </div>
+                                <div class="col-md-6">
+                                  <div class="form-group">
+                                    <label for="issuedToSearch"
+                                      >Issued To:</label
+                                    >
+                                    <input
+                                      type="text"
+                                      class="form-control"
+                                      id="issuedToSearch"
+                                      placeholder="Enter Issued To"
+                                      name="issuedToSearch"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="query-btn">
+                                <a class="btn btn-secondary"
+                                  ><i
+                                    class="fa fa-history"
+                                    aria-hidden="true"
+                                  ></i>
+                                  Reset</a
+                                >
+                                <a class="btn btn-info"
+                                  ><i
+                                    class="fa fa-search"
+                                    aria-hidden="true"
+                                  ></i>
+                                  Search</a
+                                >
+                                <a
+                                  class="btn btn-danger"
+                                  (click)="showResearchDocumentQueryForm()"
+                                  ><i
+                                    class="fa fa-close"
+                                    aria-hidden="true"
+                                  ></i>
+                                  Close</a
+                                >
+                              </div>
+                            </form>
+                          </div>
+                        </div> -->
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row" *ngIf="!newIncludeDocuments">
+                      <div class="col-12">
+                        <div class="table-responsive">
+                          <table
+                            mat-table
+                            [dataSource]="dataSourceIncludeDocuments"
+                            class="mat-elevation-z8"
+                          >
+                            <ng-container matColumnDef="documentType">
+                              <th mat-header-cell *matHeaderCellDef>
+                                {{ data ? data.promtTemp.documentType : 'Document Type' }}
+                              </th>
+                              <td mat-cell *matCellDef="let element">
+                                {{
+                                  getKeyValue(
+                                    element.docType,
+                                    "PROJECT_DOCUMENT_TYPE"
+                                  )
+                                }}
+                              </td>
+                            </ng-container>
+                            <ng-container matColumnDef="fileType">
+                              <th mat-header-cell *matHeaderCellDef>
+                                {{ data ? data.promtTemp.fileType : 'File Type' }}
+                              </th>
+                              <td mat-cell *matCellDef="let element">
+                                {{
+                                  getKeyValue(
+                                    element.fileType,
+                                    "LEGAL_FILE_TYPE"
+                                  )
+                                }}
+                              </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="criteria">
+                              <th mat-header-cell *matHeaderCellDef>
+                                {{ data ? data.promtTemp.criteria : 'Criteria' }} 
+                              </th>
+                              <td mat-cell *matCellDef="let element">
+                                {{ element.criteria }}
+                              </td>
+                            </ng-container>
+
+                            <tr
+                              mat-header-row
+                              *matHeaderRowDef="
+                                displayedColumnsIncludeDocuments
+                              "
+                            ></tr>
+                            <tr
+                              mat-row
+                              (dblclick)="getDocumentDataById(row._id)"
+                              *matRowDef="
+                                let row;
+                                columns: displayedColumnsIncludeDocuments;
+                                let i = index
+                              "
+                            ></tr>
+                          </table>
+                        </div>
+                        <mat-paginator
+                          [pageSizeOptions]="[10, 25, 50, 100]"
+                          aria-label="Select page of Research Document"
+                        >
+                        </mat-paginator>
+                      </div>
+                    </div>
+                    <div class="row" *ngIf="newIncludeDocuments">
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="documentType"
+                            >{{ data ? data.promtTemp.documentType : 'Document Type' }}<span class="asterisk">*</span
+                            >:</label
+                          >
+                          <select
+                            name="documentType"
+                            id="documentType"
+                            class="custom-select"
+                            [(ngModel)]="document.docType"
+                            (change)="
+                              fetchFileTypes(
+                                'LEGAL_FILE_TYPE',
+                                $event.target.value
+                              )
+                            "
+                          >
+                            <option
+                              *ngFor="let t of documentTypes"
+                              [value]="t.keyCode"
+                              [selected]="t.keyCode == 1"
+                            >
+                              {{ t.key1 }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="uploadFile"
+                          >{{ data ? data.promtTemp.fileType : 'File Type' }}<span class="asterisk">*</span></label
+                        >
+                        <div class="form-group">
+                          <select
+                            name="fileType"
+                            id="uploadFile"
+                            class="custom-select"
+                            [(ngModel)]="document.fileType"
+                          >
+                            <option
+                              *ngFor="let t of fileTypes"
+                              [value]="t.keyCode"
+                              [selected]="t.keyCode == 1"
+                            >
+                              {{ t.key1 }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label for="criteria"
+                            >{{ data ? data.promtTemp.criteria : 'Criteria' }}<span class="asterisk">*</span>:</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            [(ngModel)]="document.criteria"
+                            placeholder="{{ data ? data.promtTemp.phEnterCriteria : 'Enter Criteria' }}"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-12" *ngIf="isNew">
+                        <div class="result mt-4 d-flex justify-content-end">
+                          <a
+                            class="btn btn-secondary mr-2"
+                            (click)="resetDocument()"
+                          >
+                            <i class="fa fa-history" aria-hidden="true"></i>
+                            {{ data ? data.promtTemp.reset : 'Reset' }}</a
+                          >
+                          <a
+                            class="btn btn-success"
+                            (click)="saveDocument(documentRowID)"
+                          >
+                            <i class="fa fa-check" aria-hidden="true"></i>
+                            {{ data ? data.promtTemp.save : 'Save' }}</a
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="result mt-4 d-flex justify-content-end">
+                  <a
+                    class="btn btn-secondary mr-2"
+                    (click)="resetReceipt()"
+                    *ngIf="editMode == false"
+                  >
+                    <i class="fa fa-history" aria-hidden="true"></i>
+                    {{ data ? data.promtTemp.reset : 'Reset' }}</a
+                  >
+                  <a class="btn btn-success" (click)="saveTemplate(rowID)">
+                    <i class="fa fa-check" aria-hidden="true"></i>
+                    {{ data ? data.promtTemp.submit : 'Submit' }}</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="showImport">
+            <app-import-data
+              [showNavBar]="false"
+              [showLeftMenu]="false"
+              [validator]="importValidator"
+              (importClose)="backToResults()"
+            ></app-import-data>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

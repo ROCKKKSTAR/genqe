@@ -1,0 +1,794 @@
+<div
+  class="content-wrapper d-flex"
+  [ngClass]="{ 'sidebar-open': isSidebarOpen }"
+>
+  <div class="sidebar-wrapper">
+    <app-sidebar [(sidebarState)]="isSidebarOpen"></app-sidebar>
+  </div>
+  <div class="main-wrapper pt-3 h-100">
+    <div *ngIf="portLoaderShow">
+      <app-loader [message]="'Loading Ports...'"></app-loader>
+    </div>
+    <div *ngIf="ExportLoader">
+      <app-loader [message]="exportloaderMessage"></app-loader>
+    </div>
+    <div class="container-fluid h-100">
+      <div class="row h-100">
+        <div class="col-md-12">
+          <div
+            class="property-details-wrapper"
+            style="width: 100%"
+            *ngIf="!showAirportDetails && !showImport"
+          >
+            <div class="row">
+              <div class="col-md-6">
+                <p class="main-heading">
+                  <span>{{
+                    data ? data.master.airport.txtHeading : "Port/Station:"
+                  }}</span
+                  >{{
+                    data
+                      ? data.master.airport.txtDes
+                      : "View and add new Port/Station in system."
+                  }}
+                </p>
+              </div>
+              <div class="col-md-6 text-right">
+                <a
+                  href="javascript:void(0)"
+                  mat-raised-button
+                  (click)="exportReport('Airport')"
+                  style="line-height: 24px !important"
+                  class="btn btn-info"
+                  ><i class="fa fa-file-text-o" aria-hidden="true"></i>
+                  {{ data ? data.buttons.export : "Export" }}</a
+                >
+                <a
+                  (click)="showImportScreen()"
+                  class="btn btn-success text-white mr-2"
+                  ><i class="fa fa-upload" aria-hidden="true"></i>
+                  {{ data ? data.buttons.import : "Import" }}</a
+                >
+                <a class="btn btn-info" (click)="addNewAirport(true)"
+                  ><i class="fa fa-plus" aria-hidden="true"></i>
+                  {{ data ? data.buttons.new : "New" }}</a
+                >
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="search-wrapper">
+                  <div class="search-product">
+                    <div class="search_main">
+                      <div class="search-input">
+                        <span
+                          ><i class="fa fa-search" aria-hidden="true"></i
+                        ></span>
+                        <input
+                          type="search"
+                          [(ngModel)]="simpleSearch"
+                          (keyup.enter)="
+                            simpleSearchAirportData($event.target.value)
+                          "
+                        />
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>{{
+                          data
+                            ? data.master.airport.searchPortSt
+                            : "Search Port/Station"
+                        }}</label>
+                        <span
+                          ><i
+                            (click)="getAirport()"
+                            class="fa fa-times"
+                            aria-hidden="true"
+                          ></i
+                        ></span>
+                        <span (click)="showQueryForm()" class="dropdown-form"
+                          ><i class="fa fa-sort-desc" aria-hidden="true"></i
+                        ></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="query1" class="query1" *ngIf="showData">
+                    <div class="form-container">
+                      <form>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="airportName"
+                                >{{
+                                  data
+                                    ? data.master.airport.airportName
+                                    : "Airport Name"
+                                }}:</label
+                              >
+                              <div class="suggestion_input_wrapper">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                                <input
+                                  type="text"
+                                  class="form-control suggestionInput"
+                                  id="name"
+                                  placeholder="{{
+                                    data
+                                      ? data.master.airport.enterAirportName
+                                      : 'Enter Port Name'
+                                  }}"
+                                  name="name"
+                                  autocomplete="off"
+                                  (keyup)="fetchPortNames($event.target.value)"
+                                  (keydown)="onAirportInputKeydown($event)"
+                                  [(ngModel)]="name"
+                                />
+                                <ul
+                                  class="searched-list searchSuggestions"
+                                  *ngIf="airport.length > 0"
+                                >
+                                  <li
+                                    *ngFor="let a of airport; let i = index"
+                                    [class.selected]="
+                                      i === airportSuggestionIndex
+                                    "
+                                    (click)="setTokenAdvancedPort(a)"
+                                  >
+                                    {{ a.airportName }}
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="airportCode"
+                                >{{
+                                  data
+                                    ? data.master.airport.airportCode
+                                    : "Airport Code"
+                                }}:</label
+                              >
+                              <div class="suggestion_input_wrapper">
+                                <!-- <i class="fa fa-search" aria-hidden="true"></i> -->
+                                <input
+                                  type="text"
+                                  class="form-control suggestionInput"
+                                  id="airportCode"
+                                  placeholder="{{
+                                    data
+                                      ? data.master.airport.enterAirportCode
+                                      : 'Enter Port Code'
+                                  }}"
+                                  name="airportName"
+                                  [(ngModel)]="airportCode"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="airportCity">{{data? data.master.lounge.loungeType: 'Airport City'}}:</label>
+                                                            <select name="airportCity" class="custom-select" [(ngModel)]='airportCity'>
+                                                            </select>
+                                                        </div>
+                                                    </div> -->
+                        <!-- <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="airportState">{{data? data.master.lounge.loungeCategory: 'Airport State'}}:</label>
+                                                            <select name="airportState" class="custom-select" [(ngModel)]='airportState'>
+                                                            </select>
+                                                        </div>
+                                                    </div> -->
+                        <!-- </div> -->
+                        <!-- <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="airportCountry">{{data? data.master.lounge.addressLine1: 'Airport Country'}}:</label>
+                                                            <input type="text" id="airportCountry" name="airportCountry" class="form-control" [(ngModel)]='airportCountry'>
+                                                        </div>
+                                                    </div>
+                                                </div> -->
+                        <div class="query-btn">
+                          <a
+                            class="btn btn-secondary"
+                            (click)="name = ''; airportCode = ''"
+                            ><i class="fa fa-history" aria-hidden="true"></i>
+                            {{ data ? data.buttons.reset : "Reset" }}</a
+                          >
+                          <a
+                            class="btn btn-info"
+                            (click)="advanceAirportDataSearch()"
+                            ><i class="fa fa-search" aria-hidden="true"></i>
+                            {{ data ? data.buttons.search : "Search" }}</a
+                          >
+                          <a class="btn btn-danger" (click)="showQueryForm()"
+                            ><i class="fa fa-close" aria-hidden="true"></i>
+                            {{ data ? data.admission.close : "Close" }}</a
+                          >
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <div class="property-table-wrapper" style="width: 100%">
+                  <div class="table-responsive">
+                    <table
+                      mat-table
+                      [dataSource]="dataSourceAirport"
+                      matTableExporter
+                      #exporter="matTableExporter"
+                      class="mat-elevation-z8"
+                      matSort
+                    >
+                      <ng-container matColumnDef="_id">
+                        <th mat-header-cell *matHeaderCellDef>Partner Id</th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element._id }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="airportName">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data ? data.master.airport.airportName : "Port Name"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.airportName }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="airportCode">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data ? data.master.airport.airportCode : "Port Code"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.airportCode }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="airportCity">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data ? data.master.airport.airportCity : "Port City"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.airportCity }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="airportState">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data
+                              ? data.master.airport.airportState
+                              : "Port State"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.airportState }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="airportCountry">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data
+                              ? data.master.airport.airportCountry
+                              : "Port Country"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.airportCountry.name }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="airportContinent">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data
+                              ? data.master.airport.portcontinent
+                              : "Port Continent"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.airportContinent }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="airportRegion">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data
+                              ? data.master.airport.portregion
+                              : "Port Region"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.displayRegions }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="airportTimezone">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data
+                              ? data.master.airport.porttimezone
+                              : "Port Timezone"
+                          }}
+                        </th>
+                        <td
+                          style="max-width: 130px; overflow: hidden"
+                          mat-cell
+                          *matCellDef="let element"
+                        >
+                          <div>
+                            {{ element?.airportTimezone }}
+                          </div>
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="airportTimezoneInUTC">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data
+                              ? data.master.airport.porttimezoneinutc
+                              : "Port Timezone(In UTC)"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ "UTC" }} {{ element?.airportTimeZoneInUTC }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="location">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          Location
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{
+                            element?.location !== undefined
+                              ? element.location.coordinates
+                              : ""
+                          }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="status">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.airport.status : "Status" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.status === 1 ? "Active" : "Inactive" }}
+                        </td>
+                      </ng-container>
+                      <tr
+                        mat-header-row
+                        *matHeaderRowDef="displayedColumns"
+                      ></tr>
+                      <tr
+                        mat-row
+                        (dblclick)="getAirportById(row._id)"
+                        *matRowDef="
+                          let row;
+                          columns: displayedColumns;
+                          let i = index
+                        "
+                      ></tr>
+
+                      <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell">No data Found!</td>
+                      </tr>
+                    </table>
+                  </div>
+                  <mat-paginator
+                    [pageSizeOptions]="[10, 25, 50, 100]"
+                    aria-label="Select page of users"
+                  ></mat-paginator>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="showImport && !showAirportDetails">
+            <app-import-data
+              [showNavBar]="false"
+              [showLeftMenu]="false"
+              [validator]="importValidator"
+              (importClose)="backToResults()"
+            ></app-import-data>
+          </div>
+          <div
+            class="new-property-wrapper"
+            *ngIf="showAirportDetails && !showImport"
+          >
+            <p class="main-heading">
+              <span
+                >{{
+                  data
+                    ? data.master.airport.portHeading
+                    : "Add New Port/Station"
+                }}: </span
+              >{{
+                data
+                  ? data.master.airport.portDes
+                  : "Fill the following details to add New Port/Station for Outlets."
+              }}<span
+                (click)="hideAirportDetails()"
+                class="close1"
+                data-toggle="tooltip"
+                title="Close"
+                >X</span
+              >
+            </p>
+            <form>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group position-relative">
+                    <label for="airportName"
+                      >{{
+                        data ? data.master.airport.airportName : "Port Name"
+                      }}
+                      <span class="asterisk">*</span>:</label
+                    >
+                    <div class="suggestion_input_wrapper">
+                      <i class="fa fa-search" aria-hidden="true"></i>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="airportName1"
+                        placeholder="{{
+                          data
+                            ? data.master.airport.enterAirportName
+                            : 'Enter Port Name'
+                        }}"
+                        name="airportName"
+                        autocomplete="off"
+                        (keyup)="fetchPortNames($event.target.value)"
+                        [(ngModel)]="airportName"
+                      />
+                      <ul class="searched-list" *ngIf="airport.length > 0">
+                        <li *ngFor="let a of airport" (click)="setTokenPort(a)">
+                          {{ a.airportName }}
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="airportCode"
+                      >{{
+                        data ? data.master.airport.airportCode : "Airport Code"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="airportCode"
+                      placeholder="{{
+                        data
+                          ? data.master.airport.enterAirportCode
+                          : 'Enter Port Code'
+                      }}"
+                      name="airportCode"
+                      [(ngModel)]="airportCode"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="airportCity"
+                      >{{
+                        data ? data.master.airport.airportCity : "Airport City"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="airportCity"
+                      placeholder="{{
+                        data
+                          ? data.master.airport.enterAirportCity
+                          : 'Enter Port City'
+                      }}"
+                      name="airportCity"
+                      [(ngModel)]="airportCity"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="airportState"
+                      >{{
+                        data
+                          ? data.master.airport.airportState
+                          : "Airport State"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="airportState"
+                      placeholder="{{
+                        data
+                          ? data.master.airport.enterAirportState
+                          : 'Enter Port State'
+                      }}"
+                      name="airportState"
+                      [(ngModel)]="airportState"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row align-items-center">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="airportCountry"
+                      >{{
+                        data
+                          ? data.master.airport.airportCountry
+                          : "Airport Country"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <div class="suggestion_input_wrapper">
+                      <i class="fa fa-search" aria-hidden="true"></i>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="airportCountry"
+                        placeholder="{{
+                          data
+                            ? data.master.airport.enterAirportCountry
+                            : 'Enter Port Country'
+                        }}"
+                        name="airportCountry"
+                        [(ngModel)]="airportCountry"
+                        autocomplete="off"
+                        (keyup)="fetchCountryNames($event.target.value)"
+                      />
+                      <ul class="searched-list" *ngIf="country.length > 0">
+                        <li
+                          *ngFor="let c of country"
+                          (click)="setTokenCountry(c)"
+                        >
+                          {{ c.name }}
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="airportContinent"
+                      >{{
+                        data
+                          ? data.master.airport.portcontinent
+                          : "Port Continent"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="airportContinent"
+                      placeholder="{{
+                        data
+                          ? data.master.airport.enterportcontinent
+                          : 'Enter Port Continent'
+                      }}"
+                      name="airportContinent"
+                      [(ngModel)]="airportContinent"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row align-items-center">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="airportRegion"
+                      >{{ data ? data.master.airport.portregion : "Port Region"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <!-- <input
+                      type="text"
+                      class="form-control"
+                      id="airportRegion"
+                      placeholder="{{
+                        data
+                          ? data.master.airport.enterportregion
+                          : 'Enter Port Region'
+                      }}"
+                      name="airportRegion"
+                      [(ngModel)]="airportRegion"
+                    /> -->
+                    <select
+                      name="airportRegion"
+                      class="custom-select"
+                      id="airportRegion"
+                      [(ngModel)]="airportRegion"
+                    >
+                      <option *ngFor="let l of portRegions" [value]="l.keyCode">
+                        {{ l.key1 }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="airportTimezone"
+                      >{{
+                        data
+                          ? data.master.airport.porttimezone
+                          : "Port Timezone"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <div class="suggestion_input_wrapper">
+                      <i class="fa fa-search" aria-hidden="true"></i>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="airportTimezone"
+                        placeholder="Enter Port Timezone"
+                        name="airportTimezone"
+                        autocomplete="off"
+                        (keyup)="fetchTimezoneNames($event.target.value)"
+                        [(ngModel)]="airportTimezone"
+                      />
+                      <ul class="searched-list" *ngIf="timezone.length > 0">
+                        <li
+                          *ngFor="let t of timezone; let i = index"
+                          (click)="setTokenTimezone(t, i, t.utc)"
+                        >
+                          {{ t.utc }} {{ t.text }}
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row align-items-center">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="airportTimezone"
+                      >{{
+                        data
+                          ? data.master.airport.porttimezoneinutc
+                          : "Port Timezone(In UTC)"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <input
+                      [disabled]="true"
+                      type="text"
+                      class="form-control"
+                      id="portTimezone"
+                      placeholder="Enter Port Timezone (In UTC)"
+                      name="portTimezone"
+                      [(ngModel)]="airportTimezoneInUTC"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="portType"
+                      >{{ data ? data.master.airport.porttype : "Port Type"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <select
+                      name="port"
+                      class="custom-select"
+                      id="port"
+                      [(ngModel)]="port"
+                    >
+                      <option *ngFor="let l of portType" [value]="l.keyCode">
+                        {{ l.key1 }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="location">Location:</label>
+                    <span
+                      (click)="openGoogleMaps()"
+                      class="ml-2"
+                      style="cursor: pointer; font-size: 12px"
+                      ><i
+                        class="fa fa-map-marker"
+                        style="font-size: 24px; color: blue; cursor: pointer"
+                      ></i
+                      >Open in Maps</span
+                    >
+                    <input
+                      [disabled]="true"
+                      type="text"
+                      name="location"
+                      class="form-control"
+                      id="location"
+                      [(ngModel)]="location"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div
+                    class="form-group d-flex justify-content-between align-items-center"
+                  >
+                    <label class="mb-0" for="isActive"
+                      >{{
+                        data ? data.master.airport.isActive : "Is Active"
+                      }}:</label
+                    >
+                    <div class="custom-control custom-switch">
+                      <input
+                        type="checkbox"
+                        name="isActive"
+                        class="custom-control-input"
+                        id="customSwitch1"
+                        checked
+                        [(ngModel)]="isActive"
+                      />
+                      <label
+                        class="custom-control-label"
+                        for="customSwitch1"
+                      ></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <ul
+              class="nav nav-tabs mt-4"
+              id="myTab"
+              role="tablist"
+              *ngIf="showAirportDetails && !showImport"
+            >
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  id="documen-tab"
+                  data-toggle="tab"
+                  href="#documen"
+                  role="tab"
+                  aria-controls="documen"
+                  aria-selected="true"
+                  >{{ data ? data.buttons.document : "Document" }}</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div
+            class="tab-pane show active"
+            id="documen"
+            role="tabpanel"
+            aria-labelledby="documen-tab"
+            *ngIf="showAirportDetails && !showImport"
+          >
+            <app-upload-document
+              (browseFile)="browseFile($event)"
+              [showFiles]="showFiles"
+              [filleTypes]="filleTypes"
+              [dataSourceDocuments]="dataSourceDocuments"
+              (changeDocumentStatus)="changeDocumentStatus($event)"
+              (fetchDocuments)="fetchAIDocuments(tokenRowid)"
+            ></app-upload-document>
+          </div>
+          <div class="result mt-4" *ngIf="showAirportDetails && !showImport">
+            <a class="btn btn-secondary mr-2" (click)="airportDataReset()"
+              ><i class="fa fa-history" aria-hidden="true"></i
+              >{{ data ? data.buttons.reset : "Reset" }}</a
+            >
+            <a class="btn btn-success" (click)="upsertAirportDetails()">
+              <i class="fa fa-check" aria-hidden="true"></i
+              >{{ data ? data.buttons.submit : "Submit" }}</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

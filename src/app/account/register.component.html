@@ -1,0 +1,702 @@
+﻿<!-- <section class="login register-page">
+  <div class="header-box">
+    <img src="../../assets/images/ppl-logo.png" alt="logo" />
+  </div>
+  <div class="login-wrapper">
+    <div class="login-card">
+      <div class="login-fields">
+        <h2>Sign up</h2>
+        <P>Sign up with a new account</P>
+        <form [formGroup]="form" autocomplete="off">
+          <div class="form-group">
+            <label for="username"
+              >User Name <span style="color: red">*</span></label
+            >
+
+            <input
+              type="text"
+              placeholder="Username"
+              formControlName="username"
+              class="form-control rounded-pill"
+              (keydown.space)="$event.preventDefault()"
+              [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
+            />
+            <div
+              *ngIf="submitted && f.username.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f.username.errors.required" style="color: red">
+                Username is required
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="name">Name <span style="color: red">*</span></label>
+            <input
+              type="text"
+              placeholder="First Name"
+              formControlName="name"
+              class="form-control rounded-pill"
+              [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
+            />
+            <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+              <div *ngIf="f.name.errors.required" style="color: red">
+                Name is required
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <input
+              type="text"
+              placeholder="Email"
+              formControlName="email"
+              class="form-control rounded-pill"
+              [ngClass]="{
+                'is-invalid':
+                  submitted &&
+                  form.get('email').invalid &&
+                  form.get('email').touched
+              }"
+            />
+            <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+              <div style="color: red">Valid Email Id</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="password"
+              >Password <span style="color: red">*</span></label
+            >
+
+            <input
+              type="password"
+              placeholder="Password"
+              (keyup)="onKeypressEvent($event)"
+              autocomplete="new-password"
+              formControlName="password"
+              class="form-control rounded-pill"
+              [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
+            />
+            <div
+              *ngIf="submitted && f.password.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f.password.errors.required" style="color: red">
+                Password is required
+              </div>
+              <div *ngIf="f.password.errors.minlength" style="color: red">
+                Password must be at least 8 characters
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="password"
+              >Confirm Password <span style="color: red">*</span>
+            </label>
+            <input
+              type="password"
+              placeholder="Confirm Password"
+              (keyup)="onKeypressEvent($event)"
+              formControlName="confirmpassword"
+              class="form-control rounded-pill"
+              [ngClass]="{
+                'is-invalid': submitted && f.confirmpassword.errors
+              }"
+            />
+            <div
+              *ngIf="submitted && f.confirmpassword.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f.confirmpassword.errors.required" style="color: red">
+                Confirm Password is required
+              </div>
+            </div>
+            <div *ngIf="confirmpassword" class="invalid-feedback">
+              <div style="color: red">
+                Confirm Password must be same Password
+              </div>
+            </div>
+          </div>
+          <div class="form-group" *ngIf="!showflag">
+            <span *ngIf="!lowerflag" style="color: red"
+              >✖ Password must contain a lower case letter</span
+            >
+            <span *ngIf="!upperflag" style="color: red">
+              ✖ Password must contain an upper case letter</span
+            >
+            <span *ngIf="!specialflag" style="color: red"
+              >✖ Password must contain a special character</span
+            >
+            <span *ngIf="!numberflag" style="color: red"
+              >✖ Password must contain a number</span
+            >
+            <span *ngIf="!charactersflag" style="color: red"
+              >✖ Password must contain at least 8 characters</span
+            >
+          </div>
+          <div class="form-group" *ngIf="showflagGreen">
+            <span *ngIf="!lowerflag" style="color: green"
+              >✓ Password must contain a lower case letter</span
+            >
+            <span *ngIf="!upperflag" style="color: green">
+              ✓ Password must contain an upper case letter</span
+            >
+            <span *ngIf="!specialflag" style="color: green"
+              >✓ Password must contain a special character</span
+            >
+            <span *ngIf="!numberflag" style="color: green"
+              >✓ Password must contain a number</span
+            >
+            <span *ngIf="!charactersflag" style="color: green"
+              >✓ Password must contain at least 8 characters</span
+            >
+          </div>
+          <div class="action-button">
+            <button
+              type="button"
+              class="btn"
+              (click)="onSubmit()"
+              (keyup.enter)="onSubmit()"
+            >
+              Sign up
+            </button>
+          </div>
+          <div class="actions">
+            <span>Already have an account?</span> <a href="">Sign in</a>
+          </div>
+
+          <div *ngIf="chkdomanflag" class="actions">
+            <label for="name"
+              >Verfication Code <span style="color: red">*</span></label
+            >
+            <input
+              type="text"
+              placeholder="Code"
+              #code
+              class="form-control rounded-pill"
+              [ngClass]="{ 'is-invalid': chkdomanflag }"
+            />
+            <div *ngIf="chkdomanflag" class="invalid-feedback">
+              <div *ngIf="f.name.errors.required" style="color: red">
+                Name is required
+              </div>
+            </div>
+            <div class="action-button">
+              <button
+                type="button"
+                class="btn"
+                (click)="onVerficationCode()"
+                (keyup.enter)="onVerficationCode()"
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+<div class="container-fluid pr-0">
+  <div class="row bg-white">
+    <div class="col-md-7">
+      <div
+        class="d-flex h-100 w-100 align-items-center justify-content-center px-4 register-content-wrapper"
+        *ngIf="currentScreen == 'createAccountForm'"
+      >
+        <div class="w-75">
+          <h2 class="font-weight-600 mb-1">
+            Create your account with us below
+          </h2>
+          <p class="mb-2">
+            <small class="font-weight-600 text-dark">
+              Already have an account?
+              <a routerLink="/login" class="text-purple">Login</a>
+            </small>
+          </p>
+          <small class="font-weight-600 text-dark">
+            You’re creating an account as?
+          </small>
+
+          <div class="d-flex align-items-center flex-wrap mt-1">
+            <div
+              *ngFor="let role of roles"
+              class="p-1 mt-1 mr-1"
+              style="
+                background: rgba(244, 243, 255, 0.9);
+                border: 1px solid #9794aa;
+                border-radius: 100px;
+              "
+            >
+              <div class="form-check">
+                <input
+                  class="form-check-input mt-1"
+                  style="accent-color: #9161f5"
+                  type="radio"
+                  name="accountRole"
+                  [id]="role.id"
+                  (click)="getUserType(role)"
+                />
+                <label class="form-check-label" [for]="role.id">{{
+                  role.label
+                }}</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- <div class="d-flex align-items-center flex-wrap mt-1">
+            <div
+              class="p-1 mt-1 mr-1"
+              style="
+                background: rgba(244, 243, 255, 0.9);
+                border: 1px solid #9794aa;
+                border-radius: 100px;
+              "
+            >
+              <div class="form-check">
+                <input
+                  class="form-check-input mt-1"
+                  style="accent-color: #9161f5"
+                  type="radio"
+                  name="accountRole"
+                  id="asATester"
+                />
+                <label class="form-check-label" for="asATester">
+                  As a Tester
+                </label>
+              </div>
+            </div>
+            <div
+              class="p-1 mt-1 mr-1"
+              style="
+                background: rgba(244, 243, 255, 0.9);
+                border: 1px solid #9794aa;
+                border-radius: 100px;
+              "
+            >
+              <div class="form-check">
+                <input
+                  class="form-check-input mt-1"
+                  style="accent-color: #9161f5"
+                  type="radio"
+                  name="accountRole"
+                  id="asALeadTester"
+                  checked
+                />
+                <label class="form-check-label" for="asALeadTester">
+                  As a Lead Tester
+                </label>
+              </div>
+            </div>
+            <div
+              class="p-1 mt-1 mr-1"
+              style="
+                background: rgba(244, 243, 255, 0.9);
+                border: 1px solid #9794aa;
+                border-radius: 100px;
+              "
+            >
+              <div class="form-check">
+                <input
+                  class="form-check-input mt-1"
+                  style="accent-color: #9161f5"
+                  type="radio"
+                  name="accountRole"
+                  id="asAManager"
+                  checked
+                />
+                <label class="form-check-label" for="asAManager">
+                  As a Manager
+                </label>
+              </div>
+            </div>
+            <div
+              class="p-1 mt-1 mr-1"
+              style="
+                background: rgba(244, 243, 255, 0.9);
+                border: 1px solid #9794aa;
+                border-radius: 100px;
+              "
+            >
+              <div class="form-check">
+                <input
+                  class="form-check-input mt-1"
+                  style="accent-color: #9161f5"
+                  type="radio"
+                  name="accountRole"
+                  id="asADeveloper"
+                  checked
+                />
+                <label class="form-check-label" for="asADeveloper">
+                  As a Developer
+                </label>
+              </div>
+            </div>
+          </div> -->
+
+          <form [formGroup]="form" class="mt-3" autocomplete="off">
+            <div class="form-group mb-1">
+              <label for="username"
+                >Username <span style="color: red">*</span></label
+              >
+
+              <input
+                type="text"
+                placeholder="Enter Username"
+                formControlName="username"
+                class="form-control rounded-pill"
+                (keydown.space)="$event.preventDefault()"
+                [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
+              />
+              <div
+                *ngIf="submitted && f.username.errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="f.username.errors.required" style="color: red">
+                  Username is required
+                </div>
+              </div>
+            </div>
+            <div class="form-group mb-1">
+              <label for="name"
+                >Organisation/Company <span style="color: red">*</span></label
+              >
+              <input
+                type="text"
+                placeholder="Organisation/Company"
+                formControlName="organisationName"
+                class="form-control rounded-pill"
+              />
+              <div
+                *ngIf="submitted && f.organisationName.errors"
+                class="invalid-feedback"
+              >
+                <div
+                  *ngIf="f.organisationName.errors.required"
+                  style="color: red"
+                >
+                  Organisation/Company is required
+                </div>
+              </div>
+            </div>
+            <div class="form-group mb-1">
+              <label for="name"
+                >Team/Group <span style="color: red">*</span></label
+              >
+              <input
+                type="text"
+                placeholder="Team/Group"
+                formControlName="teamName"
+                class="form-control rounded-pill"
+              />
+              <div
+                *ngIf="submitted && f.teamName.errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="f.teamName.errors.required" style="color: red">
+                  Team/Group is required
+                </div>
+              </div>
+            </div>
+            <div class="form-group mb-1">
+              <label for="email">Email <span style="color: red">*</span></label>
+              <input
+                type="text"
+                placeholder="Email"
+                formControlName="email"
+                class="form-control rounded-pill"
+                [ngClass]="{
+                  'is-invalid':
+                    submitted &&
+                    form.get('email').invalid &&
+                    form.get('email').touched
+                }"
+              />
+              <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                <div style="color: red">Invalid Email Id</div>
+              </div>
+            </div>
+            <div class="form-group mb-1">
+              <label for="password"
+                >Password <span style="color: red">*</span></label
+              >
+              <div class="input-group">
+                <input
+                  type="{{ showPassword ? 'text' : 'password' }}"
+                  placeholder="Password"
+                  (keyup)="onKeypressEvent($event)"
+                  autocomplete="new-password"
+                  formControlName="password"
+                  class="form-control border-right-0"
+                  style="border-radius: 99px 0 0 99px"
+                  [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
+                />
+                <div class="input-group-append">
+                  <span
+                    class="input-group-text bg-transparent"
+                    style="border-radius: 0 99px 99px 0"
+                    id="basic-addon2"
+                  >
+                    <i
+                      class="fa"
+                      [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'"
+                      (click)="togglePasswordVisibility()"
+                      [ngStyle]="{
+                        cursor: 'pointer',
+                        fontSize: '20px'
+                      }"
+                    ></i>
+                  </span>
+                </div>
+              </div>
+              <div
+                *ngIf="submitted && f.password.errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="f.password.errors.required" style="color: red">
+                  Password is required
+                </div>
+                <div *ngIf="f.password.errors.minlength" style="color: red">
+                  Password must be at least 8 characters
+                </div>
+              </div>
+            </div>
+            <div
+              class="d-flex align-items-center flex-wrap text-light-grey my-1"
+              style="font-size: 9px"
+            >
+              <div class="d-flex align-items-center ml-1">
+                <small class="fa fa-circle mr-1"></small>
+                <small>Use 8 or more characters</small>
+              </div>
+              <div class="d-flex align-items-center ml-1">
+                <small class="fa fa-circle mr-1"></small>
+                <small>One uppercase character</small>
+              </div>
+              <div class="d-flex align-items-center ml-1">
+                <small class="fa fa-circle mr-1"></small>
+                <small>One special character</small>
+              </div>
+              <div class="d-flex align-items-center ml-1">
+                <small class="fa fa-circle mr-1"></small>
+                <small>One number</small>
+              </div>
+              <div class="d-flex align-items-center ml-1">
+                <small class="fa fa-circle mr-1"></small>
+                <small>One lowercase character</small>
+              </div>
+            </div>
+            <div class="form-group mb-1">
+              <label for="password"
+                >Confirm Password <span style="color: red">*</span>
+              </label>
+              <div class="input-group">
+                <input
+                  type="{{ showConfirmNewPassword ? 'text' : 'password' }}"
+                  placeholder="Confirm Password"
+                  (keyup)="onKeypressEvent($event)"
+                  formControlName="confirmpassword"
+                  class="form-control border-right-0"
+                  [ngClass]="{
+                    'is-invalid': submitted && f.confirmpassword.errors
+                  }"
+                  style="border-radius: 99px 0 0 99px"
+                />
+                <div class="input-group-append">
+                  <span
+                    class="input-group-text bg-transparent"
+                    style="border-radius: 0 99px 99px 0"
+                    id="basic-addon2"
+                    ><i
+                      class="fa"
+                      [ngClass]="
+                        showConfirmNewPassword ? 'fa-eye' : 'fa-eye-slash'
+                      "
+                      (click)="toggleConfirmNewPasswordVisibility()"
+                      [ngStyle]="{
+                        cursor: 'pointer',
+                        fontSize: '20px'
+                      }"
+                    ></i
+                  ></span>
+                </div>
+              </div>
+              <div
+                *ngIf="submitted && f.confirmpassword.errors"
+                class="invalid-feedback"
+              >
+                <div
+                  *ngIf="f.confirmpassword.errors.required"
+                  style="color: red"
+                >
+                  Confirm Password is required
+                </div>
+              </div>
+              <div *ngIf="confirmpassword" class="invalid-feedback">
+                <div style="color: red">
+                  Confirm Password must be same Password
+                </div>
+              </div>
+            </div>
+            <div class="form-group mb-1" *ngIf="!showflag">
+              <span *ngIf="!lowerflag" style="color: red"
+                >✖ Password must contain a lower case letter</span
+              >
+              <span *ngIf="!upperflag" style="color: red">
+                ✖ Password must contain an upper case letter</span
+              >
+              <span *ngIf="!specialflag" style="color: red"
+                >✖ Password must contain a special character</span
+              >
+              <span *ngIf="!numberflag" style="color: red"
+                >✖ Password must contain a number</span
+              >
+              <span *ngIf="!charactersflag" style="color: red"
+                >✖ Password must contain at least 8 characters</span
+              >
+            </div>
+            <div class="form-group mb-1" *ngIf="showflagGreen">
+              <span *ngIf="!lowerflag" style="color: green"
+                >✓ Password must contain a lower case letter</span
+              >
+              <span *ngIf="!upperflag" style="color: green">
+                ✓ Password must contain an upper case letter</span
+              >
+              <span *ngIf="!specialflag" style="color: green"
+                >✓ Password must contain a special character</span
+              >
+              <span *ngIf="!numberflag" style="color: green"
+                >✓ Password must contain a number</span
+              >
+              <span *ngIf="!charactersflag" style="color: green"
+                >✓ Password must contain at least 8 characters</span
+              >
+            </div>
+
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value=""
+                id="agreementCheckbox"
+                formControlName="termsConditions"
+                style="accent-color: #100f14"
+              />
+              <label class="form-check-label" for="agreementCheckbox">
+                I agree to the Terms of Service and acknowledge you’ve read our
+                Privacy Policy.
+              </label>
+              <div
+                *ngIf="submitted && f.termsConditions.errors"
+                class="invalid-feedback"
+              >
+                <div
+                  *ngIf="f.termsConditions.errors.required"
+                  style="color: red"
+                >
+                  Agreement is required
+                </div>
+              </div>
+            </div>
+            <div class="d-flex align-items-center justify-content-start mt-4">
+              <div class="action-button">
+                <button
+                  type="button"
+                  class="btn btn-purple ml-2 px-4"
+                  (click)="onSubmit()"
+                  (keyup.enter)="switchScreen('emailConfirmation'); onSubmit()"
+                >
+                  Create Account
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div
+        class="d-flex h-100 w-100 align-items-center justify-content-center px-4"
+        *ngIf="currentScreen == 'emailConfirmation'"
+      >
+        <div class="w-75">
+          <h2 class="font-weight-600 mb-1">Confirm your email address</h2>
+          <p class="mb-3">
+            <small class="font-weight-600 text-dark">
+              Please check your email for the next step to signup.
+            </small>
+          </p>
+
+          <div class="d-flex align-items-center justify-content-end">
+            <div class="forgot-passowrd">
+              <a routerLink="../login" class="btn btn-secondary px-4"
+                >Back to login</a
+              >
+            </div>
+            <div class="action-button">
+              <button
+                type="button"
+                class="btn btn-purple-2 ml-2 px-4"
+                (click)="sendEmail()"
+              >
+                Contact Support
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <section
+        class="login login-page text-white"
+        style="border-radius: 32px 0 0 32px"
+      >
+        <div class="d-flex flex-column justify-content-between h-100 mx-5">
+          <img src="../../assets/images/Frame.png" width="230px" alt="" />
+          <div>
+            <h2 class="text-white mb-1">Connecting Talent to Opportunities</h2>
+            <p>
+              Discover endless opportunities on FreelanceConnect, where talented
+              freelancers and businesses unite. Jump right in with us!
+            </p>
+          </div>
+          <div
+            class="text-white rounded p-2"
+            style="background-color: #ffffff1e"
+          >
+            <p>
+              As a freelancer, finding the right gigs can be challenging, but
+              FreelanceHub made it simple. I love the personalized job
+              recommendations and the ability to showcase my portfolio
+            </p>
+            <div class="d-flex text-white rounded align-items-center">
+              <img src="../../assets/img/tim.png" width="32px" alt="" />
+              <div class="d-flex flex-column align-items-start ml-2">
+                <p class="font-weight-700 mb-0">Daphne Park</p>
+                <small>Tester</small>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex align-items-center justify-content-center w-100">
+            <a class="btn btn-link d-flex p-1 align-items-center border-0 mr-0">
+              Terms and conditions
+            </a>
+            <i
+              class="fa fa-circle mx-2"
+              style="color: #a5a6f6; font-size: 6px"
+            ></i>
+            <a class="btn btn-link d-flex p-1 align-items-center border-0">
+              Privacy policy
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<ngx-spinner
+  bdColor="rgba(51, 51, 51, 0.8)"
+  size="default"
+  type="ball-spin-clockwise"
+>
+  <p style="color: white">Please Wait.</p>
+</ngx-spinner>

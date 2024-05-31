@@ -1,0 +1,229 @@
+<div
+  class="content-wrapper d-flex"
+  [ngClass]="{ 'sidebar-open': isSidebarOpen }"
+>
+  <div class="sidebar-wrapper">
+    <app-sidebar [(sidebarState)]="isSidebarOpen"></app-sidebar>
+  </div>
+  <div class="main-wrapper">
+    <div
+      class="container-fluid position-relative px-0 d-flex flex-column"
+      #automaticScroll
+    >
+      <p class="font-weight-500 mb-0 mt-2 mx-5 px-5 text-center">
+        AI Chatbox can provide information related to the applicability of a BIN
+        (Bank Identification Number) for various services, allowed guest
+        quantities, and lounge access policies worldwide.
+      </p>
+      <div class="w-100 pt-3 d-flex">
+        <ng-multiselect-dropdown
+          name="fileTypeSelect2"
+          id="FileTypeSelect2"
+          [settings]="dropdownSettingsFileType"
+          [data]="FileTypes"
+          [(ngModel)]="FileTypesName"
+          placeholder="Respond to Scenarios (Plug-in)"
+          style="display: block; margin: 0 auto"
+        >
+        </ng-multiselect-dropdown>
+      </div>
+      <div class="chat-container d-flex w-100 p-0 flex-column">
+        <div *ngIf="messages.length === 0" class="w-100 text-center my-auto">
+          <h3 class="mt-5">
+            <i style="color: rgb(86, 88, 105)">
+              Please enter your query in the input box.
+            </i>
+          </h3>
+          <p class="text-center">
+            <i
+              class="fa fa-arrow-down"
+              style="font-size: 24px; color: rgb(86, 88, 105)"
+            ></i>
+          </p>
+        </div>
+        <div
+          *ngFor="let message of messages"
+          class="message w-100 mx-auto d-flex flex-column align-items-center"
+          [ngClass]="{
+            user: message.user === 'user',
+            bot: message.user === 'bot'
+          }"
+        >
+          <div class="d-flex w-75">
+            <div class="text-center" style="width: 32px">
+              <i
+                class="fa fa-user-tie text-white text-center"
+                *ngIf="message.user === 'user'"
+                style="font-size: 24px"
+              ></i>
+              <img
+                width="32px"
+                height="32px"
+                *ngIf="message.user === 'bot'"
+                src="https://img.icons8.com/glyph-neue/64/ffffff/message-bot.png"
+                alt="message-bot"
+              />
+            </div>
+            <div class="w-100 mx-3">
+              <span *ngIf="message.user === 'user'">
+                {{ message.text }}
+              </span>
+              <span *ngIf="message.user === 'bot'" [innerHTML]="message.text">
+                <!-- {{ message.text }} -->
+              </span>
+            </div>
+            <div *ngIf="message.user === 'user'" style="width: 80px">
+              <i class="fa fa-edit"></i>
+            </div>
+            <div
+              class="d-flex"
+              *ngIf="message.user === 'bot'"
+              style="width: 80px"
+            >
+              <i
+                class="fa fa-clipboard-list mr-2"
+                (click)="copyTextToClipboard($event, message.textToCopy)"
+              ></i>
+              <!-- <i class="fa fa-thumbs-o-up mr-2"></i> -->
+              <i
+                id="thumbs-up-icon"
+                class="fa fa-thumbs-o-up mr-2"
+                [class.thumbs-up-clicked]="message.isUpvoted"
+                (click)="toggleThumbsUp(message)"
+              ></i>
+              <i
+                id="thumbs-down-icon"
+                class="fa fa-thumbs-o-down"
+                [class.thumbs-down-clicked]="message.isDownvoted"
+                (click)="toggleThumbsDown(message)"
+              ></i>
+            </div>
+          </div>
+          <div class="w-75 mt-3 px-5 row">
+            <div
+              class="col-6 p-0 pr-3"
+              *ngIf="
+                message.user === 'bot' &&
+                message.documents &&
+                message.documents.length > 0
+              "
+            >
+              <ng-container *ngFor="let document of message.documents">
+                <div>
+                  <a
+                    [href]="document.signedURL"
+                    [download]="document.fileName"
+                    target="_blank"
+                    class="text-cyan filename-ellipsis"
+                  >
+                    <i class="fa fa-file-pdf" style="font-size: 20px"></i>
+                    <!-- FileName -->
+                    {{ document.fileName }}
+                  </a>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="input-container flex-column user w-100 pt-4">
+      <div class="w-75 mx-auto d-flex rounded align-items-center text-center">
+        <div class="row m-0" *ngIf="messages.length === 0">
+          <div class="col-md-6 mb-2">
+            <div
+              (click)="predefinedQuestions($event)"
+              type="button"
+              class="p-3 shadow input-questions rounded"
+            >
+              Which Lounges I can access on CIMB card
+            </div>
+          </div>
+          <div class="col-md-6 mb-2">
+            <div
+              (click)="predefinedQuestions($event)"
+              type="button"
+              class="p-3 shadow input-questions rounded"
+            >
+              What features are available at flexico lounge
+            </div>
+          </div>
+          <div class="col-md-6 mb-2">
+            <div
+              (click)="predefinedQuestions($event)"
+              type="button"
+              class="p-3 shadow input-questions rounded"
+            >
+              What are are shift timing of choco lounge
+            </div>
+          </div>
+          <div class="col-md-6 mb-2">
+            <div
+              (click)="predefinedQuestions($event)"
+              type="button"
+              class="p-3 shadow input-questions rounded"
+            >
+              What products are available at flexico lounge
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="w-75 mx-auto d-flex rounded align-items-center position-relative input-div"
+      >
+        <div class="position-absolute help-icon">
+          <i class="fa fa-question-circle-o"></i>
+        </div>
+        <div class="position-absolute clear-chat bg-transparent">
+          <a
+            href="javascript:void(0)"
+            class="text-underline text-white"
+            (click)="clearChat()"
+          >
+            Clear
+          </a>
+        </div>
+        <!-- <div
+          class="position-absolute generating-option"
+          *ngIf="regenerateOption || stopGenerationOption"
+        >
+          <div
+            class="regenerate"
+            *ngIf="regenerateOption && messages.length > 0"
+          >
+            <i class="fa fa-refresh"></i> Regenerate
+          </div>
+          <div class="stop-generation" *ngIf="stopGenerationOption">
+            <i class="fa fa-stop"></i> Stop generation
+          </div>
+        </div> -->
+
+        <input
+          [(ngModel)]="userMessage"
+          class="form-control border-0 mx-3 shadow-none"
+          #msgInput
+          placeholder="Send a message"
+          (keyup.enter)="sendMessage()"
+        />
+        <div class="mr-4 d-flex justify-content-center" *ngIf="loader">
+          <div class="dot-pulse"></div>
+        </div>
+        <button
+          title="Send message"
+          class="btn shadow-none px-3 py-2"
+          *ngIf="!loader"
+          [class.bg-success]="userMessage.length > 0"
+          type="button"
+          (click)="sendMessage()"
+        >
+          <i
+            class="fa fa-send"
+            [class.text-white]="userMessage.length > 0"
+            [class.text-gray]="userMessage.length === 0"
+          ></i>
+        </button>
+      </div>
+      <hr class="my-2" />
+    </div>
+  </div>
+</div>

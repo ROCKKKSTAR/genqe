@@ -1,0 +1,30 @@
+.dmr-download {
+  position: absolute;
+  z-index: 9;
+  background: #ffffff;
+  width: 250px;
+  top: 2.5rem;
+  left: 75px;
+  padding: 12px;
+  border-radius: 4px;
+  box-shadow: 1px 2px 2px 3px #eee;
+}
+
+.close-dmr-download {
+  color: #000 !important;
+  text-align: right !important;
+  padding: 10px;
+  font-weight: bold !important;
+  font-size: 16px !important;
+  cursor: pointer !important;
+  opacity: 0.5 !important;
+  text-decoration: none !important;
+  position: absolute !important;
+  right: 0 !important;
+  top: 0 !important;
+  text-shadow: 0 1px 0 #fff !important;
+  line-height: 1 !important;
+}
+.close-dmr-download:hover {
+  opacity: 1 !important;
+}

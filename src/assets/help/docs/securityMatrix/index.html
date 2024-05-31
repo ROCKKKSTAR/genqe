@@ -1,0 +1,1959 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+
+  <title>Security matrix - PPG LMS Documentation</title>
+  
+  <link
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+    crossorigin="anonymous"
+  />
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="../../assets/css/just-the-docs.css"
+  />
+  <!--Different Browser icon for All Devices -->
+  <link
+    href="../../assets/images/fav_icon.ico"
+    rel="icon"
+    type="image/x-icon"
+  />
+  <!--IE Browser icon for All Devices -->
+  <link
+    href="../../assets/images/fav_icon.ico"
+    rel="shortcut icon"
+    type="image/x-icon"
+  />
+  <!--Icon for Devices -->
+  <link
+    href="../../assets/images/fav_icon.ico"
+    rel="apple-touch-icon"
+  />
+  <!--Icon for Devices -->
+  <link
+    href="../../assets/images/fav_icon.ico"
+    rel="apple-touch-icon-precomposed"
+  />
+
+  <script
+    type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"
+  ></script>
+  <script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"
+  ></script>
+  
+  <script
+    type="text/javascript"
+    src="../../assets/js/vendor/lunr.min.js"
+  ></script>
+  
+
+  <script
+    type="text/javascript"
+    src="../../assets/js/just-the-docs.js"
+  ></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+
+<body>
+  <div class="page-wrap">
+    <div class="side-bar">
+      <div class="site-header">
+        <a href="../.." class="site-title lh-tight">PPG LMS</a>
+        <button class="menu-button fs-3 js-main-nav-trigger" data-text-toggle="Hide" type="button">Menu</button>
+      </div>
+
+      <div class="navigation main-nav js-main-nav">
+        <nav role="navigation" aria-label="Main navigation">
+          <ul class="navigation-list"><li
+              class="navigation-list-item"
+            ><a
+                href="../../index.html"
+                class="navigation-list-link "
+                >Getting Started</a
+              ></li><li
+              class="navigation-list-item "
+            ><a
+                href="../../docs/overview/index.html"
+                class="navigation-list-link"
+                >Overview</a
+              ></li><li
+              class="navigation-list-item"
+            ><a
+                href="../../docs/newLmsUserSetup/index.html"
+                class="navigation-list-link"
+                >New LMS User Setup</a
+              ></li><li
+              class="navigation-list-item"
+            ><a
+                href="../../docs/setUpNewAdmissionToken/index.html"
+                class="navigation-list-link"
+                >Setup New Admission Token</a
+              ></li><li
+              class="navigation-list-item"
+            ><a
+                href="../../docs/guestAdmission/index.html"
+                class="navigation-list-link"
+                >Guest Admission</a
+              ></li><li
+              class="navigation-list-item"
+            ><a
+                href="../../docs/offlineParthnerIntergration/index.html"
+                class="navigation-list-link"
+                >Offline Partner Integration</a
+              ></li><li
+              class="navigation-list-item active"
+            ><a
+                href="../../docs/securityMatrix/index.html" 
+                class="navigation-list-link active"
+                >Security matrix</a
+              ></li><li
+              class="navigation-list-item "
+            ><a
+                href="../../docs/API%20Documentation/index.html"
+                class="navigation-list-link"
+                >API Documentation</a
+              ><ul class="navigation-list-child-list"><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/login/index.html"
+                    class="navigation-list-link"
+                    >Login</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/profile/index.html"
+                    class="navigation-list-link"
+                    >Profile</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/changePassword/index.html"
+                    class="navigation-list-link"
+                    >Change Password</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/certificateList/index.html"
+                    class="navigation-list-link"
+                    >Certificate List</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/cardSave/index.html"
+                    class="navigation-list-link"
+                    >Card Save</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/verifyToken/index.html"
+                    class="navigation-list-link"
+                    >Verify Token</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/boardingPassScan/index.html"
+                    class="navigation-list-link"
+                    >Boarding Pass Scan</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/boardingPassSave/index.html"
+                    class="navigation-list-link"
+                    >Boarding Pass Save</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/boardingPassId/index.html"
+                    class="navigation-list-link"
+                    >Boarding Pass ID</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/corporateTokens/index.html"
+                    class="navigation-list-link"
+                    >Corporates Token</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/corporates/index.html"
+                    class="navigation-list-link"
+                    >Corporates</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/redeemCoupon/index.html"
+                    class="navigation-list-link"
+                    >Redeem Coupon</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getFacilities/index.html"
+                    class="navigation-list-link"
+                    >Get Facilities</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getProducts/index.html"
+                    class="navigation-list-link"
+                    >Get Products</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getOrders/index.html"
+                    class="navigation-list-link"
+                    >Get Orders</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getOutlets/index.html"
+                    class="navigation-list-link"
+                    >Get Outlets</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getEntitlements/index.html"
+                    class="navigation-list-link"
+                    >Get Entitlements</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getadmissions/index.html"
+                    class="navigation-list-link"
+                    >Get Admissions</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/blackListedToken/index.html"
+                    class="navigation-list-link"
+                    >Blacklisted Token</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/whitelistedToken/index.html"
+                    class="navigation-list-link"
+                    >Whitelisted Token</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/mapOutlets/index.html"
+                    class="navigation-list-link"
+                    >Map Outlets</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/mapProducts/index.html"
+                    class="navigation-list-link"
+                    >Map Products</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getToken/index.html"
+                    class="navigation-list-link"
+                    >Get Token</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getCouponCode/index.html"
+                    class="navigation-list-link"
+                    >Coupon Code</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getCouponDetails/index.html"
+                    class="navigation-list-link"
+                    >Coupon Details</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/cancelCoupon/index.html"
+                    class="navigation-list-link"
+                    >Cancel Coupon</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/redeemToken/index.html"
+                    class="navigation-list-link"
+                    >Redeem Token</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/updateCoupon/index.html"
+                    class="navigation-list-link"
+                    >Update Coupon</a
+                  ></li></ul></li><li
+              class="navigation-list-item"
+            ><a
+                href="../../docs/LMSprocessflowdiadram/index.html"
+                class="navigation-list-link"
+                >LMS Process Flow Diagram</a
+              ></li><li
+              class="navigation-list-item"
+            ><a
+                href="../../docs/features/index.html"
+                class="navigation-list-link"
+                >Features</a
+              ><ul class="navigation-list-child-list"><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/dashboard/index.html"
+                    class="navigation-list-link"
+                    >Dashboard</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/admissions/index.html"
+                    class="navigation-list-link"
+                    >Admissions</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/orders/index.html"
+                    class="navigation-list-link"
+                    >Orders</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/GenerateCoupons/index.html"
+                    class="navigation-list-link"
+                    >Generate Coupons</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/partnerResponse/index.html"
+                    class="navigation-list-link"
+                    >Partner Responses</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/fileImportExport/index.html"
+                    class="navigation-list-link"
+                    >File Import/Export</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/partner/index.html"
+                    class="navigation-list-link"
+                    >Partner</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/outlet/index.html"
+                    class="navigation-list-link"
+                    >Outlet</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/product/index.html"
+                    class="navigation-list-link"
+                    >Product</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/admissionToken/index.html"
+                    class="navigation-list-link"
+                    >Admission Token</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/partnerContract/index.html"
+                    class="navigation-list-link"
+                    >Partner Contract</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/airport/index.html"
+                    class="navigation-list-link"
+                    >Port/Station</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/users/index.html"
+                    class="navigation-list-link"
+                    >Users</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/members/index.html"
+                    class="navigation-list-link"
+                    >Members</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/devices/index.html"
+                    class="navigation-list-link"
+                    >Devices</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/vendor/index.html"
+                    class="navigation-list-link"
+                    >Vendor</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/tax/index.html"
+                    class="navigation-list-link"
+                    >Tax</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/country/index.html"
+                    class="navigation-list-link"
+                    >Country</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/pincode/index.html"
+                    class="navigation-list-link"
+                    >Pincode</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/receiptTemplate/index.html"
+                    class="navigation-list-link"
+                    >Recipt Template</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/token/index.html"
+                    class="navigation-list-link"
+                    >Token</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/module/index.html"
+                    class="navigation-list-link"
+                    >Module</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/action/index.html"
+                    class="navigation-list-link"
+                    >Action</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/role/index.html"
+                    class="navigation-list-link"
+                    >Role</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/globalSettings/index.html"
+                    class="navigation-list-link"
+                    >Global Settings</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/AdmissionPOS/index.html"
+                    class="navigation-list-link"
+                    >Admission POS</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/DMR/index.html"
+                    class="navigation-list-link"
+                    >DMR</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/AdmissionflowsviaSunmiDevice/index.html"
+                    class="navigation-list-link"
+                    >Admission flows via Sunmi Device</a
+                  ></li></ul></li><li
+              class="navigation-list-item "
+            ><a
+                href="../../docs/ReleaseLogs/index.html"
+                class="navigation-list-link"
+                >Release Logs</a
+              ><ul class="navigation-list-child-list"><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/FirstRelease/index.html"
+                    class="navigation-list-link"
+                    >Release Notes - Build 1.1.23.01-07</a
+                  ></li></ul></li></ul>
+        </nav>
+
+      </div>
+      <!-- <footer class="site-footer">
+        <p class="text-small text-grey-dk-000 mb-4">This site is created by <a href="#">C Simplify IT</a>, for Samvad.</p>
+      </footer> -->
+    </div>
+    <div class="main-content-wrap js-main-content" tabindex="0">
+      <div class="main-content">
+        <div class="page-header js-page-header">
+          
+          <div class="search">
+            <div class="search-input-wrap">
+              <input type="text" class="js-search-input search-input" tabindex="0" placeholder="Search PPG LMS Documentation" aria-label="Search PPG LMS Documentation" autocomplete="off">
+              <svg width="14" height="14" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" class="search-icon"><title>Search</title><g fill-rule="nonzero"><path d="M17.332 20.735c-5.537 0-10-4.6-10-10.247 0-5.646 4.463-10.247 10-10.247 5.536 0 10 4.601 10 10.247s-4.464 10.247-10 10.247zm0-4c3.3 0 6-2.783 6-6.247 0-3.463-2.7-6.247-6-6.247s-6 2.784-6 6.247c0 3.464 2.7 6.247 6 6.247z"/><path d="M11.672 13.791L.192 25.271 3.02 28.1 14.5 16.62z"/></g></svg>
+            </div>
+            <div class="js-search-results search-results-wrap"></div>
+          </div>
+          
+        </div>
+        <div class="page">
+          <div id="main-content" class="page-content" role="main">
+          <h2>
+  <strong> Security matrix </strong>
+</h2>
+<p>
+  Data given on this page tells us that which role can use specific function of
+  specific module.
+</p>
+<h3>
+  <strong>Roles</strong>
+</h3>
+<p>Given below is name of roles and defination of these roles.</p>
+<div class="table-wrapper">
+  <table class="table-bordered">
+    <tr>
+      <th>Role's Name</th>
+      <th>Defination</th>
+    </tr>
+    <tr>
+      <td>GSO(Ground Staff Officer)</td>
+      <td>
+        "GSO is lounge(outlet) staff login for accessing the WAS Client for the
+        Operations.This is lounge staff login for accessing the WAS Client for
+        the Operations.Login is specific to each outlet. The clients and
+        services entitled for each outlet are controlled by LMS Admin side (i.e.
+        “LMS BOS”)"
+      </td>
+    </tr>
+    <tr>
+      <td>Lounge Manager</td>
+      <td>
+        Lounge Manager login for accessing the WAS Client. Lounge Manager has
+        the access to void the transaction and to readmit the customer
+      </td>
+    </tr>
+    <tr>
+      <td>Local Sales -AI creator</td>
+      <td>
+        This login is used by local sales team to create AIs for local clients.
+        Only local outlets and regions could be selected (e.g. Malaysia local
+        sales login can select Malaysia and Singapore outlets only
+      </td>
+    </tr>
+    <tr>
+      <td>Region Sales-AI creator</td>
+      <td>
+        "This login is for regional clients and AIs creation, used by HK Sales
+        Team. All outlet locations could be selected"
+      </td>
+    </tr>
+    <tr>
+      <td>Finance</td>
+      <td>
+        This login is used for finance department for Reconciliation
+        purpose,correct billing reports and to see transactional data.
+      </td>
+    </tr>
+    <tr>
+      <td>BUH (Business Unit head) -Approver</td>
+      <td>This login is used to approve/reject submitted Admission Instructions.</td>
+    </tr>
+    <tr>
+      <td>Admin (Super user)</td>
+      <td>
+        This login is used for giving user's permissions(roles)/outlet access
+        making user inactive if (needed).
+      </td>
+    </tr>
+  </table>
+</div>
+<h3>
+  <strong>Partner</strong>
+</h3>
+<p>
+  Partner is a business entity that has signed up a contract with Plaza lounge
+  Business to allow its customers enjoy the lounge privileges. Entity added to
+  the LMS system may have a parent entity.Partner can be any bank, airlines,
+  corporates, OTA etc.
+</p>
+<div class="table-wrapper">
+  <table class="table-bordered">
+    <tr>
+      <th>Function Name</th>
+      <th>Defination</th>
+      <th>GSO(Ground Staff Officer)</th>
+      <th>Lounge Manager</th>
+      <th>Local Sales -AI creator</th>
+      <th>Region Sales-AI creator</th>
+      <th>Finance</th>
+      <th>BUH (Business Unit head) -Approver</th>
+      <th>Admin (Super user)</th>
+    </tr>
+    <tr>
+      <td>New</td>
+      <td>
+        To create new partner in the system. When ever there is new deal signed
+        between PLAZA and any partner the new partner entity or the sub entity
+        created/on board in the BOS (3.0).
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Import</td>
+      <td>
+        To import multiple/different partners In the system.Import functionality
+        is used to create or update new/same set of records/data from existing
+        system to the new system via xls.
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>View/Search</td>
+      <td>
+        To view the existing partners in the system.If the user wants to search
+        any particular partner details out of the existing ones then user can
+        search on the basis of partner name.
+      </td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Advance Search</td>
+      <td>
+        To search the existing partners in the system based on search
+        filters(partner name,type,categoryand status)
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Edit</td>
+      <td>
+        In case partner details needs to be updated like address, contact number
+        etc then user can Edit the partner information.
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Delete</td>
+      <td>
+        To delete the existing partner.In case PLAZA does not have active deal
+        with the partner, user can delete that partner from the BOS.
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Generate AI</td>
+      <td>
+        Able to download the report in pdf format, gives hollistic view what all
+        Admission Instructions are supported by the partner, its associated
+        entitlements and on which outlets they are applicable. NOTE: User is
+        able to download only in case Admission Instructions are set up for that
+        partner.
+      </td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+  </table>
+</div>
+<h3>
+  <strong>Outlet</strong>
+</h3>
+<p>
+  An outlet is a physical location which is used to provide various services and
+  facilities for the guests. Each outlet has the staff, equipment, and features
+  that provide a set of services to the guests. The outlets can be owned by
+  plaza group and operated by plaza group also, or they could be owned by a
+  third party and operated by Plaza group using its processes, systems and
+  staff.
+</p>
+<div class="table-wrapper">
+  <table class="table-bordered">
+    <tr>
+      <th>Function Name</th>
+      <th>Defination</th>
+      <th>GSO(Ground Staff Officer)</th>
+      <th>Lounge Manager</th>
+      <th>Local Sales -AI creator</th>
+      <th>Region Sales-AI creator</th>
+      <th>Finance</th>
+      <th>BUH (Business Unit head) -Approver</th>
+      <th>Admin (Super user)</th>
+    </tr>
+    <tr>
+      <td>New</td>
+      <td>
+        To create new Outlet/Sub Outlet in the system.Once the floorplan of any
+        outlet location has been decided by PLAZA then that oultet needs to be
+        created in LMS3.0 BOS.
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Import</td>
+      <td>
+        To import multiple/different outlets In the system.Import functionality
+        is used to create or update new/same set of records/data from existing
+        system to the new system via xls.
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>View/Search</td>
+      <td>
+        To view the existing outlets in the system.If the user wants to search
+        any particular Outlet details out of the existing ones then user can
+        search on the basis of Outlet name.
+      </td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Advance Search</td>
+      <td>
+        To search the existing outlets in the system based on search
+        filters(outlet name, type,category,address1&2,status)
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Edit</td>
+      <td>
+        To edit the existing outlet data.In case Operation team of PLAZA needs
+        to update operating hours of any outlet or to make an outlet non
+        operational due to some renovation then user is allowed to edit and
+        update the details.
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Generate AI</td>
+      <td>
+        Able to download the report in pdf format,Hollistic view what all
+        Admission Instructions are mapped to any outlet.
+      </td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+  </table>
+</div>
+<h3>
+  <strong>Product</strong>
+</h3>
+<p>
+  Product are the Services/Goods available at the Outlet. Services can be lounge
+  access,spa & shower service. Goods are the food items, beverages etc.
+</p>
+<div class="table-wrapper">
+  <table class="table-bordered">
+    <tr>
+      <th>Function Name</th>
+      <th>Defination</th>
+      <th>GSO(Ground Staff Officer)</th>
+      <th>Lounge Manager</th>
+      <th>Local Sales -AI creator</th>
+      <th>Region Sales-AI creator</th>
+      <th>Finance</th>
+      <th>BUH (Business Unit head) -Approver</th>
+      <th>Admin (Super user)</th>
+    </tr>
+    <tr>
+      <td>New</td>
+      <td>
+        To create new Product.Whenever there is a new product being launched by
+        PLAZA or existing products needs to be available at different outlets
+        that needs to be created in LMS 3.0 BOS
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Import</td>
+      <td>
+        To import multiple/different products(services and goods) In the
+        system.Import functionality is used to create or update new/same set of
+        records/data from existing system to the new system via xls.
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>View/Search</td>
+      <td>
+        To view the existing products in the system.If the user wants to search
+        any particular product details out of the existing ones then user can
+        search on the basis of Product name.
+      </td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Advance Search</td>
+      <td>
+        To search the existing partners in the system based on search
+        filters(Product name,type,currency and type)
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Edit</td>
+      <td>
+        To edit the existing product data. In case Sales team of PLAZA needs to
+        update product information like its price/currency or on which outlet it
+        is available at then user is allowed to edit and update the details.
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Delete</td>
+      <td>
+        To delete the existing product.In case product that is being offered at
+        PLAZA lounges is no more available then user can delete the product from
+        the BOS.
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+  </table>
+</div>
+<h3>
+  <strong> Admission Instruction</strong>
+</h3>
+<p>
+  Each partner provides different types of tokens or identifiers that group the
+  incoming guests from the partner. The token is presented at the outlet, and
+  the staff keys in the token to check and validate the entitlements for the
+  guests based on the token. When a new partner is on board they provide a token
+  list and details to the sales staff on how to identify the guests.
+</p>
+<div class="table-wrapper">
+  <table class="table-bordered">
+    <tr>
+      <th>Function Name</th>
+      <th>Defination</th>
+      <th>GSO(Ground Staff Officer)</th>
+      <th>Lounge Manager</th>
+      <th>Local Sales -AI creator</th>
+      <th>Region Sales-AI creator</th>
+      <th>Finance</th>
+      <th>BUH (Business Unit head) -Approver</th>
+      <th>Admin (Super user)</th>
+    </tr>
+    <tr>
+      <td>New</td>
+      <td>
+        To create new Admission Instruction(for e.g credit/debit card,boarding
+        pass,etc) in the BOS.User sets the identification pattern depending upon
+        the type of admisison token like in case of credit card BIN range is set
+        up and in case of boarding pass Travel class and airline code.User is
+        able to add the entitlements for the newly created Admission Instruction.
+        Entitlements, basically defines which token can be used to get what
+        product or service at each of the outlets.
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>View/Search</td>
+      <td>
+        To view the existing Admission Instruction in the system.If the user wants to
+        search any particular Admission Instruction out of the existing ones then user
+        can search on the basis of Admission Instruction name.
+      </td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Advance Search</td>
+      <td>
+        To search the existing Admission Instruction in the system based on search
+        filters(Admission Instruction name,type,category and partner name)
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Edit</td>
+      <td>
+        To edit the exsiting Admission Instruction details. In case user needs to
+        update Admission Instruction details like adding more applicable outlets or
+        BIN range pattern needs to be modify then user is allowed to edit and
+        update the details. NOTE if the token is in DRAFT state then its
+        editable, once approved non-editable.
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+
+    <tr>
+      <td>Generate AI</td>
+      <td>
+        Able to download the report in pdf format,Hollistic view of the
+        Admission Instruction entitements, BIN range and it is applicable to what all
+        outlets.
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Update</td>
+      <td>
+        Only the Approved token can be updated in case the user wants to update
+        the T&C or append the outlet list (in case of newly opened outlets)
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Activate/Deactivate</td>
+      <td>
+        Only the approved token can be set as Deactivate in case Partner Says no
+        more Admissions should be granted on this partcular Admission Instruction if
+        presented by the guest to the GSO.In case user wants to activate it
+        again then it can also be done.
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Approve/reject</td>
+      <td>
+        Newly created Admission Instruction are submitted for the approval/rejection.
+        Note: only the approved Admission Instructions can be binded to the partner
+        contract.
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+  </table>
+</div>
+<h3>
+  <strong> Partner Contract:</strong>
+</h3>
+<p>
+  The partner contract defines the operational and commercial framework for
+  allowing customers of the partner to enjoy the services of PPG lounges at
+  preferential rates which includes complimentary access as well.
+</p>
+<div class="table-wrapper">
+  <table class="table-bordered">
+    <tr>
+      <th>Function Name</th>
+      <th>Defination</th>
+      <th>GSO(Ground Staff Officer)</th>
+      <th>Lounge Manager</th>
+      <th>Local Sales -AI creator</th>
+      <th>Region Sales-AI creator</th>
+      <th>Finance</th>
+      <th>BUH (Business Unit head) -Approver</th>
+      <th>Admin (Super user)</th>
+    </tr>
+    <tr>
+      <td>New</td>
+      <td>
+        To create new partner contract which is an agreement between the PLAZA
+        and the partner. So the approved Admission Instructions can be mapped to the
+        partner contract.
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>View/Search</td>
+      <td>
+        To view the existing partner contract in the system.If the user wants to
+        search any particular partner contract out of the existing ones then
+        user can search on the basis of partner name.
+      </td>
+
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Advance Search</td>
+      <td>
+        To search the existing partner contract in the system based on search
+        filters(partner name,contract type,Start and end date (of partner
+        contract)
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Edit</td>
+      <td>
+        "To edit the existing partner contract.In case user needs to update
+        partner contract details then user is allowed to edit and update the
+        details. NOTE: if the contract is in DRAFT state only then only user is
+        allwoed to edit, once approved non-editable."
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Generate AI</td>
+      <td>
+        Able to download the report in pdf format,Hollistic view of the
+        Admission Instruction entitements, BIN range and it is applicable to what all
+        outlets for one particular partner.
+      </td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Activate/Deactivate</td>
+      <td>
+        In case No more partner contract is valid/active with the particular
+        partner then user is allowed to Deactivate the contract.In case partner
+        contract needs to be activate again then it can also be done. Only the
+        approved partner contracts can be made Deactivate.
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Approve/reject</td>
+      <td>
+        Newly created partner contract are submitted for the approval/rejection.
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>No</td>
+    </tr>
+  </table>
+</div>
+<h3>
+  <strong> Users:</strong>
+</h3>
+<p>
+  Users are created via AWS cognito console and are reflected in LMS application
+  post confirmation.
+</p>
+<div class="table-wrapper">
+  <table class="table-bordered">
+    <tr>
+      <th>Function Name</th>
+      <th>Defination</th>
+      <th>GSO(Ground Staff Officer)</th>
+      <th>Lounge Manager</th>
+      <th>Local Sales -AI creator</th>
+      <th>Region Sales-AI creator</th>
+      <th>Finance</th>
+      <th>BUH (Business Unit head) -Approver</th>
+      <th>Admin (Super user)</th>
+    </tr>
+    <tr>
+      <td>View/Search</td>
+      <td>
+        To view the existing users in the system.If the user wants to search any
+        particular user out of the existing ones then user can search on the
+        basis of user name.
+      </td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Advance Search</td>
+      <td>
+        To search the existing users in the system based on search
+        filters(partner name,contract type,Start and end date (of partner
+        contract)
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Delete</td>
+      <td>
+        "To delete the user in the system Status of the user will become
+        INACTIVE."
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Edit</td>
+      <td>
+        To edit the user and assign the roles/ outlet access .Post confirmation
+        of the user status via AWS console,In order to access the LMS
+        appplication user must be assigned with roles and outlet.This can be
+        achieved via EDIT user functionality.
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+  </table>
+</div>
+<h3>
+  <strong> Vendor:</strong>
+</h3>
+<p>
+  A vendor, also known as a supplier, is an individual or company that sells
+  goods or services to PLAZA.
+</p>
+<div class="table-wrapper">
+  <table class="table-bordered">
+    <tr>
+      <th>Function Name</th>
+      <th>Defination</th>
+      <th>GSO(Ground Staff Officer)</th>
+      <th>Lounge Manager</th>
+      <th>Local Sales -AI creator</th>
+      <th>Region Sales-AI creator</th>
+      <th>Finance</th>
+      <th>BUH (Business Unit head) -Approver</th>
+      <th>Admin (Super user)</th>
+    </tr>
+    <tr>
+      <td>New</td>
+      <td>
+        To create new vendor in the system.Outlets could be operated by a Vendor
+        (third party) using its processes and staff. In order to onboard new
+        vendor that needs to created in LMS(3.0) BOS.
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Import</td>
+      <td>
+        To import multiple/different vendor In the system.Import functionality
+        is used to create or update new/same set of records/data from existing
+        system to the new system via xls.
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>View/Search</td>
+      <td>
+        To view the existing vendor in the system.If the user wants to search
+        any particular vendor out of the existing ones then user can search on
+        the basis of vendor name.
+      </td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Advance Search</td>
+      <td>
+        To search the existing vendor in the system based on search
+        filters(vendor name,type,categoryand status)
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Edit</td>
+      <td>
+        To edit the existing vendor data.In case vendor details needs to be
+        updated like address, contact number etc then user can Edit the Vendor
+        information.
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Delete</td>
+      <td>
+        To delete the existing vendor.In case PLAZA does not have active deal
+        with the Vendor, user can delete the vendor from the BOS.
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+  </table>
+</div>
+<h3>
+  <strong> "Port/Station:</strong>
+</h3>
+<p>
+  Port/Station is having all the information related to the airports/railway
+  ports available across the globe.
+</p>
+<div class="table-wrapper">
+  <table class="table-bordered">
+    <tr>
+      <th>Function Name</th>
+      <th>Defination</th>
+      <th>GSO(Ground Staff Officer)</th>
+      <th>Lounge Manager</th>
+      <th>Local Sales -AI creator</th>
+      <th>Region Sales-AI creator</th>
+      <th>Finance</th>
+      <th>BUH (Business Unit head) -Approver</th>
+      <th>Admin (Super user)</th>
+    </tr>
+    <tr>
+      <td>New</td>
+      <td>
+        To create new port(airport/railway port) in the system.Once the
+        floorplan of any outlet location has been decided by PLAZA and where
+        that oultet will be open, at which airport or railway station then if
+        that port does not exist,needs to be created in LMS3.0 BOS.
+      </td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Import</td>
+      <td>
+        To import multiple/different ports In the system.Import functionality is
+        used to create or update new/same set of records/data from existing
+        system to the new system via xls.
+      </td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>View/Search</td>
+      <td>
+        To view the existing port data in the system.If the user wants to search
+        any particular port out of the existing ones then user can search on the
+        basis of port name.
+      </td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Advance Search</td>
+      <td>
+        To search the existing port/stations in the system based on search
+        filters(port name,port code)
+      </td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Edit</td>
+      <td>
+        To edit the existing port/railway data.In case port details needs to be
+        updated like port city name, port is active or not then user can Edit
+        the port information.
+      </td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+  </table>
+</div>
+
+<h3>
+  <strong> Country:</strong>
+</h3>
+<p>
+  Country screen is having information related to all countries in the world,
+  their currencies , code etc.
+</p>
+<div class="table-wrapper">
+  <table class="table-bordered">
+    <tr>
+      <th>Function Name</th>
+      <th>Defination</th>
+      <th>GSO(Ground Staff Officer)</th>
+      <th>Lounge Manager</th>
+      <th>Local Sales -AI creator</th>
+      <th>Region Sales-AI creator</th>
+      <th>Finance</th>
+      <th>BUH (Business Unit head) -Approver</th>
+      <th>Admin (Super user)</th>
+    </tr>
+    <tr>
+      <td>New</td>
+      <td>
+        To create new country in the system.Port screen fetches the country
+        information from this screen, if the country does not exists then new
+        port will not be created in the system.
+      </td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Import</td>
+      <td>
+        To import multiple/different country information In the system.Import
+        functionality is used to create or update new/same set of records/data
+        from existing system to the new system via xls.
+      </td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>View/Search</td>
+      <td>
+        To view the existing country data in the system.If the user wants to
+        search any particular country out of the existing ones then user can
+        search on the basis of country name.
+      </td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Advance Search</td>
+      <td>
+        To search the existing country across the globe in the system based on
+        search filters(port name,port code)
+      </td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Edit</td>
+      <td>
+        To edit the existing country data.In case country details needs to be
+        updated like country code Is active or not then user can Edit the
+        country information.
+      </td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+    </tr>
+  </table>
+</div>
+<h3>
+  <strong> Devices:</strong>
+</h3>
+<p>
+  Device screen is having all info related to the devices available at oulet
+  such as Sunmi device , printer etc.
+</p>
+<div class="table-wrapper">
+  <table class="table-bordered">
+    <tr>
+      <th>Function Name</th>
+      <th>Defination</th>
+      <th>GSO(Ground Staff Officer)</th>
+      <th>Lounge Manager</th>
+      <th>Local Sales -AI creator</th>
+      <th>Region Sales-AI creator</th>
+      <th>Finance</th>
+      <th>BUH (Business Unit head) -Approver</th>
+      <th>Admin (Super user)</th>
+    </tr>
+    <tr>
+      <td>New</td>
+      <td>
+        To create new device in the system.Whenever there is a new device is
+        being installed by PLAZA to any outlet that needs to be created in LMS
+        3.0 BOS .
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Import</td>
+      <td>
+        To import multiple/different Device(Printer,CCTV,Sunmi/Orange)
+        information In the system.Import functionality is used to create or
+        update new/same set of records/data from existing system to the new
+        system via xls.
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>View/Search</td>
+      <td>
+        To view the existing device data in the system.If the user wants to
+        search any particular device out of the existing ones then user can
+        search on the basis of device name.
+      </td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Advance Search</td>
+      <td>
+        To search the existing devices in the system based on search
+        filters(Device name,Brand,category and type)
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Edit</td>
+      <td>
+        To edit the existing device data.In case device details needs to be
+        updated Is active or not then user can Edit the device information.
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Delete</td>
+      <td>
+        To delete the existing device data.In case any device is no more
+        active/available at any outlet that can be deleted from LMS(3.0) BOS.
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+  </table>
+</div>
+<h3>
+  <strong> TAX:</strong>
+</h3>
+<p>
+  TAX screen is having details of taxes payable per unit of good or service
+  produced or exchanged. TAX rate ranges from 0% to 16% depending on the state
+  and the type of good or service, and all states differ in their enforcement of
+  sales tax.
+</p>
+<div class="table-wrapper">
+  <table class="table-bordered">
+    <tr>
+      <th>Function Name</th>
+      <th>Defination</th>
+      <th>GSO(Ground Staff Officer)</th>
+      <th>Lounge Manager</th>
+      <th>Local Sales -AI creator</th>
+      <th>Region Sales-AI creator</th>
+      <th>Finance</th>
+      <th>BUH (Business Unit head) -Approver</th>
+      <th>Admin (Super user)</th>
+    </tr>
+    <tr>
+      <td>New</td>
+      <td>
+        To create new TAX information in the system.In case PLAZA needs to apply
+        TAX on products available at outlet, depending upon the outlet
+        location/country TAX information can be created.
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Import</td>
+      <td>To import multiple/different TAX information In the system</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>View/Search</td>
+      <td>
+        To view the existing TAX data in the system.If the user wants to search
+        any particular TAX out of the existing ones then user can search on the
+        basis of TAX name.
+      </td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Advance Search</td>
+      <td>
+        To search the existing TAX in the system based on search filters(TAX
+        name,category,applicable on)
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Edit</td>
+      <td>
+        To edit the existing TAX data.In case TAX details needs to be updated
+        like Is active or not then user can Edit the TAX information.
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+  </table>
+</div>
+<h3>
+  <strong> RECEIPT Template:</strong>
+</h3>
+<p>
+  A receipt is a written acknowledgement that the vendor (PPG) has been paid for
+  providing goods or services.
+</p>
+<div class="table-wrapper">
+  <table class="table-bordered">
+    <tr>
+      <th>Function Name</th>
+      <th>Defination</th>
+      <th>GSO(Ground Staff Officer)</th>
+      <th>Lounge Manager</th>
+      <th>Local Sales -AI creator</th>
+      <th>Region Sales-AI creator</th>
+      <th>Finance</th>
+      <th>BUH (Business Unit head) -Approver</th>
+      <th>Admin (Super user)</th>
+    </tr>
+    <tr>
+      <td>New</td>
+      <td>
+        To create new Receipt template(by selecting pre configured field) in the
+        system. Depending upon outlet and partner requirement receipt template
+        can be configured.
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Import</td>
+      <td>
+        To import multiple/different Receipt template information In the
+        system.Import functionality is used to create or update new/same set of
+        records/data from existing system to the new system via xls.
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>View/Search</td>
+      <td>
+        To view the existing receipt templates in the system.If the user wants
+        to search any particular receipt template out of the existing ones then
+        user can search on the basis of Receipt template name.
+      </td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Advance Search</td>
+      <td>
+        To search the existing Receipt in the system based on search
+        filters(Country,Applicable to vendor,Status)
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Edit</td>
+      <td>
+        To edit the existing Edit Receipt template information.In case Receipt
+        template details needs to be updated like to add/remove configurable
+        fields then user can Edit the TAX information.
+      </td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+  </table>
+</div>
+<h3>
+  <strong> Reports:</strong>
+</h3>
+<p>
+  Report screen takes in data from various sources and extrapolates it in
+  tables, charts, so that the information is easier to parse.
+</p>
+<div class="table-wrapper">
+  <table class="table-bordered">
+    <tr>
+      <th>Function Name</th>
+      <th>Defination</th>
+      <th>GSO(Ground Staff Officer)</th>
+      <th>Lounge Manager</th>
+      <th>Local Sales -AI creator</th>
+      <th>Region Sales-AI creator</th>
+      <th>Finance</th>
+      <th>BUH (Business Unit head) -Approver</th>
+      <th>Admin (Super user)</th>
+    </tr>
+    <tr>
+      <td>Run Report</td>
+      <td>
+        User can view the report based on the filter criteria the user has
+        selected.
+      </td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Export</td>
+      <td>
+        User can download the report based on the filter critera the user has
+        selected.
+      </td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+  </table>
+</div>
+
+
+          </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

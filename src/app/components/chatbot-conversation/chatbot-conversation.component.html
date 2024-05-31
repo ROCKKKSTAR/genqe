@@ -1,0 +1,555 @@
+<div
+  class="content-wrapper d-flex"
+  [ngClass]="{ 'sidebar-open': isSidebarOpen }"
+>
+  <div class="sidebar-wrapper">
+    <app-sidebar [(sidebarState)]="isSidebarOpen"></app-sidebar>
+  </div>
+  <div class="main-wrapper pt-3 h-100">
+    <div *ngIf="loadershow">
+      <app-loader [message]="loaderMessage"></app-loader>
+    </div>
+    <!-- <div *ngIf="ExportLoader">
+      <app-loader [message]="exportloaderMessage"></app-loader>
+    </div> -->
+    <div class="container-fluid h-100">
+      <div class="row h-100">
+        <div class="col-md-12">
+          <div
+            class="property-details-wrapper"
+            style="width: 100%"
+            *ngIf="!showPartnerDetails"
+          >
+            <div class="row">
+              <div class="col-md-9">
+                <p class="main-heading">
+                  <span
+                    >{{
+                      data ? data.chatBot.txtHeading : "Customer-Interaction"
+                    }}:</span
+                  >
+                  {{
+                    data
+                      ? data.chatBot.txtDes
+                      : "View and add Customer-Interaction response for Outlet."
+                  }}
+                </p>
+              </div>
+              <!-- <div class="col-md-3 text-right">
+                <a href="javascript:void(0)" mat-raised-button (click)="exportReport('PartnerResponse')"
+                  style="line-height: 25px !important;" class="btn btn-info"><i class="fa fa-file-text-o"
+                    aria-hidden="true"></i>
+                  {{ data ? data.buttons.export : "Export" }}</a>
+
+              </div> -->
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="search-wrapper">
+                  <div class="search-product">
+                    <div class="search_main">
+                      <div class="search-input">
+                        <span
+                          ><i class="fa fa-search" aria-hidden="true"></i
+                        ></span>
+                        <input
+                          type="search"
+                          [(ngModel)]="simplesearch"
+                          id="txtSearch"
+                          (keyup.enter)="
+                            simpleSearchChatbotData($event.target.value)
+                          "
+                        />
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>
+                          {{
+                            data
+                              ? data.chatBot.simpleSearch
+                              : "Search Customer-Interaction"
+                          }}
+                        </label>
+                        <span
+                          ><i
+                            (click)="fetchChatBotConversation()"
+                            class="fa fa-times"
+                            aria-hidden="true"
+                          ></i
+                        ></span>
+                        <span (click)="showQueryForm()" class="dropdown-form"
+                          ><i class="fa fa-sort-desc" aria-hidden="true"></i
+                        ></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="query1" class="query1" *ngIf="showData">
+                    <div class="form-container">
+                      <form>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="cityName"
+                                >{{ data ? data.chatBot.city : "City" }}:</label
+                              >
+                              <input
+                                type="text"
+                                name="cityName"
+                                id="cityName"
+                                name="cityName"
+                                class="form-control"
+                                [(ngModel)]="cityName"
+                                placeholder="{{
+                                  data
+                                    ? data.chatBot.enterCityName
+                                    : 'Enter City Name'
+                                }}"
+                              />
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group position-relative">
+                              <label for="categoryName"
+                                >{{
+                                  data ? data.chatBot.category : "Category"
+                                }}:</label
+                              >
+                              <select
+                                name="category"
+                                class="custom-select"
+                                id="category"
+                                [(ngModel)]="category"
+                              >
+                                <option
+                                  *ngFor="let l of Category"
+                                  [value]="l.keyCode"
+                                >
+                                  {{ l.key1 }}
+                                </option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="guestName"
+                                >{{
+                                  data ? data.chatBot.guestName : "Guest Name"
+                                }}:</label
+                              >
+                              <input
+                                type="guestName"
+                                [(ngModel)]="guestName"
+                                class="form-control"
+                                id="guestName"
+                                placeholder="{{
+                                  data
+                                    ? data.chatBot.enterGuestName
+                                    : 'Enter Guest Name'
+                                }}"
+                                name="guestName"
+                              />
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="guestEmail"
+                                >{{
+                                  data
+                                    ? data.chatBot.guestEmail
+                                    : "Guest Email"
+                                }}:</label
+                              >
+                              <input
+                                type="guestEmail"
+                                [(ngModel)]="guestEmail"
+                                class="form-control"
+                                id="email"
+                                placeholder="{{
+                                  data
+                                    ? data.chatBot.enterGuestEmail
+                                    : 'Enter Guest Email'
+                                }}"
+                                name="guestEmail"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div class="query-btn">
+                          <a
+                            class="btn btn-secondary"
+                            (click)="resetadvanceChatBotDataSearch()"
+                            ><i class="fa fa-history" aria-hidden="true"></i>
+                            {{ data ? data.buttons.reset : "Reset" }}</a
+                          >
+                          <a
+                            class="btn btn-info"
+                            (click)="advanceChatBotDataSearch()"
+                            ><i class="fa fa-search" aria-hidden="true"></i>
+                            {{ data ? data.buttons.search : "Search" }}</a
+                          >
+                          <a class="btn btn-danger" (click)="showQueryForm()"
+                            ><i class="fa fa-close" aria-hidden="true"></i>
+                            {{ data ? data.admission.close : "Close" }}</a
+                          >
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="partner-response-table">
+                  <div class="table-responsive">
+                    <table
+                      mat-table
+                      [dataSource]="dataSourceMainpartner"
+                      matTableExporter
+                      #exporter="matTableExporter"
+                      class="mat-elevation-z8"
+                      matSort
+                    >
+                      <ng-container matColumnDef="_id">
+                        <th mat-header-cell *matHeaderCellDef>Partner Id</th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element._id }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="name">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.chatBot.guestName : "Guest Name" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          <!-- {{ element.partnerID.name }} -->
+                          {{ element.name }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="email">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.chatBot.guestEmail : "Guest Email" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.email }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="city">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.chatBot.city : "City" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.city }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="bin">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.chatBot.bin : "Bin" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.bin }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="displayCategory">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.chatBot.category : "Category" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.displayCategory }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="displayType">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.chatBot.tokenType : "Token Type" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.displayType }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="remarks">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.chatBot.remarks : "Remarks" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.remarks }}
+                        </td>
+                      </ng-container>
+
+                      <!-- <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                          {{ data ? data.partnerresponse.status : "Status" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.status === 1 ? "Active" : "Inactive" }}
+                        </td>
+                      </ng-container> -->
+                      <ng-container matColumnDef="createdOn">
+                        <th
+                          mat-header-cell
+                          mat-sort-header
+                          *matHeaderCellDef
+                          mat-sort-header
+                        >
+                          {{
+                            data
+                              ? data.chatBot.interactionDate
+                              : "Interaction Date"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ cs.formatDateTime(element.createdOn) }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="action">
+                        <th
+                          mat-header-cell
+                          mat-sort-header
+                          *matHeaderCellDef
+                          mat-sort-header
+                        >
+                          {{ data ? data.chatBot.action : "Action" }}
+                        </th>
+                        <td
+                          mat-cell
+                          *matCellDef="let element; let i = index"
+                          style="text-align: center"
+                        >
+                          <i class="fa fa-comments-o" aria-hidden="true"></i>
+                        </td>
+                      </ng-container>
+
+                      <tr
+                        mat-header-row
+                        *matHeaderRowDef="displayedColumns"
+                      ></tr>
+                      <tr
+                        mat-row
+                        (dblclick)="getpartnerResponseById(row._id)"
+                        *matRowDef="
+                          let row;
+                          columns: displayedColumns;
+                          let i = index
+                        "
+                      ></tr>
+                      <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell">No data Found!</td>
+                      </tr>
+                    </table>
+                  </div>
+                  <mat-paginator
+                    [pageSizeOptions]="[10, 25, 50, 100]"
+                    aria-label="Select page of users"
+                  >
+                  </mat-paginator>
+                </div>
+                <!-- <div class="property-table-wrapper" style="width: 100%;">
+                                  <div class="table-responsive">
+                                    <table mat-table [dataSource]="dataSourcePincode" class="mat-elevation-z8" matSort>
+
+                                      <ng-container matColumnDef="pincode">
+                                          <th mat-header-cell mat-sort-header *matHeaderCellDef>{{data? data.master.pincode.pincode: 'Pincode'}} </th>
+                                          <td mat-cell *matCellDef="let element"> {{element.pincode}} </td>
+                                      </ng-container>
+
+                                      <ng-container matColumnDef="countryName">
+                                          <th mat-header-cell mat-sort-header *matHeaderCellDef> {{data? data.master.pincode.countryName: 'Country Name'}}</th>
+                                          <td mat-cell *matCellDef="let element"> {{element.countryName}} </td>
+                                      </ng-container>
+
+                                      <ng-container matColumnDef="countryISOCode">
+                                          <th mat-header-cell mat-sort-header *matHeaderCellDef>{{data? data.master.pincode.countryISOCode: 'Country ISO Code'}}</th>
+                                          <td mat-cell *matCellDef="let element"> {{element.countryISOCode}} </td>
+                                      </ng-container>
+
+                                      <ng-container matColumnDef="stateName">
+                                          <th mat-header-cell mat-sort-header *matHeaderCellDef>{{data? data.master.pincode.stateName: 'State Name'}}</th>
+                                          <td mat-cell *matCellDef="let element"> {{element.stateName}} </td>
+                                      </ng-container>
+
+                                      <ng-container matColumnDef="cityName">
+                                          <th mat-header-cell mat-sort-header *matHeaderCellDef>{{data? data.master.pincode.cityName: 'City Name'}}</th>
+                                          <td mat-cell *matCellDef="let element"> {{element.cityName}} </td>
+                                      </ng-container>
+
+                                      <ng-container matColumnDef="region">
+                                          <th mat-header-cell mat-sort-header *matHeaderCellDef>{{data? data.master.pincode.region: 'Region'}}</th>
+                                          <td mat-cell *matCellDef="let element"> {{element.region}} </td>
+                                      </ng-container>
+
+                                      <ng-container matColumnDef="status">
+                                          <th mat-header-cell *matHeaderCellDef>{{data? data.master.pincode.status: 'Status'}}
+                                          </th>
+                                          <td mat-cell *matCellDef="let element">{{element?.status===1 ? 'Active':'Inactive'}} </td>
+                                      </ng-container>
+                                      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                      <tr mat-row (dblclick)="getPincodeById(row._id)" *matRowDef="let row; columns: displayedColumns; let i = index"></tr>
+
+                                      <tr class="mat-row" *matNoDataRow>
+                                        <td class="mat-cell">No data Found!</td>
+                                    </tr>
+
+                                    </table>
+                                    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" aria-label="Select page of users"></mat-paginator>
+                                  </div>
+                              </div> -->
+              </div>
+            </div>
+          </div>
+          <div class="new-property-wrapper" *ngIf="showPartnerDetails">
+            <p class="main-heading">
+              <span
+                >{{
+                  data ? data.chatBot.txtHeading : "Customer-Interaction"
+                }}: </span
+              >{{
+                data
+                  ? data.chatBot.txtDes
+                  : "View and add Customer-Interaction response for Outlet."
+              }}
+              <span
+                (click)="hidePincodeDetails()"
+                class="close1"
+                data-toggle="tooltip"
+                title="Close"
+                >X</span
+              >
+            </p>
+            <form>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group position-relative">
+                    <label for="partnername"
+                      >{{
+                        data ? data.chatBot.guestName : "Guest Name"
+                      }}:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="email"
+                      placeholder="Guest"
+                      Name
+                      name="name"
+                      [(ngModel)]="name"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="event"
+                      >{{
+                        data ? data.chatBot.guestEmail : "Guest Email"
+                      }}:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="email"
+                      placeholder="Guest"
+                      Email
+                      name="email"
+                      [(ngModel)]="email"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="category"
+                      >{{ data ? data.chatBot.category : "Category" }}:</label
+                    >
+                    <select
+                      name="category"
+                      class="custom-select"
+                      id="category"
+                      [(ngModel)]="category"
+                    >
+                      <option *ngFor="let l of Category" [value]="l.keyCode">
+                        {{ l.key1 }}
+                      </option>
+                    </select>
+                    <!-- <input type="text" class="form-control" id="category" placeholder="Category" name="category" [(ngModel)]="category" /> -->
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="bin">
+                      {{ data ? data.chatBot.bin : "Bin" }}:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="bin"
+                      placeholder="Bin"
+                      name="bin"
+                      [(ngModel)]="bin"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row align-items-center">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="tokenType"
+                      >{{
+                        data ? data.chatBot.tokenType : "Token Type"
+                      }}:</label
+                    >
+                    <!-- <input type="text" class="form-control" id="tokenType" placeholder="Token Type" name="tokenType" [(ngModel)]="tokenType" /> -->
+                    <select
+                      name="tokenType"
+                      class="custom-select"
+                      id="tokenType"
+                      [(ngModel)]="tokenType"
+                    >
+                      <option *ngFor="let l of tokenTypes" [value]="l.keyCode">
+                        {{ l.key1 }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="city"
+                      >{{ data ? data.chatBot.city : "City" }}:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="city"
+                      placeholder="City"
+                      name="city"
+                      [(ngModel)]="city"
+                      rows="10"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="remarks">
+                      {{ data ? data.chatBot.remarks : "Remarks" }}:</label
+                    >
+                    <textarea
+                      [(ngModel)]="remarks"
+                      [ngModelOptions]="{ standalone: true }"
+                      class="form-control"
+                      id="remarks"
+                      rows="2"
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

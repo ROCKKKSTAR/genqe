@@ -1,0 +1,49 @@
+import { ILounge } from "./lounge.interface";
+import { IUser } from "./user.interface";
+export class IDelayFlight
+{
+    _id:string;
+    outletId:string[];
+    airline_iata:string;
+    airline_icao:string;
+    flight_iata:string;
+    flight_icao:string;
+    flight_number:number;
+    dep_iata:string;
+    dep_icao:string;
+    dep_terminal:number;
+    dep_gate:number;
+    dep_time:Date;
+    dep_time_utc:Date;
+    dep_estimated:Date;
+    dep_estimated_utc:Date;
+    dep_actual:Date;
+    dep_actual_utc:Date;
+    arr_iata:string;
+    arr_icao:string;
+    arr_terminal:5;
+    arr_gate:null;
+    arr_baggage:null;
+    arr_time:Date;
+    arr_time_utc:Date;
+    arr_estimated:Date;
+    arr_estimated_utc:Date;
+    cs_airline_iata:null;
+    cs_flight_number:null;
+    cs_flight_iata:null;
+    status:string;
+    duration:number;
+    delayed:number;
+    dep_delayed:number;
+    arr_delayed:number;
+    aircraft_icao:string;
+    arr_time_ts:number;
+    dep_time_ts:number;
+    arr_estimated_ts:number;
+    dep_estimated_ts:number;
+    dep_actual_ts:number;
+    createdOn:Date;
+    createdBy:IUser;
+    outlet:ILounge
+
+ }

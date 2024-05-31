@@ -1,0 +1,1549 @@
+<div
+  class="content-wrapper d-flex"
+  [ngClass]="{ 'sidebar-open': isSidebarOpen }"
+>
+  <div class="sidebar-wrapper">
+    <app-sidebar [(sidebarState)]="isSidebarOpen"></app-sidebar>
+  </div>
+  <div class="main-wrapper pt-3 h-100">
+    <div *ngIf="ExportLoader">
+      <app-loader [message]="exportloaderMessage"></app-loader>
+    </div>
+    <div class="container-fluid h-100">
+      <div class="row h-100">
+        <div class="col-md-12">
+          <div
+            class="property-details-wrapper"
+            style="width: 100%"
+            *ngIf="!showRoleDetails && !showImport"
+          >
+            <div class="row">
+              <div class="col-md-9">
+                <p class="main-heading">
+                  <span>{{ data ? data.master.role.role : "Role" }}:</span>
+                  {{
+                    data
+                      ? data.master.role.viewandaddnewroleinsystem
+                      : "View and Add New Role in System"
+                  }}
+                </p>
+              </div>
+              <div class="col-md-3 text-right">
+                <a
+                  href="javascript:void(0)"
+                  mat-raised-button
+                  (click)="exportReport('Role')"
+                  style="line-height: 24px !important"
+                  class="btn btn-info"
+                  ><i class="fa fa-file-text-o" aria-hidden="true"></i>
+                  {{ data ? data.buttons.export : "Export" }}</a
+                >
+                <!-- <a (click)="showImportScreen()" class="btn btn-secondary mr-2"
+                  ><i class="fa fa-upload" aria-hidden="true"></i
+                  >{{ data ? data.buttons.import : "Import" }}</a
+                > -->
+                <a class="btn btn-info" (click)="addNewRole(true)"
+                  ><i class="fa fa-plus" aria-hidden="true"></i>
+                  {{ data ? data.buttons.new : "New" }}</a
+                >
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="search-wrapper">
+                  <div class="search-product">
+                    <div class="search_main">
+                      <div class="search-input">
+                        <span
+                          ><i class="fa fa-search" aria-hidden="true"></i
+                        ></span>
+                        <input
+                          type="search"
+                          [(ngModel)]="simpleSearch"
+                          (keyup.enter)="
+                            simpleSearchRoleData($event.target.value)
+                          "
+                        />
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>{{
+                          data ? data.master.role.searchrole : "Search Role"
+                        }}</label>
+                        <span
+                          ><i
+                            (click)="getRole()"
+                            class="fa fa-times"
+                            aria-hidden="true"
+                          ></i
+                        ></span>
+                        <span (click)="showQueryForm()" class="dropdown-form"
+                          ><i class="fa fa-sort-desc" aria-hidden="true"></i
+                        ></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="query1" class="query1" *ngIf="showData">
+                    <div class="form-container">
+                      <form>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="Role"
+                                >{{
+                                  data
+                                    ? data.master.role.rolename
+                                    : "Role Name"
+                                }}:</label
+                              >
+                              <div class="suggestion_input_wrapper">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  id="role"
+                                  placeholder="{{
+                                    data
+                                      ? data.master.role.enterrolename
+                                      : 'Enter Role Name'
+                                  }}"
+                                  name="role"
+                                  [(ngModel)]="roleAdvanceSearch.roleName"
+                                  (keyup)="fetchRoleNames($event.target.value)"
+                                  (keydown)="
+                                    onTokenRoleSearchInputKeydown($event)
+                                  "
+                                />
+                              </div>
+                              <ul
+                                class="searched-list searchSuggestions"
+                                *ngIf="roles.length > 0"
+                              >
+                                <li
+                                  *ngFor="let role of roles; let i = index"
+                                  [class.selected]="
+                                    i === tokenRoleSearchSuggestionIndex
+                                  "
+                                  (click)="setTokenRole(role, 'search')"
+                                >
+                                  {{ role.roleName }}
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="roleShortname"
+                                >{{
+                                  data
+                                    ? data.master.role.roleshortname
+                                    : "Role Short Name"
+                                }}:</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="countryName"
+                                placeholder="{{
+                                  data
+                                    ? data.master.role.enterroleshortname
+                                    : 'Enter Role Short Name'
+                                }}"
+                                name="roleShortname"
+                                (keyup)="
+                                  $event.target.value =
+                                    $event.target.value.toUpperCase()
+                                "
+                                [(ngModel)]="roleAdvanceSearch.roleShortName"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="status"
+                                >{{
+                                  data ? data.master.role.status : "Status"
+                                }}:</label
+                              >
+                              <select
+                                name="status"
+                                class="custom-select"
+                                [(ngModel)]="roleAdvanceSearch.status"
+                              >
+                                <option selected>Active</option>
+                                <option value="2">Inactive</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="query-btn">
+                          <a class="btn btn-secondary"
+                            ><i
+                              class="fa fa-history"
+                              aria-hidden="true"
+                              (click)="resetAdvanceSearch()"
+                            ></i>
+                            {{ data ? data.buttons.reset : "Reset" }}</a
+                          >
+                          <a class="btn btn-info"
+                            ><i
+                              class="fa fa-search"
+                              aria-hidden="true"
+                              (click)="advanceRoleSearch()"
+                            ></i>
+                            {{ data ? data.buttons.search : "Search" }}</a
+                          >
+                          <a class="btn btn-danger" (click)="showQueryForm()"
+                            ><i class="fa fa-close" aria-hidden="true"></i>
+                            {{ data ? data.admission.close : "Close" }}</a
+                          >
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <div class="property-table-wrapper" style="width: 100%">
+                  <div class="table-responsive">
+                    <table
+                      mat-table
+                      [dataSource]="dataSourceRole"
+                      matTableExporter
+                      #exporter="matTableExporter"
+                      class="mat-elevation-z8"
+                      matSort
+                      #roleSort="matSort"
+                    >
+                      <ng-container matColumnDef="roleName">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.role.rolename : "Role Name" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.roleName }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="roleShortName">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data
+                              ? data.master.role.roleshortname
+                              : "Role Short Name"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.roleShortName }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="roleDescription">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data
+                              ? data.master.role.roledescription
+                              : "Role Description"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.roleDescription }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="status">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.role.status : "Status" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.status === 1 ? "Active" : "Inactive" }}
+                        </td>
+                      </ng-container>
+
+                      <tr
+                        mat-header-row
+                        *matHeaderRowDef="displayedRoleColumn"
+                      ></tr>
+                      <tr
+                        mat-row
+                        (dblclick)="getTableClickData(row._id)"
+                        *matRowDef="
+                          let row;
+                          columns: displayedRoleColumn;
+                          let i = index
+                        "
+                      ></tr>
+
+                      <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell">No data Found!</td>
+                      </tr>
+                    </table>
+                  </div>
+                  <mat-paginator
+                    [pageSizeOptions]="[10, 25, 50, 100]"
+                    aria-label="Select page of users"
+                  >
+                  </mat-paginator>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="new-property-wrapper"
+            *ngIf="showRoleDetails && !showImport"
+          >
+            <p class="main-heading">
+              <span
+                >{{
+                  data ? data.master.role.addnewrole : "Add New Role"
+                }}: </span
+              >{{
+                data
+                  ? data.master.role.fillthefollowingdetailstoaddnewrole
+                  : "Fill the following details to add new role."
+              }}
+              <span
+                (click)="hideRoleDetails()"
+                class="close1"
+                data-toggle="tooltip"
+                title="Close"
+                >X</span
+              >
+            </p>
+            <form>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group position-relative">
+                    <label for="roleName1"
+                      >{{ data ? data.master.role.rolename : "Role Name" }}
+                      <span class="asterisk">*</span>:</label
+                    >
+                    <div class="suggestion_input_wrapper">
+                      <i class="fa fa-search" aria-hidden="true"></i>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="rolename1"
+                        [(ngModel)]="roleToken.roleName"
+                        placeholder="{{
+                          data
+                            ? data.master.role.enterrolename
+                            : 'Enter Role Name'
+                        }}"
+                        name="roleName1"
+                        (keyup)="fetchRoleNames($event.target.value)"
+                        (keydown)="onTokenRolePopulateInputKeydown($event)"
+                        #roleName
+                      />
+                    </div>
+                    <ul class="searched-list" *ngIf="roles.length > 0">
+                      <li
+                        *ngFor="let role of roles; let i = index"
+                        [class.selected]="
+                          i === tokenRolePopulateSuggestionIndex
+                        "
+                        (click)="setTokenRole(role, 'populate')"
+                      >
+                        {{ role.roleName }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="roleShortname1"
+                      >{{
+                        data
+                          ? data.master.role.roleshortname
+                          : "Role Short Name"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="roleShortname1"
+                      (keyup)="
+                        $event.target.value = $event.target.value.toUpperCase()
+                      "
+                      [(ngModel)]="roleToken.roleShortName"
+                      placeholder="{{
+                        data
+                          ? data.master.role.enterroleshortname
+                          : 'Enter Role Short Name'
+                      }}"
+                      name="roleShortname1"
+                      #roleShortName
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="roledescription"
+                      >{{
+                        data
+                          ? data.master.role.roledescription
+                          : "Role Description"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <textarea
+                      [(ngModel)]="roleToken.roleDescription"
+                      [ngModelOptions]="{ standalone: true }"
+                      class="form-control"
+                      id="roledescription"
+                      rows="2"
+                      #roleDescription
+                      placeholder="{{
+                        data
+                          ? data.master.role.enterroledescription
+                          : 'Enter Role Description'
+                      }}"
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-2">
+                  <div
+                    class="form-group d-flex justify-content-between align-items-center"
+                  >
+                    <label class="mb-0" for="isActive"
+                      >{{
+                        data ? data.master.role.isactive : "Is Active"
+                      }}:</label
+                    >
+                    <div class="custom-control custom-switch">
+                      <input
+                        type="checkbox"
+                        name="isActive"
+                        [(ngModel)]="roleToken.status"
+                        class="custom-control-input"
+                        id="customSwitch1"
+                        checked
+                      />
+                      <label
+                        class="custom-control-label"
+                        for="customSwitch1"
+                      ></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <ul
+              class="nav nav-tabs mt-4"
+              id="myTab"
+              role="tablist"
+              *ngIf="roleToken._id && roleToken._id !== ''"
+            >
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  id="properties-tab"
+                  data-toggle="tab"
+                  href="#properties"
+                  role="tab"
+                  aria-controls="properties"
+                  aria-selected="true"
+                  >{{
+                    data
+                      ? data.master.role.allowmoduleactions
+                      : "Allow Module Actions"
+                  }}</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="actionDeny"
+                  data-toggle="tab"
+                  href="#actiondeny"
+                  role="tab"
+                  aria-controls="actiondeny"
+                  aria-selected="true"
+                  >{{
+                    data
+                      ? data.master.role.denymoduleactions
+                      : "Deny Module Actions"
+                  }}</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="users-tab"
+                  data-toggle="tab"
+                  href="#users"
+                  role="tab"
+                  aria-controls="users"
+                  aria-selected="true"
+                  >{{ data ? data.master.lounge.users : "Users" }}</a
+                >
+              </li>
+            </ul>
+            <div
+              class="tab-content"
+              id="myTabContent"
+              *ngIf="roleToken._id && roleToken._id !== ''"
+            >
+              <div
+                class="tab-pane fade show active"
+                id="properties"
+                role="tabpanel"
+                aria-labelledby="properties-tab"
+              >
+                <div class="properties-data" *ngIf="!addNewAction">
+                  <p class="main-heading">
+                    <span>{{
+                      data
+                        ? data.master.role.allowmoduleactions
+                        : "Allow Module Actions"
+                    }}</span>
+                    <span
+                      class="pull-right"
+                      [title]="
+                        !roleToken._id || roleToken._id === ''
+                          ? 'Save Module to add new Action'
+                          : ''
+                      "
+                    >
+                      <a
+                        class="btn btn-info"
+                        [class.disabled]="
+                          !roleToken._id || roleToken._id === ''
+                        "
+                        (click)="addNewAction = true"
+                        ><i class="fa fa-plus" aria-hidden="true"></i
+                        >{{
+                          data
+                            ? data.master.role.addnewactionforallow
+                            : "Add New Action for Allow"
+                        }}</a
+                      ></span
+                    >
+                  </p>
+                  <div class="row align-items-center mb-2">
+                    <div class="col-md-4">
+                      <div class="form-group position-relative">
+                        <label for="moduleName2"
+                          >{{
+                            data ? data.master.module.modulename : "Module Name"
+                          }}
+                          :</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="modulename2"
+                          [(ngModel)]="filterModName"
+                          placeholder="{{
+                            data
+                              ? data.master.module.entermodulename
+                              : 'Enter Module Name'
+                          }}"
+                          name="moduleName2"
+                          (keyup)="fetchModuleNames($event.target.value)"
+                          (keydown)="onTokenModuleFilterInputKeydown($event)"
+                          #moduleNameD
+                        />
+                        <ul class="searched-list" *ngIf="modules.length > 0">
+                          <li
+                            *ngFor="let module of modules; let i = index"
+                            [class.selected]="
+                              i === tokenModuleFilterSuggestionIndex
+                            "
+                            (click)="setTokenModule(module, 'filter')"
+                          >
+                            {{ module.moduleName }}
+                          </li>
+                        </ul>
+                      </div>
+                      <!-- <div class="form-group position-relative">
+                        <label for="moduleName1"
+                          >Module Name<span class="asterisk">*</span>:</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Enter Module Name"
+                          name="actionName1"
+                        />
+                        <ul class="searched-list" *ngIf="modules.length > 0">
+                          <li>moduleName</li>
+                        </ul>
+                      </div> -->
+                    </div>
+                    <!-- <div class="col-5">
+                       <input
+                        type="text"
+                        class="form-control"
+                        placeholder="search"
+                      />
+                    </div> -->
+                    <div class="col-md-4">
+                      <div class="form-group position-relative">
+                        <label for="actionName1"
+                          >{{
+                            data ? data.master.action.actionname : "Action Name"
+                          }}
+                          :</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="actionName1"
+                          [(ngModel)]="filterActName"
+                          placeholder="{{
+                            data
+                              ? data.master.action.enteractionname
+                              : 'Enter Action Name'
+                          }}"
+                          (keydown)="onTokenActionFilterInputKeydown($event)"
+                          name="actionName1"
+                          (keyup)="getActionNames($event.target.value)"
+                          #actionName
+                        />
+                        <ul class="searched-list" *ngIf="actions.length > 0">
+                          <li
+                            *ngFor="let action of actions; let i = index"
+                            [class.selected]="
+                              i === tokenActionFilterSuggestionIndex
+                            "
+                            (click)="getTokenAction(action, 'filter')"
+                          >
+                            {{ action.actionName }}
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <!-- <div class="col-5">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="search"
+                      />
+                    </div> -->
+
+                    <div class="col-4 text-right">
+                      <a class="btn btn-secondary" (click)="resetFilter()"
+                        ><i class="fa fa-history" aria-hidden="true"></i
+                        >{{ data ? data.buttons.reset : "Reset" }}</a
+                      >
+                      <a class="btn btn-info" (click)="filterSearch()">{{
+                        data ? data.buttons.search : "Search"
+                      }}</a>
+                    </div>
+                  </div>
+                  <table
+                    mat-table
+                    [dataSource]="dataSourceAction"
+                    class="mat-elevation-z8"
+                    matSort
+                    #actionSort="matSort"
+                  >
+                    <ng-container matColumnDef="moduleName">
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                        {{
+                          data ? data.master.module.modulename : "Module Name"
+                        }}
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element.moduleId.moduleName }}
+                      </td>
+                    </ng-container>
+                    <ng-container matColumnDef="actionName">
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                        {{
+                          data ? data.master.action.actionname : "Action Name"
+                        }}
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element.actionId.actionName }}
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="actionShortName">
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                        {{
+                          data
+                            ? data.master.action.actionshortname
+                            : "Action Short Name"
+                        }}
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element.actionId.actionShortName }}
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="actionDescription">
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                        {{
+                          data
+                            ? data.master.action.actiondescription
+                            : "Action Description"
+                        }}
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element.actionId.actionDescription }}
+                      </td>
+                    </ng-container>
+                    <ng-container matColumnDef="action">
+                      <th mat-header-cell *matHeaderCellDef>
+                        {{ data ? data.master.action.action : "Action" }}
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        <a
+                          href="javascript:void(null)"
+                          style="color: red"
+                          (click)="deleteAction(element._id)"
+                        >
+                          <i class="fa fa-trash" aria-hidden="true"></i>
+                        </a>
+                      </td>
+                    </ng-container>
+
+                    <!-- <ng-container matColumnDef="actionUrl">
+                                <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                                  Action Url
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.actionUrl}}
+                                </td>
+                            </ng-container> -->
+
+                    <tr
+                      mat-header-row
+                      *matHeaderRowDef="displayedActionColumn"
+                    ></tr>
+                    <tr
+                      mat-row
+                      (dblclick)="editAction(row)"
+                      *matRowDef="
+                        let row;
+                        columns: displayedActionColumn;
+                        let i = index
+                      "
+                    ></tr>
+
+                    <tr class="mat-row" *matNoDataRow>
+                      <td class="mat-cell">No data Found!</td>
+                    </tr>
+                  </table>
+                  <mat-paginator
+                    [pageSizeOptions]="[10, 25, 50, 100]"
+                    aria-label="Select page of actions"
+                  >
+                  </mat-paginator>
+                </div>
+                <div class="add-new-property" *ngIf="addNewAction">
+                  <p class="main-heading">
+                    <span>{{
+                      data ? data.master.module.addnewaction : "Add New Action"
+                    }}</span>
+                    <span
+                      class="close1"
+                      data-toggle="tooltip"
+                      title="Close"
+                      (click)="addNewAction = false"
+                      >X</span
+                    >
+                  </p>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group position-relative">
+                        <label for="moduleName1"
+                          >{{
+                            data ? data.master.module.modulename : "Module Name"
+                          }}
+                          <span class="asterisk">*</span>:</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="modulename1"
+                          [(ngModel)]="moduleToken.moduleName"
+                          (keydown)="onTokenModuleAllowInputKeydown($event)"
+                          placeholder="{{
+                            data
+                              ? data.master.module.entermodulename
+                              : 'Enter Module Name'
+                          }}"
+                          name="moduleName1"
+                          (keyup)="fetchModuleNames($event.target.value)"
+                          #moduleName
+                        />
+                        <ul class="searched-list" *ngIf="modules.length > 0">
+                          <li
+                            *ngFor="let module of modules; let i = index"
+                            [class.selected]="
+                              i === tokenModuleAllowSuggestionIndex
+                            "
+                            (click)="setTokenModule(module, 'allow')"
+                          >
+                            {{ module.moduleName }}
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <!-- </div> -->
+                    <!-- <div class="row" *ngIf="moduleToken._id && moduleToken._id !== ''"> -->
+                    <div
+                      class="col-md-6"
+                      *ngIf="moduleToken._id && moduleToken._id !== ''"
+                    >
+                      <div class="form-group position-relative">
+                        <label for="actionName1"
+                          >{{
+                            data ? data.master.action.actionname : "Action Name"
+                          }}
+                          <span class="asterisk">*</span>:</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="actionName1"
+                          [(ngModel)]="actionToken.actionName"
+                          (keydown)="onTokenActionAllowInputKeydown($event)"
+                          placeholder="{{
+                            data
+                              ? data.master.action.enteractionname
+                              : 'Enter Action Name'
+                          }}"
+                          name="actionName1"
+                          (keyup)="fetchActionNames($event.target.value)"
+                          #actionName
+                        />
+                        <ul class="searched-list" *ngIf="actions.length > 0">
+                          <li
+                            *ngFor="let action of actions; let i = index"
+                            [class.selected]="
+                              i === tokenActionAllowSuggestionIndex
+                            "
+                            (click)="setTokenAction(action, 'allow')"
+                          >
+                            {{ action.actionName }}
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="row"
+                    *ngIf="moduleToken._id && moduleToken._id !== ''"
+                  >
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="actionShortname1"
+                          >{{
+                            data
+                              ? data.master.action.actionshortname
+                              : "Action Short Name"
+                          }}<span class="asterisk">*</span>:</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="actionShortname1"
+                          disabled
+                          (keyup)="
+                            $event.target.value =
+                              $event.target.value.toUpperCase()
+                          "
+                          [(ngModel)]="actionToken.actionShortName"
+                          placeholder="{{
+                            data
+                              ? data.master.action.enteractionshortname
+                              : 'Enter Action Short Name'
+                          }}"
+                          name="actionShortname1"
+                          #actionShortName
+                        />
+                      </div>
+                    </div>
+                    <!-- </div> -->
+                    <!-- <div class="row" *ngIf="moduleToken._id && moduleToken._id !== ''"> -->
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="actiondescription"
+                          >{{
+                            data
+                              ? data.master.action.actiondescription
+                              : "Action Description"
+                          }}<span class="asterisk">*</span>:</label
+                        >
+                        <textarea
+                          [(ngModel)]="actionToken.actionDescription"
+                          disabled
+                          [ngModelOptions]="{ standalone: true }"
+                          class="form-control"
+                          id="actiondescription"
+                          rows="2"
+                          #actionDescription
+                          placeholder="{{
+                            data
+                              ? data.master.action.enteractiondescription
+                              : 'Enter Action Description'
+                          }}"
+                        ></textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="row align-items-center"
+                    *ngIf="moduleToken._id && moduleToken._id !== ''"
+                  >
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="actionUrl"
+                          >{{
+                            data ? data.master.action.actionurl : "Action Url"
+                          }}<span class="asterisk">*</span>:</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          disabled
+                          id="actionUrl"
+                          [(ngModel)]="actionToken.actionUrl"
+                          placeholder="{{
+                            data
+                              ? data.master.action.enteractionurl
+                              : 'Enter Help Url'
+                          }}"
+                          name="actionUrl"
+                          #actionUrl
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="result">
+                    <a class="btn btn-secondary" (click)="resetActionModule()"
+                      ><i class="fa fa-history" aria-hidden="true"></i
+                      >{{ data ? data.buttons.reset : "Reset" }}</a
+                    >
+                    <a class="btn btn-info" (click)="addAction()"
+                      ><i class="fa fa-plus" aria-hidden="true"></i
+                      >{{
+                        data
+                          ? data.master.role.addnewactionforallow
+                          : "Add New Action for Allow"
+                      }}
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="actiondeny"
+                role="tabpanel"
+                aria-labelledby="actionDeny"
+              >
+                <div class="deny-data" *ngIf="!addNewActionD">
+                  <p class="main-heading">
+                    <span>{{
+                      data
+                        ? data.master.role.denymoduleactions
+                        : "Deny Module Actions"
+                    }}</span>
+                    <span
+                      class="pull-right"
+                      [title]="
+                        !roleToken._id || roleToken._id === ''
+                          ? 'Save Module to add new Action'
+                          : ''
+                      "
+                    >
+                      <a
+                        class="btn btn-info"
+                        [class.disabled]="
+                          !roleToken._id || roleToken._id === ''
+                        "
+                        (click)="addNewActionD = true"
+                        ><i class="fa fa-plus" aria-hidden="true"></i
+                        >{{
+                          data
+                            ? data.master.role.addnewactionfordeny
+                            : "Add New Action for Deny"
+                        }}</a
+                      ></span
+                    >
+                  </p>
+                  <table
+                    mat-table
+                    [dataSource]="dataSourceActionDeny"
+                    class="mat-elevation-z8"
+                    matSort
+                    #actionSortD="matSort"
+                  >
+                    <ng-container matColumnDef="moduleName">
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                        {{
+                          data ? data.master.module.modulename : "Module Name"
+                        }}
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element.moduleId.moduleName }}
+                      </td>
+                    </ng-container>
+                    <ng-container matColumnDef="actionName">
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                        {{
+                          data ? data.master.action.actionname : "Action Name"
+                        }}
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element.actionId.actionName }}
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="actionShortName">
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                        {{
+                          data
+                            ? data.master.action.actionshortname
+                            : "Action Short Name"
+                        }}
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element.actionId.actionShortName }}
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="actionDescription">
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                        {{
+                          data
+                            ? data.master.action.actiondescription
+                            : "Action Description"
+                        }}
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element.actionId.actionDescription }}
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="action">
+                      <th mat-header-cell *matHeaderCellDef>Action</th>
+                      <td mat-cell *matCellDef="let element">
+                        <a
+                          href="javascript:void(null)"
+                          style="color: red"
+                          (click)="deleteActionDeny(element._id)"
+                        >
+                          <i class="fa fa-trash" aria-hidden="true"></i>
+                        </a>
+                      </td>
+                    </ng-container>
+                    <!-- <ng-container matColumnDef="actionUrl">
+                                <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                                  Action Url
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.actionUrl}}
+                                </td>
+                            </ng-container> -->
+
+                    <tr
+                      mat-header-row
+                      *matHeaderRowDef="displayedActionColumnD"
+                    ></tr>
+                    <tr
+                      mat-row
+                      (dblclick)="editActionD(row)"
+                      *matRowDef="
+                        let row;
+                        columns: displayedActionColumnD;
+                        let i = index
+                      "
+                    ></tr>
+
+                    <tr class="mat-row" *matNoDataRow>
+                      <td class="mat-cell">No data Found!</td>
+                    </tr>
+                  </table>
+                  <mat-paginator
+                    [pageSizeOptions]="[10, 25, 50, 100]"
+                    aria-label="Select page of actions"
+                  >
+                  </mat-paginator>
+                </div>
+                <div class="add-new-property" *ngIf="addNewActionD">
+                  <p class="main-heading">
+                    <span>{{
+                      data ? data.master.module.addnewaction : "Add New Action"
+                    }}</span>
+                    <span
+                      class="close1"
+                      data-toggle="tooltip"
+                      title="Close"
+                      (click)="addNewActionD = false"
+                      >X</span
+                    >
+                  </p>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group position-relative">
+                        <label for="moduleName2"
+                          >{{
+                            data ? data.master.module.modulename : "Module Name"
+                          }}
+                          <span class="asterisk">*</span>:</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="modulename2"
+                          [(ngModel)]="moduleToken.moduleName"
+                          placeholder="{{
+                            data
+                              ? data.master.module.entermodulename
+                              : 'Enter Module Name'
+                          }}"
+                          (keydown)="onTokenModuleDenyInputKeydown($event)"
+                          name="moduleName2"
+                          (keyup)="fetchModuleNames($event.target.value)"
+                          #moduleNameD
+                        />
+                        <ul class="searched-list" *ngIf="modules.length > 0">
+                          <li
+                            *ngFor="let module of modules; let i = index"
+                            [class.selected]="
+                              i === tokenModuleDenySuggestionIndex
+                            "
+                            (click)="setTokenModule(module, 'deny')"
+                          >
+                            {{ module.moduleName }}
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <!-- </div>
+                                      <div class="row"> -->
+                    <div
+                      class="col-md-6"
+                      *ngIf="
+                        actionTokenD.moduleId && actionTokenD.moduleId !== ''
+                      "
+                    >
+                      <div class="form-group position-relative">
+                        <label for="actionName2"
+                          >{{
+                            data
+                              ? data.master.action.actionname
+                              : "Action Name"
+                          }}<span class="asterisk">*</span>:</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="actionName2"
+                          [(ngModel)]="actionTokenD.actionName"
+                          (keydown)="onTokenActionDenyInputKeydown($event)"
+                          placeholder="{{
+                            data
+                              ? data.master.action.enteractionname
+                              : 'Enter Action Name'
+                          }}"
+                          name="actionName2"
+                          (keyup)="fetchActionNames($event.target.value)"
+                          #actionNameD
+                        />
+                        <ul class="searched-list" *ngIf="actions.length > 0">
+                          <li
+                            *ngFor="let action of actions; let i = index"
+                            [class.selected]="
+                              i === tokenActionDenySuggestionIndex
+                            "
+                            (click)="setTokenAction(action, 'deny')"
+                          >
+                            {{ action.actionName }}
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="row"
+                    *ngIf="
+                      actionTokenD.moduleId && actionTokenD.moduleId !== ''
+                    "
+                  >
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="actionShortname2"
+                          >{{
+                            data
+                              ? data.master.action.actionshortname
+                              : "Action Short Name"
+                          }}<span class="asterisk">*</span>:</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          disabled
+                          id="actionShortname2"
+                          [(ngModel)]="actionTokenD.actionShortName"
+                          placeholder="{{
+                            data
+                              ? data.master.action.enteractionshortname
+                              : 'Enter Action Short Name'
+                          }}"
+                          name="actionShortname2"
+                          #actionShortNameD
+                        />
+                      </div>
+                    </div>
+                    <!-- </div>
+                                      <div class="row" *ngIf="moduleToken._id && moduleToken._id !== ''"> -->
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="actiondescription2"
+                          >{{
+                            data
+                              ? data.master.action.actiondescription
+                              : "Action Description"
+                          }}<span class="asterisk">*</span>:</label
+                        >
+                        <textarea
+                          [(ngModel)]="actionTokenD.actionDescription"
+                          [ngModelOptions]="{ standalone: true }"
+                          class="form-control"
+                          disabled
+                          id="actiondescription2"
+                          rows="2"
+                          #actionDescriptionD
+                          placeholder="{{
+                            data
+                              ? data.master.action.enteractiondescription
+                              : 'Enter Action Description'
+                          }}"
+                        ></textarea>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="row align-items-center"
+                    *ngIf="
+                      actionTokenD.moduleId && actionTokenD.moduleId !== ''
+                    "
+                  >
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="actionUrl2"
+                          >{{
+                            data ? data.master.action.actionurl : "Action Url"
+                          }}<span class="asterisk">*</span>:</label
+                        >
+                        <input
+                          type="text"
+                          disabled
+                          class="form-control"
+                          id="actionUrl2"
+                          [(ngModel)]="actionTokenD.actionUrl"
+                          placeholder="{{
+                            data
+                              ? data.master.action.enteractionurl
+                              : 'Enter Help Url'
+                          }}"
+                          name="actionUrl2"
+                          #actionUrlD
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="result">
+                    <a class="btn btn-secondary" (click)="resetActionModuleD()"
+                      ><i class="fa fa-history" aria-hidden="true"></i
+                      >{{ data ? data.buttons.reset : "Reset" }}</a
+                    >
+                    <a class="btn btn-info" (click)="addActionDeny()"
+                      ><i class="fa fa-plus" aria-hidden="true"></i
+                      >{{
+                        data
+                          ? data.master.role.addnewactionfordeny
+                          : "Add New Action for Deny"
+                      }}</a
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="users"
+                role="tabpanel"
+                aria-labelledby="users-tab"
+              >
+                <div class="users-data" *ngIf="!addNewUser">
+                  <div class="table-responsive">
+                    <table
+                      mat-table
+                      [dataSource]="dataSourceUser"
+                      class="mat-elevation-z8"
+                      matSort
+                    >
+                      <ng-container matColumnDef="name">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.lounge.name : "Name" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.name }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="role">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.lounge.role : "Role" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          <span *ngFor="let role of element.roles">
+                            {{ role.roleName }},
+                          </span>
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="mobileNo">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.lounge.mobileNo : "Mobile No" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.mobile }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="emailId">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.lounge.emailId : "Email Id" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.email }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="status">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.lounge.status : "Status" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.status === 1 ? "Active" : "Inactive" }}
+                        </td>
+                      </ng-container>
+
+                      <tr
+                        mat-header-row
+                        *matHeaderRowDef="displayedUserColumns"
+                      ></tr>
+                      <tr
+                        mat-row
+                        *matRowDef="
+                          let row;
+                          columns: displayedUserColumns;
+                          let i = index
+                        "
+                      ></tr>
+                    </table>
+                    <mat-paginator
+                      [pageSizeOptions]="[10, 25, 50, 100]"
+                      aria-label="Select page of users"
+                    >
+                    </mat-paginator>
+                  </div>
+                  <!-- <table datatable class="table table-striped table-bordered">
+                                          <thead>
+                                              <tr>
+                                                  <th>Name</th>
+                                                  <th>Role</th>
+                                                  <th>Mobile No</th>
+                                                  <th>Email</th>
+                                              </tr>
+                                          </thead>
+                                          <tbody>
+                                              <tr (dblclick)="getUserLoungeById(u._id)" *ngFor="let u of userLoungeData">
+                                                  <td>{{u.name}}</td>
+                                                  <td>{{u.role}}</td>
+                                                  <td>{{u.mobileNo}}</td>
+                                                  <td>{{u.emailId}}</td>
+                                              </tr>
+                                          </tbody>
+                                      </table> -->
+                </div>
+                <div class="add-new-user" *ngIf="addNewUser">
+                  <p class="main-heading">
+                    <span>{{
+                      data ? data.master.user.addNewUser : "Add New User"
+                    }}</span>
+                    <span
+                      class="close1"
+                      data-toggle="tooltip"
+                      title="Close"
+                      (click)="resetUserLoungeData()"
+                      >X</span
+                    >
+                  </p>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group position-relative">
+                        <label for="userName"
+                          >{{
+                            data
+                              ? data.master.user.username
+                              : "User
+                        Name"
+                          }}<span class="asterisk">*</span>:</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="userName"
+                          autocomplete="off"
+                          placeholder="{{
+                            data
+                              ? data.master.lounge.enterUserName
+                              : 'Enter User Name'
+                          }}"
+                          name="userName"
+                          [(ngModel)]="userName"
+                          (keyup)="fetchUserLoungeNames($event.target.value)"
+                          #userLoungeName
+                        />
+                        <ul class="searched-list" *ngIf="user.length > 0">
+                          <li
+                            *ngFor="let u of user"
+                            (click)="setTokenUserLounge(u)"
+                          >
+                            {{ u.name }}
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="userRole"
+                          >{{
+                            data
+                              ? data.master.user.userroles
+                              : "User
+                        Roles"
+                          }}<span class="asterisk">*</span>:</label
+                        >
+                        <select
+                          name="userRole"
+                          class="custom-select"
+                          id="userRole"
+                          [(ngModel)]="role"
+                        >
+                          <option *ngFor="let r of roles">{{ r.name }}</option>
+                          <!-- <option selected>Manager</option>
+                                                      <option value="1">Sales</option> -->
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="contactNo"
+                          >{{
+                            data
+                              ? data.master.user.mobileNo
+                              : "Mobile
+                        No"
+                          }}<span class="asterisk">*</span>:</label
+                        >
+                        <input
+                          type="number"
+                          class="form-control"
+                          id="contactNo"
+                          placeholder="{{
+                            data
+                              ? data.master.lounge.enterMobileNo
+                              : 'Enter Mobile No'
+                          }}"
+                          name="contactNo"
+                          [(ngModel)]="mobileNo"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="contactEmail"
+                          >{{ data ? data.master.user.email : "Email"
+                          }}<span class="asterisk">*</span>:</label
+                        >
+                        <input
+                          type="email"
+                          class="form-control"
+                          id="contactEmail"
+                          placeholder="{{
+                            data ? data.master.lounge.enterEmail : 'Enter Email'
+                          }}"
+                          name="contactEmail"
+                          [(ngModel)]="emailId"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="result">
+                    <a (click)="resetUserLoungeData()" class="btn btn-secondary"
+                      ><i class="fa fa-history" aria-hidden="true"></i>
+                      {{ data ? data.buttons.reset : "reset" }}</a
+                    >
+                    <a (click)="saveUserDetails()" class="btn btn-info"
+                      ><i class="fa fa-plus" aria-hidden="true"></i>
+                      {{
+                        data
+                          ? data.buttons.addNewUser
+                          : "Add New
+                    User"
+                      }}</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="tab-content" id="myTabContent" >
+                      <div class="tab-pane fade show active" id="properties" role="tabpanel"
+                          aria-labelledby="properties-tab">
+                          <div class="properties-data" *ngIf="!addNewProperty">
+                              <p class="main-heading">
+                                  <span>Module Roles </span>
+                              </p>
+                          </div>
+                        </div>
+                      </div> -->
+            <div class="result mt-4">
+              <a
+                class="btn btn-primary"
+                style="color: white"
+                (click)="cloneRole()"
+                *ngIf="roleToken._id !== ''"
+                ><i class="fa fa-clone" aria-hidden="true"></i
+                >{{ data ? data.buttons.cloneRole : "Clone Role" }}</a
+              >
+              <a class="btn btn-secondary mr-2" (click)="resetRole()"
+                ><i class="fa fa-history" aria-hidden="true"></i
+                >{{ data ? data.buttons.reset : "Reset" }}</a
+              >
+              <a class="btn btn-info mr-2" (click)="saveRole()">
+                <i class="fa fa-check" aria-hidden="true"></i
+                >{{ data ? data.buttons.saveDraft : "Save Draft" }}</a
+              >
+              <a
+                class="btn btn-success"
+                [hidden]="!roleToken._id || roleToken._id === ''"
+                (click)="submitRoleDetails()"
+                ><i class="fa fa-check" aria-hidden="true"></i
+                >{{ data ? data.buttons.submit : "Submit" }}</a
+              >
+            </div>
+          </div>
+          <div *ngIf="showImport && !showRoleDetails">
+            <app-import-data
+              [showNavBar]="false"
+              [showLeftMenu]="false"
+              [validator]="importValidator"
+              (importClose)="backToResults()"
+            ></app-import-data>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

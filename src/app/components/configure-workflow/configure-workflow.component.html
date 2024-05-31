@@ -1,0 +1,821 @@
+<!-- <div class="content-wrapper d-flex h-100" [ngClass]="{ 'sidebar-open': isSidebarOpen }">
+    <div class="sidebar-wrapper">
+        <app-sidebar [(sidebarState)]="isSidebarOpen"></app-sidebar>
+    </div>
+    <div class="main-wrapper pt-3 h-100">
+        <div *ngIf="loadershow">
+            <app-loader [message]="loaderMessage"></app-loader>
+        </div> -->
+
+<div class="container-fluid h-100">
+  <div class="row h-100">
+    <div class="col-md-12">
+      <!-- <div class="property-details-wrapper" style="width: 100%" *ngIf="!isUpsertWorkflow">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <p class="main-heading">
+                                    <span>Workflows:</span>
+                                    Create and edit workflows using AI
+                                </p>
+                            </div>
+                            <div>
+                                <a href="javascript:void(0)" mat-raised-button (click)="startNewWorkflow()"
+                                    style="line-height: 25px !important" class="btn btn-info"><i class="fa fa-plus"
+                                        aria-hidden="true"></i>
+                                    New</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="search-wrapper">
+                                    <div class="search-product">
+                                        <div class="search_main">
+                                            <div class="search-input">
+                                                <span><i class="fa fa-search" aria-hidden="true"></i></span>
+                                                <input type="search" [(ngModel)]="searchText" id="txtSearch"
+                                                    (keyup.enter)="fetchWorkflows()" />
+                                                <span class="highlight"></span>
+                                                <span class="bar"></span>
+                                                <label>Search Workflows</label>
+                                                <span><i class="fa fa-times" (click)="fetchWorkflows('')"
+                                                        aria-hidden="true"></i></span>
+                                                <span (click)="showQueryForm()" class="dropdown-form"><i
+                                                        class="fa fa-sort-desc" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="query1" class="query1" *ngIf="isAdvanceSearchForm">
+                                         <div class="form-container">
+                                            <form>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="fromDate">
+                                                                {{
+                                                                data
+                                                                ? data.master.partner.frdate
+                                                                : "fromDate:"
+                                                                }}
+                                                            </label>
+                                                            <input type="date" [(ngModel)]="fromDate"
+                                                                class="form-control" id="fromDate"
+                                                                placeholder="Enter from Date" name="fromDate"
+                                                                min="{{ todaydateHideMin }}"
+                                                                max="{{ todaydateHideMAx }}" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="toDate">
+                                                                {{
+                                                                data
+                                                                ? data.master.partner.tdate
+                                                                : "To Date:"
+                                                                }}
+                                                            </label>
+                                                            <input type="date" [(ngModel)]="toDate" class="form-control"
+                                                                id="toDate" placeholder="Enter To Date" name="toDate"
+                                                                min="{{ todaydateHideMin }}"
+                                                                max="{{ todaydateHideMAx }}" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group position-relative">
+                                                            <label for="partnerName1">{{
+                                                                data
+                                                                ? data.master.partner.partnerName
+                                                                : "Partner
+                                                                Name"
+                                                                }}:</label>
+                                                            <div class="suggestion_input_wrapper">
+                                                                <i class="fa fa-search" aria-hidden="true"></i>
+                                                                <input type="text" class="form-control suggestionInput"
+                                                                    id="partnerName1" [(ngModel)]="pname"
+                                                                    [disabled]="type == 1 || type == 0"
+                                                                    autocomplete="off" (keyup)="
+                                    fetchPartnerNames($event.target.value)
+                                  " (keydown)="onTokenPartnerInputKeydown($event)" placeholder="{{
+                                    data
+                                      ? data.master.partner.partnerP
+                                      : 'Enter Partner Name'
+                                  }}" name="partnerName1" #partnerName />
+                                                            </div>
+                                                            <ul class="searched-list searchSuggestions"
+                                                                *ngIf="partners.length > 0">
+                                                                <li *ngFor="
+                                    let partner of partners;
+                                    let i = index
+                                  " [class.selected]="
+                                    i === tokenPartnerSuggestionIndex
+                                  " (click)="setTokenPartner(partner, 'populate')">
+                                                                    {{ partner.name }}
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="userStatus">
+                                                                {{
+                                                                data
+                                                                ? data.master.partner.ststs
+                                                                : "Status:"
+                                                                }}
+                                                            </label>
+                                                            <select [(ngModel)]="status" name="userStatus"
+                                                                class="custom-select">
+                                                                
+                                                                <option selected>Active</option>
+                                                                <option>Inactive</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group position-relative">
+                                                            <label for="partnerEvent">{{
+                                                                data
+                                                                ? data.master.partner.EventName
+                                                                : 'Event Name'
+                                                                }}:</label>
+                                                            <div class="suggestion_input_wrapper">
+                                                                <i class="fa fa-search" aria-hidden="true"></i>
+                                                                <input type="text" class="form-control suggestionInput"
+                                                                    id="partnerEvent" [(ngModel)]="ename"
+                                                                    [disabled]="type == 1 || type == 0"
+                                                                    autocomplete="off" placeholder="{{
+                                    data
+                                      ? data.master.partner.EventNameE
+                                      : 'Enter Event Name'
+                                  }}" (keyup)="
+                                    fetchEventNames($event.target.value)
+                                  " name="partnerEvent" #partnerEvent />
+                                                            </div>
+                                                            <ul class="searched-list searchSuggestions"
+                                                                *ngIf="filteredEvents.length > 0">
+                                                                <li *ngFor="
+                                    let partner of filteredEvents;
+                                    let i = index
+                                  " (click)="setEvent(partner)">
+                                                                    {{ partner.event }}
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="query-btn">
+                                                    <a class="btn btn-secondary" (click)="resetAdvanceSearch()"><i
+                                                            class="fa fa-history" aria-hidden="true"></i>
+                                                        Reset</a>
+                                                    <a class="btn btn-info"
+                                                        (click)="advancepartnersearchDataSearch()"><i
+                                                            class="fa fa-search" aria-hidden="true"></i>
+                                                        Search</a>
+                                                    <a class="btn btn-danger" (click)="showQueryForm()"><i
+                                                            class="fa fa-close" aria-hidden="true"></i>
+                                                        {{ data ? data.admission.close : "Close" }}</a>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="partner-response-table">
+                                    <div class="table-responsive">
+                                        <table mat-table [dataSource]="dataSourceWorkflows" matTableExporter
+                                            #exporter="matTableExporter" class="mat-elevation-z8" matSort>
+                                            <ng-container matColumnDef="name">
+                                                <th mat-header-cell *matHeaderCellDef>Name</th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    {{ element.name }}
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="type">
+                                                <th mat-header-cell *matHeaderCellDef>Type</th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    {{ element.type }}
+                                                </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="headParticipant">
+                                                <th mat-header-cell *matHeaderCellDef>Head Participant</th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    {{ element.headParticipant }}
+                                                </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="status">
+                                                <th mat-header-cell *matHeaderCellDef>Status</th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    {{ element.status }}
+                                                </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="lastModifiedOn">
+                                                <th mat-header-cell *matHeaderCellDef>Modified On</th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    {{ cs.formatDateTime(element.lastModifiedOn) }}
+                                                </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="lastModifiedBy">
+                                                <th mat-header-cell *matHeaderCellDef>Modified By</th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    {{ element.lastModifiedBy ? element.lastModifiedBy.name : '' }}
+                                                </td>
+                                            </ng-container>
+
+                                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                            <tr mat-row (dblclick)="getWorkflowById(row._id)"
+                                                *matRowDef="let row;columns: displayedColumns; let i = index"></tr>
+                                            <tr class="mat-row" *matNoDataRow>
+                                                <td class="mat-cell">No data Found!</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"
+                                        aria-label="Select page of users">
+                                    </mat-paginator>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+
+      <div class="new-property-wrapper">
+        <!-- <p class="main-heading">
+                            <span>Create New Workflow:: </span>Create new workflow process and checklist.
+                            <span (click)="closeNewWorkflow()" class="close1" data-toggle="tooltip"
+                                title="Close">X</span>
+                        </p> -->
+
+        <!-- <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="txtworkflowname">Workflow Name:</label>
+                                    <input type="hidden" id="hdnworkflowId" required
+                                        [(ngModel)]="saveUpdateWorkflow._id">
+                                    <input type="text" class="form-control" id="txtworkflowname"
+                                        [(ngModel)]="saveUpdateWorkflow.name" placeholder="Enter Workflow Name"
+                                        name="txtworkflowname">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="txtworkflowdescription">Workflow Description::</label>
+                                    <textarea class="form-control" [(ngModel)]="saveUpdateWorkflow.description"
+                                        id="txtworkflowdescription" rows="1"
+                                        placeholder="Enter Workflow Description"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="selectworkflowtype">Workflow Type:</label>
+                                    <select class="form-control" id="selectworkflowtype"
+                                        [(ngModel)]="saveUpdateWorkflow.type">
+                                        <option *ngFor="let wt of workflowTypes" value="{{wt.keyCode}}">
+                                            {{ wt.key1 }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="selectHeadparticipants">Head Participant:</label>
+                                    <select class="form-control" id="selectHeadparticipants"
+                                        [(ngModel)]="saveUpdateWorkflow.headParticipant">
+                                        <option *ngFor="let hp of participants" value="{{hp._id}}">
+                                            {{ hp.name }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="selectstatus">Status:</label>
+                                    <select class="form-control" id="selectstatus"
+                                        [(ngModel)]="saveUpdateWorkflow.status">
+                                        <option *ngFor="let wt of workflowStatus" value="{{wt.keyCode}}">
+                                            {{ wt.key1 }} </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="txtAIPrompt">AI Prompt:</label>
+                                    <textarea class="form-control" [(ngModel)]="saveUpdateWorkflow.aiPrompt"
+                                        id="txtAIPrompt" rows="2" placeholder="Enter AI Prompt"></textarea>
+                                </div>
+                            </div>
+                        </div> -->
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="result mt-1">
+              <!-- <a class="btn btn-info mr-2" (click)="createWorkflowWithAI()"><i
+                                            class="fa fa-floppy-o" aria-hidden="true"></i>
+                                        Generate Workflow</a> -->
+              <!-- <span  (click)="onCloseWorkFlow()" class="close1" data-toggle="tooltip" title="Close">X</span> -->
+            </div>
+          </div>
+        </div>
+
+        <form>
+          <div class="row">
+            <div class="new-coupon-data col-md-12">
+              <div id="pallette">
+                <!-- <a href="javascript:void(null)" (click)="openWorkflowDetail()">Workflow Details
+                                            <i id="pop" aria-hidden="true"></i></a>
+                                        <div class="save-workflow-button">
+                                            <a href="javascript:void(null)" (click)="upsertWorkflow()">
+                                                <i class="fa fa-floppy-o" aria-hidden="true" data-toggle="tooltip"
+                                                    title="Save Workflow"></i>
+                                            </a>
+                                        </div> -->
+                <div class="shapes">
+                  <a
+                    href="javascript:void(null)"
+                    (click)="drawStart({})"
+                    id="start"
+                    ><img
+                      src="/assets/images/circle.png"
+                      data-toggle="tooltip"
+                      title="Start"
+                  /></a>
+                  <a
+                    href="javascript:void(null)"
+                    (click)="drawEnd({})"
+                    style="color: red"
+                    id="end"
+                    ><img
+                      src="/assets/images/circle1.png"
+                      data-toggle="tooltip"
+                      title="End"
+                  /></a>
+                  <a
+                    href="javascript:void(null)"
+                    (click)="drawHumanStep({})"
+                    id="humanStep"
+                    ><img
+                      src="/assets/images/rectangle.png"
+                      data-toggle="tooltip"
+                      title="Human Step"
+                  /></a>
+                  <a
+                    href="javascript:void(null)"
+                    (click)="drawSystemStep({})"
+                    id="systemStep"
+                    ><img
+                      src="/assets/images/rectangle.png"
+                      data-toggle="tooltip"
+                      title="System Step"
+                  /></a>
+                  <a
+                    href="javascript:void(null)"
+                    (click)="drawDelay({})"
+                    id="delay"
+                    ><img
+                      src="/assets/images/circle.png"
+                      data-toggle="tooltip"
+                      title="Delay"
+                  /></a>
+                  <a
+                    href="javascript:void(null)"
+                    (click)="drawDecision({})"
+                    id="decision"
+                    ><img
+                      src="/assets/images/rhombus.png"
+                      data-toggle="tooltip"
+                      title="Decision"
+                  /></a>
+                </div>
+                <div class="links">
+                  <a
+                    href="javascript:void(null)"
+                    (click)="linkShape(null, null, {})"
+                    id="linkShape"
+                  >
+                    <i
+                      class="fa fa-arrow-right"
+                      aria-hidden="true"
+                      data-toggle="tooltip"
+                      title="Link Shape"
+                    ></i>
+                  </a>
+                  <a href="javascript:void(null)" id="reverseLink">
+                    <i
+                      class="fa fa-arrow-left"
+                      aria-hidden="true"
+                      data-toggle="tooltip"
+                      title="Reverse Link"
+                    ></i>
+                  </a>
+                </div>
+                <div class="delete">
+                  <a
+                    href="javascript:void(null)"
+                    (click)="deleteShape()"
+                    id="deleteShape"
+                  >
+                    <i
+                      class="fa fa-trash"
+                      aria-hidden="true"
+                      data-toggle="tooltip"
+                      title="Delete Shape"
+                    ></i>
+                  </a>
+                </div>
+                <div class="actions">
+                  <a
+                    href="javascript:void(null)"
+                    id="validate"
+                    (click)="validateWorkflow()"
+                    >Validate Workflow
+                    <i
+                      class="fa fa-american-sign-language-interpreting"
+                      aria-hidden="true"
+                      data-toggle="tooltip"
+                      title="Validate"
+                    ></i>
+                  </a>
+                </div>
+              </div>
+
+              <div class="stage">
+                <div class="row">
+                  <div class="col-md-9 konvaStage">
+                    <div #docCanvas id="canvasDoc" class="cc-container"></div>
+                  </div>
+                  <div class="col-md-3 konvaProperties">
+                    <div class="stageTable" *ngIf="selectedShape">
+                      <div class="row">
+                        <div class="col-12">
+                          <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                              <a
+                                class="nav-link active"
+                                id="editable"
+                                data-toggle="pill"
+                                href="#v-pills-editable-tab"
+                                role="tab"
+                                aria-controls="v-pills-editable"
+                                aria-selected="true"
+                                ><i
+                                  class="fa fa-pencil-square-o"
+                                  aria-hidden="true"
+                                  data-toggle="tooltip"
+                                  title="Name/Text"
+                                ></i
+                              ></a>
+                            </li>
+                            <li class="nav-item">
+                              <a
+                                class="nav-link"
+                                id="caseconfig"
+                                data-toggle="pill"
+                                href="#v-pills-caseconfig-tab"
+                                role="tab"
+                                aria-controls="v-pills-caseconfig"
+                                aria-selected="false"
+                                ><i
+                                  class="fa fa-sticky-note"
+                                  aria-hidden="true"
+                                  data-toggle="tooltip"
+                                  title="Case Configuration"
+                                ></i
+                              ></a>
+                            </li>
+                          </ul>
+                          <div class="tab-content">
+                            <div
+                              class="tab-pane active container pt-3"
+                              id="v-pills-editable-tab"
+                            >
+                              <div class="form-container">
+                                <form>
+                                  <div class="form-group">
+                                    <input
+                                      type="hidden"
+                                      id="hdnStepId"
+                                      name="hdnStepId"
+                                      [value]="selectedShape.getAttr('id')"
+                                    />
+                                    <label for="txtStepName">Step Name:</label>
+                                    <input
+                                      type="text"
+                                      class="form-control"
+                                      id="txtStepName"
+                                      [value]="
+                                        selectedShape.getAttr('stepName')
+                                      "
+                                      (focusout)="
+                                        setShapeAttribute(
+                                          $event.target.value,
+                                          'stepName'
+                                        )
+                                      "
+                                      placeholder="Enter Step Name"
+                                      name="txtStepName"
+                                    />
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="txtStepText">Step Text:</label>
+                                    <input
+                                      type="text"
+                                      class="form-control"
+                                      id="txtStepText"
+                                      (focusout)="
+                                        setShapeAttribute(
+                                          $event.target.value,
+                                          'stepText'
+                                        )
+                                      "
+                                      [value]="
+                                        selectedShape.getAttr('stepText')
+                                      "
+                                      placeholder="Enter Step Text"
+                                      name="txtStepText"
+                                    />
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="txtStepText"
+                                      >Step Description:</label
+                                    >
+                                    <input
+                                      type="text"
+                                      class="form-control"
+                                      id="txtStepDescription"
+                                      (focusout)="
+                                        setShapeAttribute(
+                                          $event.target.value,
+                                          'stepDescription'
+                                        )
+                                      "
+                                      [value]="
+                                        selectedShape.getAttr('stepDescription')
+                                      "
+                                      placeholder="Enter Step Description"
+                                      name="txtStepDescription"
+                                    />
+                                  </div>
+                                  <!-- <div class="form-group">
+                                                                                <label for="participantRole">{{data.admin.partRole}}:</label>
+                                                                                <select class="form-control" id="participantRole"
+                                                                                    (change)="setParticipantRole($event)" class="custom-select">
+                                                                                    <option value="" selected disabled hidden>
+                                                                                        {{data.admin.partRoleselect}}</option>
+                        
+                                                                                    <option *ngFor="let part of participantsResult"
+                                                                                        value="{{part.Id}}">
+                                                                                        {{ part.Name }} </option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="checklist">{{data.admin.checklist}}:</label>
+                                                                                <button type="button" class="btn"
+                                                                                    (click)="createNewChecklist(true)"><i class="fa fa-plus"
+                                                                                        aria-hidden="true"></i> </button>
+                                                                                <select class="form-control" id="checklist"
+                                                                                    (change)="setChecklistId($event)" class="custom-select">
+                                                                                    <option value="" selected disabled hidden>
+                                                                                        {{data.admin.selectchecklist}}</option>
+                                                                                    <option *ngFor="let chk of checklistResult"
+                                                                                        value="{{chk.Id}}">
+                                                                                        {{ chk.Name + ' - ' +chk.Type }} </option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="form-check">
+                                                                                <input type="checkbox" class="form-check-input" id="chkStarting"
+                                                                                    (click)="SetShapeAttribute(this,'Checkbox','starting')">
+                                                                                <label class="form-check-label"
+                                                                                    for="chkStarting">{{data.admin.start}}</label>
+                                                                            </div>
+                                                                            <div class="form-check">
+                                                                                <input type="checkbox" class="form-check-input"
+                                                                                    id="chkSelfAssign"
+                                                                                    (click)="SetShapeAttribute(this,'Checkbox','selfAssign')">
+                                                                                <label class="form-check-label"
+                                                                                    for="chkSelfAssign">{{data.admin.selfassign}}</label>
+                                                                            </div> -->
+                                </form>
+                              </div>
+                            </div>
+                            <div
+                              class="tab-pane container pt-3"
+                              id="v-pills-caseconfig-tab"
+                            >
+                              <div class="form-container">
+                                <!-- <form>
+                                                                            <div class="form-group">
+                                                                                <label for="txtcurrentstep">{{data.admin.currentStep}}:</label>
+                                                                                <input type="text" class="form-control" id="txtcurrentstep"
+                                                                                    placeholder={{data.admin.currentStepp}}
+                                                                                    name="txtcurrentstep">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="txtnextstep">{{data.admin.avaiNextSteps}}:</label>
+                                                                                <input type="text" class="form-control" id="txtnextstep"
+                                                                                    placeholder={{data.admin.avaiNextStepsp}}
+                                                                                    name="txtnextstep">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="selectDefault">{{data.admin.defaultStep}}:</label>
+                                                                                <select class="form-control" id="selectDefault">
+                                                                                    <option>1</option>
+                                                                                    <option>2</option>
+                                                                                    <option>3</option>
+                                                                                </select>
+                                                                            </div>
+                        
+                                                                            <nav aria-label="Page navigation example">
+                                                                                <ul class="pagination text-right">
+                                                                                    <li class="page-item"><a class="btn btn-info mr-2"
+                                                                                            id="nextpager1" data-toggle="pill"
+                                                                                            href="#v-pills-shapeprop-tab" role="tab"
+                                                                                            aria-controls="v-pills-shapeprop"
+                                                                                            aria-selected="false">Next</a></li>
+                                                                                    <li class="page-item"><a class="btn btn-info" id="previous"
+                                                                                            data-toggle="pill" href="##v-pills-editable-tab"
+                                                                                            role="tab" aria-controls="v-pills-editable"
+                                                                                            aria-selected="false">Previous</a></li>
+                                                                                </ul>
+                                                                            </nav>
+                        
+                                                                        </form> -->
+                              </div>
+                            </div>
+
+                            <div
+                              class="tab-pane container pt-3"
+                              id="v-pills-shapeprop-tab"
+                            >
+                              <div class="form-container">
+                                <!-- <form>
+                                                                            <div class="form-group">
+                                                                                <label for="txtX">X:</label>
+                                                                                <input type="text" class="form-control" id="txtX"
+                                                                                    placeholder="Enter X" name="txtX">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="txtY">Y:</label>
+                                                                                <input type="text" class="form-control" id="txtY"
+                                                                                    placeholder="Enter Y" name="txtY">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="txtRadius">Radius:</label>
+                                                                                <input type="text" class="form-control" id="txtRadius"
+                                                                                    placeholder="Enter Radius" name="txtRadius">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="txtHeight">Height:</label>
+                                                                                <input type="text" class="form-control" id="txtHeight"
+                                                                                    placeholder="Enter Height" name="txtHeight">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="txtWidth">Width:</label>
+                                                                                <input type="text" class="form-control" id="txtWidth"
+                                                                                    placeholder="Enter Width" name="txtWidth">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="txtLabel">Label:</label>
+                                                                                <input type="text" class="form-control" id="txtLabel"
+                                                                                    placeholder="Enter Label" name="txtLabel">
+                                                                            </div>
+                                                                        </form> -->
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <!-- <div class="result mt-4">
+                            <a class="btn btn-info mr-2" (click)="upsertWorkflow()"><i class="fa fa-floppy-o"
+                                    aria-hidden="true"></i>
+                                Save</a>
+                        </div> -->
+      </div>
+    </div>
+  </div>
+</div>
+<!-- </div>
+</div> -->
+
+<ng-template #workflowModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="WF">Workflow Details</h4>
+    <button
+      type="button"
+      class="close"
+      (click)="closeworkflowModal(false)"
+      data-dismiss="modal"
+    >
+      &times;
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row mt-3" id="wfdetails">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="txtworkflowname">Workflow Name:</label>
+          <input
+            type="hidden"
+            id="hdnworkflowId"
+            required
+            [(ngModel)]="saveUpdateWorkflow._id"
+          />
+          <input
+            type="text"
+            class="form-control"
+            id="txtworkflowname"
+            [(ngModel)]="saveUpdateWorkflow.name"
+            placeholder="Enter Workflow Name"
+            name="txtworkflowname"
+          />
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="txtworkflowdescription">Workflow Description::</label>
+          <textarea
+            class="form-control"
+            [(ngModel)]="saveUpdateWorkflow.description"
+            id="txtworkflowdescription"
+            rows="1"
+            placeholder="Enter Workflow Descriptioon"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="selectworkflowtype">Workflow Type:</label>
+          <select
+            class="form-control"
+            id="selectworkflowtype"
+            [(ngModel)]="saveUpdateWorkflow.type"
+          >
+            <option *ngFor="let wt of workflowTypes" value="{{ wt.keyCode }}">
+              {{ wt.key1 }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="selectHeadparticipants">Head Participant:</label>
+          <select
+            class="form-control"
+            id="selectHeadparticipants"
+            [(ngModel)]="saveUpdateWorkflow.headParticipant"
+          >
+            <option *ngFor="let hp of participants" value="{{ hp._id }}">
+              {{ hp.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="selectstatus">Status:</label>
+          <select
+            class="form-control"
+            id="selectstatus"
+            [(ngModel)]="saveUpdateWorkflow.status"
+          >
+            <option *ngFor="let wt of workflowStatus" value="{{ wt.keyCode }}">
+              {{ wt.key1 }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a class="btn btn-info mr-2" (click)="upsertWorkflow()"
+      ><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</a
+    >
+    <button
+      type="button"
+      class="btn btn-white"
+      (click)="closeworkflowModal(false)"
+    >
+      <i class="fa fa-times" aria-hidden="true"></i> Close
+    </button>
+  </div>
+</ng-template>

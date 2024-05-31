@@ -1,0 +1,47 @@
+.fa-plus-square {
+  color: #3d55df;
+}
+.add-hours-action {
+  cursor: pointer;
+  color: #5e72e4 !important;
+}
+.add-hours-action:hover {
+  color: #233dd2 !important;
+}
+li.selected {
+  background-color: #7c0b3c;
+  color: #fff;
+}
+.lounge-features-img {
+  border: 2px solid #555555;
+  padding: 8px;
+}
+
+.table-cell-content {
+  white-space: normal; /* Allow text to wrap within the container */
+  word-wrap: break-word;
+}
+
+.table-cell-text-size {
+  font-size: 13px;
+}
+
+.table-cell-left-align {
+  text-align: left;
+}
+
+.table-cell-left-align {
+  text-align: left;
+}
+
+.input-group .input-group-prepend {
+  margin-right: 5px; /* Adjust the spacing as needed */
+}
+.lighter-warning {
+  background-color: #ffecb3; /* Adjust the color code to your preference */
+  color: #333; /* Text color */
+}
+
+.table-cell-normal-weight {
+  font-weight: normal;
+}

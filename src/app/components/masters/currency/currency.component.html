@@ -1,0 +1,458 @@
+<div
+  class="content-wrapper d-flex"
+  [ngClass]="{ 'sidebar-open': isSidebarOpen }"
+>
+  <div class="sidebar-wrapper">
+    <app-sidebar [(sidebarState)]="isSidebarOpen"></app-sidebar>
+  </div>
+  <div class="main-wrapper pt-3 h-100">
+    <div *ngIf="ExportLoader">
+      <app-loader [message]="exportloaderMessage"></app-loader>
+    </div>
+    <div class="container-fluid h-100">
+      <div class="row h-100">
+        <div class="col-md-12">
+          <div
+            class="property-details-wrapper"
+            style="width: 100%"
+            *ngIf="!showCurrencyDetails && !addCurrencyDetails && !showImport"
+          >
+            <div class="row">
+              <div class="col-md-6">
+                <p class="main-heading">
+                  <span
+                    >{{
+                      data
+                        ? data.master.currency.txtHeading
+                        : "Currency Exchange"
+                    }}: </span
+                  >{{
+                    data
+                      ? data.master.currency.txtDes
+                      : "View Currency Exchange in System."
+                  }}
+                </p>
+              </div>
+              <div class="col-md-6 text-right">
+                <a
+                  href="javascript:void(0)"
+                  mat-raised-button
+                  (click)="exportReport('Currency')"
+                  style="line-height: 25px !important"
+                  class="btn btn-info"
+                  ><i class="fa fa-file-text-o" aria-hidden="true"></i>
+                  {{ data ? data.buttons.export : "Export" }}</a
+                >
+                <a
+                  (click)="showImportScreen()"
+                  class="btn btn-success text-white mr-2"
+                  ><i class="fa fa-upload" aria-hidden="true"></i
+                  >{{ data ? data.buttons.import : "Import" }}</a
+                >
+                <a class="btn btn-info" (click)="addNewCurrency(true)"
+                  ><i class="fa fa-plus" aria-hidden="true"></i>
+                  {{ data ? data.buttons.new : "New" }}</a
+                >
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="search-wrapper">
+                  <!-- Simple Search -->
+                  <div class="search-product">
+                    <div class="search_main">
+                      <div class="search-input">
+                        <span
+                          ><i class="fa fa-search" aria-hidden="true"></i
+                        ></span>
+                        <input
+                          type="search"
+                          [(ngModel)]="simpleSearch"
+                          (keyup.enter)="
+                            simpleSearchCurrencyData($event.target.value)
+                          "
+                        />
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>{{
+                          data
+                            ? data.master.currency.searchCurrency
+                            : "Search Currency"
+                        }}</label>
+                        <span
+                          ><i
+                            (click)="getCurrencyData()"
+                            class="fa fa-times"
+                            aria-hidden="true"
+                          ></i
+                        ></span>
+                        <span (click)="showQueryForm()" class="dropdown-form"
+                          ><i class="fa fa-sort-desc" aria-hidden="true"></i
+                        ></span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Advance search query form -->
+
+                  <div id="query1" class="query1" *ngIf="showData">
+                    <div class="form-container">
+                      <form>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="name1"
+                                >{{
+                                  data ? data.master.currency.name : "Name"
+                                }}:</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="name1"
+                                placeholder="{{
+                                  data
+                                    ? data.master.currency.enterCurrencyName
+                                    : 'Enter Currency Name'
+                                }}"
+                                name="name1"
+                                [(ngModel)]="name"
+                              />
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="currencyCode1"
+                                >{{
+                                  data
+                                    ? data.master.currency.currencyCode
+                                    : "Currency Code"
+                                }}:</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="currencyCode1"
+                                placeholder="{{
+                                  data
+                                    ? data.master.currency.enterCurrencyCode
+                                    : 'Enter Currency Code'
+                                }}"
+                                name="currencyCode1"
+                                [(ngModel)]="currencyCode"
+                              />
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="Value1"
+                                >{{
+                                  data
+                                    ? data.master.currency.value
+                                    : "Currency Value wrt INR"
+                                }}:</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="value1"
+                                placeholder="{{
+                                  data
+                                    ? data.master.currency.enterCurrencyValue
+                                    : 'Enter Currency Value wrt INR'
+                                }}"
+                                name="Value1"
+                                [(ngModel)]="value"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div class="query-btn">
+                          <a
+                            class="btn btn-secondary"
+                            (click)="resetCurrencyData()"
+                            ><i class="fa fa-history" aria-hidden="true"></i>
+                            {{ data ? data.buttons.reset : "Reset" }}</a
+                          >
+                          <a
+                            class="btn btn-info"
+                            (click)="advanceCurrencyDataSearch()"
+                            ><i class="fa fa-search" aria-hidden="true"></i>
+                            {{ data ? data.buttons.search : "Search" }}</a
+                          >
+                          <a class="btn btn-danger" (click)="showQueryForm()"
+                            ><i class="fa fa-close" aria-hidden="true"></i>
+                            {{ data ? data.admission.close : "Close" }}</a
+                          >
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Data Table -->
+                <div class="property-table-wrapper" style="width: 100%">
+                  <div class="table-responsive">
+                    <table
+                      mat-table
+                      [dataSource]="dataSourceCurrency"
+                      matTableExporter
+                      #exporter="matTableExporter"
+                      [hiddenColumns]="[4]"
+                      class="mat-elevation-z8"
+                      matSort
+                    >
+                      <!-- <ng-container matColumnDef="_id">
+                                        <th mat-header-cell *matHeaderCellDef> Partner Id </th>
+                                        <td mat-cell *matCellDef="let element"> {{element._id}} </td>
+                                    </ng-container> -->
+                      <ng-container matColumnDef="name">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data ? data.master.currency.name : "Currency Name"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.currencyName }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="currencyCode">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data
+                              ? data.master.currency.currencyCode
+                              : "Currency Code"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.currencyCode }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="value">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data ? data.master.currency.value : "Currency Value"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.currencyValue }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="respectTo">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data ? data.master.currency.respectTo : "Respect To"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.respectTo }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="action">
+                        <th
+                          mat-header-cell
+                          *matHeaderCellDef
+                          style="text-align: center"
+                        >
+                          {{ data ? data.master.currency.action : "Action" }}
+                        </th>
+                        <td
+                          mat-cell
+                          *matCellDef="let element; let i = index"
+                          style="text-align: center"
+                        >
+                          <i
+                            class="fa fa-pencil mr-3 mr-lg-4"
+                            aria-hidden="true"
+                            (click)="fetchCurrencyById(element._id)"
+                          ></i>
+                        </td>
+                      </ng-container>
+
+                      <tr
+                        mat-header-row
+                        *matHeaderRowDef="displayedColumns"
+                      ></tr>
+                      <tr
+                        mat-row
+                        (dblclick)="fetchCurrencyById(row._id)"
+                        *matRowDef="
+                          let row;
+                          columns: displayedColumns;
+                          let i = index
+                        "
+                      ></tr>
+
+                      <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell">No data Found!</td>
+                      </tr>
+                    </table>
+                  </div>
+                  <mat-paginator
+                    [pageSizeOptions]="[10, 25, 50, 100]"
+                    aria-label="Select page of users"
+                  >
+                  </mat-paginator>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Add/Edit currency -->
+          <div
+            class="new-property-wrapper"
+            *ngIf="showCurrencyDetails || (addCurrencyDetails && !showImport)"
+          >
+            <p class="main-heading">
+              <span
+                >{{
+                  addCurrencyDetails
+                    ? data
+                      ? data.master.currency.addCurrencyHeading
+                      : "Add New Currency"
+                    : showCurrencyDetails
+                    ? data
+                      ? data.master.currency.editCurrencyHeading
+                      : "Edit Currency Details"
+                    : ""
+                }}:
+              </span>
+              {{
+                addCurrencyDetails
+                  ? data
+                    ? data.master.currency.addCurrencyDes
+                    : "Fill up the following details"
+                  : showCurrencyDetails
+                  ? data
+                    ? data.master.currency.editCurrencyDes
+                    : "Edit details as per the requirement"
+                  : ""
+              }}.
+              <span
+                (click)="hideCurrencyDetails()"
+                class="close1"
+                data-toggle="tooltip"
+                title="Close"
+                >X</span
+              >
+            </p>
+            <form>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group position-relative">
+                    <label for="name"
+                      >{{ data ? data.master.currency.name : "Currency Name"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="name"
+                      placeholder="{{
+                        data
+                          ? data.master.currency.enterCurrencyName
+                          : 'Enter Currency Name'
+                      }}"
+                      name="name"
+                      [(ngModel)]="name"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="currencyCode"
+                      >{{
+                        data
+                          ? data.master.currency.currencyCode
+                          : "Currency Code"
+                      }}
+                      <span class="asterisk">*</span>:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="currencyCode"
+                      placeholder="{{
+                        data
+                          ? data.master.currency.enterCurrencyCode
+                          : 'Enter Currency Code'
+                      }}"
+                      name="currencyCode"
+                      [(ngModel)]="currencyCode"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row align-items-center">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="value"
+                      >{{
+                        data ? data.master.currency.value : "Currency Value "
+                      }}
+                      <span class="asterisk">*</span>:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="value"
+                      placeholder="{{
+                        data
+                          ? data.master.currency.enterCurrencyValue
+                          : 'Enter Currency Value wrt INR'
+                      }}"
+                      name="value"
+                      [(ngModel)]="value"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="respectTo">
+                      {{
+                        data ? data.master.currency.respectTo : "Respect To "
+                      }}
+                      <span class="asterisk">*</span>:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="respectTo"
+                      placeholder="{{
+                        data
+                          ? data.master.currency.enterrespectTo
+                          : 'Enter Respect To'
+                      }}"
+                      name="respectTo"
+                      [(ngModel)]="respectTo"
+                    />
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div class="result mt-4">
+              <a class="btn btn-secondary mr-2" (click)="resetCurrencyData()"
+                ><i class="fa fa-history" aria-hidden="true"></i
+                >{{ data ? data.buttons.reset : "Reset" }}</a
+              >
+              <a class="btn btn-info mr-2" (click)="saveCurrencyDetails()">
+                <i class="fa fa-check" aria-hidden="true"></i
+                >{{ data ? data.buttons.save : "Save" }}</a
+              >
+            </div>
+          </div>
+
+          <div *ngIf="showImport && !showCurrencyDetails">
+            <app-import-data
+              [showNavBar]="false"
+              [showLeftMenu]="false"
+              [validator]="importValidator"
+              (importClose)="backToResults()"
+            ></app-import-data>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

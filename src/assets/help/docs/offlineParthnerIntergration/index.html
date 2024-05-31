@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+
+  <title>Offline Partner Integration - PPG LMS Documentation</title>
+  
+  <link
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+    crossorigin="anonymous"
+  />
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="../../assets/css/just-the-docs.css"
+  />
+  <!--Different Browser icon for All Devices -->
+  <link
+    href="../../assets/images/fav_icon.ico"
+    rel="icon"
+    type="image/x-icon"
+  />
+  <!--IE Browser icon for All Devices -->
+  <link
+    href="../../assets/images/fav_icon.ico"
+    rel="shortcut icon"
+    type="image/x-icon"
+  />
+  <!--Icon for Devices -->
+  <link
+    href="../../assets/images/fav_icon.ico"
+    rel="apple-touch-icon"
+  />
+  <!--Icon for Devices -->
+  <link
+    href="../../assets/images/fav_icon.ico"
+    rel="apple-touch-icon-precomposed"
+  />
+
+  <script
+    type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"
+  ></script>
+  <script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"
+  ></script>
+  
+  <script
+    type="text/javascript"
+    src="../../assets/js/vendor/lunr.min.js"
+  ></script>
+  
+
+  <script
+    type="text/javascript"
+    src="../../assets/js/just-the-docs.js"
+  ></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+
+<body>
+  <div class="page-wrap">
+    <div class="side-bar">
+      <div class="site-header">
+        <a href="../.." class="site-title lh-tight">PPG LMS</a>
+        <button class="menu-button fs-3 js-main-nav-trigger" data-text-toggle="Hide" type="button">Menu</button>
+      </div>
+
+      <div class="navigation main-nav js-main-nav">
+        <nav role="navigation" aria-label="Main navigation">
+          <ul class="navigation-list"><li
+              class="navigation-list-item"
+            ><a
+                href="../../index.html"
+                class="navigation-list-link "
+                >Getting Started</a
+              ></li><li
+              class="navigation-list-item "
+            ><a
+                href="../../docs/overview/index.html"
+                class="navigation-list-link"
+                >Overview</a
+              ></li><li
+              class="navigation-list-item"
+            ><a
+                href="../../docs/newLmsUserSetup/index.html"
+                class="navigation-list-link"
+                >New LMS User Setup</a
+              ></li><li
+              class="navigation-list-item"
+            ><a
+                href="../../docs/setUpNewAdmissionToken/index.html"
+                class="navigation-list-link"
+                >Setup New Admission Token</a
+              ></li><li
+              class="navigation-list-item"
+            ><a
+                href="../../docs/guestAdmission/index.html"
+                class="navigation-list-link"
+                >Guest Admission</a
+              ></li><li
+              class="navigation-list-item"
+            ><a
+                href="../../docs/offlineParthnerIntergration/index.html"
+                class="navigation-list-link active"
+                >Offline Partner Integration</a
+              ></li><li
+              class="navigation-list-item active"
+            ><a
+                href="../../docs/securityMatrix/index.html"
+                class="navigation-list-link"
+                >Security matrix</a
+              ></li><li
+              class="navigation-list-item"
+            ><a
+                href="../../docs/API%20Documentation/index.html"
+                class="navigation-list-link"
+                >API Documentation</a
+              ><ul class="navigation-list-child-list"><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/login/index.html"
+                    class="navigation-list-link"
+                    >Login</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/profile/index.html"
+                    class="navigation-list-link"
+                    >Profile</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/changePassword/index.html"
+                    class="navigation-list-link"
+                    >Change Password</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/certificateList/index.html"
+                    class="navigation-list-link"
+                    >Certificate List</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/cardSave/index.html"
+                    class="navigation-list-link"
+                    >Card Save</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/verifyToken/index.html"
+                    class="navigation-list-link"
+                    >Verify Token</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/boardingPassScan/index.html"
+                    class="navigation-list-link"
+                    >Boarding Pass Scan</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/boardingPassSave/index.html"
+                    class="navigation-list-link"
+                    >Boarding Pass Save</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/boardingPassId/index.html"
+                    class="navigation-list-link"
+                    >Boarding Pass ID</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/corporateTokens/index.html"
+                    class="navigation-list-link"
+                    >Corporates Token</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/corporates/index.html"
+                    class="navigation-list-link"
+                    >Corporates</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/redeemCoupon/index.html"
+                    class="navigation-list-link"
+                    >Redeem Coupon</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getFacilities/index.html"
+                    class="navigation-list-link"
+                    >Get Facilities</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getProducts/index.html"
+                    class="navigation-list-link"
+                    >Get Products</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getOrders/index.html"
+                    class="navigation-list-link"
+                    >Get Orders</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getOutlets/index.html"
+                    class="navigation-list-link"
+                    >Get Outlets</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getEntitlements/index.html"
+                    class="navigation-list-link"
+                    >Get Entitlements</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getadmissions/index.html"
+                    class="navigation-list-link"
+                    >Get Admissions</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/blackListedToken/index.html"
+                    class="navigation-list-link"
+                    >Blacklisted Token</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/whitelistedToken/index.html"
+                    class="navigation-list-link"
+                    >Whitelisted Token</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/mapOutlets/index.html"
+                    class="navigation-list-link"
+                    >Map Outlets</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/mapProducts/index.html"
+                    class="navigation-list-link"
+                    >Map Products</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getToken/index.html"
+                    class="navigation-list-link"
+                    >Get Token</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getCouponCode/index.html"
+                    class="navigation-list-link"
+                    >Coupon Code</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getCouponDetails/index.html"
+                    class="navigation-list-link"
+                    >Coupon Details</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/cancelCoupon/index.html"
+                    class="navigation-list-link"
+                    >Cancel Coupon</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/redeemToken/index.html"
+                    class="navigation-list-link"
+                    >Redeem Token</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/updateCoupon/index.html"
+                    class="navigation-list-link"
+                    >Update Coupon</a
+                  ></li></ul></li><li
+              class="navigation-list-item"
+            ><a
+                href="../../docs/LMSprocessflowdiadram/index.html"
+                class="navigation-list-link"
+                >LMS Process Flow Diagram</a
+              ></li><li
+              class="navigation-list-item"
+            ><a
+                href="../../docs/features/index.html"
+                class="navigation-list-link"
+                >Features</a
+              ><ul class="navigation-list-child-list"><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/dashboard/index.html"
+                    class="navigation-list-link"
+                    >Dashboard</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/admissions/index.html"
+                    class="navigation-list-link"
+                    >Admissions</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/orders/index.html"
+                    class="navigation-list-link"
+                    >Orders</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/GenerateCoupons/index.html"
+                    class="navigation-list-link"
+                    >Generate Coupons</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/partnerResponse/index.html"
+                    class="navigation-list-link"
+                    >Partner Responses</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/fileImportExport/index.html"
+                    class="navigation-list-link"
+                    >File Import/Export</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/partner/index.html"
+                    class="navigation-list-link"
+                    >Partner</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/outlet/index.html"
+                    class="navigation-list-link"
+                    >Outlet</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/product/index.html"
+                    class="navigation-list-link"
+                    >Product</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/admissionToken/index.html"
+                    class="navigation-list-link"
+                    >Admission Token</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/partnerContract/index.html"
+                    class="navigation-list-link"
+                    >Partner Contract</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/airport/index.html"
+                    class="navigation-list-link"
+                    >Port/Station</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/users/index.html"
+                    class="navigation-list-link"
+                    >Users</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/members/index.html"
+                    class="navigation-list-link"
+                    >Members</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/devices/index.html"
+                    class="navigation-list-link"
+                    >Devices</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/vendor/index.html"
+                    class="navigation-list-link"
+                    >Vendor</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/tax/index.html"
+                    class="navigation-list-link"
+                    >Tax</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/country/index.html"
+                    class="navigation-list-link"
+                    >Country</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/pincode/index.html"
+                    class="navigation-list-link"
+                    >Pincode</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/receiptTemplate/index.html"
+                    class="navigation-list-link"
+                    >Recipt Template</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/token/index.html"
+                    class="navigation-list-link"
+                    >Token</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/module/index.html"
+                    class="navigation-list-link"
+                    >Module</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/action/index.html"
+                    class="navigation-list-link"
+                    >Action</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/role/index.html"
+                    class="navigation-list-link"
+                    >Role</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/globalSettings/index.html"
+                    class="navigation-list-link"
+                    >Global Settings</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/AdmissionPOS/index.html"
+                    class="navigation-list-link"
+                    >Admission POS</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/DMR/index.html"
+                    class="navigation-list-link"
+                    >DMR</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/AdmissionflowsviaSunmiDevice/index.html"
+                    class="navigation-list-link"
+                    >Admission flows via Sunmi Device</a
+                  ></li></ul></li><li
+              class="navigation-list-item "
+            ><a
+                href="../../docs/ReleaseLogs/index.html"
+                class="navigation-list-link"
+                >Release Logs</a
+              ><ul class="navigation-list-child-list"><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/FirstRelease/index.html"
+                    class="navigation-list-link"
+                    >Release Notes - Build 1.1.23.01-07</a
+                  ></li></ul></li></ul>
+        </nav>
+
+      </div>
+      <!-- <footer class="site-footer">
+        <p class="text-small text-grey-dk-000 mb-4">This site is created by <a href="#">C Simplify IT</a>, for Samvad.</p>
+      </footer> -->
+    </div>
+    <div class="main-content-wrap js-main-content" tabindex="0">
+      <div class="main-content">
+        <div class="page-header js-page-header">
+          
+          <div class="search">
+            <div class="search-input-wrap">
+              <input type="text" class="js-search-input search-input" tabindex="0" placeholder="Search PPG LMS Documentation" aria-label="Search PPG LMS Documentation" autocomplete="off">
+              <svg width="14" height="14" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" class="search-icon"><title>Search</title><g fill-rule="nonzero"><path d="M17.332 20.735c-5.537 0-10-4.6-10-10.247 0-5.646 4.463-10.247 10-10.247 5.536 0 10 4.601 10 10.247s-4.464 10.247-10 10.247zm0-4c3.3 0 6-2.783 6-6.247 0-3.463-2.7-6.247-6-6.247s-6 2.784-6 6.247c0 3.464 2.7 6.247 6 6.247z"/><path d="M11.672 13.791L.192 25.271 3.02 28.1 14.5 16.62z"/></g></svg>
+            </div>
+            <div class="js-search-results search-results-wrap"></div>
+          </div>
+          
+        </div>
+        <div class="page">
+          <div id="main-content" class="page-content" role="main">
+          <h1>
+  <strong> Offline File based Integration with Partners</strong>
+</h1>
+<img
+  src="../../assets/images/intergration-flow.jpg"
+  alt="Offline File based Integration with Partners Flow imgae"
+  width="100%"
+/>
+<p>
+  If a new Partner wants to share files for Integration, the same is conveyed to the admin and the
+following process is followed.
+</p>
+<ul>
+  <li>
+    Admin (outside LMS ) set up FTP Server Access for that partner and share the
+    same to the partner.
+  </li>
+  <li>LMS admin creates new partner in the LMS</li>
+  <li>
+    Partner Settings are done for the file shared by partner which are described below in detail
+  </li>
+  <li>Partner Admission Instruction(AI)/ Admission Instruction is defined.</li>
+  <li>A Partner Contract is set up for the Admission Instructions.</li>
+  <li>File Integration is used in the Admissions Process.</li>
+</ul>
+ 
+ 
+<h2>Partner Settings</h2>
+<p>
+  Partner settings depend on the file type (i.e.) Inbound and Outbound, also each setting contains
+  different key values explained below.
+</p>
+<ul>
+  <li>
+    <strong>● Process File Type - </strong>It defines which file types will be
+    processed for a particular partner. File can be of following types.
+    <ul>
+      <li>Whitelisting File (WL)</li>
+      <li>Blacklisting File (BL)</li>
+      <li>Outbound File (OUT)</li>
+    </ul>
+  </li>
+  <p>
+    This setting is named Process_File_type and under this we set key1 to
+    declare the file types.
+  </p>
+  <table class="table-bordered"
+>
+    <tr>
+      <th>Setting Name</th>
+      <th>Key1</th>
+      <th>Key2</th>
+      <th>Key3</th>
+      <th>Key4</th>
+      <th>Key5</th>
+    </tr>
+    <tr>
+      <td><strong> Process_File_type </strong></td>
+      <td>WL,BL, OUT</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </table>
+  <p>
+    <strong> How to set Keys? </strong>
+  </p>
+  <p>
+    Key1 will be set with the comma separated abbreviations for file type, like
+    if for a particular partner integration only whitelisting file and outbound
+    file are there, then key1 will be set to WL, OUT.
+  </p>
+  <p>Key2, Key3, Key4, Key5 are left blank or set as N/A.</p>
+</ul>
+<br />
+<h3> <strong><u>Inbound Partner Settings</u></strong></h3>
+<br />
+<ul>
+  <li>
+    <strong> Parsing Implementation Class - </strong>This setting is about implementation details of the given file,
+    which can be of two types
+    <ul>
+      <li>
+        <strong>Comma Separated Values (CSV) - </strong>It is a plain text file that contains a list of data
+        which is separated by either comma or tab space.
+       
+      </li>
+      <li>
+        <strong>Fixed Width (Flat File) - </strong>- It is a plain text file where each field value is the same width
+        and padded with spaces. It is much easier to read than CSV files but takes up more
+        space than CSV.
+      </li>
+    </ul>
+  </li>
+  <p>
+    Setting named Parsing_Impl_Class_{process_file_type} is used to parse implementation
+class and key1, key2 are set to implement this.
+  </p>
+  <table class="table-bordered"
+>
+    <tr>
+      <th>Setting Name</th>
+      <th>Key1</th>
+      <th>Key2</th>
+      <th>Key3</th>
+      <th>Key4</th>
+      <th>Key5</th>
+    </tr>
+    <tr>
+      <td><strong> Parsing_Impl_C
+        lass_{process_
+        file_type}
+         </strong></td>
+      <td>csvImportService /
+        fixedLengthImportS
+        ervice</td>
+      <td>tabBasedSplitter /
+        commaBasedSplitter</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </table>
+  <p>
+    <strong> How to set Setting Name? </strong>
+  </p>
+  <p>
+    Parsing_Impl_Class_{process_file_type} will be Parsing_Impl_Class_WL if the
+    Processing file type is Whitelisting File, similarly Parsing_Impl_Class_BL for
+    blacklisting file.
+  </p>
+  <p>
+    <strong> How to set Keys? </strong>
+  </p>
+  <p>
+    Key1 - csvImportService( If the Implementation class is CSV) <br/>
+    fixedimportService ( If the Implementation class is Fixed Width)
+  </p>
+  <p>
+    Key2 - Is set only if Key1 is csvImportService and in this case Key2 defines whether
+    the data will be comma separated (commaBasedSplitter) or tab separated
+    (tabBasedSplitter) and in case of fixedimportService key2 will be empty.
+    If the file is comma separated CSV then also key2 can be left blank.
+  </p>
+  <p>Key3, key4 , key5 left blank or N/A.</p>
+  <li>
+    <strong>SFTP Details - </strong>SFTP details are provided under this setting as
+  </li>
+  <table class="table-bordered"
+>
+    <tr>
+      <th>Setting Name</th>
+      <th>Key1</th>
+      <th>Key2</th>
+      <th>Key3</th>
+      <th>Key4</th>
+      <th>Key5</th>
+    </tr>
+    <tr>
+      <td><strong> SFTPDetail_{proce
+        ss_file_type} </strong></td>
+      <td>sftp_path </td>
+      <td>hostname</td>
+      <td>username</td>
+      <td>encrypted password</td>
+      <td></td>
+    </tr>
+  </table>
+  <p>
+    <strong> How to set Setting Name? </strong>
+  </p>
+  <p>
+    Setting name will be processed the same as mentioned in case of
+    Parsing_Impl_Class like SFTPDetail_{process_file_type} is SFTPDetail_WL for
+    whitelisting files and likewise for others.
+  </p>
+  <p>
+    <strong> How to set Keys? </strong>
+  </p>
+  <p>
+    Key1 holds SFTP path like for example <br />
+    /offline/inbound/SBIN_WL/
+  </p>
+  <p>This path will point to the folder where the file will be uploaded by the partner.</p>
+  <p>key2 holds the hostname,</p>
+  <p>key3 holds username</p>
+  <p>
+    key4 holds the encrypted password. Encryption is done using
+    DESEDE_ENCRYPTION_SCHEME.    
+  </p>
+  <p>Key5 left blank</p>
+ 
+  <li>
+    <strong>SFTP File Type - </strong>this setting is about the file format and their encryption/decryption details
+    as
+  </li>
+ 
+  <table class="table-bordered"
+>
+    <tr>
+      <th>Setting Name</th>
+      <th>Key1</th>
+      <th>Key2</th>
+      <th>Key3</th>
+      <th>Key4</th>
+      <th>Key5</th>
+    </tr>
+    <tr>
+      <td><strong> SFTP_File_type_{
+        process_file_type}
+         </strong></td>
+      <td>gpg/zip</td>
+      <td>Public_key / private_key</td>
+      <td>encrypted password</td>
+      <td>txt</td>
+      <td>fileExtentionExist</td>
+    </tr>
+  </table>
+  <p>
+    <strong> How to set Setting Name? </strong>
+  </p>
+  <p>
+    Same as for above settings
+  </p>
+  <p>
+    <strong> How to set Keys? </strong>
+  </p>
+  <p>
+    Key1 - It describes the extension of the encrypted file that can be either .gpg file or
+    .zip file
+  </p>
+  <p>Key2 - It is set with the private key / public key name</p>
+  <p>
+    Key3 - It contains the encryption password. Encryption is done using
+    DESEDE_ENCRYPTION_SCHEME.
+   
+  </p>
+  <p>Key4 - contains the extension of the file </p>
+  <p>
+    Key5 - It is set to either fileExtensionExist or fileExtentionNotExist. if it is fileExtensionExist then the key4 data is taken into consideration else not
+<br />
+Example - suppose there is a file name ABA_PPL_IN_20220412.txt.gpg, in this
+case key4 is set as txt and key5 is set as fileextensionexist but in case of file
+ABBPPRLP-20220411.gpg, key4, key5 are set to either blank or N/A.
+  </p>
+  <li>
+    <strong>Data Ingestion Webhook </strong>- A webhook is a way for one application to deliver data to
+    another app in real-time. This setting define Webhook for each card detail which is
+    inserted
+  </li>
+  <table class="table-bordered"
+>
+    <tr>
+      <th>Setting Name</th>
+      <th>Key1</th>
+      <th>Key2</th>
+      <th>Key3</th>
+      <th>Key4</th>
+      <th>Key5</th>
+    </tr>
+    <tr>
+      <td><strong>Data_Ingestion_Webhook_
+        {process_file_type}
+         </strong></td>
+      <td>webhook_url </td>
+      <td>0</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </table>
+  <p>
+    <strong> How to set Setting Name? </strong>
+  </p>
+  <p>
+    Same as for above settings.
+  </p>
+  <p>
+    <strong> How to set Keys? </strong>
+  </p>
+  <p>Set the URL under Key1 and set key2 as 0 because currently the system is not
+    reading data from any webhook.</p>
+
+  <li>
+    <strong>PostData Ingestion Webhook- </strong>This setting defines Webhook where the ingested data
+    will show
+  </li>
+
+  <table class="table-bordered"
+>
+    <tr>
+      <th>Setting Name</th>
+      <th>Key1</th>
+      <th>Key2</th>
+      <th>Key3</th>
+      <th>Key4</th>
+      <th>Key5</th>
+    </tr>
+    <tr>
+      <td><strong>Postdata_Ingestion_Web
+        hook_{process_file_type}
+         </strong></td>
+      <td>webhook_url </td>
+      <td>1</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </table>
+  <p>
+    <strong> How to set Setting Name? </strong>
+  </p>
+  <p>
+    Same as for above settings
+  </p>
+ 
+  <p>
+    <strong> How to set Keys? </strong>
+  </p>
+  <p>Set the URL under Key1 and set key2 as 1
+  </p>
+ 
+  <li>
+    <strong>Header - </strong>This setting is about header information, if it exists or not and the values passed
+    to it, length of the data size, padding and all.
+   
+  </li>
+  <table class="table-bordered"
+>
+    <tr>
+      <th>Setting Name</th>
+      <th>Key1</th>
+      <th>Key2</th>
+      <th>Key3</th>
+      <th>Key4</th>
+      <th>Key5</th>
+    </tr>
+    <tr>
+      <td><strong>IsHeaderAvailable_{pro
+        cess_file_type}
+         </strong></td>
+      <td>YES/NO</td>
+      <td>Titles</td>
+      <td>any number</td>
+      <td>left/right</td>
+      <td>space /tab</td>
+    </tr>
+  </table>
+  <p>
+    <strong> How to set Setting Name? </strong>
+  </p>
+  <p>
+    Same as for above settings
+ 
+  </p>
+  <p>
+    <strong> How to set Keys? </strong>
+  </p>
+  <p>
+    Key1 - defines whether header will be shown in file or not. It is set to either Yes or
+    No.
+   
+  </p>
+  <p>
+    Key2 - Defines the header values separated by comma/tab for csv file type and
+    fixed spaces for fixed length file type
+   <br />
+   Example- Sno,IssuingRegion,Region,Airport,Outlet,Client_Type,Client_Name,Account_Nam
+e,Card_Name,Receipt_Number,Quota_Config,Transaction_Date,Transaction_Tim
+e,Customer_Name,CardNumber,Service_Location,Service_Item    
+  </p>
+  <p>
+    Key3 - data size used in case of fixed length (can be any number depending on
+    how many characters are needed to show)
+  </p>
+  <p>Key4 - defines whether padding will be provided on the left or right.</p>
+  <p>Key5 - defines whether the space will be filled by tabs or spaces.</p>
+  <p>Key3, key4, key5 are set only for fixed length file case or tab splitted CSV file
+    and if key1 is set no, key2, key3, key4, key5 will be left blank.</p>
+  <li>
+    <strong>Parsing Rule Json - </strong> It sets up the rules for data validation. The file gets parsed only if it
+    passes these rules, and these rules may be different for each partner.
+  </li>
+  <table class="table-bordered"
+>
+    <tr>
+      <th>Setting Name</th>
+      <th>Key1</th>
+      <th>Key2</th>
+      <th>Key3</th>
+      <th>Key4</th>
+      <th>Key5</th>
+    </tr>
+    <tr>
+      <td><strong> Parsing_Rule_Json
+        _{process_file_type
+        }
+         </strong></td>
+      <td>Parsing_Rule_Json </td>
+      <td>Key_mapping</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </table>
+  <p>
+    <strong> How to set Setting Name? </strong>
+  </p>
+  <p>
+    Same as for above settings
+  </p>
+  <p>
+    <strong> How to set Keys? </strong>
+  </p>
+  <p>
+    Key1 is set with json code. Sample is shown below
+    <pre>
+      {
+        {
+          "$schema": "http://json-schema.org/draft-04/schema#",
+          "title": "Product",
+          "description": "A product from the catalog",
+          "type": "object",
+          "properties": {
+          "STARTDATE": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+          },
+          "CARDNUMBER": {
+          "type": "string",
+          "minLength": 16,
+          "maxLength": 16
+          },
+          "OldCardNumber": {
+          "type": "string",
+          "minLength": 16,
+          "maxLength": 16
+          },
+          "VALIDTILL": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+          },
+          "SQ": {
+          "type": "string"
+          }
+          },
+          "required": ["STARTDATE", "CARDNUMBER", "VALIDTILL"]
+         }
+       
+ 
+    </pre>
+    All the data under the partner file should validate wrt the properties defined in this
+    Parsing_Rule_Json. Like if data under CARDNUMBER in the file doesn’t have the
+    string data type and minLength=maxLength = 16, data validation will be failed and
+    the file will not get parsed. So, the data types, patterns, datalength and some other
+    properties are defined under this which are mandatory to pass.
+  </p>
+  <p>
+    Key2 - This key maps the header name to the database key, like below is the
+example
+ 
+  <pre>
+    {
+      "CARDHOLDER_NO": "CARDNUMBER",
+      "No of Access":"NO_OF_ACCESS"
+      }
+     
+     
+  </pre>
+  Here, CARDNUMBER will be mapped to the CARDHOLDER_NO in database
+  </p>
+  <li>
+    <strong> PARTNER_MASK - </strong>This setting is all about the masking pattern of the card number for a
+    particular partner
+  </li>
+  <table class="table-bordered"
+>
+    <tr>
+      <th>Setting Name</th>
+      <th>Key1</th>
+      <th>Key2</th>
+      <th>Key3</th>
+      <th>Key4</th>
+      <th>Key5</th>
+    </tr>
+    <tr>
+      <td><strong> PARTNER_MASK
+         </strong></td>
+      <td>1111110000111111
+      </td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </table>
+  <p>
+    <strong> How to set Setting Name? </strong>
+  </p>
+  <p>
+    Set key1 as the mask pattern like suppose a partner allows 6F6L pattern then the
+    partner mask will be 1111110000111111 for a 16 digit card number.
+    Key2, key3, key4, key5 are left blank or N/A.
+  </p>
+ 
+  <li>
+    <strong>ONLY_WHITELISTED_ALLOWED - </strong>If this is set as &lsquo;true&rsquo;&nbsp; under key1, then the cards that
+    fall under valid period as per the whitelisting file are allowed for admission. If the validity
+    period expires for a particular card as per the ingested whitelisting file and a customer
+    seeks admission on the card, he/she will not be allowed.
+   
+  </li>
+  <table class="table-bordered"
+>
+    <tr>
+      <th>Setting Name</th>
+      <th>Key1</th>
+      <th>Key2</th>
+      <th>Key3</th>
+      <th>Key4</th>
+      <th>Key5</th>
+    </tr>
+    <tr>
+      <td><strong> ONLY_WHITELISTED
+        _ALLOWED
+         </strong></td>
+      <td>true
+      </td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </table>
+ 
+</ul>
+<br />
+<h3> <strong><u>Outbound Partner Settings</u></strong></h3>
+<br />
+<ul>
+  <li>
+    <strong> File Frequency - </strong>It defines file regeneration cycle duration and next scheduled date. Setup
+    as below
+  </li>
+  <table class="table-bordered"
+>
+    <tr>
+      <th>Setting Name</th>
+      <th>Key1</th>
+      <th>Key2</th>
+      <th>Key3</th>
+      <th>Key4</th>
+      <th>Key5</th>
+    </tr>
+    <tr>
+      <td><strong> File_Frequency_{Proc
+        ess_File_type}
+             </strong></td>
+      <td>30 / 12 </td>
+      <td>9/8/2022 0:00:00  </td>
+      <td> 9/7/2022
+        0:00:00 </td>
+      <td>1 / 2</td>
+      <td></td>
+    </tr>
+  </table>
+  <p>
+    <strong> How to set Setting Name? </strong>
+  </p>
+  <p>
+    File_Frequency_{Process_File_type} will be File_Frequency_OUT for this case.
+  </p>
+  <p>
+    <strong> How to set Keys? </strong>
+  </p>
+  <p>
+    Key1 - shows the number of days or months based on the Key4 and basically set
+    as a cycle period. If key4 is set 1 that means Key1 contains the number of days and
+    if key4 is set 2 that means key1 contains number of days.
+   
+ 
+  </p>
+  <p>
+    Key2 - This key is set with the next scheduled datetime.
+ 
+ 
+  </p>
+  <p>Key3 - This key shows Last Run datetime.
+ 
+  </p>
+    <p>
+     
+      Key4 - as mentioned under Key1 it signifies that what type of data value is set in
+      key1</p>
+      <p>Key5 - Left blank</p>
+    <li>
+      <strong> Parsing Implementation Class </strong> [Parsing_Impl_Class_{process_file_type}] - This is same as explained in Inbound Case. We need to set Key1 as csvExportService if the file that is exported is csv type or excelExportService if the file exported is of excel type.
+      <ul>
+        <li>
+          <strong>SFTP Details  </strong> [SFTPDetail_{process_file_type}] - This is same as explained in Inbound Case
+        </li>
+        <li>
+          <strong>SFTP File Type  </strong> [SFTP_File_type_{process_file_type}]- This is set same as explained in
+          Inbound Case
+        </li>
+        <li>
+          <strong>Data Ingestion Webhook  </strong>  [Data_Ingestion_Webhook_{process_file_type}] - This is same
+          as explained in inbound, key2 is set as 0 for outbound case.
+        </li>
+        <li>
+          <strong>PostData Ingestion Webhook </strong>  [Postdata_Ingestion_Webhook_{process_file_type}]- This
+          is same as explained in inbound, key2 is set as 0 for outbound case.
+         
+        </li>
+        <li>
+          <strong>Password Protected Data </strong> It is set if the file is password protected
+         
+        </li>
+ 
+      </ul>
+    </li>
+   
+    <table class="table-bordered"
+>
+      <tr>
+        <th>Setting Name</th>
+        <th>Key1</th>
+        <th>Key2</th>
+        <th>Key3</th>
+        <th>Key4</th>
+        <th>Key5</th>
+      </tr>
+      <tr>
+        <td><strong>PasswordProtectedData_
+          {process_file_type}
+          </strong></td>
+        <td>yes/no
+          </td>
+        <td>encrypted
+          password</td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </table>
+    <p>
+      <strong> How to set Setting Name? </strong>
+    </p>
+    <p>Same as for above settings
+    </p>
+    <p>
+      <strong> How to set Keys? </strong>
+    </p>
+    <p>
+      Key2 is set in case if key1 is set yes. It holds the encrypted password. Encryption
+is done using DESEDE_ENCRYPTION_SCHEME.
+    </p>
+   
+  <li>
+    <strong> Header </strong> [IsHeaderAvailable_{process_file_type}]  &ndash;&nbsp; This is set almost same as that of Inbound. 
+  </li>
+  <table class="table-bordered"
+  >
+      <tr>
+        <th>Setting Name</th>
+        <th>Key1</th>
+        <th>Key2</th>
+        <th>Key3</th>
+        <th>Key4</th>
+        <th>Key5</th>
+      </tr>
+      <tr>
+        <td><strong> IsHeaderAvailable_
+          {process_file_type}
+           </strong></td>
+        <td>YES/NO</td>
+        <td>Titles</td>
+        <td>any number</td>
+        <td></td>
+        <td></td>
+      </tr>
+    </table>
+    <p>
+      Key1 - Set as YES/NO which represents if the header is available or not</p>
+    <p>
+      Key2 - header values are set here.</p>
+    <p> 
+      Key3 - it represents the cell width ratio for each column. 
+    </p>
+    <p>
+      Key4, Key5 left blank.
+    </p>
+
+
+  <li>
+    <strong> Parsing Rule Json </strong>This sets up the rules for data validation. The file gets parsed only if
+    it passes these rules, and these rules may be different for each partner.
+   
+  </li>
+  <table class="table-bordered"
+>
+    <tr>
+      <th>Setting Name</th>
+      <th>Key1</th>
+      <th>Key2</th>
+      <th>Key3</th>
+      <th>Key4</th>
+      <th>Key5</th>
+    </tr>
+    <tr>
+      <td><strong> Parsing_Rule_Json
+        _{process_file_type
+        }
+         </strong></td>
+      <td></td>
+      <td>Key_mapping</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </table>
+ 
+    <strong> How to set Keys? </strong>
+  </p>
+  <p>Key2 - This key maps the header name to the database key. Like below is the
+    example</p>
+    <p>{"SN":"SNO", "Issuing Region":"IssuingRegion"}
+    </p>
+    <p>Here, “Issuing Region” will be mapped to the “IssuingRegion” in database
+      Key1, key3, key4, key5 are left blank</p>
+ 
+
+
+
+          </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

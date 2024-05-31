@@ -1,0 +1,714 @@
+<div
+  class="content-wrapper d-flex"
+  [ngClass]="{ 'sidebar-open': isSidebarOpen }"
+>
+  <div class="sidebar-wrapper">
+    <app-sidebar [(sidebarState)]="isSidebarOpen"></app-sidebar>
+  </div>
+  <div class="main-wrapper pt-3">
+    <div *ngIf="ExportLoader">
+      <app-loader [message]="exportloaderMessage"></app-loader>
+    </div>
+    <div class="container-fluid h-100">
+      <div class="row h-100">
+        <div class="col-md-12">
+          <div
+            class="property-details-wrapper"
+            *ngIf="!showDeviceDetails && !showImport"
+          >
+            <div class="row" *ngIf="!showImport">
+              <div class="col-md-9">
+                <p class="main-heading">
+                  <span>{{
+                    data ? data.master.device.txtHeading : "Devices"
+                  }}</span>
+                  {{
+                    data
+                      ? data.master.device.txtDes
+                      : "View and add new device for outlet."
+                  }}
+                </p>
+              </div>
+              <div class="col-md-3 text-right">
+                <a
+                  href="javascript:void(0)"
+                  mat-raised-button
+                  (click)="exportReport('Device')"
+                  style="line-height: 24px !important"
+                  class="btn btn-info"
+                  ><i class="fa fa-file-text-o" aria-hidden="true"></i>
+                  {{ data ? data.buttons.export : "Export" }}</a
+                >
+                <!-- <a (click)="showDeviceImport()" class="btn btn-secondary mr-2"
+                  ><i class="fa fa-upload" aria-hidden="true"></i>
+                  {{ data ? data.buttons.import : "Import" }}</a
+                > -->
+                <a class="btn btn-info" (click)="addNewDevice(true)"
+                  ><i class="fa fa-plus" aria-hidden="true"></i>
+                  {{ data ? data.buttons.new : "New" }}</a
+                >
+              </div>
+            </div>
+            <div class="row" *ngIf="!showImport">
+              <div class="col-md-12">
+                <div class="search-wrapper">
+                  <div class="search-product">
+                    <div class="search_main">
+                      <div class="search-input">
+                        <span
+                          ><i class="fa fa-search" aria-hidden="true"></i
+                        ></span>
+                        <input
+                          type="search"
+                          [(ngModel)]="simplesearch"
+                          id="txtSearch"
+                          (keyup.enter)="
+                            simpleSearchDevice($event.target.value)
+                          "
+                        />
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>{{
+                          data ? data.master.device.search : "Search Device"
+                        }}</label>
+                        <span
+                          ><i
+                            (click)="fetchDeviceDataSearch()"
+                            class="fa fa-times"
+                            aria-hidden="true"
+                          ></i
+                        ></span>
+                        <span (click)="showQueryForm()" class="dropdown-form"
+                          ><i class="fa fa-sort-desc" aria-hidden="true"></i
+                        ></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="query1" class="query1" *ngIf="showData">
+                    <div class="form-container">
+                      <form>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="deviceName"
+                                >{{
+                                  data
+                                    ? data.master.device.deviceName
+                                    : "Device Name:"
+                                }}:</label
+                              >
+                              <div class="suggestion_input_wrapper">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  id="deviceName"
+                                  placeholder="{{
+                                    data
+                                      ? data.master.device.enterDeviceName
+                                      : 'Enter Device Name'
+                                  }}"
+                                  name="deviceName"
+                                  #deviceName
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="deviceType"
+                                >{{
+                                  data
+                                    ? data.master.device.deviceType
+                                    : "Device Type:"
+                                }}:</label
+                              >
+                              <select
+                                name="deviceType"
+                                class="custom-select"
+                                #searchDeviceType
+                              >
+                                <option checked value="0">None</option>
+                                <option
+                                  *ngFor="let d of deviceDataDetails"
+                                  [value]="d.keyCode"
+                                >
+                                  {{ d.key1 }}
+                                </option>
+                                <!-- <option value="1">{{data? data.master.device.dev2 :"Device 2"}}</option> -->
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="deviceBrand"
+                                >{{
+                                  data
+                                    ? data.master.device.deviceBrand
+                                    : "Device Brand:"
+                                }}:</label
+                              >
+                              <select
+                                name="deviceBrand"
+                                class="custom-select"
+                                #deviceBrand
+                              >
+                                <option checked value="0">None</option>
+                                <option
+                                  *ngFor="let d of deviceBrandsDetails"
+                                  [value]="d.keyCode"
+                                >
+                                  {{ d.key1 }}
+                                </option>
+                                <!-- <option value="1">{{data? data.master.device.br2 :"Brand 2"}}</option> -->
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="deviceCategory"
+                                >{{
+                                  data
+                                    ? data.master.device.deviceCategory
+                                    : "Device Category:"
+                                }}:</label
+                              >
+                              <select
+                                name="deviceCategory"
+                                class="custom-select"
+                                #deviceCategory
+                              >
+                                <option checked value="0">None</option>
+                                <option
+                                  *ngFor="let d of deviceCategoriesDetails"
+                                  [value]="d.keyCode"
+                                >
+                                  {{ d.key1 }}
+                                </option>
+                                <!-- <option value="1">{{data? data.master.device.catg2 :"Category 2"}}</option> -->
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="status">{{data? data.master.device.stat :"Status:"}}:</label>
+                                                            <select name="status" [(ngModel)]="status" class="custom-select">
+                                                                <option *ngFor="let d of deviceData" [value]="deviceData">{{device?.status}}</option>
+                                                                <option value="1">{{data? data.master.device.inAct :"Inactive"}}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div> -->
+                        <div class="query-btn">
+                          <a
+                            class="btn btn-secondary"
+                            (click)="
+                              deviceName.value = '';
+                              searchDeviceType.value = 0;
+                              deviceCategory.value = 0;
+                              deviceBrand.value = 0
+                            "
+                            ><i class="fa fa-history" aria-hidden="true"></i>
+                            {{ data ? data.buttons.reset : "Reset" }}</a
+                          >
+                          <a
+                            class="btn btn-info"
+                            (click)="
+                              fetchDevicesAdvanced(
+                                deviceName.value,
+                                searchDeviceType.value,
+                                deviceCategory.value,
+                                deviceBrand.value
+                              )
+                            "
+                            ><i class="fa fa-search" aria-hidden="true"></i>
+                            {{ data ? data.buttons.search : "Search" }}</a
+                          >
+                          <a class="btn btn-danger" (click)="showQueryForm()"
+                            ><i class="fa fa-close" aria-hidden="true"></i>
+                            {{ data ? data.admission.close : "Close" }}</a
+                          >
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="admission-table-wrapper">
+              <div class="table-responsive">
+                <table
+                  mat-table
+                  [dataSource]="dataSourceDevice"
+                  matTableExporter
+                  #exporter="matTableExporter"
+                  [hiddenColumns]="[7]"
+                  class="mat-elevation-z8"
+                  matSort
+                >
+                  <!-- <ng-container matColumnDef="_id">
+                                <th mat-header-cell *matHeaderCellDef> Partner Id </th>
+                                <td mat-cell *matCellDef="let element"> {{element._id}} </td>
+                            </ng-container> -->
+                  <ng-container matColumnDef="name">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{ data ? data.master.device.deviceName : "Device Name" }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.name }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="displayType">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{ data ? data.master.device.deviceType : "Device Type" }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.displayType }}
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="serialNo">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{ data ? data.master.device.serialNum : "Serial No" }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element?.serialNo }}
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="currentLounge">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{ data ? data.master.device.crtLa : "Current Outlet" }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{
+                        element.currentLounge.name
+                          ? element.currentLounge.name
+                          : element.currentLounge
+                      }}
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="displayBrand">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{
+                        data ? data.master.device.deviceBrand : "Device Brand"
+                      }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.displayBrand }}
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="displayCategory">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{
+                        data
+                          ? data.master.device.deviceCategory
+                          : "Device Category"
+                      }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.displayCategory }}
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="status">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{ data ? data.master.device.stat : "Status" }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.isActive === true ? "Active" : "Inactive" }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="action">
+                    <th
+                      mat-header-cell
+                      *matHeaderCellDef
+                      style="text-align: center"
+                    >
+                      {{ data ? data.master.partner.action : "Action" }}
+                    </th>
+                    <td
+                      mat-cell
+                      *matCellDef="let element; let i = index"
+                      style="text-align: center"
+                    >
+                      <!-- <i style="color: red; cursor: pointer;" class="fa fa-trash mr-4"
+                                        aria-hidden="true" (click)="deleteDeviceData(element._id)"></i>
+
+                                    <i class="fa fa-pencil" (click)="getDeviceClickData(element._id)"
+                                        aria-hidden="true"></i> -->
+
+                      <i
+                        style="cursor: pointer"
+                        class="fa fa-pencil mr-3 mr-lg-4"
+                        (click)="getDeviceClickData(element._id)"
+                        aria-hidden="true"
+                      ></i>
+                      <i
+                        style="color: red; cursor: pointer"
+                        class="fa fa-trash"
+                        aria-hidden="true"
+                        (click)="deleteDeviceData(element._id)"
+                      ></i>
+                      <!-- <a mat-button mat-icon-button href="javascript:void(null)" (click)="editAssessment(element._id, element.assessment, i)" matTooltip="Edit">
+                                    <mat-icon style="color: grey;">edit</mat-icon>
+                                </a>
+                                <a mat-button mat-icon-button href="javascript:void(null)" (click)="deleteAssessment(element._id, element.assessment)" matTooltip="Delete">
+                                    <mat-icon style="color: #da0000;">delete</mat-icon>
+                                </a> -->
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr
+                    mat-row
+                    (dblclick)="getDeviceById(row._id)"
+                    *matRowDef="
+                      let row;
+                      columns: displayedColumns;
+                      let i = index
+                    "
+                  ></tr>
+                  <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell">
+                      {{
+                        data ? data.master.device.noDataFound : "No data Found!"
+                      }}
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <mat-paginator
+                [pageSizeOptions]="[10, 25, 50, 100]"
+                aria-label="Select page of users"
+              ></mat-paginator>
+              <!-- <table datatable class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>{{data? data.master.device.deviceName :"Device Name"}}</th>
+                                        <th>{{data? data.master.device.deviceType :"Device Type"}}</th>
+                                        <th>{{data? data.master.device.deviceBrand :"Device Brand"}}</th>
+                                        <th>{{data? data.master.device.deviceCategory :"Device Category"}}</th>
+                                        <th>{{data? data.master.device.stat :"Status"}}</th>
+                                        <th>{{data? data.master.device.serialNum :"Serial No"}}</th>
+                                        <th>{{data? data.master.device.crtLa :"Current Outlet"}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr (dblclick)="getTableClickDeviceData(device)"   *ngFor="let device of deviceData">
+                                        <td>{{device?.name}}</td>
+                                        <td>{{device?.displayType}}</td>
+                                        <td>{{device?.displayBrand}}</td>
+                                        <td>{{device?.displayCategory}}</td>
+                                        <td>{{device?.status ? 'Active':'Inactive'}}</td>
+                                        <td>{{device?.serialNo}}</td>
+                                        <td>{{device?.displayLounge}}</td>
+                                    </tr>
+                                </tbody>
+                            </table> -->
+            </div>
+          </div>
+          <div
+            class="new-property-wrapper"
+            *ngIf="showDeviceDetails && !showImport"
+          >
+            <p class="main-heading">
+              <span
+                >{{
+                  data ? data.master.device.addNew : "Add New Device:"
+                }} </span
+              >{{
+                data
+                  ? data.master.device.addDes
+                  : "Fill the following details to add new device for outlets."
+              }}<span
+                (click)="hideDeviceDetails()"
+                class="close1"
+                data-toggle="tooltip"
+                title="Close"
+                >X</span
+              >
+            </p>
+            <form>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="deviceName1"
+                      >{{ data ? data.master.device.deviceName : "Device Name:"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <div class="suggestion_input_wrapper">
+                      <i class="fa fa-search" aria-hidden="true"></i>
+                      <input
+                        [(ngModel)]="name"
+                        autocomplete="off"
+                        (keyup)="fetchDeviceName($event.target.value)"
+                        type="text"
+                        class="form-control"
+                        id="deviceName1"
+                        placeholder="{{
+                          data
+                            ? data.master.device.enterDeviceName
+                            : 'Enter Device Name'
+                        }}"
+                        name="deviceName1"
+                      />
+                    </div>
+                    <ul class="searched-list" *ngIf="device.length > 0">
+                      <li *ngFor="let d of device" (click)="setTokenDevice(d)">
+                        {{ d.name }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="deviceType1"
+                      >{{ data ? data.master.device.deviceType : "Device Type"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <select
+                      [(ngModel)]="type"
+                      name="deviceType1"
+                      class="custom-select"
+                    >
+                      <option
+                        *ngFor="let d of deviceDataDetails"
+                        [value]="d.keyCode"
+                      >
+                        {{ d.key1 }}
+                      </option>
+                      <!-- <option value="1">{{data? data.master.device.dev2 :"Device 2"}}</option> -->
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="serialNo"
+                      >{{ data ? data.master.device.serialNum : "Serial No:"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <input
+                      [(ngModel)]="serialNo"
+                      type="text"
+                      class="form-control"
+                      id="serialNo"
+                      placeholder="{{
+                        data
+                          ? data.master.device.enterSerialNu
+                          : 'Enter Serial No'
+                      }}"
+                      name="serialNo"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="currentLounge"
+                      >{{
+                        data ? data.master.device.crtLa : "Available At Outlet"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <div class="suggestion_input_wrapper">
+                      <i class="fa fa-search" aria-hidden="true"></i>
+                      <input
+                        [(ngModel)]="currentLounge"
+                        (keyup)="fetchLoungeNames($event.target.value)"
+                        autocomplete="off"
+                        type="text"
+                        class="form-control"
+                        id="currentLounge"
+                        placeholder="{{
+                          data
+                            ? data.master.device.enterAvailableAtOutlet
+                            : 'Available At Outlet'
+                        }}"
+                        name="currentLounge"
+                      />
+                    </div>
+                    <ul
+                      class="searched-list"
+                      *ngIf="lounge && lounge.length > 0"
+                    >
+                      <li *ngFor="let l of lounge" (click)="setDevicelounge(l)">
+                        {{ l.name }}
+                      </li>
+                    </ul>
+                    <!-- <select [(ngModel)]="currentLounge" name="currentLounge" class="custom-select">
+                                          <option *ngFor="let d of deviceLounges" [value]="d._id">{{d.name}}</option>
+                                          <option value="1">{{data? data.master.device.mbInt :"Mumbai International Airport"}}</option>
+                                      </select> -->
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="deviceCategory1"
+                      >{{
+                        data
+                          ? data.master.device.deviceCategory
+                          : "Device Category:"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <select
+                      [(ngModel)]="category"
+                      name="deviceCategory1"
+                      class="custom-select"
+                    >
+                      <option
+                        *ngFor="let d of deviceCategoriesDetails"
+                        [value]="d.keyCode"
+                      >
+                        {{ d.key1 }}
+                      </option>
+                      <!-- <option value="1">{{data? data.master.device.catg2 :"Category 2"}}</option> -->
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="deviceBrand1"
+                      >{{
+                        data ? data.master.device.deviceBrand : "Device Brand:"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <select
+                      [(ngModel)]="brand"
+                      name="deviceBrand1"
+                      class="custom-select"
+                    >
+                      <option
+                        *ngFor="let d of deviceBrandsDetails"
+                        [value]="d.keyCode"
+                      >
+                        {{ d?.key1 }}
+                      </option>
+                      <!-- <option value="1">{{data? data.master.device.br1 :"Brand 2"}}</option> -->
+                    </select>
+                  </div>
+                </div>
+                <!-- <div class="col-md-2">
+                              <div class="form-group d-flex justify-content-between align-items-center">
+                                  <label class="mb-0" for="isActive">{{data? data.master.device.stat :"Is Active:"}}</label>
+                                  <div class="custom-control custom-switch">
+                                      <input type="checkbox" name="isActive" class="custom-control-input" id="customSwitch1" checked [(ngModel)]='isActive'>
+                                      <label class="custom-control-label" for="customSwitch1"></label>
+                                    </div>
+                              </div>
+                          </div> -->
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="mb-0" for="tag"
+                      >{{ data ? data.master.device.deviceTag : "Device Tag:"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <mat-form-field class="example-chip-list d-block">
+                      <mat-chip-list #chipList aria-label="Fruit selection">
+                        <mat-chip
+                          *ngFor="let t of tag"
+                          [selectable]="selectable"
+                          [removable]="removable"
+                          (removed)="remove(t)"
+                        >
+                          {{ t }}
+                          <mat-icon matChipRemove *ngIf="removable"
+                            >cancel</mat-icon
+                          >
+                        </mat-chip>
+                        <input
+                          name="tag"
+                          id="tag"
+                          #fruitInput
+                          [formControl]="fruitCtrl"
+                          [matAutocomplete]="auto"
+                          [matChipInputFor]="chipList"
+                          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                          (matChipInputTokenEnd)="add($event)"
+                        />
+                      </mat-chip-list>
+                      <mat-autocomplete
+                        #auto="matAutocomplete"
+                        (optionSelected)="selected($event)"
+                      >
+                        <mat-option *ngFor="let t of tag" [value]="t">
+                          {{ t }}
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
+                    <!-- <div class="form-group">
+                                    <label for="tag">{{data? data.master.device.deviceTag :"Device Tag:"}}<span class="asterisk">*</span>:</label>
+                                    <input [(ngModel)]="tag" type="text" class="form-control" id="tag" placeholder="{{data? data.master.device.enterDeviceTag :'Enter Device Tag'}}" name="tag">
+                                </div> -->
+                    <!-- <ng-select2 [value]="tag" name="tag" id="tag" [data]="deviceTagList" [(ngModel)]="tag"
+                                                [placeholder]="'Select Device Tag'"
+                                                [options]="options"></ng-select2> -->
+                  </div>
+                </div>
+                <div class="col-md-2 align-self-center">
+                  <div
+                    class="form-group d-flex justify-content-between align-items-center"
+                  >
+                    <label class="mb-0" for="isActive">{{
+                      data ? data.master.device.stat : "Is Active:"
+                    }}</label>
+                    <div class="custom-control custom-switch">
+                      <input
+                        type="checkbox"
+                        name="isActive"
+                        class="custom-control-input"
+                        id="customSwitch1"
+                        checked
+                        [(ngModel)]="isActive"
+                      />
+                      <label
+                        class="custom-control-label"
+                        for="customSwitch1"
+                      ></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="row"> -->
+              <!-- <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="status1">{{data? data.master.device.stat :"Status:"}}</label>
+                                        <select [(ngModel)]="status" name="status1" class="custom-select" >
+                                            <option *ngFor="let device of deviceData" [Value]="deviceData">{{device?.status}}</option>
+                                            <option value="1">{{data? data.master.device.inAct :"Inactive"}}</option>
+                                        </select>
+                                    </div>
+                                </div> -->
+              <!-- </div> -->
+            </form>
+            <div class="result">
+              <a class="btn btn-secondary" (click)="resetDeviceDetails()"
+                ><i class="fa fa-history" aria-hidden="true"></i>
+                {{ data ? data.buttons.reset : "Reset" }}</a
+              >
+              <a class="btn btn-info" (click)="saveDeviceData()"
+                ><i class="fa fa-check" aria-hidden="true"></i>
+                {{ data ? data.buttons.save : "Save" }}</a
+              >
+            </div>
+          </div>
+          <div *ngIf="showImport && !showDeviceDetails">
+            <app-import-data
+              [showNavBar]="false"
+              [showLeftMenu]="false"
+              [validator]="importValidator"
+              (importClose)="backToResults()"
+            ></app-import-data>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

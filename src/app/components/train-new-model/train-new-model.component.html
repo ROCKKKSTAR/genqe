@@ -1,0 +1,1177 @@
+<div
+  class="content-wrapper d-flex"
+  [ngClass]="{ 'sidebar-open': isSidebarOpen }"
+>
+  <div class="sidebar-wrapper">
+    <app-sidebar [(sidebarState)]="isSidebarOpen"></app-sidebar>
+  </div>
+  <div *ngIf="loadershow">
+    <app-loader [message]="loaderMessage"></app-loader>
+  </div>
+  <div class="main-wrapper pt-3 h-100">
+    <div class="container-fluid">
+      <div class="row" *ngIf="currentScreen == 'selectProcessType'">
+        <div class="col-12">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <nav aria-label="breadcrumb" class="w-100">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item">Train Model</li>
+                <li class="breadcrumb-item">Train New Model</li>
+                <li class="breadcrumb-item active" aria-current="page">Web</li>
+              </ol>
+            </nav>
+            <div class="col-md-3 text-right">
+              <select class="custom-select">
+                <option value="0">2 Defect(s) are Returned</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="my-5">
+            <div class="d-flex align-items-center justify-content-center mt-5">
+              <div class="primary-pill active mr-3">
+                <p class="mb-0">Web</p>
+                <div class="icon-wrapper">
+                  <img
+                    src="../../../../assets/images/Icon/Icon (1).png"
+                    alt=""
+                  />
+                </div>
+              </div>
+              <div class="primary-pill">
+                <p class="mb-0">Mobile App</p>
+                <div class="icon-wrapper">
+                  <img
+                    src="../../../../assets/images/Icon/mobile-Regular.png"
+                    alt=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="d-flex align-items-center justify-content-center">
+              <div class="primary-pill mr-3">
+                <p class="mb-0">Desktop</p>
+                <div class="icon-wrapper">
+                  <img
+                    src="../../../../assets/images/Icon/desktop-Regular.png"
+                    alt=""
+                  />
+                </div>
+              </div>
+              <div class="primary-pill mr-3">
+                <p class="mb-0">API</p>
+                <div class="icon-wrapper">
+                  <img
+                    src="../../../../assets/images/Icon/Group 427318861.png"
+                    alt=""
+                  />
+                </div>
+              </div>
+              <div class="primary-pill">
+                <p class="mb-0">Others (DB, Excel)</p>
+                <div class="icon-wrapper">
+                  <img
+                    src="../../../../assets/images/Icon/paperclip-Regular.png"
+                    alt=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="d-flex align-items-center justify-content-center"
+              style="gap: 12px"
+            >
+              <div class="form-check-wrapper">
+                <div class="form-check">
+                  <input
+                    class="mt-1 form-check-input"
+                    type="radio"
+                    name="documentTypeToTrain"
+                    id="record"
+                  />
+                  <label class="form-check-label" for="record">Record</label>
+                </div>
+              </div>
+              <div class="form-check-wrapper">
+                <div class="form-check">
+                  <input
+                    class="mt-1 form-check-input"
+                    type="radio"
+                    name="documentTypeToTrain"
+                    id="uploadWireframe"
+                  />
+                  <label class="form-check-label" for="uploadWireframe"
+                    >Upload WireFrame</label
+                  >
+                </div>
+              </div>
+              <div class="form-check-wrapper">
+                <div class="form-check">
+                  <input
+                    class="mt-1 form-check-input"
+                    type="radio"
+                    name="documentTypeToTrain"
+                    id="uploadExcel"
+                  />
+                  <label class="form-check-label" for="uploadExcel"
+                    >Upload Excel</label
+                  >
+                </div>
+              </div>
+              <div class="form-check-wrapper">
+                <div class="form-check">
+                  <input
+                    class="mt-1 form-check-input"
+                    type="radio"
+                    name="documentTypeToTrain"
+                    id="uploadWord"
+                  />
+                  <label class="form-check-label" for="uploadWord"
+                    >Upload Word</label
+                  >
+                </div>
+              </div>
+            </div>
+            <div
+              class="d-flex align-items-center justify-content-center mb-5"
+              style="gap: 12px"
+            >
+              <div class="form-check-wrapper">
+                <div class="form-check">
+                  <input
+                    class="mt-1 form-check-input"
+                    type="radio"
+                    name="documentTypeToTrain"
+                    id="existingTestCaseIntegration"
+                  />
+                  <label
+                    class="form-check-label"
+                    for="existingTestCaseIntegration"
+                    >Existing Test Case Integration</label
+                  >
+                </div>
+              </div>
+              <div class="form-check-wrapper">
+                <div class="form-check">
+                  <input
+                    class="mt-1 form-check-input"
+                    type="radio"
+                    name="documentTypeToTrain"
+                    id="trainedModel"
+                  />
+                  <label class="form-check-label" for="trainedModel"
+                    >Trained Model</label
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex mt-5">
+            <button
+              class="primary-pill mx-auto"
+              (click)="switchScreen('recordScreen')"
+            >
+              <p class="mb-0">Train Now</p>
+              <div class="icon-wrapper">
+                <img
+                  src="../../../../assets/images/Icon/Vector (3).png"
+                  alt=""
+                />
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="currentScreen == 'recordScreen'">
+        <div class="col-12">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <nav aria-label="breadcrumb" class="w-100">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item">Train Model</li>
+                <li class="breadcrumb-item">Train New Model</li>
+                <li class="breadcrumb-item">Web</li>
+                <li class="breadcrumb-item active" aria-current="page">
+                  Record
+                </li>
+              </ol>
+            </nav>
+            <div class="col-md-3 text-right">
+              <select class="custom-select">
+                <option value="0">2 Defect(s) are Returned</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div
+            class="d-flex align-items-center justify-content-end mb-3"
+            style="gap: 8px"
+          >
+            <div class="bg-light-grey rounded p-2 d-flex align-items-center">
+              <p class="mb-0 mr-2" style="font-size: 14px">All Browsers</p>
+              <img
+                src="../../../../assets/images/Icon/Group 427318836.png"
+                alt=""
+                height="18px"
+              />
+            </div>
+            <div class="bg-light-grey rounded p-2 d-flex align-items-center">
+              <p class="mb-0 mr-2" style="font-size: 14px">Edge</p>
+              <img
+                src="../../../../assets/images/Icon/Vector (4).png"
+                alt=""
+                height="18px"
+              />
+            </div>
+            <div class="bg-light-grey rounded p-2 d-flex align-items-center">
+              <p class="mb-0 mr-2" style="font-size: 14px">Firefox</p>
+              <img
+                src="../../../../assets/images/Icon/Vector (5).png"
+                alt=""
+                height="18px"
+              />
+            </div>
+            <div
+              class="bg-purple-primary text-white rounded p-2 d-flex align-items-center"
+            >
+              <p class="mb-0 mr-2" style="font-size: 14px">Chrome</p>
+              <img
+                src="../../../../assets/images/Icon/Vector (6).png"
+                alt=""
+                height="18px"
+              />
+            </div>
+            <div class="primary-pill active py-2">
+              <p class="mb-0 font-weight-700" style="font-size: 14px">Web</p>
+              <div class="icon-wrapper">
+                <img
+                  src="../../../../assets/images/Icon/Icon (1).png"
+                  alt=""
+                  height="18px"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group-wrapper">
+                <div class="icon-wrapper">
+                  <img
+                    src="../../../../assets/images/Icon/Group 427318864.png"
+                    alt=""
+                  />
+                </div>
+                <div class="form-group w-100 mb-0">
+                  <input
+                    type="text"
+                    name="modelName"
+                    id="modelName"
+                    placeholder="Model Name"
+                    class="form-control"
+                  />
+                  <label class="w-100" for="modelName"
+                    >Model Name<span class="pull-right">
+                      <div class="d-flex align-items-center">
+                        <div class="bg-light-grey p-1 mr-2 d-flex rounded">
+                          <img
+                            src="../../../../assets/images/Icon/Icon.png"
+                            alt=""
+                          />
+                        </div>
+                        <div class="bg-light-grey p-1 mr-2 d-flex rounded">
+                          <img
+                            src="../../../../assets/images/Icon/trash.png"
+                            alt=""
+                          />
+                        </div>
+                      </div>
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group-wrapper">
+                <div class="icon-wrapper">
+                  <img
+                    src="../../../../assets/images/Icon/icon _channel_.png"
+                    alt=""
+                  />
+                </div>
+                <div class="form-group w-100 mb-0">
+                  <input
+                    type="text"
+                    name="channel"
+                    id="channel"
+                    placeholder="Channel"
+                    class="form-control"
+                  />
+                  <label class="w-100" for="channel"
+                    >Channel<span class="pull-right">
+                      <div class="d-flex align-items-center">
+                        <div class="bg-light-grey p-1 mr-2 d-flex rounded">
+                          <img
+                            src="../../../../assets/images/Icon/Icon.png"
+                            alt=""
+                          />
+                        </div>
+                        <div class="bg-light-grey p-1 mr-2 d-flex rounded">
+                          <img
+                            src="../../../../assets/images/Icon/trash.png"
+                            alt=""
+                          />
+                        </div>
+                      </div>
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group-wrapper">
+                <div class="icon-wrapper">
+                  <img
+                    src="../../../../assets/images/Icon/user-Regular.png"
+                    alt=""
+                  />
+                </div>
+                <div class="form-group w-100 mb-0">
+                  <input
+                    type="text"
+                    name="trainer"
+                    id="trainer"
+                    placeholder="Trainer"
+                    class="form-control"
+                  />
+                  <label class="w-100" for="trainer"
+                    >Trainer<span class="text-primary"
+                      >(User name will instantly took as trainer)</span
+                    ><span class="pull-right">
+                      <div class="d-flex align-items-center">
+                        <div class="bg-light-grey p-1 mr-2 d-flex rounded">
+                          <img
+                            src="../../../../assets/images/Icon/Icon.png"
+                            alt=""
+                          />
+                        </div>
+                        <div class="bg-light-grey p-1 mr-2 d-flex rounded">
+                          <img
+                            src="../../../../assets/images/Icon/trash.png"
+                            alt=""
+                          />
+                        </div>
+                      </div>
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group-wrapper">
+                <div class="icon-wrapper">
+                  <img
+                    src="../../../../assets/images/Icon/calendar-Regular.png"
+                    alt=""
+                  />
+                </div>
+                <div class="form-group w-100 mb-0">
+                  <input
+                    type="text"
+                    name="trainDate"
+                    id="trainDate"
+                    placeholder="Train Date"
+                    class="form-control"
+                  />
+                  <label class="w-100" for="trainDate"
+                    >Train Date<span class="pull-right">
+                      <div class="d-flex align-items-center">
+                        <div class="bg-light-grey p-1 mr-2 d-flex rounded">
+                          <img
+                            src="../../../../assets/images/Icon/Icon.png"
+                            alt=""
+                          />
+                        </div>
+                        <div class="bg-light-grey p-1 mr-2 d-flex rounded">
+                          <img
+                            src="../../../../assets/images/Icon/trash.png"
+                            alt=""
+                          />
+                        </div>
+                      </div>
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group-wrapper">
+                <div class="icon-wrapper">
+                  <img
+                    src="../../../../assets/images/Icon/Group 427318862.png"
+                    alt=""
+                  />
+                </div>
+                <div class="form-group w-100 mb-0">
+                  <input
+                    type="text"
+                    name="application"
+                    id="application"
+                    placeholder="Application"
+                    class="form-control"
+                  />
+                  <label class="w-100" for="application"
+                    >Application<span class="pull-right">
+                      <div class="d-flex align-items-center">
+                        <div class="bg-light-grey p-1 mr-2 d-flex rounded">
+                          <img
+                            src="../../../../assets/images/Icon/Icon.png"
+                            alt=""
+                          />
+                        </div>
+                        <div class="bg-light-grey p-1 mr-2 d-flex rounded">
+                          <img
+                            src="../../../../assets/images/Icon/trash.png"
+                            alt=""
+                          />
+                        </div>
+                      </div>
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group-wrapper">
+                <div class="icon-wrapper">
+                  <img
+                    src="../../../../assets/images/Icon/Vector (3).png"
+                    alt=""
+                  />
+                </div>
+                <div class="form-group w-100 mb-0">
+                  <input
+                    type="text"
+                    name="trainedUsing"
+                    id="trainedUsing"
+                    placeholder="Trained Using"
+                    class="form-control"
+                  />
+                  <label class="w-100" for="trainedUsing"
+                    >Trained Using<span class="text-primary"
+                      >(Recording or Wireframe or Word or Excel)</span
+                    ><span class="pull-right">
+                      <div class="d-flex align-items-center">
+                        <div class="bg-light-grey p-1 mr-2 d-flex rounded">
+                          <img
+                            src="../../../../assets/images/Icon/Icon.png"
+                            alt=""
+                          />
+                        </div>
+                        <div class="bg-light-grey p-1 mr-2 d-flex rounded">
+                          <img
+                            src="../../../../assets/images/Icon/trash.png"
+                            alt=""
+                          />
+                        </div>
+                      </div>
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group-wrapper">
+                <div class="icon-wrapper">
+                  <img
+                    src="../../../../assets/images/Icon/Group 427318862.png"
+                    alt=""
+                  />
+                </div>
+                <div class="form-group w-100 mb-0">
+                  <input
+                    type="text"
+                    name="target"
+                    id="target"
+                    placeholder="Target"
+                    class="form-control"
+                  />
+                  <label class="w-100" for="target"
+                    >Target<span class="pull-right">
+                      <div class="d-flex align-items-center">
+                        <div class="bg-light-grey p-1 mr-2 d-flex rounded">
+                          <img
+                            src="../../../../assets/images/Icon/Icon.png"
+                            alt=""
+                          />
+                        </div>
+                        <div class="bg-light-grey p-1 mr-2 d-flex rounded">
+                          <img
+                            src="../../../../assets/images/Icon/trash.png"
+                            alt=""
+                          />
+                        </div>
+                      </div>
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group-wrapper">
+                <div class="icon-wrapper">
+                  <img
+                    src="../../../../assets/images/Icon/Group 427318865.png"
+                    alt=""
+                  />
+                </div>
+                <div class="form-group w-100 mb-0">
+                  <input
+                    type="text"
+                    name="journeyScenario"
+                    id="journeyScenario"
+                    placeholder="Journey/Scenario"
+                    class="form-control"
+                  />
+                  <label class="w-100" for="journeyScenario"
+                    >Journey/Scenario<span class="pull-right">
+                      <div class="d-flex align-items-center">
+                        <div class="bg-light-grey p-1 mr-2 d-flex rounded">
+                          <img
+                            src="../../../../assets/images/Icon/Icon.png"
+                            alt=""
+                          />
+                        </div>
+                        <div class="bg-light-grey p-1 mr-2 d-flex rounded">
+                          <img
+                            src="../../../../assets/images/Icon/trash.png"
+                            alt=""
+                          />
+                        </div>
+                      </div>
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="d-flex align-items-center justify-content-center my-5">
+            <button
+              class="primary-pill mr-3"
+              (click)="switchScreen('recording')"
+            >
+              <p class="mb-0">Record</p>
+              <div class="icon-wrapper">
+                <img
+                  src="../../../../assets/images/Icon/Group 427318877.png"
+                  alt=""
+                  width="24px"
+                  style="height: 24px"
+                />
+              </div>
+            </button>
+            <button class="primary-pill">
+              <p class="mb-0">Cancel</p>
+              <div class="icon-wrapper">
+                <img
+                  src="../../../../assets/images/Icon/Group 427318837.png"
+                  alt=""
+                  width="24px"
+                  style="height: 24px"
+                />
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="currentScreen == 'recording'">
+        <div class="col-12">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <nav aria-label="breadcrumb" class="w-100">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item">Train Model</li>
+                <li class="breadcrumb-item">Train New Model</li>
+                <li class="breadcrumb-item">Web</li>
+                <li class="breadcrumb-item">Record</li>
+                <li class="breadcrumb-item active" aria-current="page">
+                  Recording
+                </li>
+              </ol>
+            </nav>
+            <div class="col-md-3 text-right">
+              <select class="custom-select">
+                <option value="0">2 Defect(s) are Returned</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="d-flex">
+            <div
+              class="bg-light-purple h-100 d-flex rounded-2 align-items-start p-2 mr-3"
+            >
+              <div class="bg-purple-primary p-1 rounded">
+                <img
+                  src="../../../../assets/images/Icon/Group 427318862.png"
+                  alt=""
+                  height="18px"
+                />
+              </div>
+            </div>
+            <div class="form-group-wrapper mr-3" style="min-width: 400px">
+              <div class="icon-wrapper">
+                <img
+                  src="../../../../assets/images/Icon/icon _channel_.png"
+                  alt=""
+                />
+              </div>
+              <div class="form-group w-100 mb-0">
+                <input
+                  type="text"
+                  name="modelName"
+                  id="modelName"
+                  placeholder="Model Name"
+                  class="form-control"
+                />
+                <label class="w-100" for="modelName"
+                  >Channel<span class="pull-right">
+                    <div class="d-flex align-items-center">
+                      <small class="mr-2"
+                        >Train Model ID: AAAAA1110204235</small
+                      >
+                      <img
+                        class="mr-2"
+                        src="../../../../assets/images/Icon/Copy - Train Model.png"
+                        alt=""
+                      />
+                      <div class="bg-light-grey p-1 mr-2 d-flex rounded">
+                        <img
+                          src="../../../../assets/images/Icon/Icon.png"
+                          alt=""
+                        />
+                      </div>
+                      <div class="bg-light-grey p-1 mr-2 d-flex rounded">
+                        <img
+                          src="../../../../assets/images/Icon/trash.png"
+                          alt=""
+                        />
+                      </div>
+                    </div>
+                  </span>
+                </label>
+              </div>
+            </div>
+            <div
+              class="bg-light-purple h-100 d-flex rounded-2 align-items-start p-2 mr-3"
+            >
+              <div class="bg-purple-primary p-1 rounded">
+                <img
+                  src="../../../../assets/images/Icon/Group 427318865.png"
+                  alt=""
+                  height="18px"
+                />
+              </div>
+            </div>
+            <div
+              class="bg-light-purple h-100 d-flex rounded-2 align-items-start p-2 mr-3"
+            >
+              <div class="bg-purple-primary p-1 rounded">
+                <img
+                  src="../../../../assets/images/Icon/Group 427318864.png"
+                  alt=""
+                  height="18px"
+                />
+              </div>
+            </div>
+            <div
+              class="bg-light-purple h-100 d-flex rounded-2 align-items-start p-2 mr-3"
+            >
+              <div class="bg-purple-primary p-1 rounded">
+                <img
+                  src="../../../../assets/images/Icon/Vector (3).png"
+                  alt=""
+                  height="18px"
+                />
+              </div>
+            </div>
+            <div class="d-flex ml-auto flex-column align-items-end">
+              <div class="d-flex justify-content-end">
+                <div class="d-flex bg-dark-purple rounded p-2 mr-3">
+                  <img
+                    src="../../../../assets/images/Icon/Group 427318877.png"
+                    height="18px"
+                    class="mr-2"
+                    alt=""
+                  />
+                  <img
+                    src="../../../../assets/images/Icon/Pause - Train Model.png"
+                    height="18px"
+                    class="mr-2"
+                    alt=""
+                  />
+                  <img
+                    src="../../../../assets/images/Icon/Stop - Train Model.png"
+                    height="18px"
+                    class="mr-2"
+                    alt=""
+                  />
+                  <img
+                    src="../../../../assets/images/Icon/Resume - Train Model.png"
+                    height="18px"
+                    class="mr-2"
+                    alt=""
+                  />
+                  <img
+                    src="../../../../assets/images/Icon/Paly - Train Model.png"
+                    height="18px"
+                    alt=""
+                  />
+                </div>
+                <div class="d-flex bg-dark-purple rounded p-2">
+                  <img
+                    src="../../../../assets/images/Icon/Review - Train Model.png"
+                    height="18px"
+                    class="mr-2"
+                    alt=""
+                  />
+                  <img
+                    src="../../../../assets/images/Icon/Restart - Train Model.png"
+                    height="18px"
+                    class="mr-2"
+                    alt=""
+                  />
+                  <img
+                    src="../../../../assets/images/Icon/Delete - Train Model.png"
+                    height="18px"
+                    class="mr-2"
+                    alt=""
+                  />
+                  <img
+                    src="../../../../assets/images/Icon/Copy - Train Model.png"
+                    height="18px"
+                    class="mr-2"
+                    alt=""
+                  />
+                  <img
+                    src="../../../../assets/images/Icon/Save Draft - Train Model.png"
+                    height="18px"
+                    class="mr-2"
+                    alt=""
+                  />
+                  <img
+                    src="../../../../assets/images/Icon/Edit - Train Model.png"
+                    height="18px"
+                    class="mr-2"
+                    alt=""
+                  />
+                  <img
+                    src="../../../../assets/images/Icon/Add - Train Model.png"
+                    height="18px"
+                    class="mr-2"
+                    alt=""
+                  />
+                  <img
+                    src="../../../../assets/images/Icon/Close - Train Model.png"
+                    height="18px"
+                    alt=""
+                  />
+                </div>
+              </div>
+              <div class="d-flex mt-3 justify-content-end">
+                <div class="bg-light-purple p-2 mr-3 rounded">
+                  <span style="font-size: 14px">Retrain</span>
+                  <img
+                    src="../../../../assets/images/Icon/tv-reload-purple.png"
+                    class="ml-1"
+                    alt=""
+                    height="18px"
+                  />
+                </div>
+                <div class="bg-light-purple p-2 mr-3 rounded">
+                  <span style="font-size: 14px">GenQE</span>
+                  <img
+                    src="../../../../assets/images/Icon/setting-purple.png"
+                    class="ml-1"
+                    alt=""
+                    height="18px"
+                  />
+                </div>
+                <div class="bg-light-purple p-2 rounded">
+                  <span style="font-size: 14px">Cancel</span>
+                  <img
+                    src="../../../../assets/images/Icon/close-purple.png"
+                    class="ml-1"
+                    alt=""
+                    height="18px"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="bg-light-purple w-100 p-3 rounded-2">
+            <div class="row mb-3">
+              <div class="col-12">
+                <div
+                  class="d-flex align-items-center mr-2 px-2 py-1"
+                  style="
+                    background-color: #d4d4ff;
+                    border-radius: 16px 16px 0 0;
+                    width: fit-content;
+                  "
+                >
+                  <span style="font-size: 14px">Step 1.1</span>
+                  <input type="checkbox" class="mx-2" />
+                  <img
+                    src="../../../../assets/images/Icon/Step State (Passed).png"
+                    alt=""
+                    height="18px"
+                  />
+                  <span class="ml-4 mr-2" style="font-size: 14px">
+                    Action ID: AAA111557788
+                  </span>
+                  <img
+                    src="../../../../assets/images/Icon/Actin ID Copy Icon.png"
+                    alt=""
+                    height="18px"
+                  />
+                </div>
+              </div>
+              <div class="col-md-7">
+                <div class="form-group-wrapper p-0 mb-0">
+                  <input
+                    type="text"
+                    placeholder="Step Description"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+              <div class="col-md-5">
+                <div class="form-group-wrapper p-0 mb-0">
+                  <input
+                    type="text"
+                    placeholder="Expected Result"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-12">
+                <div
+                  class="d-flex align-items-center mr-2 px-2 py-1"
+                  style="
+                    background-color: #d4d4ff;
+                    border-radius: 16px 16px 0 0;
+                    width: fit-content;
+                  "
+                >
+                  <span style="font-size: 14px">Step 1.1</span>
+                  <input type="checkbox" class="mx-2" />
+                  <img
+                    src="../../../../assets/images/Icon/Step State (Passed).png"
+                    alt=""
+                    height="18px"
+                  />
+                  <span class="ml-4 mr-2" style="font-size: 14px">
+                    Action ID: AAA111557788
+                  </span>
+                  <img
+                    src="../../../../assets/images/Icon/Actin ID Copy Icon.png"
+                    alt=""
+                    height="18px"
+                  />
+                </div>
+              </div>
+              <div class="col-md-7">
+                <div class="form-group-wrapper p-0 mb-0">
+                  <input
+                    type="text"
+                    placeholder="Step Description"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+              <div class="col-md-5">
+                <div class="form-group-wrapper p-0 mb-0">
+                  <input
+                    type="text"
+                    placeholder="Expected Result"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-12">
+                <div
+                  class="d-flex align-items-center mr-2 px-2 py-1"
+                  style="
+                    background-color: #d4d4ff;
+                    border-radius: 16px 16px 0 0;
+                    width: fit-content;
+                  "
+                >
+                  <span style="font-size: 14px">Step 1.1</span>
+                  <input type="checkbox" class="mx-2" />
+                  <img
+                    src="../../../../assets/images/Icon/Step State (Passed).png"
+                    alt=""
+                    height="18px"
+                  />
+                  <span class="ml-4 mr-2" style="font-size: 14px">
+                    Action ID: AAA111557788
+                  </span>
+                  <img
+                    src="../../../../assets/images/Icon/Actin ID Copy Icon.png"
+                    alt=""
+                    height="18px"
+                  />
+                </div>
+              </div>
+              <div class="col-md-7">
+                <div class="form-group-wrapper p-0 mb-0">
+                  <input
+                    type="text"
+                    placeholder="Step Description"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+              <div class="col-md-5">
+                <div class="form-group-wrapper p-0 mb-0">
+                  <input
+                    type="text"
+                    placeholder="Expected Result"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-12">
+                <div
+                  class="d-flex align-items-center mr-2 px-2 py-1"
+                  style="
+                    background-color: #d4d4ff;
+                    border-radius: 16px 16px 0 0;
+                    width: fit-content;
+                  "
+                >
+                  <span style="font-size: 14px">Step 1.1</span>
+                  <input type="checkbox" class="mx-2" />
+                  <img
+                    src="../../../../assets/images/Icon/Step State (Passed).png"
+                    alt=""
+                    height="18px"
+                  />
+                  <span class="ml-4 mr-2" style="font-size: 14px">
+                    Action ID: AAA111557788
+                  </span>
+                  <img
+                    src="../../../../assets/images/Icon/Actin ID Copy Icon.png"
+                    alt=""
+                    height="18px"
+                  />
+                </div>
+              </div>
+              <div class="col-md-7">
+                <div class="form-group-wrapper p-0 mb-0">
+                  <input
+                    type="text"
+                    placeholder="Step Description"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+              <div class="col-md-5">
+                <div class="form-group-wrapper p-0 mb-0">
+                  <input
+                    type="text"
+                    placeholder="Expected Result"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-12">
+                <div
+                  class="d-flex align-items-center mr-2 px-2 py-1"
+                  style="
+                    background-color: #d4d4ff;
+                    border-radius: 16px 16px 0 0;
+                    width: fit-content;
+                  "
+                >
+                  <span style="font-size: 14px">Step 1.1</span>
+                  <input type="checkbox" class="mx-2" />
+                  <img
+                    src="../../../../assets/images/Icon/Step State (Passed).png"
+                    alt=""
+                    height="18px"
+                  />
+                  <span class="ml-4 mr-2" style="font-size: 14px">
+                    Action ID: AAA111557788
+                  </span>
+                  <img
+                    src="../../../../assets/images/Icon/Actin ID Copy Icon.png"
+                    alt=""
+                    height="18px"
+                  />
+                </div>
+              </div>
+              <div class="col-md-7">
+                <div class="form-group-wrapper p-0 mb-0">
+                  <input
+                    type="text"
+                    placeholder="Step Description"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+              <div class="col-md-5">
+                <div class="form-group-wrapper p-0 mb-0">
+                  <input
+                    type="text"
+                    placeholder="Expected Result"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="row">
+            <div class="col-12">
+              <div
+                id="instructions"
+                class="overflow-hidden d-flex flex-column rounded-2 mb-3"
+              >
+                <video
+                  id="my_video_1"
+                  class="video-js vjs-default-skin"
+                  width="100%"
+                  height="auto"
+                  preload="none"
+                  poster="../../../../assets/images/loginBG.png"
+                  data-setup='{ "aspectRatio":"640:267", "playbackRates": [1, 1.5, 2] }'
+                  #videoElement
+                >
+                  <source
+                    src="https://vjs.zencdn.net/v/oceans.mp4"
+                    type="video/mp4"
+                  />
+                  <source
+                    src="https://vjs.zencdn.net/v/oceans.webm"
+                    type="video/webm"
+                  />
+                </video>
+                <div class="d-flex bg-light-purple p-2 align-items-center">
+                  <span style="font-size: 12px">Train Model Name</span>
+                  <button
+                    class="ml-auto mr-1 border-0 bg-transparent"
+                    (click)="playVideo()"
+                  >
+                    <img
+                      src="../../../../assets/images/Icon/play-purple.png"
+                      height="16px"
+                      alt=""
+                    />
+                  </button>
+                  <button
+                    class="mr-1 border-0 bg-transparent"
+                    (click)="pauseVideo()"
+                  >
+                    <img
+                      src="../../../../assets/images/Icon/pause-purple.png"
+                      height="16px"
+                      alt=""
+                    />
+                  </button>
+                  <button
+                    class="mr-1 border-0 bg-transparent"
+                    (click)="stopVideo()"
+                  >
+                    <img
+                      src="../../../../assets/images/Icon/stop-purple.png"
+                      height="16px"
+                      alt=""
+                    />
+                  </button>
+                  <button
+                    class="mr-1 border-0 bg-transparent"
+                    (click)="skip(10)"
+                  >
+                    <img
+                      src="../../../../assets/images/Icon/resume-purple.png"
+                      height="16px"
+                      alt=""
+                    />
+                  </button>
+                  <button
+                    class="mr-1 border-0 bg-transparent"
+                    (click)="restart()"
+                  >
+                    <img
+                      src="../../../../assets/images/Icon/restart-purple.png"
+                      height="16px"
+                      alt=""
+                    />
+                  </button>
+                  <button
+                    (click)="requestFullScreen()"
+                    class="border-0 bg-transparent"
+                  >
+                    <img
+                      src="../../../../assets/images/Icon/fullscreen-purple.png"
+                      height="16px"
+                      alt=""
+                    />
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div
+                class="bg-light-purple w-100 p-4 pb-0 overflow-hidden d-flex flex-column rounded-2 mb-3"
+              >
+                <img src="../../../../assets/images/loginBG.png" alt="" />
+                <div class="d-flex p-2 align-items-center">
+                  <span style="font-size: 12px">Business Flow Diagram</span>
+                  <button class="ml-auto mr-1 border-0 bg-transparent">
+                    <img
+                      src="../../../../assets/images/Icon/Save Draft - Train Model.png"
+                      height="16px"
+                      alt=""
+                    />
+                  </button>
+                  <button class="mr-1 border-0 bg-transparent">
+                    <img
+                      src="../../../../assets/images/Icon/Edit - Train Model.png"
+                      height="16px"
+                      alt=""
+                    />
+                  </button>
+                  <button class="border-0 bg-transparent">
+                    <img
+                      src="../../../../assets/images/Icon/fullscreen-purple.png"
+                      height="16px"
+                      alt=""
+                    />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

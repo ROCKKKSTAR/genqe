@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+
+  <title>Partner Contract - PPG LMS Documentation</title>
+  
+  <link
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+    crossorigin="anonymous"
+  />
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="../../assets/css/just-the-docs.css"
+  />
+  <!--Different Browser icon for All Devices -->
+  <link
+    href="../../assets/images/fav_icon.ico"
+    rel="icon"
+    type="image/x-icon"
+  />
+  <!--IE Browser icon for All Devices -->
+  <link
+    href="../../assets/images/fav_icon.ico"
+    rel="shortcut icon"
+    type="image/x-icon"
+  />
+  <!--Icon for Devices -->
+  <link
+    href="../../assets/images/fav_icon.ico"
+    rel="apple-touch-icon"
+  />
+  <!--Icon for Devices -->
+  <link
+    href="../../assets/images/fav_icon.ico"
+    rel="apple-touch-icon-precomposed"
+  />
+
+  <script
+    type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"
+  ></script>
+  <script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"
+  ></script>
+  
+  <script
+    type="text/javascript"
+    src="../../assets/js/vendor/lunr.min.js"
+  ></script>
+  
+
+  <script
+    type="text/javascript"
+    src="../../assets/js/just-the-docs.js"
+  ></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+
+<body>
+  <div class="page-wrap">
+    <div class="side-bar">
+      <div class="site-header">
+        <a href="../.." class="site-title lh-tight">PPG LMS</a>
+        <button class="menu-button fs-3 js-main-nav-trigger" data-text-toggle="Hide" type="button">Menu</button>
+      </div>
+
+      <div class="navigation main-nav js-main-nav">
+        <nav role="navigation" aria-label="Main navigation">
+  <ul class="navigation-list"><li
+      class="navigation-list-item"
+    ><a
+        href="../../index.html"
+        class="navigation-list-link"
+        >Getting Started</a
+      ></li><li
+      class="navigation-list-item"
+    ><a
+        href="../../docs/overview/index.html"
+        class="navigation-list-link"
+        >Overview</a
+      ></li><li
+      class="navigation-list-item"
+    ><a
+        href="../../docs/newLmsUserSetup/index.html"
+        class="navigation-list-link"
+        >New LMS User Setup</a
+      ></li><li
+      class="navigation-list-item"
+    ><a
+        href="../../docs/setUpNewAdmissionToken/index.html"
+        class="navigation-list-link"
+        >Setup New Admission Token</a
+      ></li><li
+      class="navigation-list-item"
+    ><a
+        href="../../docs/guestAdmission/index.html"
+        class="navigation-list-link"
+        >Guest Admission</a
+      ></li><li
+      class="navigation-list-item"
+    ><a
+        href="../../docs/offlineParthnerIntergration/index.html"
+        class="navigation-list-link"
+        >Offline Partner Integration</a
+      ></li><li
+      class="navigation-list-item"
+    ><a
+        href="../../docs/securityMatrix/index.html"
+        class="navigation-list-link"
+        >Security matrix</a
+      ></li><li
+      class="navigation-list-item"
+    ><a
+        href="../../docs/API%20Documentation/index.html"
+        class="navigation-list-link"
+        >API Documentation</a
+      ><ul class="navigation-list-child-list"><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/login/index.html"
+            class="navigation-list-link"
+            >Login</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/profile/index.html"
+            class="navigation-list-link"
+            >Profile</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/changePassword/index.html"
+            class="navigation-list-link"
+            >Change Password</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/certificateList/index.html"
+            class="navigation-list-link"
+            >Certificate List</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/cardSave/index.html"
+            class="navigation-list-link"
+            >Card Save</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/verifyToken/index.html"
+            class="navigation-list-link"
+            >Verify Token</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/boardingPassScan/index.html"
+            class="navigation-list-link"
+            >Boarding Pass Scan</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/boardingPassSave/index.html"
+            class="navigation-list-link"
+            >Boarding Pass Save</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/boardingPassId/index.html"
+            class="navigation-list-link"
+            >Boarding Pass ID</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/corporateTokens/index.html"
+            class="navigation-list-link"
+            >Corporates Token</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/corporates/index.html"
+            class="navigation-list-link"
+            >Corporates</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/redeemCoupon/index.html"
+            class="navigation-list-link"
+            >Redeem Coupon</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/getFacilities/index.html"
+            class="navigation-list-link"
+            >Get Facilities</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/getProducts/index.html"
+            class="navigation-list-link"
+            >Get Products</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/getOrders/index.html"
+            class="navigation-list-link"
+            >Get Orders</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/getOutlets/index.html"
+            class="navigation-list-link"
+            >Get Outlets</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/getEntitlements/index.html"
+            class="navigation-list-link"
+            >Get Entitlements</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/getadmissions/index.html"
+            class="navigation-list-link"
+            >Get Admissions</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/blackListedToken/index.html"
+            class="navigation-list-link"
+            >Blacklisted Token</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/whitelistedToken/index.html"
+            class="navigation-list-link"
+            >Whitelisted Token</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/mapOutlets/index.html"
+            class="navigation-list-link"
+            >Map Outlets</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/mapProducts/index.html"
+            class="navigation-list-link"
+            >Map Products</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/getToken/index.html"
+            class="navigation-list-link"
+            >Get Token</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/getCouponCode/index.html"
+            class="navigation-list-link"
+            >Coupon Code</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/getCouponDetails/index.html"
+            class="navigation-list-link"
+            >Coupon Details</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/cancelCoupon/index.html"
+            class="navigation-list-link"
+            >Cancel Coupon</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/redeemToken/index.html"
+            class="navigation-list-link"
+            >Redeem Token</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/updateCoupon/index.html"
+            class="navigation-list-link"
+            >Update Coupon</a
+          ></li></ul></li><li
+      class="navigation-list-item"
+    ><a
+        href="../../docs/LMSprocessflowdiadram/index.html"
+        class="navigation-list-link"
+        >LMS Process Flow Diagram</a
+      ></li><li
+      class="navigation-list-item active"
+    ><a
+        href="../../docs/features/index.html"
+        class="navigation-list-link"
+        >Features</a
+      ><ul class="navigation-list-child-list"><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/dashboard/index.html"
+            class="navigation-list-link"
+            >Dashboard</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/admissions/index.html"
+            class="navigation-list-link"
+            >Admissions</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/orders/index.html"
+            class="navigation-list-link"
+            >Orders</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/GenerateCoupons/index.html"
+            class="navigation-list-link"
+            >Generate Coupons</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/partnerResponse/index.html"
+            class="navigation-list-link"
+            >Partner Responses</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/fileImportExport/index.html"
+            class="navigation-list-link"
+            >File Import/Export</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/partner/index.html"
+            class="navigation-list-link"
+            >Partner</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/outlet/index.html"
+            class="navigation-list-link"
+            >Outlet</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/product/index.html"
+            class="navigation-list-link"
+            >Product</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/admissionToken/index.html"
+            class="navigation-list-link"
+            >Admission Token</a
+          ></li><li
+          class="navigation-list-item  active"
+        ><a
+            href="../../docs/partnerContract/index.html"
+            class="navigation-list-link active"
+            >Partner Contract</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/airport/index.html"
+            class="navigation-list-link"
+            >Port/Station</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/users/index.html"
+            class="navigation-list-link"
+            >Users</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/members/index.html"
+            class="navigation-list-link"
+            >Members</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/devices/index.html"
+            class="navigation-list-link"
+            >Devices</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/vendor/index.html"
+            class="navigation-list-link"
+            >Vendor</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/tax/index.html"
+            class="navigation-list-link"
+            >Tax</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/country/index.html"
+            class="navigation-list-link"
+            >Country</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/pincode/index.html"
+            class="navigation-list-link"
+            >Pincode</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/receiptTemplate/index.html"
+            class="navigation-list-link"
+            >Recipt Template</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/token/index.html"
+            class="navigation-list-link"
+            >Token</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/module/index.html"
+            class="navigation-list-link"
+            >Module</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/action/index.html"
+            class="navigation-list-link"
+            >Action</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/role/index.html"
+            class="navigation-list-link"
+            >Role</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/globalSettings/index.html"
+            class="navigation-list-link"
+            >Global Settings</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/AdmissionPOS/index.html"
+            class="navigation-list-link"
+            >Admission POS</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/DMR/index.html"
+            class="navigation-list-link"
+            >DMR</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/AdmissionflowsviaSunmiDevice/index.html"
+            class="navigation-list-link"
+            >Admission flows via Sunmi Device</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/WalkinPOS/index.html"
+            class="navigation-list-link"
+            >Walkin POS</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/FailedAdmissions/index.html"
+            class="navigation-list-link"
+            >Failed Admissions</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/PartnerMigration/index.html"
+            class="navigation-list-link"
+            >Partner Migration</a
+          ></li></ul></li><li
+      class="navigation-list-item"
+    ><a
+        href="../../docs/ReleaseLogs/index.html"
+        class="navigation-list-link"
+        >Release Logs</a
+      ><ul class="navigation-list-child-list"><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/FirstRelease/index.html"
+            class="navigation-list-link"
+            >Release Notes - Build 1.1.23.01-07</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/SecondRelease/index.html"
+            class="navigation-list-link"
+            >Release Notes - Build 1.1.23.01-20</a
+          ></li></ul></li></ul>
+</nav>
+
+      </div>
+      <!-- <footer class="site-footer">
+        <p class="text-small text-grey-dk-000 mb-4">This site is created by <a href="#">C Simplify IT</a>, for Samvad.</p>
+      </footer> -->
+    </div>
+    <div class="main-content-wrap js-main-content" tabindex="0">
+      <div class="main-content">
+        <div class="page-header js-page-header">
+          
+          <div class="search">
+            <div class="search-input-wrap">
+              <input type="text" class="js-search-input search-input" tabindex="0" placeholder="Search PPG LMS Documentation" aria-label="Search PPG LMS Documentation" autocomplete="off">
+              <svg width="14" height="14" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" class="search-icon"><title>Search</title><g fill-rule="nonzero"><path d="M17.332 20.735c-5.537 0-10-4.6-10-10.247 0-5.646 4.463-10.247 10-10.247 5.536 0 10 4.601 10 10.247s-4.464 10.247-10 10.247zm0-4c3.3 0 6-2.783 6-6.247 0-3.463-2.7-6.247-6-6.247s-6 2.784-6 6.247c0 3.464 2.7 6.247 6 6.247z"/><path d="M11.672 13.791L.192 25.271 3.02 28.1 14.5 16.62z"/></g></svg>
+            </div>
+            <div class="js-search-results search-results-wrap"></div>
+          </div>
+          
+        </div>
+        <div class="page">
+          <div id="main-content" class="page-content" role="main">
+          <h2><strong>Partner Contract</strong></h2>
+<p>
+  You can add new contract manually or import complete file containing list of
+  contracts and their details. Also, edit existing contract's details in the
+  system for futher use.
+</p>
+<p>
+  "Partner Contract" tab is accessiable from the sidebar as a "Masters" submenu
+  item. Click on it to get in-depth data view of all the contracts.
+</p>
+<img
+  src="../../assets/images/partnerContractTab.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  You can search for the contract(s) by entering its details in the search
+  field.
+</p>
+<img
+  src="../../assets/images/searchPartnerContact.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  Or, you can click on dropdown icon for advance serach in which you are having
+  more option to filter out list.
+</p>
+<img
+  src="../../assets/images/advSearchContract.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Reset" button to reset the form values.</p>
+<img
+  src="../../assets/images/resetBtnContract.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Search" button to search for the result.</p>
+<img
+  src="../../assets/images/searchBtnContract.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>You can find contracts list in the table.</p>
+<img
+  src="../../assets/images/contractTable.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  You can view contract's details by double click on that row of the table for
+  whose details you want to see.
+</p>
+<img
+  src="../../assets/images/dblClickContract.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  System then populates a screen where you can see the complete detail of that
+  particular contract including partner name, tax identification number, partner
+  type, contract type, date, etc.
+</p>
+<img
+  src="../../assets/images/editContract.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  If quota is defined on partner contract level then then this field displays if
+  the defined quota is refreshed on daily/ monthly/ yearly basis.
+</p>
+<img
+  src="../../assets/images/PartnerContractQuotaRefresh.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  The quota in this field displays the total quota of all the tokens associated
+  to this partner contract. If the total quota of tokens is 10 then firstly
+  uncheck the checkbox against unlimited then a field will appear enter '10' in
+  the field. This is how you bind combined quota for more than one token on
+  partner contract level
+</p>
+<img
+  src="../../assets/images/PartnerQuotaNumber.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<p>
+  Also, you can see one horizontal tab in the details page below the form fields
+  - Contract Tokens.
+</p>
+<img
+  src="../../assets/images/contractTokenTab.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  By default "Contract Tokens" data is visible, where you can see available
+  tokens for that contract.
+</p>
+<img
+  src="../../assets/images/contractTokenTable.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  You can see the available contract token details and other information in the
+  table.
+</p>
+<img
+  src="../../assets/images/contractTokenTable.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  You can also add new token for for the contract by clicking on "Add Token"
+  button present on the top right of the table.
+</p>
+<img
+  src="../../assets/images/addContractToken.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  In this screen, you can check the checkbox(es) to select tokens at a time.
+</p>
+<img
+  src="../../assets/images/addToken.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Reset" button to reset the edited information.</p>
+<img
+  src="../../assets/images/resetToken.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Add Token" button to save the token details.</p>
+<img
+  src="../../assets/images/addToken1.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<p>Click on "Submit" button to submit created partner contract.</p>
+<img
+  src="../../assets/images/PartnerContractSubmitBTN.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  the status of submited partner contract should be "Approval pending" as shown
+  below
+</p>
+<img
+  src="../../assets/images/PartnerContractApprovalPending.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  To reject submitted partner contract click on "Reject" button and mention the
+  reason in pop up window.
+</p>
+<img
+  src="../../assets/images/PartnerContractRejectBTN.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>To approve submitted partner contract click on "Approve" button</p>
+<img
+  src="../../assets/images/PartnerContractApproveBTN.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<p>The status of approved contract should be "Approved" As shown below</p>
+<img
+  src="../../assets/images/PartnerContractApprovedStatus.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<p>Click on "Action History" button.</p>
+<img
+  src="../../assets/images/PCactionhistory.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  whatever action is performed on a particular contract, will get logged into
+  action history
+</p>
+<img
+  src="../../assets/images/ActionHistoryPopup.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>To renew the Partner Contract click on Renew Contract button.</p>
+<img
+  src="../../assets/images/PCRenewContract.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  It will open the popup for user, where you have to click on "Yes' button if
+  you want to renew contract. Else, click on the "No" button.
+</p>
+<img
+  src="../../assets/images/contractrenewyes.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  To add tokens in approved Partner contract then click on "Add Token" button.
+</p>
+<img
+  src="../../assets/images/AddTokenUpdate.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  Select the tokens which you want to add and click on update contract button.
+</p>
+<img
+  src="../../assets/images/Updatecontract.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Partner contract will get updated.</p>
+<img
+  src="../../assets/images/updatedcontract.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>To deactivate the created partner contract click on "Deactivate" button</p>
+<img
+  src="../../assets/images/PartnerContractDeactiveBTN.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  Mention the reason and comment for that partner contract then click on
+  "Deactive" button
+</p>
+<img
+  src="../../assets/images/PartnerContractReason.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>The status of deactivated partner contract should be "Deactivated"</p>
+
+<img
+  src="../../assets/images/PartnerContractDeactiveStatus.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<p>
+  You can also add new contract by clicking on "New" button present on the top
+  right corner on the main screen.
+</p>
+<img
+  src="../../assets/images/newContract.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Fill the following information to add new contract in the system.</p>
+<img
+  src="../../assets/images/contractDetails.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Reset" button to reset the form.</p>
+<img
+  src="../../assets/images/resetContract.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Save" button to save the filled details in the system.</p>
+<img
+  src="../../assets/images/saveDraftContract.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  Click on "Import" button so that you can import the complete file having
+  required data in one go.
+</p>
+<img
+  src="../../assets/images/importContract.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  Follow the steps present in "Import" tab present the sidenav of this
+  documentation.
+</p>
+<img
+  src="../../assets/images/importContactSteps.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  Detailed view of data of this screen can be exported by clicking on the Export
+  button placed at the top right corner of the screen. It downloads the details
+  in the form of an excel sheet for further use.
+</p>
+<img
+  src="../../assets/images/ExportPartnerContract.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p><strong>Below are the input fields used in this screen:</strong></p>
+<table class="table-bordered">
+  <tr>
+    <th>Name of the field</th>
+    <th>Entry Mode</th>
+    <th>Mandatory</th>
+    <th>Comments</th>
+  </tr>
+  <tr>
+    <td>Partner Name</td>
+    <td>Free text with dropdown</td>
+    <td>Yes</td>
+    <td>
+      You have to enter starting three alphabets of the partner name and it will
+      show you the result based on that, select it from dropdown.
+    </td>
+  </tr>
+  <tr>
+    <td>Tax Identification Number</td>
+    <td>View Only</td>
+    <td>-</td>
+    <td>System generated</td>
+  </tr>
+  <tr>
+    <td>Partner Type</td>
+    <td>View only</td>
+    <td>-</td>
+    <td>System Generated</td>
+  </tr>
+  <tr>
+    <td>Contract Starts On</td>
+    <td>Date</td>
+    <td>Yes</td>
+    <td>Enter/select the date on which contract will start</td>
+  </tr>
+  <tr>
+    <td>Contract Ends On</td>
+    <td>Date</td>
+    <td>Yes</td>
+    <td>Enter/select the date on which contract will end</td>
+  </tr>
+  <tr>
+    <td>Contract Type</td>
+    <td>Selection</td>
+    <td>Yes</td>
+    <td>Business Line could have following values - Global, Local, Regional</td>
+  </tr>
+  <tr>
+    <td>Status</td>
+    <td>View only</td>
+    <td>-</td>
+    <td>System generated</td>
+  </tr>
+  <tr>
+    <td>Last Modified On</td>
+    <td>View only</td>
+    <td>-</td>
+    <td>System generated</td>
+  </tr>
+  <tr>
+    <td>Last Modified By</td>
+    <td>View only</td>
+    <td>-</td>
+    <td>System generated</td>
+  </tr>
+  <tr>
+    <td>Contract Quota Refresh</td>
+    <td>-</td>
+    <td>Yes</td>
+    <td>
+      If quota is defined on partner contract level then then this field
+      displays if the defined quota is refreshed on daily/ monthly/ yearly
+      basis.
+    </td>
+  </tr>
+  <tr>
+    <td>Contract Quota (All Entitlements)</td>
+    <td>Checkbox/Number</td>
+    <td>Yes</td>
+    <td>
+      The quota in this field displays the total quota of all the tokens
+      associated to this partner contract. So you can either select "unlimited"
+      Checkbox or you can Enter the number and increase or decrease the values.
+    </td>
+  </tr>
+</table>
+
+
+          </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

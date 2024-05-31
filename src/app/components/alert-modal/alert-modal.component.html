@@ -1,0 +1,15 @@
+<div class="mat-typography">
+    <h2 mat-dialog-title>{{data.title}}</h2>
+    <div mat-dialog-content fxLayout="column" fxLayoutAlign="start center" style="text-align: center;"
+        [innerHtml]="data.message" [style.color]="textColor"></div>
+    <div mat-dialog-actions fxLayoutAlign="start center" style="text-align: center; margin-top:20px">
+        <button class="close-btn" mat-button mat-raised-button mat-dialog-close (click)="onClose(resConfirm)"
+            [hidden]="resConfirm === resUndef" [innerHtml]="data.labelConfirm"></button>
+        <button class="close-btnred" mat-button mat-raised-button mat-dialog-close (click)="onClose(resConfirmred)"
+            [hidden]="resConfirmred === resUndef" [innerHtml]="data.labelConfirmRed"></button>
+        <button class="deny-btn" mat-button mat-raised-button mat-dialog-close (click)="onClose(resDeny)"
+            [hidden]="resDeny === resUndef" [innerHtml]="data.labelDeny"></button>
+        <button class="cancel-btn" mat-button mat mat-raised-button mat-dialog-close (click)="onClose(resCancel)"
+            [hidden]="resCancel === resUndef" [innerHtml]="data.labelCancel"></button>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+.create-member-id-link {
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline;
+    margin-top: -71px;
+    margin-left: 60%;
+  }
+
+.memberID_validation{
+  position: relative;
+  text-decoration: underline;
+  cursor: pointer;
+  bottom: 64%;
+  left:76%;
+}
+.green-button {
+  color: green;
+}
+
+.red-button {
+  color: red;
+}

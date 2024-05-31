@@ -1,0 +1,337 @@
+.login {
+  height: 100vh;
+  width: 100%;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.login-card {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  width: 350px;
+  background: white;
+  margin: 0px auto;
+}
+.login-card .logo {
+  padding: 25px 0px 25px 0px;
+  background-color: lightgray;
+  text-align: center;
+}
+.login-card .login-fields {
+  padding: 15px 25px 25px;
+  background-color: white;
+}
+.login-card h1 {
+  font-size: 36px;
+  margin: 15px 0;
+  font-weight: 500;
+  line-height: 1.1;
+}
+.login-card h2 {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  display: block;
+  font-size: 16px;
+  margin: 0;
+  font-weight: normal;
+}
+.login-card .form-control {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 10px;
+  height: auto;
+  padding: 0;
+  border: none;
+}
+.login-card .form-control label {
+  width: 100%;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #3b3b3b;
+  font-size: 14px;
+  line-height: 1.42857143;
+}
+.login-card .form-control input.form-element {
+  width: 100%;
+  height: 34px;
+  color: #555;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+.login-card .forgot-passowrd a {
+  color: #337ab7;
+  text-decoration: none;
+  font-size: 14px;
+  line-height: 1.42857143;
+  margin: 0;
+  letter-spacing: initial;
+}
+.login-card .forgot-passowrd a:hover {
+  text-decoration: underline;
+}
+.login-card .action-button {
+  margin: 20px 0px 10px 0px;
+}
+.login-card .action-button .btn {
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  height: 40px;
+  width: 100%;
+  color: #fff;
+  background-color: #337ab7;
+  border: 0;
+  padding: 6px 12px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.login-card .action-button .btn:hover {
+  background-color: #286090;
+}
+.login-card .actions {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  font-size: 14px;
+}
+.login-card .actions a {
+  color: #337ab7;
+  text-decoration: none;
+  margin: 0 5px;
+  padding: 0 !important;
+  line-height: 1;
+}
+.login-card .actions a:hover {
+  text-decoration: underline;
+}
+
+.form-modal {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 11;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #909090;
+}
+.form-modal .action-button {
+  margin: 0px 0px 10px 0px;
+}
+.form-modal .action-button .btn {
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  height: 40px;
+  width: 100%;
+  color: #fff;
+  background-color: #337ab7;
+  border: 0;
+  padding: 6px 12px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.form-modal .action-button .btn:hover {
+  background-color: #286090;
+}
+.form-modal .form-modal-inner {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  width: 350px;
+  background: white;
+  margin: 0px auto;
+  padding: 35px;
+}
+.form-modal .scan-image {
+  width: 100%;
+}
+.form-modal .scan-image img {
+  width: 100%;
+}
+.form-modal .form-control {
+  border: 0;
+  height: auto;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 10px;
+}
+.form-modal .form-control label {
+  width: 100%;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #3b3b3b;
+  font-size: 14px;
+  line-height: 1.42857143;
+}
+.form-modal .form-control input.form-element {
+  width: 100%;
+  height: 34px;
+  color: #555;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+
+.login-page,
+.register-page {
+  height: 100vh;
+  min-height: 780px;
+  width: 100%;
+  background-image: url(../../assets/images/lawnextbg.svg);
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+  background-position: center left;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+.login-page .header-box,
+.register-page .header-box {
+  padding: 10px 80px 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+.login-page .header-box img,
+.register-page .header-box img {
+  height: 100px;
+}
+.login-page .login-wrapper,
+.register-page .login-wrapper {
+  padding: 0 80px;
+}
+.login-page .login-wrapper .login-card,
+.register-page .login-wrapper .login-card {
+  box-shadow: 0px 25px 20px rgba(0, 0, 0, 0.0705882353);
+  background: white;
+  border-radius: 10px;
+  width: auto;
+  max-width: 400px;
+  padding: 40px 40px;
+  margin: 0;
+}
+.login-page .login-wrapper h2,
+.register-page .login-wrapper h2 {
+  font-size: 22px;
+  color: black;
+  margin: 0 0 30px;
+  font-weight: 600;
+  position: relative;
+  padding-top: 0;
+}
+.login-page .login-wrapper h2::after,
+.register-page .login-wrapper h2::after {
+  content: "";
+  width: 27px;
+  height: 5px;
+  position: absolute;
+  bottom: 0;
+  background-color: #337ab7;
+  left: 0;
+  bottom: -10px;
+  border-radius: 5px;
+}
+.login-page .login-wrapper p,
+.register-page .login-wrapper p {
+  color: rgba(0, 0, 0, 0.5019607843);
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 16px;
+  font-weight: normal;
+}
+.login-page .login-wrapper .login-fields,
+.register-page .login-wrapper .login-fields {
+  padding: 0;
+}
+.login-page .login-wrapper .login-fields .form-control label,
+.register-page .login-wrapper .login-fields .form-control label {
+  margin-bottom: 0;
+  text-align: left;
+}
+.login-page .login-wrapper .login-fields .form-element,
+.register-page .login-wrapper .login-fields .form-element {
+  border: 1px solid #d0c8d6;
+  border-radius: 9px;
+  height: 60px;
+  margin-top: 5px;
+  padding: 5px 10px;
+  position: relative;
+}
+.login-page .login-wrapper .action-button .btn,
+.register-page .login-wrapper .action-button .btn {
+  border: 0;
+  height: 48px;
+  border-radius: 9px;
+  color: white;
+  transition: all 0.3s ease-in-out;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+}
+@media (max-width: 767px) {
+  .login-page,
+  .register-page {
+    padding-top: 130px;
+    background-position: right;
+    height: auto;
+    min-height: inherit;
+    padding-bottom: 30px;
+    background-position: right;
+    min-height: 100vh;
+  }
+  .login-page .header-box,
+  .register-page .header-box {
+    padding: 40px 20px;
+  }
+  .login-page .header-box img,
+  .register-page .header-box img {
+    height: 100px;
+  }
+  .login-page .login-wrapper,
+  .register-page .login-wrapper {
+    padding: 0 20px;
+  }
+  .login-page .login-wrapper .login-card,
+  .register-page .login-wrapper .login-card {
+    padding: 30px;
+  }
+}
+
+.register-page {
+  height: 100vh;
+  padding: 0 0 30px;
+  overflow-y: auto;
+  padding: 120px 0 30px;
+}
+.register-page form {
+  padding: 0 !important;
+}
+.register-page .form-control {
+  text-align: left;
+}
+.register-page .login-card .action-button {
+  margin: 10px 0;
+  width: 100%;
+} /*# sourceMappingURL=login.component.css.map */

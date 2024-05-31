@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+
+  <title>Orders - PPG LMS Documentation</title>
+  
+  <link
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+    crossorigin="anonymous"
+  />
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="../../assets/css/just-the-docs.css"
+  />
+  <!--Different Browser icon for All Devices -->
+  <link
+    href="../../assets/images/fav_icon.ico"
+    rel="icon"
+    type="image/x-icon"
+  />
+  <!--IE Browser icon for All Devices -->
+  <link
+    href="../../assets/images/fav_icon.ico"
+    rel="shortcut icon"
+    type="image/x-icon"
+  />
+  <!--Icon for Devices -->
+  <link
+    href="../../assets/images/fav_icon.ico"
+    rel="apple-touch-icon"
+  />
+  <!--Icon for Devices -->
+  <link
+    href="../../assets/images/fav_icon.ico"
+    rel="apple-touch-icon-precomposed"
+  />
+
+  <script
+    type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"
+  ></script>
+  <script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"
+  ></script>
+  
+  <script
+    type="text/javascript"
+    src="../../assets/js/vendor/lunr.min.js"
+  ></script>
+  
+
+  <script
+    type="text/javascript"
+    src="../../assets/js/just-the-docs.js"
+  ></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+
+<body>
+  <div class="page-wrap">
+    <div class="side-bar">
+      <div class="site-header">
+        <a href="../.." class="site-title lh-tight">PPG LMS</a>
+        <button class="menu-button fs-3 js-main-nav-trigger" data-text-toggle="Hide" type="button">Menu</button>
+      </div>
+
+      <div class="navigation main-nav js-main-nav">
+        <nav role="navigation" aria-label="Main navigation">
+  <ul class="navigation-list"><li
+      class="navigation-list-item"
+    ><a
+        href="../../index.html"
+        class="navigation-list-link"
+        >Getting Started</a
+      ></li><li
+      class="navigation-list-item"
+    ><a
+        href="../../docs/overview/index.html"
+        class="navigation-list-link"
+        >Overview</a
+      ></li><li
+      class="navigation-list-item"
+    ><a
+        href="../../docs/newLmsUserSetup/index.html"
+        class="navigation-list-link"
+        >New LMS User Setup</a
+      ></li><li
+      class="navigation-list-item"
+    ><a
+        href="../../docs/setUpNewAdmissionToken/index.html"
+        class="navigation-list-link"
+        >Setup New Admission Token</a
+      ></li><li
+      class="navigation-list-item"
+    ><a
+        href="../../docs/guestAdmission/index.html"
+        class="navigation-list-link"
+        >Guest Admission</a
+      ></li><li
+      class="navigation-list-item"
+    ><a
+        href="../../docs/securityMatrix/index.html"
+        class="navigation-list-link"
+        >Security matrix</a
+      ></li><li
+      class="navigation-list-item"
+    ><a
+        href="../../docs/offlineParthnerIntergration/index.html"
+        class="navigation-list-link"
+        >Offline Partner Integration</a
+      ></li><li
+      class="navigation-list-item"
+    ><a
+        href="../../docs/API%20Documentation/index.html"
+        class="navigation-list-link"
+        >API Documentation</a
+      ><ul class="navigation-list-child-list"><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/login/index.html"
+            class="navigation-list-link"
+            >Login</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/profile/index.html"
+            class="navigation-list-link"
+            >Profile</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/changePassword/index.html"
+            class="navigation-list-link"
+            >Change Password</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/certificateList/index.html"
+            class="navigation-list-link"
+            >Certificate List</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/cardSave/index.html"
+            class="navigation-list-link"
+            >Card Save</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/verifyToken/index.html"
+            class="navigation-list-link"
+            >Verify Token</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/boardingPassScan/index.html"
+            class="navigation-list-link"
+            >Boarding Pass Scan</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/boardingPassSave/index.html"
+            class="navigation-list-link"
+            >Boarding Pass Save</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/boardingPassId/index.html"
+            class="navigation-list-link"
+            >Boarding Pass ID</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/corporateTokens/index.html"
+            class="navigation-list-link"
+            >Corporates Token</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/corporates/index.html"
+            class="navigation-list-link"
+            >Corporates</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/redeemCoupon/index.html"
+            class="navigation-list-link"
+            >Redeem Coupon</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/getFacilities/index.html"
+            class="navigation-list-link"
+            >Get Facilities</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/getProducts/index.html"
+            class="navigation-list-link"
+            >Get Products</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/getOrders/index.html"
+            class="navigation-list-link"
+            >Get Orders</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/getOutlets/index.html"
+            class="navigation-list-link"
+            >Get Outlets</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/getEntitlements/index.html"
+            class="navigation-list-link"
+            >Get Entitlements</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/getadmissions/index.html"
+            class="navigation-list-link"
+            >Get Admissions</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/blackListedToken/index.html"
+            class="navigation-list-link"
+            >Blacklisted Token</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/whitelistedToken/index.html"
+            class="navigation-list-link"
+            >Whitelisted Token</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/mapOutlets/index.html"
+            class="navigation-list-link"
+            >Map Outlets</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/mapProducts/index.html"
+            class="navigation-list-link"
+            >Map Products</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/getToken/index.html"
+            class="navigation-list-link"
+            >Get Token</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/getCouponCode/index.html"
+            class="navigation-list-link"
+            >Coupon Code</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/getCouponDetails/index.html"
+            class="navigation-list-link"
+            >Coupon Details</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/cancelCoupon/index.html"
+            class="navigation-list-link"
+            >Cancel Coupon</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/redeemToken/index.html"
+            class="navigation-list-link"
+            >Redeem Token</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/updateCoupon/index.html"
+            class="navigation-list-link"
+            >Update Coupon</a
+          ></li></ul></li><li
+      class="navigation-list-item"
+    ><a
+        href="../../docs/LMSprocessflowdiadram/index.html"
+        class="navigation-list-link"
+        >LMS Process Flow Diagram</a
+      ></li><li
+      class="navigation-list-item active"
+    ><a
+        href="../../docs/features/index.html"
+        class="navigation-list-link"
+        >Features</a
+      ><ul class="navigation-list-child-list"><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/dashboard/index.html"
+            class="navigation-list-link"
+            >Dashboard</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/admissions/index.html"
+            class="navigation-list-link"
+            >Admissions</a
+          ></li><li
+          class="navigation-list-item  active"
+        ><a
+            href="../../docs/orders/index.html"
+            class="navigation-list-link active"
+            >Orders</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/GenerateCoupons/index.html"
+            class="navigation-list-link"
+            >Generate Coupons</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/partnerResponse/index.html"
+            class="navigation-list-link"
+            >Partner Responses</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/fileImportExport/index.html"
+            class="navigation-list-link"
+            >File Import/Export</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/partner/index.html"
+            class="navigation-list-link"
+            >Partner</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/outlet/index.html"
+            class="navigation-list-link"
+            >Outlet</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/product/index.html"
+            class="navigation-list-link"
+            >Product</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/admissionToken/index.html"
+            class="navigation-list-link"
+            >Admission Token</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/partnerContract/index.html"
+            class="navigation-list-link"
+            >Partner Contract</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/airport/index.html"
+            class="navigation-list-link"
+            >Port/Station</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/users/index.html"
+            class="navigation-list-link"
+            >Users</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/members/index.html"
+            class="navigation-list-link"
+            >Members</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/devices/index.html"
+            class="navigation-list-link"
+            >Devices</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/vendor/index.html"
+            class="navigation-list-link"
+            >Vendor</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/tax/index.html"
+            class="navigation-list-link"
+            >Tax</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/country/index.html"
+            class="navigation-list-link"
+            >Country</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/pincode/index.html"
+            class="navigation-list-link"
+            >Pincode</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/receiptTemplate/index.html"
+            class="navigation-list-link"
+            >Recipt Template</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/token/index.html"
+            class="navigation-list-link"
+            >Token</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/module/index.html"
+            class="navigation-list-link"
+            >Module</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/action/index.html"
+            class="navigation-list-link"
+            >Action</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/role/index.html"
+            class="navigation-list-link"
+            >Role</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/globalSettings/index.html"
+            class="navigation-list-link"
+            >Global Settings</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/AdmissionPOS/index.html"
+            class="navigation-list-link"
+            >Admission POS</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/DMR/index.html"
+            class="navigation-list-link"
+            >DMR</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/AdmissionflowsviaSunmiDevice/index.html"
+            class="navigation-list-link"
+            >Admission flows via Sunmi Device</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/WalkinPOS/index.html"
+            class="navigation-list-link"
+            >Walkin POS</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/FailedAdmissions/index.html"
+            class="navigation-list-link"
+            >Failed Admissions</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/PartnerMigration/index.html"
+            class="navigation-list-link"
+            >Partner Migration</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/BoardingPass/index.html"
+            class="navigation-list-link"
+            >Boarding Pass</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/CustomerInteraction/index.html"
+            class="navigation-list-link"
+            >Customer Interaction</a
+          ></li></ul></li><li
+      class="navigation-list-item"
+    ><a
+        href="../../docs/ReleaseLogs/index.html"
+        class="navigation-list-link"
+        >Release Logs</a
+      ><ul class="navigation-list-child-list"><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/FirstRelease/index.html"
+            class="navigation-list-link"
+            >Release Notes - Build 1.1.23.01-07</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/SecondRelease/index.html"
+            class="navigation-list-link"
+            >Release Notes - Build 1.1.23.01-20</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/ThirdRelease/index.html"
+            class="navigation-list-link"
+            >Release Notes - Build 1.1.23.02-20</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/FourthRelease/index.html"
+            class="navigation-list-link"
+            >Release Notes - Build 1.1.23.02-24</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/fifthRelease/index.html"
+            class="navigation-list-link"
+            >Release Notes - Build 1.1.23.03-16</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/SixthRelease/index.html"
+            class="navigation-list-link"
+            >Release Notes - Build 1.1.23.03-25</a
+          ></li><li
+          class="navigation-list-item "
+        ><a
+            href="../../docs/SeventhRelease/index.html"
+            class="navigation-list-link"
+            >Release Notes - Build 1.1.23.03-31</a
+          ></li></ul></li></ul>
+</nav>
+
+      </div>
+      <!-- <footer class="site-footer">
+        <p class="text-small text-grey-dk-000 mb-4">This site is created by <a href="#">C Simplify IT</a>, for Samvad.</p>
+      </footer> -->
+    </div>
+    <div class="main-content-wrap js-main-content" tabindex="0">
+      <div class="main-content">
+        <div class="page-header js-page-header">
+          
+          <div class="search">
+            <div class="search-input-wrap">
+              <input type="text" class="js-search-input search-input" tabindex="0" placeholder="Search PPG LMS Documentation" aria-label="Search PPG LMS Documentation" autocomplete="off">
+              <svg width="14" height="14" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" class="search-icon"><title>Search</title><g fill-rule="nonzero"><path d="M17.332 20.735c-5.537 0-10-4.6-10-10.247 0-5.646 4.463-10.247 10-10.247 5.536 0 10 4.601 10 10.247s-4.464 10.247-10 10.247zm0-4c3.3 0 6-2.783 6-6.247 0-3.463-2.7-6.247-6-6.247s-6 2.784-6 6.247c0 3.464 2.7 6.247 6 6.247z"/><path d="M11.672 13.791L.192 25.271 3.02 28.1 14.5 16.62z"/></g></svg>
+            </div>
+            <div class="js-search-results search-results-wrap"></div>
+          </div>
+          
+        </div>
+        <div class="page">
+          <div id="main-content" class="page-content" role="main">
+          <h2><strong>Orders</strong></h2>
+<p>
+  In 'Orders' screen user can see all the admissions done in the outlet with its
+  in-depth details.
+</p>
+<iframe
+  width="700"
+  height="315"
+  src="https://www.youtube.com/embed/VU0uP94EL80"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  allowfullscreen
+></iframe>
+<p></p>
+<p>
+  "Orders" tab is accessible from the sidebar. Click on it to get an in-depth
+  data view of the admissions.
+</p>
+<img
+  src="../../assets/images/ordersTab.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  User can search for the order(s) by entering its details in the search field.
+</p>
+<img
+  src="../../assets/images/searchOrder.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  Or, User can click on the dropdown icon for advanced search in which options
+  are present as different fields, use those to filter the search.
+</p>
+<img
+  src="../../assets/images/advSearchOrder.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Reset" button to reset the form values.</p>
+<img
+  src="../../assets/images/resetBtnOrder.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on "Search" button to search for the result.</p>
+<img
+  src="../../assets/images/searchBtnOrder.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>User can find the orders list in the table.</p>
+<img
+  src="../../assets/images/ordersTb.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  You can view order's details by double click on that row of the table for
+  whose details you want to see.
+</p>
+<img
+  src="../../assets/images/dblClickIOrder.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  System then populates a screen where you can see the complete detail of that
+  particular order including Order Number, Receipt No., Order Amount, etc.
+</p>
+<img
+  src="../../assets/images/orderDetails.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  This screen has three horizontal tabs namely, Items, Payments, Boarding Pass.
+</p>
+<img
+  src="../../assets/images/itemsList.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  The Items tab gives a detailed view of products/services availed at or during
+  the admission. Name, SKU, Quantity, Price Tax etc.
+</p>
+<img
+  src="../../assets/images/itemstable.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+<p>
+  Payments tab shows the payment details. Unique Payment ID, Mode & Amount of
+  payment, Collected by, Collect Date etc.
+</p>
+<img
+  src="../../assets/images/paymenttable.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  The Boarding Pass tab gives a glimpse of the flight details obtained after
+  scanning or manually entering the boarding pass details of the guest. Each
+  guest will show its unique boarding pass and when scanned while admission the
+  details will be displayed in this tab.
+</p>
+<img
+  src="../../assets/images/boardingpasstable.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  <strong
+    >How to add an item to an existing order for an on-going admission.
+  </strong>
+</p>
+<p>
+  Once the guest can is admitted to access the lounge, the guest can avail
+  add-on products or services. The new item can be added to the order by GSO.
+  GSO needs to go to 'Order' screen, Double click on the order in which new item
+  has to be added.
+</p>
+<img
+  src="../../assets/images/OrderNewitemdbclick.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Scroll down, under the Items tab and click on 'New Item'.</p>
+<img
+  src="../../assets/images/OrderAddNewItem.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  In product field, enter the product/service name the guest wants to avail.
+  Enter first 3 letters of product/service name the list of options will
+  populate, select one option. Enter the quantity under quantity field. Enter
+  remarks (if applicable).
+</p>
+<img
+  src="../../assets/images/OrderNewItemDetails.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on 'Add Product'.</p>
+<img
+  src="../../assets/images/OrderClickAddProduct.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  The details will be displayed below once 'Add Product' is clicked. This is
+  editable, GSO can edit the quantity or delete the product(s) if needed. Click
+  on 'Add Product(s) to order'.
+</p>
+<img
+  src="../../assets/images/AddProductToOrder.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  Click on 'Collect Pending Amount' to collect the payment of newly added
+  product/service.
+</p>
+<img
+  src="../../assets/images/CollectPendingAmount.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  Now the payment details to collect payment will be shown below. Choose one
+  'Payment Type'. Click on 'Collect Payment' Once the payment has been collected
+  'Save Payment'.
+</p>
+<img
+  src="../../assets/images/ordersavepayment.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on 'Close' button.</p>
+<img
+  src="../../assets/images/OrderNewItemclose.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  Payment can be collected later as well if the guest wants to pay later. In the
+  order screen the orders with pending payment are highlighted in Red colour.
+  Double click on the order and repeat the above stated procedure to collect
+  payment.
+</p>
+
+<img
+  src="../../assets/images/OrderNewItemDone.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>This feature is to settle the payment collected by the GSO.</p>
+<img
+  src="../../assets/images/orderSettle.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  Click on the Settle button from the top right corner of the 'Order' screen.
+  User (name of the GSO), Select the Date & Time (between which you want to
+  settle the payment).
+</p>
+<img
+  src="../../assets/images/settleDetails.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  Click on the search icon next to 'End Time'. It will populate the table
+  showing the payments pending for settlement.
+</p>
+<img
+  src="../../assets/images/settleTable.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  On the left side, checkboxes are given against each payment details (Also,
+  select all is given on the top). Select the payments to be settled.
+</p>
+<img
+  src="../../assets/images/PaymentSelect.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on 'Mark as settled' to settle the payment.</p>
+<img
+  src="../../assets/images/MarkAsSettle.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>
+  Click on 'Generate PDF' to generate the settlement report in pdf format to
+  further reference.
+</p>
+<img
+  src="../../assets/images/SettlePDF.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+<p>Click on the 'Close' button to exit the screen.</p>
+<img
+  src="../../assets/images/SettleClose.jpg"
+  alt=""
+  style="margin-bottom: 30px; box-shadow: 5px 8px 12px #33333361"
+/>
+
+
+          </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+
+  <title>Coupon Code - PPG LMS Documentation</title>
+  
+  <link
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+    crossorigin="anonymous"
+  />
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+  />
+  <link
+    rel="stylesheet"
+    href="../../assets/css/just-the-docs.css"
+  />
+  <!--Different Browser icon for All Devices -->
+  <link
+    href="../../assets/images/fav_icon.ico"
+    rel="icon"
+    type="image/x-icon"
+  />
+  <!--IE Browser icon for All Devices -->
+  <link
+    href="../../assets/images/fav_icon.ico"
+    rel="shortcut icon"
+    type="image/x-icon"
+  />
+  <!--Icon for Devices -->
+  <link
+    href="../../assets/images/fav_icon.ico"
+    rel="apple-touch-icon"
+  />
+  <!--Icon for Devices -->
+  <link
+    href="../../assets/images/fav_icon.ico"
+    rel="apple-touch-icon-precomposed"
+  />
+
+  <script
+    type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"
+  ></script>
+  <script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"
+  ></script>
+  
+  <script
+    type="text/javascript"
+    src="../../assets/js/vendor/lunr.min.js"
+  ></script>
+  
+
+  <script
+    type="text/javascript"
+    src="../../assets/js/just-the-docs.js"
+  ></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+
+<body>
+  <div class="page-wrap">
+    <div class="side-bar">
+      <div class="site-header">
+        <a href="../.." class="site-title lh-tight">PPG LMS</a>
+        <button class="menu-button fs-3 js-main-nav-trigger" data-text-toggle="Hide" type="button">Menu</button>
+      </div>
+
+      <div class="navigation main-nav js-main-nav">
+        <nav role="navigation" aria-label="Main navigation">
+          <ul class="navigation-list"><li
+              class="navigation-list-item"
+            ><a
+                href="../../index.html"
+                class="navigation-list-link"
+                >Getting Started</a
+              ></li><li
+              class="navigation-list-item"
+            ><a
+                href="../../docs/overview/index.html"
+                class="navigation-list-link"
+                >Overview</a
+              ></li><li
+              class="navigation-list-item"
+            ><a
+                href="../../docs/newLmsUserSetup/index.html"
+                class="navigation-list-link"
+                >New LMS User Setup</a
+              ></li><li
+              class="navigation-list-item"
+            ><a
+                href="../../docs/setUpNewAdmissionToken/index.html"
+                class="navigation-list-link"
+                >Setup New Admission Token</a
+              ></li><li
+              class="navigation-list-item"
+            ><a
+                href="../../docs/guestAdmission/index.html"
+                class="navigation-list-link"
+                >Guest Admission</a
+              ></li><li
+              class="navigation-list-item"
+            ><a
+                href="../../docs/offlineParthnerIntergration/index.html"
+                class="navigation-list-link"
+                >Offline Partner Integration</a
+              ></li><li
+              class="navigation-list-item"
+            ><a
+                href="../../docs/securityMatrix/index.html"
+                class="navigation-list-link"
+                >Security matrix</a
+              ></li><li
+              class="navigation-list-item"
+            ><a
+                href="../../docs/API%20Documentation/index.html"
+                class="navigation-list-link"
+                >API Documentation</a
+              ><ul class="navigation-list-child-list"><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/login/index.html"
+                    class="navigation-list-link"
+                    >Login</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/profile/index.html"
+                    class="navigation-list-link"
+                    >Profile</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/changePassword/index.html"
+                    class="navigation-list-link"
+                    >Change Password</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/certificateList/index.html"
+                    class="navigation-list-link"
+                    >Certificate List</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/cardSave/index.html"
+                    class="navigation-list-link"
+                    >Card Save</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/verifyToken/index.html"
+                    class="navigation-list-link"
+                    >Verify Token</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/boardingPassScan/index.html"
+                    class="navigation-list-link"
+                    >Boarding Pass Scan</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/boardingPassSave/index.html"
+                    class="navigation-list-link"
+                    >Boarding Pass Save</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/boardingPassId/index.html"
+                    class="navigation-list-link"
+                    >Boarding Pass ID</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/corporateTokens/index.html"
+                    class="navigation-list-link"
+                    >Corporates Token</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/corporates/index.html"
+                    class="navigation-list-link"
+                    >Corporates</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/redeemCoupon/index.html"
+                    class="navigation-list-link"
+                    >Redeem Coupon</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getFacilities/index.html"
+                    class="navigation-list-link"
+                    >Get Facilities</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getProducts/index.html"
+                    class="navigation-list-link"
+                    >Get Products</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getOrders/index.html"
+                    class="navigation-list-link"
+                    >Get Orders</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getOutlets/index.html"
+                    class="navigation-list-link"
+                    >Get Outlets</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getEntitlements/index.html"
+                    class="navigation-list-link"
+                    >Get Entitlements</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getadmissions/index.html"
+                    class="navigation-list-link"
+                    >Get Admissions</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/blackListedToken/index.html"
+                    class="navigation-list-link"
+                    >Blacklisted Token</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/whitelistedToken/index.html"
+                    class="navigation-list-link"
+                    >Whitelisted Token</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/mapOutlets/index.html"
+                    class="navigation-list-link"
+                    >Map Outlets</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/mapProducts/index.html"
+                    class="navigation-list-link"
+                    >Map Products</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getToken/index.html"
+                    class="navigation-list-link"
+                    >Get Token</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getCouponCode/index.html"
+                    class="navigation-list-link"
+                    >Coupon Code</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/getCouponDetails/index.html"
+                    class="navigation-list-link"
+                    >Coupon Details</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/cancelCoupon/index.html"
+                    class="navigation-list-link"
+                    >Cancel Coupon</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/redeemToken/index.html"
+                    class="navigation-list-link"
+                    >Redeem Token</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/updateCoupon/index.html"
+                    class="navigation-list-link"
+                    >Update Coupon</a
+                  ></li></ul></li><li
+              class="navigation-list-item"
+            ><a
+                href="../../docs/LMSprocessflowdiadram/index.html"
+                class="navigation-list-link"
+                >LMS Process Flow Diagram</a
+              ></li><li
+              class="navigation-list-item active"
+            ><a
+                href="../../docs/features/index.html"
+                class="navigation-list-link"
+                >Features</a
+              ><ul class="navigation-list-child-list"><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/dashboard/index.html"
+                    class="navigation-list-link"
+                    >Dashboard</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/admissions/index.html"
+                    class="navigation-list-link"
+                    >Admissions</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/orders/index.html"
+                    class="navigation-list-link"
+                    >Orders</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/GenerateCoupons/index.html"
+                    class="navigation-list-link active"
+                    >Generate Coupons</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/partnerResponse/index.html"
+                    class="navigation-list-link"
+                    >Partner Responses</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/fileImportExport/index.html"
+                    class="navigation-list-link"
+                    >File Import/Export</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/partner/index.html"
+                    class="navigation-list-link"
+                    >Partner</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/outlet/index.html"
+                    class="navigation-list-link"
+                    >Outlet</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/product/index.html"
+                    class="navigation-list-link"
+                    >Product</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/admissionToken/index.html"
+                    class="navigation-list-link"
+                    >Admission Token</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/partnerContract/index.html"
+                    class="navigation-list-link"
+                    >Partner Contract</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/airport/index.html"
+                    class="navigation-list-link"
+                    >Port/Station</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/users/index.html"
+                    class="navigation-list-link"
+                    >Users</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/members/index.html"
+                    class="navigation-list-link"
+                    >Members</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/devices/index.html"
+                    class="navigation-list-link"
+                    >Devices</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/vendor/index.html"
+                    class="navigation-list-link"
+                    >Vendor</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/tax/index.html"
+                    class="navigation-list-link"
+                    >Tax</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/country/index.html"
+                    class="navigation-list-link"
+                    >Country</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/pincode/index.html"
+                    class="navigation-list-link"
+                    >Pincode</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/receiptTemplate/index.html"
+                    class="navigation-list-link"
+                    >Recipt Template</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/token/index.html"
+                    class="navigation-list-link"
+                    >Token</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/module/index.html"
+                    class="navigation-list-link"
+                    >Module</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/action/index.html"
+                    class="navigation-list-link"
+                    >Action</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/role/index.html"
+                    class="navigation-list-link"
+                    >Role</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/globalSettings/index.html"
+                    class="navigation-list-link"
+                    >Global Settings</a
+                  ></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/AdmissionPOS/index.html"
+                    class="navigation-list-link"
+                    >Admission POS</a
+                  ></li><li
+                  class="navigation-list-item  "
+                ><a
+                    href="../../docs/DMR/index.html"
+                    class="navigation-list-link "
+                    >DMR</a
+                  ></li>
+                  <li class="navigation-list-item "><a
+                        href="../../docs/AdmissionflowsviaSunmiDevice/index.html"
+                        class="navigation-list-link"
+                        >Admission flows via Sunmi Device</a
+                      ></li></ul></li><li
+                  class="navigation-list-item "
+                ><a
+                    href="../../docs/ReleaseLogs/index.html"
+                    class="navigation-list-link"
+                    >Release Logs</a
+                  ><ul class="navigation-list-child-list"><li
+                      class="navigation-list-item "
+                    ><a
+                        href="../../docs/FirstRelease/index.html"
+                        class="navigation-list-link"
+                        >Release Notes - Build 1.1.23.01-07</a
+                      ></li></ul></li></ul>
+      </div>
+      <!-- <footer class="site-footer">
+        <p class="text-small text-grey-dk-000 mb-4">This site is created by <a href="#">C Simplify IT</a>, for Samvad.</p>
+      </footer> -->
+    </div>
+    <div class="main-content-wrap js-main-content" tabindex="0">
+      <div class="main-content">
+        <div class="page-header js-page-header">
+          
+          <div class="search">
+            <div class="search-input-wrap">
+              <input type="text" class="js-search-input search-input" tabindex="0" placeholder="Search PPG LMS Documentation" aria-label="Search PPG LMS Documentation" autocomplete="off">
+              <svg width="14" height="14" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" class="search-icon"><title>Search</title><g fill-rule="nonzero"><path d="M17.332 20.735c-5.537 0-10-4.6-10-10.247 0-5.646 4.463-10.247 10-10.247 5.536 0 10 4.601 10 10.247s-4.464 10.247-10 10.247zm0-4c3.3 0 6-2.783 6-6.247 0-3.463-2.7-6.247-6-6.247s-6 2.784-6 6.247c0 3.464 2.7 6.247 6 6.247z"/><path d="M11.672 13.791L.192 25.271 3.02 28.1 14.5 16.62z"/></g></svg>
+            </div>
+            <div class="js-search-results search-results-wrap"></div>
+          </div>
+          
+        </div>
+        <div class="page">
+          <div id="main-content" class="page-content" role="main">
+          <h3 id="create-sku">Coupon Code</h3>
+
+<p>
+  This API allows publisher/partner to get coupon code by using the parameters
+  mentioned below:
+</p>
+
+<pre>
+  <code
+    >{
+      "PublicKey": "p9XEH8C1mMZk6eA",
+      "Token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmM5NmM4ZTQxZDhmNzU2YmM1OGUxMWUiLCJuYW1lIjoiYW1hbi5iYW5zYWwiLCJsYW5ndWFnZSI6ImVuIiwidXNlclRpbWVab25lIjoiVVRDICs4OjAwIiwidXNlckxhbmd1YWdlIjoiRW5nbGlzaCIsInVzZXJUeXBlIjoxLCJ1c2VyUGFydG5lcklEIjoiIiwidXNlck91dGxldCI6eyJfaWQiOiI2MmQ4ZWQ3ZDJlOTdjOTRkN2M4ODQ1MTIiLCJuYW1lIjoiS0xJQSIsImFpcnBvcnQiOnsiX2lkIjoiNjI1NGVkMGUxOTU3YjY4MDg5ZjRkZTNmIiwiYWlycG9ydENvdW50cnkiOnsiX2lkIjoiNjJhODEyMDc2MjE5MzA4ZTI4N2EyOTRkIiwibmFtZSI6Ik1hbGF5c2lhIn0sImFpcnBvcnRUaW1lem9uZSI6IlVUQyArODowMCJ9LCJjZXJ0aWZpY2F0ZUlEIjp7Il9pZCI6IjYyZDhlZDdjMmU5N2M5NGQ3Yzg4NDUwZiIsImV4cGlyZURhdGUiOiIyMDI0LTA3LTIxVDA2OjA5OjAwLjkxMFoiLCJwdWJsaWNLZXkiOiJNSUlDSWpBTkJna3Foa2lHOXcwQkFRRUZBQU9DQWc4QU1JSUNDZ0tDQWdFQTZrbTVWaGlZMHp2QitlUjZYZVdYUXhzQkZLVm1EM3FybWtGbllWZkJieWtQYlZlTURDbExIYUdxYjlBRkdNOFVSVXFZMGFweVJxTTI2NDkwK2JYNVlRb1pLSGdrUTEvWWVDSFR3VTBOOGpxWnhlK2FySm5VYWE5K3Uwc2QrM2lzZnArNUNudVlYcUpWaG9OQ002ZHVpa3d5RkZVNHQyeUZFVHNmQU9MaEh5UnBOcWgrMWJHWGt2UDlvMEhYRWZJelE2aml2SmtSNmYvMmlFL0psSEEzbVljRXBFdG9LOU4ya2JmbjRLNWxpSEx6amFWOUY5cE93U3Uyc3RPWmYzMFJUeWJ4NTNCU3gxUGMzdUdJTHNBUnEwNTVwTDIxWUFiYnFjR3NNdUdnaDZKZ2s2eGRsQmxVUjh6Q3BQYXhwak4rcjZycGtYWVRoaTlYUzZTWE9VeGlEc0R5NWprZGh1RU9VaUJpWTNZb1lScENJY0VQU0FTeVlWeXlpTlRBdFg5UWFsRWVJUkUrcnhEZVhDZjdFUmJCbDgyZlhjV2IwT1hlOVhkVkRER0dXTGxYeWdwQVQ2SnJrczZnRGVVNmNrcTZLT094L0c5eExmMFVQdWt3WjFaK0NIVkxjTEhYSEw0dzcrNCtkQzhWZDRpN2I1WklDRmczYXJJS2tsOTcrdUo5WEpoSTVKbU10Z1BsVjlVTkVRMmxhOWxRVm5aLzdxZ3NXOE9YTVFDZFZpNm1Va252RmI0UnllOGZOQzFEWkJCWmYrdDFuWkN3dmt6TTVIT0EvT2RVWldxSFovU1QxU21IS29pQVlzU3VWL0UyNHFEMTlzZU5VaWQvUmdRcXB3YWtTa1c0NHpYSWZnTUVEQkVqS1dBVG80Y1BDOVZ1dkRYWEN5TGl1dERUZTRVQ0F3RUFBUT09In19LCJzaXRlSUQiOjMxMDAsIm9yZ2FuaXNhdGlvbklEIjozMjAwLCJwZXJtaXNzaW9ucyI6W3siREVWSUNFUyI6WyJORVciLCJBRFZBTkNFX1NFQVJDSCIsIklNUE9SVCIsIlZJRVciLCJHT19CQUNLIiwiQ09OVElOVUUiLCJVUExPQUQiLCJDSE9PU0VfRklMRSIsIkVYQ0VMX1RFTVBMQVRFIiwiQ0xPU0VfSU1QT1JUIiwiSVNfQUNUSVZFIiwiU0FWRSIsIlJFU0VUIiwiREVMRVRFIiwiU0VBUkNIIiwiRURJVCJdfSx7Ik1PRFVMRSI6WyJORVciLCJERUxFVEUiLCJFRElUIiwiVklFVyIsIlNBVkUiLCJTRUFSQ0giLCJJTVBPUlQiXX0seyJST0xFIjpbIk5FVyIsIkRFTEVURSIsIlNBVkUiLCJFRElUIiwiVklFVyIsIlNFQVJDSCIsIklNUE9SVCJdfSx7IkFDVElPTiI6WyJORVciLCJJTVBPUlQiLCJBRFZBTkNFX1NFQVJDSCIsIkVESVQiLCJWSUVXIiwiU0FWRSIsIlNFQVJDSCJdfSx7IlVTRVJTIjpbIklNUE9SVCIsIkFEVkFOQ0VfU0VBUkNIIiwiU0VBUkNIIiwiR09fQkFDSyIsIkNPTlRJTlVFIiwiVVBMT0FEIiwiQ0hPT1NFX0ZJTEUiLCJFWENFTF9URU1QTEFURSIsIkNMT1NFX0lNUE9SVCIsIkFERF9VU0VSX1RPX09VVExFVCIsIlJPTEVTX0NIRUNLX0JPWCIsIlJFU0VUIiwiREVMRVRFIiwiRURJVCIsIlVTRVJfU1lOQyIsIk5FVyIsIlZJRVciXX0seyJBRE1JU1NJT04iOlsiQ0FOQ0VMIiwiRE9XTkxPQUQiLCJQUklOVCIsIkVESVQiLCJTQVZFIiwiUkVERUVNIiwiVkVSSUZZIiwiVklFVyIsIk5FVyIsIkFEVkFOQ0VfU0VBUkNIIiwiU0VBUkNIIiwiQ09MTEVDVCIsIk5FWFQiLCJSRVNFVCIsIlZFUklGWV9UT0tFTl9FTlRJVExFTUVOVFMiLCJXQUxLX0lOIiwiQ0hFQ0tfUEFSVE5FUiIsIkNIT09TRV9GSUxFIl19LHsiVkVORE9SIjpbIlZJRVciLCJVUERBVEUiLCJTQVZFIiwiREVMRVRFIiwiRURJVCIsIkFEVkFOQ0VfU0VBUkNIIiwiU0VBUkNIIiwiTkVXIiwiSU1QT1JUIl19LHsiUElOQ09ERSI6WyJTRUFSQ0giLCJWSUVXIiwiQURWQU5DRV9TRUFSQ0giLCJFRElUIiwiTkVXIiwiSU1QT1JUIl19LHsiQk9BUkRJTkdfUEFTU19UUkFOU0FDVElPTiI6WyJWSUVXIiwiU0VBUkNIIiwiUlVOX1JFUE9SVCIsIlJFU0VUIl19LHsiQ0FSRF9UUkFOU0FDVElPTl9SRVBPUlQiOlsiVklFVyIsIlNFQVJDSCIsIkVYUE9SVCIsIlJVTl9SRVBPUlQiLCJSRVNFVCJdfSx7IlBPU19TQUxFU19SRVBPUlQiOlsiVklFVyIsIlNFQVJDSCIsIlJVTl9SRVBPUlQiLCJSRVNFVCJdfSx7IlBBUlRORVJfUkVTUE9OU0VTIjpbIlZJRVciLCJTRUFSQ0giXX0seyJPUkRFUiI6WyJET1dOTE9BRCIsIlBSSU5UIiwiVklFVyIsIkVESVQiLCJBRFZBTkNFX1NFQVJDSCIsIlNFQVJDSCIsIklNUE9SVCIsIlJFRlVORCIsIk9LQVkiLCJDT0xMRUNUX1BFTkRJTkdfQU1PVU5UIiwiQ0xPU0UiLCJQQVlfTEFURVIiLCJDT0xMRUNUIiwiREVMRVRFIiwiQUREX1BST0RVQ1QiLCJBRERfTkVXX0lURU0iLCJORVdfSVRFTSJdfSx7IkFVRElUIjpbIlZJRVdfREVUQUlMUyIsIlZJRVciLCJFRElUIiwiQURWQU5DRV9TRUFSQ0giLCJTRUFSQ0giXX0seyJDVVJSRU5DWSI6WyJBRFZBTkNFX1NFQVJDSCIsIlNFQVJDSCIsIlNBVkUiLCJFRElUIiwiVklFVyJdfSx7IlRBWCI6WyJWSUVXIiwiU0FWRSIsIkVESVQiLCJBRFZBTkNFX1NFQVJDSCIsIlNFQVJDSCIsIk5FVyIsIklNUE9SVCIsIkFERF9DT01QT05FTlQiLCJJU19BQ1RJVkUiLCJSRVNFVCIsIkdPX0JBQ0siLCJDT05USU5VRSIsIlVQTE9BRCIsIkNIT09TRV9GSUxFIiwiRVhDRUxfVEVNUExBVEUiLCJDTE9TRV9JTVBPUlQiXX0seyJDT1VOVFJZIjpbIlZJRVciLCJFRElUIiwiU0FWRSIsIkFEVkFOQ0VfU0VBUkNIIiwiU0VBUkNIIiwiSU1QT1JUIiwiTkVXIl19LHsiUE9SVF9TVEFUSU9OIjpbIlZJRVciLCJFRElUIiwiU0FWRSIsIkFEVkFOQ0VfU0VBUkNIIiwiU0VBUkNIIiwiSU1QT1JUIiwiTkVXIl19LHsiRklMRV9JTVBPUlRfRVhQT1JUIjpbIlZJRVciLCJFRElUIiwiVVBEQVRFIiwiSU1QT1JUIiwiQURWQU5DRV9TRUFSQ0giLCJTRUFSQ0giLCJORVciXX0seyJUT0tFTiI6WyJWSUVXIiwiVFlQRV9DSEFOR0UiLCJTQVZFIiwiQ1JFQVRFIiwiU09SVF9PTiIsIkFDQ0VTU19UT19GSUxURVIiLCJBRFZBTkNFX1NFQVJDSCIsIlNFQVJDSCJdfSx7IlJFUE9SVFMiOlsiRURJVCIsIlZJRVciLCJBRFZBTkNFX1NFQVJDSCIsIlNFQVJDSCJdfSx7Ik1FTUJFUlMiOlsiRURJVCIsIlZJRVciLCJBRFZBTkNFX1NFQVJDSCIsIlNFQVJDSCJdfSx7IlBBUlRORVJfQ09OVFJBQ1QiOlsiVklFVyIsIlNBVkVfRFJBRlQiLCJTQVZFIiwiQ0xPTkUiLCJTVUJNSVQiLCJERUxFVEUiLCJFRElUIiwiVVBEQVRFIiwiQURWQU5DRV9TRUFSQ0giLCJTRUFSQ0giLCJORVciLCJJTVBPUlQiLCJSRUpFQ1QiLCJBUFBST1ZFIiwiQ09OVFJBQ1RfUVVPVEEiLCJDTE9ORV9UT0tFTiIsIkFERF9UT0tFTiIsIkdFTkVSQVRFX0FJIiwiUkVTRVQiLCJHT19CQUNLIiwiQ09OVElOVUUiLCJVUExPQUQiLCJDSE9PU0VfRklMRSIsIkVYQ0VMX1RFTVBMQVRFIiwiQ0xPU0VfSU1QT1JUIl19LHsiUFJPRFVDVCI6WyJWSUVXIiwiU0FWRSIsIkRFTEVURSIsIkVESVQiLCJBRFZBTkNFX1NFQVJDSCIsIlNFQVJDSCIsIklNUE9SVCIsIk5FVyJdfSx7Ik9VVExFVCI6WyJWSUVXIiwiREVMRVRFIiwiRURJVCIsIlNBVkUiLCJBRFZBTkNFX1NFQVJDSCIsIlNFQVJDSCIsIk5FVyIsIklNUE9SVCIsIklTX1NFQ1VSRUQiLCJJU19BQ1RJVkUiLCJHRU5FUkFURV9BSSJdfSx7IkRBU0hCT0FSRCI6WyJFRElUIiwiQURWQU5DRV9TRUFSQ0giLCJTRUFSQ0giLCJWSUVXIl19LHsiQURNSVNTSU9OX1RPS0VOIjpbIlBBUlRORVIiLCJWSUVXIiwiU0FWRV9EUkFGVCIsIkRFTEVURSIsIkFQUFJPVkUiLCJSRUpFQ1QiLCJDTE9ORV9UT0tFTiIsIlNVQk1JVCIsIkdFTkVSQVRFX0FJIiwiUFJJTlQiLCJFRElUIiwiU0FWRSIsIkRPV05MT0FEIiwiQURWQU5DRV9TRUFSQ0giLCJTRUFSQ0giLCJORVciLCJJTVBPUlQiXX0seyJQQVJUTkVSIjpbIkFEVkFOQ0VfU0VBUkNIIiwiU0VBUkNIIiwiVklFVyIsIlNBVkUiLCJERUxFVEUiLCJFRElUIiwiTkVXIiwiSU1QT1JUIiwiR0VORVJBVEVfQUkiXX0seyJQQVlNRU5UIjpbIlJFRlVORCIsIkNPTExFQ1QiXX0seyJHTE9CQUxfU0VUVElORyI6WyJTQVZFIiwiTkVXIiwiRURJVCIsIlZJRVciLCJBRFZBTkNFX1NFQVJDSCIsIlNFQVJDSCJdfSx7IlJFQ0VJUFRfVEVNUExBVEUiOlsiU0VBUkNIIiwiRURJVCIsIlVQREFURSIsIlZJRVciLCJTQVZFIiwiQURWQU5DRV9TRUFSQ0giLCJORVciLCJJTVBPUlQiLCJMQUJFTF9OQU1FU19DSEVDS0JPWCIsIlJFU0VUIiwiSVNfQUNUSVZFIiwiR09fQkFDSyIsIkNPTlRJTlVFIiwiVVBMT0FEIiwiQ0hPT1NFX0ZJTEUiLCJFWENFTF9URU1QTEFURSIsIkNMT1NFX0lNUE9SVCJdfSx7Ik9VVEJPVU5EX1JFUE9SVCI6WyJTRUFSQ0giLCJWSUVXIiwiUlVOX1JFUE9SVCIsIlJFU0VUIl19XSwiaWF0IjoxNjU4NzgwMzc5LCJleHAiOjE2NTg4MzQzNzl9.H1YyKs5ZKR32cIHWjBZT5KfHbkJw3juvZC50RFPZTUY",
+      "ClientCode": "CM000000000000000469",
+      "CardCode": "",
+      "ServiceCode": "SV100000000000000057",
+      "ProductCode": "PPLCATEST001",
+      "TransactionDateTime": "3/18/2019 05:20:43",
+      "TransactionUTCDateTime": "3/18/2019 05:20:43 PM +08:00",
+      "OrderID": "1710132145313888",
+      "DeviceID": "862573031292207",
+      "LocationID": "10007",
+      "PartnerCode": "CAPITAL/ARRTURE",
+      "ItemDescription": "Coffee",
+      "PromotionCode": "19Summer10Off",
+      "ReceiptNumber": "HKM0000646240",
+      "Remarks": "remarks",
+      "NotificationMode": "email",
+      "NotificationID": "abc@yahoo.com",
+      "LastName": "peter",
+      "FirstName": "lin",
+      "MiddleName": ""
+  }</code
+  >
+</pre>
+
+<h3 id="request-url">Request URL</h3>
+
+<p>
+  <code
+    >POST:
+    https://dev-us-lms-backendapi.plaza-network.com/api/fe/Coupon/GetCouponCode</code
+  >
+</p>
+
+<h3 id="parameters-description">Parameters Description</h3>
+
+<table>
+  <tr>
+    <th>Parameter</th>
+    <th>Type</th>
+    <th>Mandatory*</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>publicKey</td>
+    <td>String</td>
+    <td>Mandatory*</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Token</td>
+    <td>string</td>
+    <td>Mandatory*</td>
+    <td>This is token which is generated when user login into system.</td>
+  </tr>
+  <tr>
+    <td>ClientCode</td>
+    <td>String</td>
+    <td>Mandatory*</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>CardCode</td>
+    <td>string</td>
+    <td>Mandatory*</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>ServiceCode</td>
+    <td>string</td>
+    <td>Mandatory*</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>ProductCode</td>
+    <td>string</td>
+    <td>Mandatory*</td>
+    <td>This is unique code of product that user uses.</td>
+  </tr>
+  <tr>
+    <td>TransactionDateTime</td>
+    <td>Date</td>
+    <td>Mandatory*</td>
+    <td>This is the transaction date and time when user make payment.</td>
+  </tr>
+  <tr>
+    <td>TransactionUTCDateTime</td>
+    <td>Date</td>
+    <td>Mandatory*</td>
+    <td>This is the transaction UTC date and time when user make payment.</td>
+  </tr>
+  <tr>
+    <td>OrderID</td>
+    <td>Number</td>
+    <td>Mandatory*</td>
+    <td>This is unique order id of user's order.</td>
+  </tr>
+  <tr>
+    <td>DeviceID</td>
+    <td>Number</td>
+    <td>Mandatory*</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>PartnerCode</td>
+    <td>String</td>
+    <td>Mandatory*</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>ItemDescription</td>
+    <td>string</td>
+    <td>Mandatory*</td>
+    <td>Item that user odered.</td>
+  </tr>
+  <tr>
+    <td>PromotionCode</td>
+    <td>string</td>
+    <td>Mandatory*</td>
+    <td>This is promotion code which user can apply for discount.</td>
+  </tr>
+  <tr>
+    <td>ReceiptNumber</td>
+    <td>string</td>
+    <td>Mandatory*</td>
+    <td>This is receipt number of user's bill.</td>
+  </tr>
+  <tr>
+    <td>Remarks</td>
+    <td>string</td>
+    <td>Optional*</td>
+    <td>This is field where user can give remarks about service or product.</td>
+  </tr>
+  <tr>
+    <td>NotificationMode</td>
+    <td>Option</td>
+    <td>Mandatory*</td>
+    <td>This is notification mode in which user will notified.</td>
+  </tr>
+  <tr>
+    <td>NotificationID</td>
+    <td>string</td>
+    <td>Mandatory*</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>LastName</td>
+    <td>string</td>
+    <td>Mandatory*</td>
+    <td>This is user's last name.</td>
+  </tr>
+  <tr>
+    <td>FirstName</td>
+    <td>string</td>
+    <td>Mandatory*</td>
+    <td>This is user's first name.</td>
+  </tr>
+  <tr>
+    <td>MiddleName</td>
+    <td>string</td>
+    <td>Optional*</td>
+    <td>This is user's middle name.</td>
+  </tr>
+</table>
+
+<h3 id="responses">Responses</h3>
+
+<p><b>Success:</b></p>
+
+<pre>
+  <code
+    >{
+      "tag": " /v1/api/plaza/lms/mapOutlets",
+      "input": {
+          "partner": "Capital One",
+          "outletCode": "HGN",
+          "partnerOutletId": "Campu Token"
+      },
+      "status": 1,
+      "result": {
+          "loungePartnerLink": {
+              "_id": "625d4e7e2e6088fe884ed212",
+              "partnerID": {
+                  "_id": "625574c4f0b6a02ef1bec7d2",
+                  "name": "Capital One"
+              },
+              "loungeID": "624304ac1db50c6abd8667c3",
+              "partnerLoungeID": "Campu Token",
+              "createdBy": "61efae1b6015051f1988fa92",
+              "createdOn": "2022-04-18T11:41:50.469Z",
+              "lastModifiedBy": {
+                  "_id": "62b5963ef88a77058c34bff3",
+                  "name": "buh"
+              },
+              "lastModifiedOn": "2022-07-15T07:57:39.954Z",
+              "status": 1,
+              "__v": 0
+          }
+      },
+      "description": "Lounge Partner Link Successfully"
+  }
+  </code>
+</pre>
+
+<!-- <p><b>Error:</b></p>
+
+<p><code>Status: Token Invalid</code></p>
+
+<p>
+  <code></code>
+</p> -->
+
+
+          </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

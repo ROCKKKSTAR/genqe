@@ -1,0 +1,218 @@
+.chat-container {
+  padding: 10px;
+  margin-bottom: 10px;
+}
+.container-fluid {
+  background-color: rgb(52, 53, 65);
+  color: #ffffffdc;
+  height: calc(100vh - 140px);
+  overflow-y: auto;
+  text-align: justify;
+  line-height: 1.6;
+}
+.container-fluid::-webkit-scrollbar-thumb {
+  background-color: #b8b9c3;
+}
+.container-fluid::-webkit-scrollbar-track {
+  background-color: rgb(52, 53, 65);
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+span,
+button,
+div,
+i {
+  color: #ffffffdc;
+}
+.message {
+  padding: 16px;
+  margin: 6px 0;
+}
+
+.user {
+  background-color: rgb(52, 53, 65);
+  color: #ffffff;
+}
+
+.bot {
+  background-color: rgb(68, 70, 84);
+  color: #fff;
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+  bottom: 0;
+  left: 0;
+  position: sticky;
+}
+
+.input-container .input-div,
+.input-container .input-questions {
+  background-color: rgb(64, 65, 79);
+}
+.input-container input {
+  flex: 1;
+  padding: 5px;
+  margin-right: 5px;
+  background-color: rgb(64, 65, 79);
+}
+.clear-chat {
+  bottom: 0;
+  right: -6%;
+}
+.clear-chat button {
+  padding: 0.25rem;
+  font-size: 12px;
+}
+button {
+  padding: 5px;
+}
+.dot-pulse {
+  position: relative;
+  left: -9999px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #9880ff;
+  color: #fff;
+  box-shadow: 9999px 0 0 -5px;
+  animation: dot-pulse 1.5s infinite linear;
+  animation-delay: 0.25s;
+}
+.dot-pulse::before,
+.dot-pulse::after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #9880ff;
+  color: #fff;
+}
+.dot-pulse::before {
+  box-shadow: 9984px 0 0 -5px;
+  animation: dot-pulse-before 1.5s infinite linear;
+  animation-delay: 0s;
+}
+.dot-pulse::after {
+  box-shadow: 10014px 0 0 -5px;
+  animation: dot-pulse-after 1.5s infinite linear;
+  animation-delay: 0.5s;
+}
+
+@keyframes dot-pulse-before {
+  0% {
+    box-shadow: 9984px 0 0 -5px;
+  }
+  30% {
+    box-shadow: 9984px 0 0 2px;
+  }
+  60%,
+  100% {
+    box-shadow: 9984px 0 0 -5px;
+  }
+}
+@keyframes dot-pulse {
+  0% {
+    box-shadow: 9999px 0 0 -5px;
+  }
+  30% {
+    box-shadow: 9999px 0 0 2px;
+  }
+  60%,
+  100% {
+    box-shadow: 9999px 0 0 -5px;
+  }
+}
+@keyframes dot-pulse-after {
+  0% {
+    box-shadow: 10014px 0 0 -5px;
+  }
+  30% {
+    box-shadow: 10014px 0 0 2px;
+  }
+  60%,
+  100% {
+    box-shadow: 10014px 0 0 -5px;
+  }
+}
+::ng-deep .multiselect-dropdown .dropdown-btn .dropdown-multiselect__caret {
+  display: none !important;
+}
+::ng-deep .multiselect-dropdown .dropdown-btn {
+  border: 7px solid rgb(32, 33, 35) !important;
+  border-right: 8px solid rgb(32, 33, 35) !important;
+  border-left: 8px solid rgb(32, 33, 35) !important;
+  border-radius: 16px !important;
+  width: auto !important;
+  padding: 10px 20px !important;
+  border-radius: 12px;
+  font-weight: 700 !important;
+}
+::ng-deep .dropdown-list {
+  background-color: rgb(52, 53, 65) !important;
+  min-width: 270px;
+}
+::ng-deep .dropdown-list .filter-textbox input {
+  background-color: rgb(52, 53, 65) !important;
+}
+::ng-deep .multiselect-item-checkbox input[type="checkbox"] + div {
+  color: #fff !important;
+}
+::ng-deep .multiselect-item-checkbox input[type="checkbox"] + div:before {
+  color: #fff !important;
+  border-color: #fff !important;
+}
+::ng-deep
+  .multiselect-item-checkbox
+  input[type="checkbox"]:checked
+  + div:before {
+  background: rgb(32, 33, 35) !important;
+}
+::ng-deep .multiselect-item-checkbox:hover {
+  background-color: #40414f !important;
+}
+.help-icon {
+  bottom: 2%;
+  right: -12%;
+}
+.help-icon i {
+  font-size: 20px;
+  color: rgb(217, 217, 227);
+}
+.generating-option {
+  background-color: rgb(52, 53, 65);
+  border-color: rgb(86, 88, 105);
+  color: rgb(217, 217, 227);
+  padding: 8px 12px;
+  border: 1px solid;
+  border-radius: 8px;
+  top: -100%;
+  right: 3%;
+}
+
+.filename-ellipsis {
+  /* Ensure it's an inline-block element to take width property */
+  display: inline-block;
+  /* Limit the width of the anchor tag */
+  max-width: 400px; /* Adjust this width according to your layout and preferences */
+  /* Ensure text doesn't wrap and show an ellipsis */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.thumbs-up-clicked {
+  color: cyan; /* Change this to the desired darker color */
+}
+
+.thumbs-down-clicked {
+  color: cyan; /* Change this to the desired darker color */
+}

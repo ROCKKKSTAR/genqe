@@ -1,0 +1,808 @@
+<div class="h-100">
+  <div
+    class="sidebar left d-flex justify-content-between"
+    [ngClass]="{ fliph: !sidebarState }"
+  >
+    <ul class="list-sidebar bg-defoult h-100 pt-3">
+      <li
+        routerLinkActive
+        #rla="routerLinkActive"
+        *ngIf="userType === 1 || userType === 2"
+      >
+        <a
+          href="#"
+          data-toggle="collapse"
+          data-target="#caseManagementMenu"
+          [ngClass]="{ collapsed: !rla.isActive }"
+        >
+          <i class="fa fa-book"></i>
+          <span class="nav-label">GenQE</span>
+          <span class="fa fa-chevron-right pull-right"></span>
+        </a>
+        <ul
+          class="sub-menu collapse"
+          routerLinkActive="show"
+          id="caseManagementMenu"
+        >
+          <!-- <li *ngIf="userType === 1">
+            <a routerLink="/case" routerLinkActive="active"
+              ><i class="fa fa-book"></i>
+              <span class="nav-label"> Case</span></a
+            >
+          </li> -->
+          <li *ngIf="userType === 1">
+            <a routerLink="/applications" routerLinkActive="active"
+              ><i class="fa fa-tachometer"></i>
+              <span class="nav-label">  {{ data ? data.buttons.applications : "Applications" }}</span></a
+            >
+          </li>
+          <li *ngIf="userType === 1">
+            <a routerLink="/channels" routerLinkActive="active"
+              ><i class="fa fa-tachometer"></i>
+              <span class="nav-label">  {{ data ? data.buttons.channels : "Channels" }}</span></a
+            >
+          </li>
+          <li *ngIf="userType === 1">
+            <a routerLink="/prompt-templates" routerLinkActive="active"
+              ><i class="fa fa-list-alt"></i>
+              <span class="nav-label">  {{ data ? data.buttons.promptTemp : "Prompt Templates" }}</span></a
+            >
+          </li>
+          <li *ngIf="userType === 1">
+            <a routerLink="/document-templates" routerLinkActive="active"
+              ><i class="fa fa-list-alt"></i>
+              <span class="nav-label">  {{ data ? data.buttons.documentTemp : "Document Templates" }}</span></a
+            >
+          </li>
+          <!-- <li *ngIf="userType === 1">
+            <a routerLink="/legal-assistant" routerLinkActive="active"
+              ><i class="fa fa-robot"></i>
+              <span class="nav-label"> Legal Assistant</span></a
+            >
+          </li> -->
+          <li *ngIf="userType === 1">
+            <a routerLink="/application-assistant" routerLinkActive="active"
+              ><i class="fa fa-robot"></i>
+              <span class="nav-label">  {{ data ? data.buttons.testBox : "Test Box" }}</span></a
+            >
+          </li>
+        </ul>
+      </li>
+      <!-- <li *ngIf="userType === 1">
+        <a routerLink="/biometric-prompt" routerLinkActive="active"
+          ><i class="fa fa-tachometer"></i>
+          <span class="nav-label"> FingerPrint</span></a
+        >
+      </li>
+      <li *ngIf="userType === 1">
+        <a routerLink="/biometric-scanner" routerLinkActive="active"
+          ><i class="fa fa-tachometer"></i>
+          <span class="nav-label"> Scanner</span></a
+        >
+      </li> -->
+      <li *ngIf="userType === 1">
+        <a routerLink="/train-model" routerLinkActive="active"
+          ><i class="fa fa-tachometer"></i>
+          <span class="nav-label">  {{ data ? data.buttons.trainModel : "Train Model" }}</span></a
+        >
+      </li>
+      <li *ngIf="userType === 1">
+        <a routerLink="/train-new-model" routerLinkActive="active"
+          ><i class="fa fa-tachometer"></i>
+          <span class="nav-label">  {{ data ? data.buttons.trainNewModel : "Train New Model" }}</span></a
+        >
+      </li>
+      <li *ngIf="userType === 1">
+        <a routerLink="/test-planning" routerLinkActive="active"
+          ><i class="fa fa-tachometer"></i>
+          <span class="nav-label">  {{ data ? data.buttons.testPlanning : "Test Planning" }}</span></a
+        >
+      </li>
+      <li *ngIf="userType === 1">
+        <a routerLink="/test-case-management" routerLinkActive="active"
+          ><i class="fa fa-tachometer"></i>
+          <span class="nav-label">  {{ data ? data.buttons.testCaseManagment : "Test Case Management" }}</span></a
+        >
+      </li>
+      <li *ngIf="userType === 1">
+        <a routerLink="/test-execution" routerLinkActive="active"
+          ><i class="fa fa-tachometer"></i>
+          <span class="nav-label"> {{ data ? data.buttons.testExecution : "Test Execution" }}</span></a
+        >
+      </li>
+      <li *ngIf="userType === 1">
+        <a routerLink="/defects" routerLinkActive="active"
+          ><i class="fa fa-tachometer"></i>
+          <span class="nav-label">  {{ data ? data.buttons.defects : "Defects" }}</span></a
+        >
+      </li>
+      <li *ngIf="userType === 1">
+        <a routerLink="/reporting-and-analytics" routerLinkActive="active"
+          ><i class="fa fa-tachometer"></i>
+          <span class="nav-label">  {{ data ? data.buttons.reportAndAnalytics : "Reporting & Analytics" }}</span></a
+        >
+      </li>
+      <li *ngIf="userType === 1">
+        <a routerLink="/intake-and-assignments" routerLinkActive="active"
+          ><i class="fa fa-tachometer"></i>
+          <span class="nav-label">{{ data ? data.buttons.intakeAssignments : " Intake & Assignments" }}</span></a
+        >
+      </li>
+      <!-- <li *ngIf="userType === 1">
+        <a routerLink="/dashboard" routerLinkActive="active"
+          ><i class="fa fa-tachometer"></i>
+          <span class="nav-label">
+            {{ data ? data.buttons.dashboard : "DashBoard" }}</span
+          ></a
+        >
+      </li>
+      <li *ngIf="userType === 1">
+        <a routerLink="/admissions-pos" routerLinkActive="active"
+          ><i class="fa fa-id-card"></i>
+          <span class="nav-label">
+            {{ data ? data.buttons.admissionpos : "Admission POS" }}</span
+          ></a
+        >
+      </li>
+      <li *ngIf="userType === 1">
+        <a routerLink="/walkin-pos" routerLinkActive="active"
+          ><i class="fa fa-id-card"></i>
+          <span class="nav-label">{{
+            data ? data.master.order.walkinPOS : "Walkin POS"
+          }}</span></a
+        >
+      </li>
+      <li *ngIf="userType === 1">
+        <a routerLink="/orders" routerLinkActive="active"
+          ><i class="fa fa-shopping-cart"></i>
+          <span class="nav-label">
+            {{ data ? data.buttons.orders : "Orders" }}</span
+          ></a
+        >
+      </li>
+
+      <li *ngIf="userType === 1">
+        <a routerLink="/bookings" routerLinkActive="active"
+          ><i class="fa fa-shopping-cart"></i>
+          <span class="nav-label">
+            {{ data ? data.buttons.bookings : "Bookings" }}</span
+          ></a
+        >
+      </li>
+      <li *ngIf="userType === 1">
+        <a routerLink="/outlet-events" routerLinkActive="active"
+          ><i class="fa fa-calendar-o" aria-hidden="true"></i>
+          <span class="nav-label">
+            {{ data ? data.master.outletevents.outletevents : "DMR" }}
+          </span>
+        </a>
+      </li>
+      <li *ngIf="userType === 1">
+        <a routerLink="/tokens" routerLinkActive="active"
+          ><i class="fa fa-file-text"></i>
+          <span class="nav-label">
+            {{ data ? data.buttons.token : "Token" }}</span
+          ></a
+        >
+      </li>
+      <li *ngIf="userType === 1">
+        <a routerLink="/boardingPass" routerLinkActive="active"
+          ><i class="fa fa-file-text"></i>
+          <span class="nav-label">
+            {{ data ? data.buttons.boardingPass : "Boarding Pass" }}</span
+          ></a
+        >
+      </li>
+      <li *ngIf="displayCouponGen()">
+        <a routerLink="/generate-coupon" routerLinkActive="active"
+          ><i class="fa fa-ticket" aria-hidden="true"></i>
+          <span class="nav-label">
+            {{ data ? data.generateCoupons.genC : "Generate Coupons" }}
+          </span></a
+        >
+      </li> -->
+
+      <li *ngIf="userType === 1">
+        <a routerLink="/partner-responses" routerLinkActive="active"
+          ><i class="fa fa-reply-all"></i>
+          <span class="nav-label">{{
+            data ? data.buttons.partnerresponses : "Partner Responses"
+          }}</span></a
+        >
+      </li>
+      <li *ngIf="userType === 1">
+        <a routerLink="/file-import-export" routerLinkActive="active"
+          ><i class="fa fa-download"></i>
+          <span class="nav-label">{{
+            data ? data.buttons.fileImportExport : "File Import/Export"
+          }}</span></a
+        >
+      </li>
+      <!-- <li *ngIf="userType === 1">
+        <a routerLink="/was-consumption" routerLinkActive="active"
+          ><i class="fa fa-reply-all"></i>
+          <span class="nav-label">{{
+            data ? data.buttons.wasConsumption : "WAS Consumption"
+          }}</span></a
+        >
+      </li> -->
+      <li *ngIf="userType === 1">
+        <a routerLink="/chatbot-conversation" routerLinkActive="active"
+          ><i class="fa fa-comments-o"></i>
+          <span class="nav-label">{{
+            data ? data.buttons.CustomerInteraction : "Customer-Interaction"
+          }}</span></a
+        >
+      </li>
+      <li
+        routerLinkActive
+        #rla="routerLinkActive"
+        *ngIf="userType === 1 || userType === 2"
+      >
+        <a
+          href="#"
+          data-toggle="collapse"
+          data-target="#products11"
+          [ngClass]="{ collapsed: !rla.isActive }"
+        >
+          <i class="fa fa-sitemap"></i>
+          <span class="nav-label">{{
+            data ? data.generateCoupons.rep : "Reports"
+          }}</span>
+          <span class="fa fa-chevron-right pull-right"></span>
+        </a>
+        <ul class="sub-menu collapse" routerLinkActive="show" id="products11">
+          <li *ngIf="userType === 1">
+            <a routerLink="/operational-reports" routerLinkActive="active"
+              ><i class="fa fa-book" aria-hidden="true"></i>
+              <span class="nav-label"
+                >{{
+                  data ? data.generateCoupons.opReports : "Operational Reports"
+                }}
+              </span>
+            </a>
+          </li>
+          <li *ngIf="userType === 1">
+            <a routerLink="/billing-reports" routerLinkActive="active"
+              ><i class="fa fa-book" aria-hidden="true"></i>
+              <span class="nav-label"
+                >{{ data ? data.generateCoupons.bilRep : "Billing Reports" }}
+              </span>
+            </a>
+          </li>
+          <li *ngIf="userType === 1">
+            <a routerLink="/report-queue" routerLinkActive="active"
+              ><i class="fa fa-book" aria-hidden="true"></i>
+              <span class="nav-label"
+                >{{ data ? data.generateCoupons.repQue : "Report Queue" }}
+              </span>
+            </a>
+          </li>
+
+          <li *ngIf="userType === 2">
+            <a routerLink="/quota-report" routerLinkActive="active"
+              ><i class="fa fa-book" aria-hidden="true"></i>
+              <span class="nav-label">
+                {{ data ? data.generateCoupons.qtaRep : "Quota Report" }}</span
+              >
+            </a>
+          </li>
+          <li *ngIf="userType === 2">
+            <a routerLink="/daily-quota-report" routerLinkActive="active"
+              ><i class="fa fa-book" aria-hidden="true"></i>
+              <span class="nav-label">
+                {{
+                  data ? data.generateCoupons.dailyQtaRep : "Daily Quota Report"
+                }}</span
+              >
+            </a>
+          </li>
+          <li *ngIf="userType === 2">
+            <a routerLink="/card-history-report" routerLinkActive="active"
+              ><i class="fa fa-book" aria-hidden="true"></i>
+              <span class="nav-label">
+                {{
+                  data
+                    ? data.generateCoupons.cardHistoryRep
+                    : "Card History Report"
+                }}</span
+              >
+            </a>
+          </li>
+          <li *ngIf="userType === 2">
+            <a routerLink="/lounge-use-summary" routerLinkActive="active"
+              ><i class="fa fa-book" aria-hidden="true"></i>
+              <span class="nav-label">
+                {{
+                  data ? data.master.hsbc.txtHeading : "Lounge Use Summary"
+                }}</span
+              >
+            </a>
+          </li>
+          <li *ngIf="userType === 2">
+            <a routerLink="/lounge-eligibility" routerLinkActive="active"
+              ><i class="fa fa-building-o" aria-hidden="true"></i>
+              <span class="nav-label">{{
+                data ? data.generateCoupons.loungelgb : " Lounge Eligibility"
+              }}</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li routerLinkActive #rla="routerLinkActive" *ngIf="userType === 2">
+        <a
+          href="#"
+          data-toggle="collapse"
+          data-target="#chatboxAI"
+          [ngClass]="{ collapsed: !rla.isActive }"
+        >
+          <i class="fa fa-sitemap"></i>
+          <span class="nav-label">Chatbox & Assistant's</span>
+          <span class="fa fa-chevron-right pull-right"></span>
+        </a>
+
+        <ul class="sub-menu collapse" routerLinkActive="show" id="chatboxAI">
+          <li *ngIf="userType === 2">
+            <a routerLink="/chatbox" routerLinkActive="active"
+              ><i class="fa fa-robot" aria-hidden="true"></i>
+              <span class="nav-label">AI Chatbox</span>
+            </a>
+          </li>
+          <li *ngIf="userType === 2">
+            <a routerLink="/loungeCheckIn-Assistant" routerLinkActive="active"
+              ><i class="fa fa-robot" aria-hidden="true"></i>
+              <span class="nav-label">Lounge CheckIn Assistant</span>
+            </a>
+          </li>
+          <li *ngIf="userType === 2">
+            <a routerLink="/lounge-Assistant" routerLinkActive="active"
+              ><i class="fa fa-robot" aria-hidden="true"></i>
+              <span class="nav-label">Lounge Assistant</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li *ngIf="userType === 2">
+        <a routerLink="/lounge-details" routerLinkActive="active"
+          ><i class="fa fa-robot" aria-hidden="true"></i>
+          <span class="nav-label">Gemini Lounge Assistant</span>
+        </a>
+      </li>
+      <li routerLinkActive #rla="routerLinkActive" *ngIf="userType === 1">
+        <a
+          href="#"
+          data-toggle="collapse"
+          data-target="#products"
+          [ngClass]="{ collapsed: !rla.isActive }"
+        >
+          <i class="fa fa-sitemap"></i>
+          <span class="nav-label">{{
+            data ? data.buttons.aiMasters : "AI Masters"
+          }}</span>
+          <span class="fa fa-chevron-right pull-right"></span>
+        </a>
+        <ul class="sub-menu collapse" routerLinkActive="show" id="products">
+          <li>
+            <a routerLink="/admission-token" routerLinkActive="active"
+              ><i class="fa fa-ticket" aria-hidden="true"></i
+              >{{
+                data ? data.buttons.admissionToken : "Admission Instruction"
+              }}</a
+            >
+            <a
+              class="plus-icon"
+              routerLink="/admission-token"
+              [queryParams]="{ n: 'y' }"
+              ><i class="fa fa-plus" aria-hidden="true"></i
+            ></a>
+          </li>
+          <li>
+            <a routerLink="/partner-contract" routerLinkActive="active"
+              ><i class="fa fa-suitcase" aria-hidden="true"></i
+              >{{ data ? data.buttons.partnercontract : "Partner Contract" }}</a
+            >
+            <a
+              class="plus-icon"
+              routerLink="/partner-contract"
+              [queryParams]="{ n: 'y' }"
+              ><i class="fa fa-plus" aria-hidden="true"></i
+            ></a>
+          </li>
+          <!-- <li *ngIf="userType === 1">
+            <a routerLink="/delayed-flight-contracts" routerLinkActive="active"
+              ><i class="fa fa-plane"></i>
+              <span class="nav-label">{{
+                data
+                  ? data.master.df.delayedflightcontracts
+                  : "Delayed Flight Contracts"
+              }}</span></a
+            >
+          </li> -->
+          <li>
+            <a routerLink="/partner" routerLinkActive="active"
+              ><i class="fa fa-handshake-o" aria-hidden="true"></i
+              >{{ data ? data.buttons.partner : "Partner" }}</a
+            >
+            <a
+              class="plus-icon"
+              routerLink="/partner"
+              [queryParams]="{ n: 'y' }"
+              ><i class="fa fa-plus" aria-hidden="true"></i
+            ></a>
+          </li>
+          <!-- <li>
+            <a routerLink="/members" routerLinkActive="active"
+              ><i class="fa fa-users" aria-hidden="true"></i
+              >{{ data ? data.buttons.members : "Members" }}</a
+            >
+            <a
+              class="plus-icon"
+              routerLink="/members"
+              [queryParams]="{ n: 'y' }"
+              ><i class="fa fa-plus" aria-hidden="true"></i
+            ></a>
+          </li>
+          <li>
+            <a routerLink="/registered-members" routerLinkActive="active"
+              ><i class="fa fa-users" aria-hidden="true"></i
+              >{{
+                data ? data.buttons.RegisterdMembers : "RegisterdMembers"
+              }}</a
+            >
+          </li>
+          <li>
+            <a routerLink="/member-booking" routerLinkActive="active"
+              ><i class="fa fa-users" aria-hidden="true"></i
+              >{{ data ? data.buttons.MemberBooking : "Member Booking" }}</a
+            >
+          </li>
+          <li>
+            <a routerLink="/lounge-access-history" routerLinkActive="active"
+              ><i class="fa fa-users" aria-hidden="true"></i
+              >{{
+                data
+                  ? data.buttons.loungeAccessHistory
+                  : "Lounge Access History"
+              }}</a
+            >
+            <a
+              class="plus-icon"
+              routerLink="/lounge-access-history"
+              [queryParams]="{ n: 'y' }"
+              ><i class="fa fa-plus" aria-hidden="true"></i
+            ></a>
+          </li> -->
+        </ul>
+      </li>
+      <li *ngIf="userType === 4">
+        <a routerLink="/lounge-access-history" routerLinkActive="active"
+          ><i class="fa fa-users" aria-hidden="true"></i
+          >{{
+            data ? data.buttons.loungeAccessHistory : "Lounge Access History"
+          }}</a
+        >
+      </li>
+      <li *ngIf="userType === 4">
+        <a routerLink="/card-bin-lounge-access" routerLinkActive="active"
+          ><i class="fa fa-users" aria-hidden="true"></i
+          >{{ data ? data.buttons.cardBinAccess : "Card Bin Lounge Access" }}</a
+        >
+      </li>
+      <li routerLinkActive #rla="routerLinkActive" *ngIf="userType === 1">
+        <a
+          href="#"
+          data-toggle="collapse"
+          data-target="#products1"
+          [ngClass]="{ collapsed: !rla.isActive }"
+        >
+          <i class="fa fa-sitemap"></i>
+          <span class="nav-label">{{
+            data ? data.buttons.lmsMasters : "LMS Masters"
+          }}</span>
+          <span class="fa fa-chevron-right pull-right"></span>
+        </a>
+        <ul class="sub-menu collapse" routerLinkActive="show" id="products1">
+          <li>
+            <a routerLink="/product" routerLinkActive="active"
+              ><i class="fa fa-gift" aria-hidden="true"></i
+              >{{ data ? data.buttons.product : "Product" }}</a
+            >
+            <a
+              class="plus-icon"
+              routerLink="/product"
+              [queryParams]="{ n: 'y' }"
+              ><i class="fa fa-plus" aria-hidden="true"></i
+            ></a>
+          </li>
+          <li>
+            <a routerLink="/lounge" routerLinkActive="active"
+              ><i class="fa fa-building-o" aria-hidden="true"></i
+              >{{ data ? data.buttons.lounge : "Outlet" }}</a
+            >
+            <a class="plus-icon" routerLink="/lounge" [queryParams]="{ n: 'y' }"
+              ><i class="fa fa-plus" aria-hidden="true"></i
+            ></a>
+          </li>
+          <li>
+            <a routerLink="/vendor" routerLinkActive="active"
+              ><i class="fa fa-male" aria-hidden="true"></i
+              >{{ data ? data.buttons.vendor : "Vendor" }}</a
+            >
+            <a class="plus-icon" routerLink="/vendor" [queryParams]="{ n: 'y' }"
+              ><i class="fa fa-plus" aria-hidden="true"></i
+            ></a>
+          </li>
+          <li>
+            <a routerLink="/airport" routerLinkActive="active"
+              ><i class="fa fa-plane" aria-hidden="true"></i
+              >{{ data ? data.buttons.airport : "Airport" }}</a
+            >
+            <a
+              class="plus-icon"
+              routerLink="/airport"
+              [queryParams]="{ n: 'y' }"
+              ><i class="fa fa-plus" aria-hidden="true"></i
+            ></a>
+          </li>
+          <li>
+            <a routerLink="/country" routerLinkActive="active"
+              ><i class="fa fa-globe" aria-hidden="true"></i
+              >{{ data ? data.buttons.country : "Country" }}</a
+            >
+            <a
+              class="plus-icon"
+              routerLink="/country"
+              [queryParams]="{ n: 'y' }"
+              ><i class="fa fa-plus" aria-hidden="true"></i
+            ></a>
+          </li>
+          <li>
+            <a routerLink="/pincode" routerLinkActive="active"
+              ><i class="fa fa-map-marker" aria-hidden="true"></i
+              >{{ data ? data.buttons.pincode : "Pincode" }}</a
+            >
+            <a
+              class="plus-icon"
+              routerLink="/pincode"
+              [queryParams]="{ n: 'y' }"
+              ><i class="fa fa-plus" aria-hidden="true"></i
+            ></a>
+          </li>
+
+          <li>
+            <a routerLink="/currency" routerLinkActive="active"
+              ><i class="fa fa-money" aria-hidden="true"></i
+              >{{ data ? data.buttons.currency : "Currency Exchange" }}</a
+            >
+            <a
+              class="plus-icon"
+              routerLink="/currency"
+              [queryParams]="{ n: 'y' }"
+              ><i class="fa fa-plus" aria-hidden="true"></i
+            ></a>
+          </li>
+          <!-- <li>
+            <a routerLink="/devices" routerLinkActive="active"
+              ><i class="fa fa-laptop" aria-hidden="true"></i
+              >{{ data ? data.buttons.devices : "Devices" }}</a
+            >
+            <a
+              class="plus-icon"
+              routerLink="/devices"
+              [queryParams]="{ n: 'y' }"
+              ><i class="fa fa-plus" aria-hidden="true"></i
+            ></a>
+          </li> -->
+          <li>
+            <a routerLink="/tax" routerLinkActive="active"
+              ><i class="fa fa-money" aria-hidden="true"></i
+              >{{ data ? data.buttons.tax : "Tax" }}</a
+            >
+            <a class="plus-icon" routerLink="/tax" [queryParams]="{ n: 'y' }"
+              ><i class="fa fa-plus" aria-hidden="true"></i
+            ></a>
+          </li>
+          <li>
+            <a routerLink="/receipt-template" routerLinkActive="active"
+              ><i class="fa fa-list-alt" aria-hidden="true"></i
+              >{{
+                data ? data.master.receipt.receipttemplate : "Receipt Template"
+              }}</a
+            >
+            <a
+              class="plus-icon"
+              routerLink="/receipt-template"
+              [queryParams]="{ n: 'y' }"
+              ><i class="fa fa-plus" aria-hidden="true"></i
+            ></a>
+          </li>
+          <!-- <li>
+            <a routerLink="/voucher-template" routerLinkActive="active"
+              ><i class="fa fa-list-alt" aria-hidden="true"></i
+              >{{
+                data ? data.master.receipt.vouchertemplate : "Voucher Template"
+              }}</a
+            >
+            <a
+              class="plus-icon"
+              routerLink="/voucher-template"
+              [queryParams]="{ n: 'y' }"
+              ><i class="fa fa-plus" aria-hidden="true"></i
+            ></a>
+          </li> -->
+
+          <!-- <li>
+            <a routerLink="/airline-code" routerLinkActive="active"
+              ><i class="fa fa-code" aria-hidden="true"></i>
+              {{
+                data
+                  ? data.master.airlinescodes.airlinescodes
+                  : "Airlines Codes"
+              }}
+            </a>
+            <a
+              class="plus-icon"
+              routerLink="/airline-code"
+              [queryParams]="{ n: 'y' }"
+              ><i class="fa fa-plus" aria-hidden="true"></i
+            ></a>
+          </li> -->
+          <li>
+            <a routerLink="/failed-tokens" routerLinkActive="active"
+              ><i class="fa fa-exclamation" aria-hidden="true"></i>
+              {{ data ? data.token.failedtoken : "Failed Admissions" }}
+            </a>
+          </li>
+          <li>
+            <a routerLink="/partner-migration" routerLinkActive="active"
+              ><i class="fa fa-exchange" aria-hidden="true"></i>
+              <span class="nav-label">
+                {{ data ? data.token.partnermigration : "Partner Migration" }}
+              </span>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li
+        routerLinkActive
+        #rla="routerLinkActive"
+        *ngIf="userType === 1 || userType === 3"
+      >
+        <a
+          href="#"
+          data-toggle="collapse"
+          data-target="#products2"
+          [ngClass]="{ collapsed: !rla.isActive }"
+        >
+          <i class="fa fa-sitemap"></i>
+          <span class="nav-label">{{
+            data ? data.buttons.securityMasters : "Security Masters"
+          }}</span>
+          <span class="fa fa-chevron-right pull-right"></span>
+        </a>
+        <ul class="sub-menu collapse" routerLinkActive="show" id="products2">
+          <li *ngIf="userType === 1 || userType === 3">
+            <a routerLink="/users" routerLinkActive="active"
+              ><i class="fa fa-user" aria-hidden="true"></i
+              >{{ data ? data.buttons.users : "Users" }}</a
+            >
+            <a class="plus-icon" routerLink="/users" [queryParams]="{ n: 'y' }"
+              ><i class="fa fa-plus" aria-hidden="true"></i
+            ></a>
+          </li>
+
+          <li *ngIf="userType === 1">
+            <a routerLink="/role" routerLinkActive="active"
+              ><i class="fa fa-object-group" aria-hidden="true"></i>
+              {{ data ? data.master.role.role : "Role" }}
+            </a>
+            <a class="plus-icon" routerLink="/role" [queryParams]="{ n: 'y' }"
+              ><i class="fa fa-plus" aria-hidden="true"></i
+            ></a>
+          </li>
+
+          <li *ngIf="userType === 1">
+            <a routerLink="/action" routerLinkActive="active"
+              ><i class="fa fa-share-square-o" aria-hidden="true"></i>
+              {{ data ? data.master.action.action : "Action" }}
+            </a>
+            <a class="plus-icon" routerLink="/action" [queryParams]="{ n: 'y' }"
+              ><i class="fa fa-plus" aria-hidden="true"></i
+            ></a>
+          </li>
+
+          <li *ngIf="userType === 1">
+            <a routerLink="/module" routerLinkActive="active"
+              ><i class="fa fa-th" aria-hidden="true"></i
+              >{{ data ? data.master.module.module : "Module" }}</a
+            >
+            <a class="plus-icon" routerLink="/module" [queryParams]="{ n: 'y' }"
+              ><i class="fa fa-plus" aria-hidden="true"></i
+            ></a>
+          </li>
+          <li *ngIf="userType === 1">
+            <a routerLink="/global-setting" routerLinkActive="active"
+              ><i class="fa fa-wrench" aria-hidden="true"></i>
+              {{ data ? data.buttons.globalsettings : "Global Settings" }}
+            </a>
+            <a
+              class="plus-icon"
+              routerLink="/global-setting"
+              [queryParams]="{ n: 'y' }"
+              ><i class="fa fa-plus" aria-hidden="true"></i
+            ></a>
+          </li>
+
+          <li *ngIf="userType === 1">
+            <a routerLink="/audit" routerLinkActive="active"
+              ><i class="fa fa-file-archive-o" aria-hidden="true"></i
+              >{{ data ? data.buttons.audit : "Audit" }}</a
+            >
+            <a class="plus-icon" routerLink="/audit" [queryParams]="{ n: 'y' }"
+              ><i class="fa fa-plus" aria-hidden="true"></i
+            ></a>
+          </li>
+          <!-- <li *ngIf="userType === 1">
+            <a routerLink="/partner-sync" routerLinkActive="active"
+              ><i class="fa fa-file-archive-o" aria-hidden="true"></i
+              >{{ "Partner Sync" }}</a
+            >
+            <a
+              class="plus-icon"
+              routerLink="/partner-sync"
+              [queryParams]="{ n: 'y' }"
+              ><i class="fa fa-plus" aria-hidden="true"></i
+            ></a>
+          </li> -->
+        </ul>
+      </li>
+
+      <!-- <li *ngIf="userType === 1">
+        <a routerLink="/shower-bookings" routerLinkActive="active"
+          ><i class="fas fa-shower"></i>
+          <span class="nav-label">{{
+            data ? data.buttons.showerBookings : "Shower-Bookings"
+          }}</span></a
+        >
+      </li>
+
+      <li *ngIf="userType === 1">
+        <a routerLink="/delayed-Flights" routerLinkActive="active"
+          ><i class="fas fa-plane"></i>
+          <span class="nav-label">{{
+            data ? data.buttons.delayedFlight : "Delayed Flights"
+          }}</span></a
+        >
+      </li>
+
+      <li *ngIf="userType === 1">
+        <a routerLink="/clone-entitlement" routerLinkActive="active"
+          ><i class="fa fa-copy" aria-hidden="true"></i>
+          <span class="nav-label">{{
+            data ? data.master.cloneEnt.txtHeading : "Clone Entitlements"
+          }}</span></a
+        >
+      </li> -->
+    </ul>
+    <ul>
+      <li>
+        <a
+          href="javascript:void(0)"
+          class="button-left"
+          (click)="toggleSidebarState()"
+          ><span class="fa fa-fw fa-bars"></span>
+          <span
+            style="
+              margin: auto;
+              font-size: 12px;
+              color: #7883c5;
+              padding: 0 15px;
+            "
+            class="nav-label"
+            >Build {{ buildNum }}</span
+          >
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

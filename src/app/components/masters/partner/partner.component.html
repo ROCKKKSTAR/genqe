@@ -1,0 +1,2696 @@
+<div
+  class="content-wrapper d-flex"
+  [ngClass]="{ 'sidebar-open': isSidebarOpen }"
+>
+  <div class="sidebar-wrapper">
+    <app-sidebar [(sidebarState)]="isSidebarOpen"></app-sidebar>
+  </div>
+  <div class="main-wrapper pt-3">
+    <div *ngIf="loadershow">
+      <app-loader [message]="loaderMessage"></app-loader>
+    </div>
+    <div *ngIf="loadershowPartner">
+      <app-loader [message]="loaderMessage"></app-loader>
+    </div>
+
+    <div class="container-fluid h-100">
+      <div class="row h-100">
+        <div class="col-md-12">
+          <div
+            class="property-details-wrapper"
+            *ngIf="!showPartnerDetails && !showImport"
+          >
+            <div class="row">
+              <div class="col-md-6">
+                <p class="main-heading">
+                  <span
+                    >{{
+                      data ? data.master.partner.txtHeading : "Partner"
+                    }}:</span
+                  >
+                  {{
+                    data
+                      ? data.master.partner.txtDes
+                      : "View and add new
+                  partner for outlet."
+                  }}
+                </p>
+                <!-- <input type="file" accept="image/*" (change)="changeSelectedfile($event.target.files)"> -->
+              </div>
+              <div class="col-md-6 text-right">
+                <a
+                  href="javascript:void(0)"
+                  mat-raised-button
+                  (click)="exportReport('Partner')"
+                  style="line-height: 25px !important"
+                  class="btn btn-info"
+                  ><i class="fa fa-file-text-o" aria-hidden="true"></i>
+                  {{ data ? data.master.possalesreport.export : "Export" }}</a
+                >
+                <a
+                  (click)="showPartnerImport()"
+                  href="javascript:void(0)"
+                  class="btn btn-success mr-2"
+                  ><i class="fa fa-upload" aria-hidden="true"></i>
+                  {{ data ? data.buttons.import : "Import" }}</a
+                >
+                <a
+                  href="javascript:void(0)"
+                  class="btn btn-info"
+                  (click)="addNewPartner(true)"
+                  ><i class="fa fa-plus" aria-hidden="true"></i>
+                  {{ data ? data.buttons.new : "New" }}</a
+                >
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="search-wrapper">
+                  <div class="search-product">
+                    <div class="search_main">
+                      <div class="search-input">
+                        <span
+                          ><i class="fa fa-search" aria-hidden="true"></i
+                        ></span>
+                        <input
+                          type="search"
+                          [(ngModel)]="simpleSearch"
+                          (keyup.enter)="
+                            simpleSearchPartner($event.target.value)
+                          "
+                          autocomplete="off"
+                        />
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>{{
+                          data ? data.master.partner.searchP : "Search Partner"
+                        }}</label>
+                        <span
+                          ><i
+                            (click)="getPartner()"
+                            class="fa fa-times"
+                            aria-hidden="true"
+                          ></i
+                        ></span>
+                        <span (click)="showQueryForm()" class="dropdown-form"
+                          ><i class="fa fa-sort-desc" aria-hidden="true"></i
+                        ></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="query1" class="query1" *ngIf="showData">
+                    <div class="form-container">
+                      <form>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="partnerType"
+                                >{{
+                                  data
+                                    ? data.master.partner.partnerType
+                                    : "Partner
+                                Type"
+                                }}:</label
+                              >
+                              <select
+                                name="partnerType"
+                                class="custom-select"
+                                [(ngModel)]="selectedType"
+                                (ngModelChange)="changeName()"
+                              >
+                                <option selected value="0">None</option>
+                                <option
+                                  *ngFor="let t of partnerTypes"
+                                  [value]="t.key1"
+                                >
+                                  {{ t.key1 }}
+                                </option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="name"
+                                >{{
+                                  data
+                                    ? data.master.partner.partnerName
+                                    : "Partner Name"
+                                }}:</label
+                              >
+                              <div class="suggestion_input_wrapper">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+
+                                <input
+                                  type="text"
+                                  class="form-control suggestionInput"
+                                  id="name"
+                                  autocomplete="off"
+                                  (keyup)="
+                                    fetchPartnerNamesByType($event.target.value)
+                                  "
+                                  (keydown)="
+                                    onTokenPartnerSearchInputKeydown($event)
+                                  "
+                                  placeholder="{{
+                                    data
+                                      ? data.master.partner.partnerP
+                                      : 'Enter Partner Name'
+                                  }}"
+                                  name="name"
+                                  [(ngModel)]="name"
+                                />
+                              </div>
+                              <ul
+                                class="searched-list searchSuggestions"
+                                *ngIf="partners.length > 0"
+                              >
+                                <li
+                                  *ngFor="
+                                    let partner of partners;
+                                    let i = index
+                                  "
+                                  [class.selected]="
+                                    i === tokenPartnerSearchSuggestionIndex
+                                  "
+                                  (click)="setTokenPartner(partner, 'search')"
+                                >
+                                  {{ partner.name }}
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="partnerCategory"
+                                >{{
+                                  data
+                                    ? data.master.partner.partnerCategory
+                                    : "Partner
+                                Category"
+                                }}:</label
+                              >
+                              <select
+                                name="partnerCategory"
+                                class="custom-select"
+                                [(ngModel)]="selectedCategory"
+                              >
+                                <option selected value="0">None</option>
+                                <option
+                                  *ngFor="let t of partnerCategory"
+                                  [value]="t.key1"
+                                >
+                                  {{ t.key1 }}
+                                </option>
+                                <!-- <option selected>Permanent</option>
+                                                                <option value="1">Temporary</option> -->
+                              </select>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="status"
+                                >{{
+                                  data ? data.master.partner.status : "Status"
+                                }}:</label
+                              >
+                              <select
+                                name="status"
+                                class="custom-select"
+                                [(ngModel)]="selectedStatus"
+                              >
+                                <option selected>Active</option>
+                                <option value="2">Inactive</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="countryName"
+                                >{{ "Partner Country Name" }}:</label
+                              >
+                              <div class="suggestion_input_wrapper">
+                                <!-- <i class="fa fa-search" aria-hidden="true"></i> -->
+                                <!-- <label
+                                  type="text"
+                                  class="form-control"
+                                  id="countryName"
+                                  placeholder="{{ data ? data.master.df.entercountryname : 'Enter Partner Country Name' }}"
+                                  name="countryName"
+                                ></label> -->
+                                <ng-multiselect-dropdown
+                                  name="regionSelect2"
+                                  id="RegionSelect2"
+                                  [settings]="dropdownSettingsRegion"
+                                  [data]="RegionSearchList"
+                                  [(ngModel)]="selectedRegion"
+                                  placeholder="Select Region"
+                                  (onSelect)="onItemSelectRegion($event)"
+                                  (onSelectAll)="onSelectAllRegion($event)"
+                                  (onDeSelect)="onItemDeSelectRegion($event)"
+                                  (onDeSelectAll)="
+                                    onItemDeSelectAllRegion($event)
+                                  "
+                                  (ngModelChange)="fetchCountries()"
+                                >
+                                </ng-multiselect-dropdown>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="query-btn">
+                          <a class="btn btn-secondary" (click)="resetPartner()"
+                            ><i class="fa fa-history" aria-hidden="true"></i>
+                            {{ data ? data.buttons.reset : "Reset" }}</a
+                          >
+                          <a
+                            class="btn btn-info"
+                            (click)="advancePartnerSearch()"
+                            ><i class="fa fa-search" aria-hidden="true"></i>
+                            {{ data ? data.buttons.search : "Search" }}</a
+                          >
+                          <a class="btn btn-danger" (click)="showQueryForm()"
+                            ><i class="fa fa-close" aria-hidden="true"></i>
+                            {{ data ? data.admission.close : "Close" }}</a
+                          >
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="property-table-wrapper">
+              <div class="table-responsive">
+                <table
+                  mat-table
+                  [dataSource]="dataSourceMain"
+                  matTableExporter
+                  #exporter="matTableExporter"
+                  [hiddenColumns]="[5, 6]"
+                  class="mat-elevation-z8"
+                  matSort
+                  #partnerSort="matSort"
+                >
+                  <ng-container matColumnDef="name">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{
+                        data ? data.master.partner.partnerName : "Partner Name"
+                      }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      <span
+                        data-toggle="tooltip"
+                        title="{{
+                          element.parentPartnerId &&
+                          element.parentPartnerId.name
+                            ? element.parentPartnerId.name
+                            : 'Parent'
+                        }}"
+                        ><i
+                          [ngClass]="
+                            element.parentPartnerId &&
+                            element.parentPartnerId.name
+                              ? 'fas fa-baby'
+                              : 'fa fa-child'
+                          "
+                          aria-hidden="true"
+                          style="font-size: 16px; color: #5e72e4"
+                        ></i>
+                        {{ element.name }}
+                      </span>
+                    </td>
+                  </ng-container>
+
+                  <!-- <ng-container matColumnDef="entityCode">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{
+                      data
+                      ? data.master.partner.partnerSC
+                      : "Partner Short Code"
+                      }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.entityCode }}
+                    </td>
+                  </ng-container> -->
+
+                  <ng-container matColumnDef="displayType">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{
+                        data ? data.master.partner.partnerType : "Partner Type"
+                      }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.displayType }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="displayCategory">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{
+                        data
+                          ? data.master.partner.partnerCategory
+                          : "Partner Category"
+                      }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.displayCategory }}
+                    </td>
+                  </ng-container>
+
+                  <!-- <ng-container matColumnDef="parentPartner">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      Partner Parent
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element?.parentPartnerId?.name || '' }}
+                    </td>
+                  </ng-container> -->
+
+                  <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{ data ? data.master.partner.status : "Status" }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element?.status === 1 ? "Active" : "Inactive" }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="createdOn">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{
+                        data ? data.master.partner.onBoarding : "Onboarding On"
+                      }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ cs.formatDateTime(element?.createdOn) }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="action">
+                    <th
+                      mat-header-cell
+                      *matHeaderCellDef
+                      style="text-align: center"
+                    >
+                      {{ data ? data.master.partner.action : "Action" }}
+                    </th>
+                    <td
+                      mat-cell
+                      *matCellDef="let element; let i = index"
+                      style="text-align: center"
+                    >
+                      <i
+                        class="fa fa-pencil mr-3 mr-lg-4"
+                        (click)="getTableClickData(element._id)"
+                        aria-hidden="true"
+                      ></i>
+                      <i
+                        style="color: red; cursor: pointer"
+                        class="fa fa-trash"
+                        aria-hidden="true"
+                        (click)="deletePartner(element._id)"
+                      ></i>
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="generate_ai">
+                    <th
+                      mat-header-cell
+                      *matHeaderCellDef
+                      style="text-align: center"
+                    >
+                      {{ data ? data.buttons.generateai : "Generate AI" }}
+                    </th>
+                    <td
+                      mat-cell
+                      *matCellDef="let element; let i = index"
+                      style="text-align: center"
+                    >
+                      <!-- <i class="fa fa-download" (click)="downloadpartnertoken(element._id)" aria-hidden="true">AI1</i>
+                      &nbsp; -->
+                      <i
+                        class="fa fa-download"
+                        (click)="downloadpartnertokenNew(element._id)"
+                        aria-hidden="true"
+                        >AI</i
+                      >
+                    </td>
+                  </ng-container>
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr
+                    mat-row
+                    (dblclick)="getTableClickData(row._id)"
+                    *matRowDef="
+                      let row;
+                      columns: displayedColumns;
+                      let i = index
+                    "
+                  ></tr>
+
+                  <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell">
+                      {{ data ? data.noData : "No data Found!" }}
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <mat-paginator
+                #partnerPaginator
+                [pageSizeOptions]="[10, 25, 50, 100]"
+                aria-label="Select page of Partner"
+              >
+              </mat-paginator>
+            </div>
+          </div>
+          <div
+            class="new-property-wrapper"
+            *ngIf="showPartnerDetails && !showImport"
+          >
+            <p class="main-heading">
+              <span
+                >{{
+                  data ? data.master.partner.newPartner : "Add New Partner"
+                }}:
+              </span>
+              {{
+                data
+                  ? data.master.partner.newPartnerTxt
+                  : "Fill the following details to add new partner
+              for outlets"
+              }}.
+              <span
+                (click)="hidePartnerDetails()"
+                class="close1"
+                data-toggle="tooltip"
+                title="Close"
+                >X</span
+              >
+            </p>
+            <form>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group position-relative">
+                    <label for="partnerName1"
+                      >{{
+                        data
+                          ? data.master.partner.partnerName
+                          : "Partner
+                      Name"
+                      }}<span class="asterisk">*</span>:
+                      <span style="cursor: pointer">
+                        <a
+                          data-toggle="tooltip"
+                          data-placement="bottom"
+                          title="{{
+                            data
+                              ? data.master.partner.clicktocopy
+                              : 'Click to Copy'
+                          }}"
+                          (click)="copiedMessage()"
+                          cdkCopyToClipboard="{{ clipboardid }}"
+                        >
+                          <i class="fa fa-clipboard" aria-hidden="true"></i>
+                        </a>
+                      </span>
+                      <!-- <span>
+                        {{clipboardid}}
+                      </span> -->
+                    </label>
+                    <div class="suggestion_input_wrapper">
+                      <i class="fa fa-search" aria-hidden="true"></i>
+                      <input
+                        type="text"
+                        class="form-control suggestionInput"
+                        id="partnerName1"
+                        [(ngModel)]="partnerToken.name"
+                        autocomplete="off"
+                        (keyup)="fetchPartnerNamesEntity($event.target.value)"
+                        (keydown)="onTokenPartnerPopulateInputKeydown($event)"
+                        placeholder="{{
+                          data
+                            ? data.master.partner.partnerP
+                            : 'Enter Partner Name'
+                        }}"
+                        name="partnerName1"
+                        #partnerName
+                      />
+                    </div>
+                    <ul class="searched-list" *ngIf="partners.length > 0">
+                      <li
+                        *ngFor="let partner of partners; let i = index"
+                        [class.selected]="
+                          i === tokenPartnerPopulateSuggestionIndex
+                        "
+                        (click)="setTokenPartner(partner, 'populate')"
+                      >
+                        {{ partner.name }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="partnerType1"
+                      >{{
+                        data
+                          ? data.master.partner.partnerType
+                          : "Partner
+                      Type"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <select
+                      name="partnerType1"
+                      class="custom-select"
+                      [(ngModel)]="partnerToken.type"
+                      id="partnerType"
+                      #partnerType
+                    >
+                      <option
+                        *ngFor="let t of partnerTypes"
+                        [value]="t.keyCode"
+                      >
+                        {{ t.key1 }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="partnerCategory"
+                      >{{
+                        data
+                          ? data.master.partner.partnerCategory
+                          : "Partner Category"
+                      }}<span class="asterisk">*</span>:<span
+                        class="pull-right"
+                        data-toggle="tooltip"
+                        title="Partner category is dependent on contract agreement between plaza and partner"
+                        data-placement="bottom"
+                        data-html="true"
+                        id="port-tooltip"
+                        ><i
+                          class="fa fa-info-circle"
+                          aria-hidden="true"
+                          style="font-size: 16px; color: #5e72e4"
+                        ></i></span
+                    ></label>
+                    <select
+                      name="partnerCategory"
+                      class="custom-select"
+                      [(ngModel)]="partnerToken.category"
+                      #partnercategory
+                    >
+                      <option
+                        *ngFor="let t of partnerCategory"
+                        [ngValue]="t.keyCode"
+                      >
+                        {{ t.key1 }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="gstIn"
+                      >{{
+                        data
+                          ? data.master.partner.tin
+                          : "Tax Identification
+                      Number"
+                      }}:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="gstIn"
+                      autocomplete="off"
+                      (keyup)="fetchPartnerTins($event.target.value)"
+                      placeholder="{{
+                        data
+                          ? data.master.partner.tinP
+                          : 'Enter Tax Identification Number'
+                      }}"
+                      name="gstIn"
+                      [(ngModel)]="partnerToken.tin"
+                      #tin
+                    />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="partnerStatus1"
+                      >{{ data ? data.master.partner.status : "Status"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <select
+                      name="partnerStatus1"
+                      class="custom-select"
+                      [(ngModel)]="partnerToken.status"
+                      (change)="changeStatus()"
+                      #status
+                    >
+                      <option selected value="1">Active</option>
+                      <option value="2">Inactive</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="partnerSCP"
+                      >{{
+                        data
+                          ? data.master.partner.partnerSC
+                          : "Partner Short
+                      Code"
+                      }}:</label
+                    >
+
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="partnerSC"
+                      [(ngModel)]="partnerToken.partnerSC"
+                      autocomplete="off"
+                      maxlength="10"
+                      (keyup)="
+                        $event.target.value = $event.target.value.toUpperCase()
+                      "
+                      placeholder="{{
+                        data
+                          ? data.master.partner.partnerSCP
+                          : 'Enter Partner Short Code'
+                      }}"
+                      name="partnerSCP"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="country"
+                      >{{
+                        data
+                          ? data.master.partner.clientLegal
+                          : "Partner Legal Entity Country"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <select
+                      name="country"
+                      class="custom-select"
+                      [(ngModel)]="partnerToken.country"
+                      (ngModelChange)="countyType()"
+                      id="country"
+                    >
+                      <option *ngFor="let c of countries">{{ c.name }}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="region"
+                      >{{
+                        data ? data.master.partner.region : "Region"
+                      }}:</label
+                    >
+                    <select
+                      name="region"
+                      class="custom-select"
+                      [(ngModel)]="partnerToken.region"
+                      id="region"
+                    >
+                      <option
+                        *ngFor="let t of partnerRegions"
+                        [ngValue]="t.keyCode"
+                      >
+                        {{ t.key1 }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="erpNo"
+                      >{{
+                        data
+                          ? data.master.partner.identificationNo
+                          : "ERP Accounting
+                      Code"
+                      }}:</label
+                    >
+                    <input
+                      class="form-control"
+                      id="erpNo"
+                      autocomplete="off"
+                      placeholder="{{
+                        data
+                          ? data.master.partner.identificatonNoP
+                          : 'ERP Accounting Code'
+                      }}"
+                      name="erpNo"
+                      [(ngModel)]="partnerToken.erpNo"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="addressLine1"
+                      >{{
+                        data
+                          ? data.master.lounge.addressLine1
+                          : "Address Line 1"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="addressLineP1"
+                      [(ngModel)]="partnerToken.addressLine1"
+                      autocomplete="off"
+                      placeholder="{{
+                        data
+                          ? data.master.partner.addressL1
+                          : 'Enter Address Line 1'
+                      }}"
+                      name="addressLine1"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="addressLine2"
+                      >{{
+                        data ? data.master.partner.addressL2 : "Address Line 2"
+                      }}:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="addressLineP2"
+                      [(ngModel)]="partnerToken.addressLine2"
+                      autocomplete="off"
+                      placeholder="{{
+                        data
+                          ? data.master.partner.addressL2
+                          : 'Enter Address Line 2'
+                      }}"
+                      name="addressLine2"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="postalCode"
+                      >{{
+                        data
+                          ? data.master.partner.postalCode
+                          : "Postal
+                      Code"
+                      }}:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="postalCodeP"
+                      [(ngModel)]="partnerToken.pinCode"
+                      autocomplete="off"
+                      placeholder="{{
+                        data
+                          ? data.master.partner.postalCodeP
+                          : 'Enter Postal Code'
+                      }}"
+                      name="postalCode"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="state"
+                      >{{ data ? data.master.partner.state : "State" }}:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="stateP"
+                      [(ngModel)]="partnerToken.state"
+                      autocomplete="off"
+                      placeholder="{{
+                        data ? data.master.partner.stateP : 'Enter State'
+                      }}"
+                      name="state"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="city"
+                      >{{ data ? data.master.partner.city : "City" }}:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="cityP"
+                      [(ngModel)]="partnerToken.city"
+                      autocomplete="off"
+                      placeholder="{{
+                        data ? data.master.partner.cityP : 'Enter City'
+                      }}"
+                      name="city"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row align-items-center">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="AccPICname"
+                      >Account Point In Charge (PIC)<span class="asterisk"
+                        >*</span
+                      >:
+                      <span
+                        class="pull-right"
+                        data-toggle="tooltip"
+                        title="{{ AccPIC.email }}, {{ AccPIC.mobile }}"
+                        data-placement="bottom"
+                        data-html="true"
+                        id="port-tooltip"
+                        ><i
+                          class="fa fa-info-circle"
+                          aria-hidden="true"
+                          style="font-size: 16px; color: #5e72e4"
+                        ></i></span
+                    ></label>
+                    <div class="suggestion_input_wrapper">
+                      <i class="fa fa-search" aria-hidden="true"></i>
+
+                      <input
+                        type="text"
+                        class="form-control suggestionInput"
+                        id="AccPICname"
+                        autocomplete="off"
+                        (keyup)="fetchAccPICs($event.target.value)"
+                        placeholder="Enter Account PIC"
+                        name="AccPICname"
+                        [(ngModel)]="AccPIC.name"
+                      />
+                      <ul
+                        class="searched-list searchSuggestions"
+                        *ngIf="AccPICs.length > 0"
+                      >
+                        <li
+                          *ngFor="let AccPIC of AccPICs; let i = index"
+                          (click)="setAccPIC(AccPIC, 'search')"
+                        >
+                          {{ AccPIC.name }}
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="partnerApproval"
+                      >Role Approval For Partner Contract/AI<span
+                        class="asterisk"
+                        >*</span
+                      >:<span
+                        class="pull-right"
+                        data-toggle="tooltip"
+                        title="Selected role can approve or reject the Partner Contract and Admission Instruction"
+                        data-placement="bottom"
+                        data-html="true"
+                        id="port-tooltip"
+                        ><i
+                          class="fa fa-info-circle"
+                          aria-hidden="true"
+                          style="font-size: 16px; color: #5e72e4"
+                        ></i></span
+                    ></label>
+                    <select
+                      name="partnerApproval"
+                      class="custom-select"
+                      (ngModelChange)="setApprovalRole($event)"
+                      [(ngModel)]="partnerToken.role._id"
+                      id="partnerApproval"
+                    >
+                      <option
+                        *ngFor="let role of userRoles"
+                        [ngValue]="role._id"
+                      >
+                        {{ role.roleName }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <!-- <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="partnerApproval">Role Approval For Partner Contract/AI<span
+                        class="asterisk">*</span>:<span class="pull-right" data-toggle="tooltip"
+                        title="Selected role can approve or reject the Partner Contract and Admission Instruction"
+                        data-placement="bottom" data-html="true" id="port-tooltip"><i class="fa fa-info-circle"
+                          aria-hidden="true" style="font-size: 16px; color: #5e72e4"></i></span></label>
+                    <div class="suggestion_input_wrapper">
+                      <i class="fa fa-search" aria-hidden="true"></i>
+                      <input type="text" class="form-control suggestionInput" id="partnerApproval" autocomplete="off"
+                        (keyup)="
+                        fetchApprovalRoles($event.target.value)" (keydown)="onApprovalRoleInputKeydown($event)" placeholder="Enter Role for Partner Approval"
+                        name="partnerApproval" [(ngModel)]="partnerToken.role.name" />
+                    </div>
+                    <ul class="searched-list searchSuggestions" *ngIf="userRoles.length > 0">
+                      <li *ngFor="let role of userRoles; let i = index"
+                      [class.selected]="
+                        i === approvalRoleSuggestionIndex
+                      " (click)="setApprovalRole(role)">
+                        {{ role.roleName }}
+                      </li>
+                    </ul>
+                  </div>
+                </div> -->
+
+                <div class="col-md-2">
+                  <div
+                    class="form-group d-flex justify-content-between align-items-center"
+                  >
+                    <label class="mb-0" for="isActive"
+                      >{{
+                        data
+                          ? data.master.lounge.isActive
+                          : "Is
+                      Active"
+                      }}:</label
+                    >
+                    <div class="custom-control custom-switch">
+                      <input
+                        data-toggle="modal"
+                        data-target="#isActiveModal"
+                        data-backdrop="static"
+                        data-keyboard="false"
+                        type="checkbox"
+                        name="isActive"
+                        class="custom-control-input"
+                        id="customSwitch1"
+                        checked
+                        [(ngModel)]="partnerToken.isActive"
+                        (click)="changeStatus()"
+                      />
+                      <label
+                        class="custom-control-label"
+                        for="customSwitch1"
+                      ></label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="uploadToken"
+                      >{{
+                        data ? data.master.vendor.uploadlogo : "Upload Logo"
+                      }}:
+                      <i
+                        >Upload png image of size (Width x Height) 180 x 60 px.
+                        Maximum image size 20 kB</i
+                      ></label
+                    >
+                    <div class="image-upload-wrapper">
+                      <div class="panel">
+                        <div class="button_outer flex-shrink-0 btn btn-info">
+                          <div class="btn_upload">
+                            <input
+                              type="file"
+                              id="upload_file"
+                              name=""
+                              (change)="savePartnerLogo($event.target.files)"
+                            />
+                            <i class="fa fa-upload ml-0" aria-hidden="true"></i>
+                          </div>
+                          <div class="processing_bar"></div>
+                          <div class="success_box"></div>
+                        </div>
+                        <div class="sample-image-wrapper position-relative">
+                          <img
+                            [src]="partnerToken.logoURL"
+                            alt=""
+                            class="img-fluid"
+                            style="width: 100px; margin-bottom: 10px"
+                          />
+                          <i
+                            class="fa fa-trash delete-sample-image"
+                            aria-hidden="true"
+                            (click)="deletePartnerLogo(i)"
+                            style="color: red; cursor: pointer"
+                            *ngIf="
+                              partnerToken.logoURL !== '' &&
+                              partnerToken._id !== ''
+                            "
+                          ></i>
+                        </div>
+                      </div>
+                      <div class="error_msg"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <ul
+              class="nav nav-tabs mt-4"
+              id="myTab"
+              role="tablist"
+              *ngIf="partnerToken._id && partnerToken._id !== ''"
+            >
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  id="property-tab"
+                  data-toggle="tab"
+                  href="#property"
+                  role="tab"
+                  aria-controls="property"
+                  aria-selected="true"
+                  >{{
+                    data ? data.master.partner.entities : "Partner Entities"
+                  }}</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="contact-tab"
+                  data-toggle="tab"
+                  href="#contact"
+                  role="tab"
+                  aria-controls="contact"
+                  aria-selected="false"
+                  >{{ data ? data.master.partner.contacts : "Contacts" }}</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="documen-tab"
+                  data-toggle="tab"
+                  href="#documen"
+                  role="tab"
+                  aria-controls="documen"
+                  aria-selected="false"
+                  >{{ data ? data.buttons.document : "Document" }}</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  id="localisation-tab"
+                  data-toggle="tab"
+                  href="#localisation"
+                  role="tab"
+                  aria-controls="localisation"
+                  aria-selected="false"
+                >
+                  {{
+                    data
+                      ? data.master.admissionToken.localisation
+                      : "Localisation"
+                  }}
+                  <!-- <span><i class="fa fa-circle" aria-hidden="true" style="margin-left: 5px; font-size: 10px"
+                      [style.color]="
+                        tokenTabs['localisation-tab'] &&
+                        tokenTabs['localisation-tab'].isError
+                          ? 'red'
+                          : 'green'
+                      "></i></span> -->
+                </a>
+              </li>
+            </ul>
+            <div
+              class="tab-content"
+              id="myTabContent"
+              *ngIf="partnerToken._id && partnerToken._id !== ''"
+            >
+              <div
+                class="tab-pane fade show active"
+                id="property"
+                role="tabpanel"
+                aria-labelledby="property-tab"
+              >
+                <div class="property-data" *ngIf="!addNewProperty">
+                  <p class="main-heading">
+                    <span
+                      >{{
+                        data ? data.master.partner.entities : "Entities"
+                      }}:</span
+                    >
+                    Clicking on Add Entity will create a child for above Partner
+                    <span
+                      class="pull-right"
+                      [title]="
+                        !partnerToken._id || partnerToken._id === ''
+                          ? 'Save Partner to add new Entity'
+                          : ''
+                      "
+                    >
+                      <a
+                        class="btn btn-info"
+                        [class.disabled]="
+                          !partnerToken._id || partnerToken._id === ''
+                        "
+                        (click)="addNewPartnerEntity()"
+                        ><i class="fa fa-plus" aria-hidden="true"> </i>
+                        {{
+                          data
+                            ? data.master.partner.addEntity
+                            : "Add New Entity"
+                        }}</a
+                      >
+                    </span>
+                  </p>
+                  <div class="table-responsive">
+                    <table
+                      mat-table
+                      [dataSource]="dataSourceEntity"
+                      class="mat-elevation-z8"
+                      matSort
+                      #entitySort="matSort"
+                    >
+                      <ng-container matColumnDef="name">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data
+                              ? data.master.partner.entityName
+                              : "Entity Name"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.name }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="addressLine1">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data
+                              ? data.master.partner.addressL1
+                              : "Address Line 1"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.addressLine1 }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="addressLine2">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data
+                              ? data.master.partner.addressL2
+                              : "Address Line 2"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.addressLine2 }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="country">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.partner.country : "Country" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.country }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="state">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.partner.state : "State" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.state }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="city">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.partner.city : "City" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.city }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="postalCode">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data
+                              ? data.master.partner.postalCode
+                              : "Postal Code"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.postalCode }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="status">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.partner.status : "Status" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ statusMap[element.status] }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="action">
+                        <th
+                          mat-header-cell
+                          *matHeaderCellDef
+                          style="text-align: center"
+                        >
+                          {{ data ? data.master.partner.action : "Action" }}
+                        </th>
+                        <td
+                          mat-cell
+                          *matCellDef="let element; let i = index"
+                          style="text-align: center"
+                        >
+                          <i
+                            class="fa fa-pencil mr-3 mr-lg-4"
+                            aria-hidden="true"
+                            (click)="editEntity(element)"
+                          ></i>
+                          <i
+                            style="color: red; cursor: pointer"
+                            class="fa fa-trash"
+                            aria-hidden="true"
+                            (click)="deleteEntity(element._id)"
+                          ></i>
+                        </td>
+                      </ng-container>
+
+                      <tr
+                        mat-header-row
+                        *matHeaderRowDef="displayColumnEntity"
+                      ></tr>
+                      <tr
+                        mat-row
+                        (dblclick)="editEntity(row)"
+                        *matRowDef="
+                          let row;
+                          columns: displayColumnEntity;
+                          let i = index
+                        "
+                      ></tr>
+                    </table>
+                  </div>
+                  <mat-paginator
+                    #entitypaginator
+                    [pageSizeOptions]="[10, 25, 50, 100]"
+                    aria-label="Select page of Partner Entity"
+                  ></mat-paginator>
+                </div>
+                <div class="add-new-property" *ngIf="addNewProperty">
+                  <p class="main-heading">
+                    <span>{{
+                      data ? data.master.partner.addEntity : "Add New Entity"
+                    }}</span>
+                    <span
+                      class="close1"
+                      data-toggle="tooltip"
+                      title="Close"
+                      (click)="addNewPartnerEntity()"
+                      >X</span
+                    >
+                  </p>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="entityName"
+                          >{{
+                            data
+                              ? data.master.partner.entityName
+                              : "Partner
+                          Entity Name"
+                          }}<span class="asterisk">*</span>:</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="entityName"
+                          [(ngModel)]="entityToken.name"
+                          autocomplete="off"
+                          placeholder="{{
+                            data
+                              ? data.master.partner.entityP
+                              : 'Enter Partner  entity name'
+                          }}"
+                          name="entityName"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="gstIn"
+                          >{{
+                            data
+                              ? data.master.partner.entityTin
+                              : "Partner
+                          Entity Tin"
+                          }}:</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="entityTin"
+                          autocomplete="off"
+                          placeholder="{{
+                            data
+                              ? data.master.partner.entityTinP
+                              : 'Enter Partner Entity TIN'
+                          }}"
+                          name="gstIn"
+                          [(ngModel)]="entityToken.tin"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="entityCategory"
+                          >{{
+                            data
+                              ? data.master.partner.entityCategory
+                              : "Partner Entity Category"
+                          }}<span class="asterisk">*</span>:</label
+                        >
+                        <select
+                          name="entityCategory"
+                          class="custom-select"
+                          [(ngModel)]="entityToken.category"
+                          id="entityCategory"
+                        >
+                          <option
+                            *ngFor="let t of partnerCategory"
+                            [ngValue]="t.keyCode"
+                          >
+                            {{ t.key1 }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="addressLine1"
+                          >{{
+                            data
+                              ? data.master.lounge.addressLine1
+                              : "Address Line 1"
+                          }}<span class="asterisk">*</span>:</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="addressLine1"
+                          [(ngModel)]="entityToken.addressLine1"
+                          autocomplete="off"
+                          placeholder="{{
+                            data
+                              ? data.master.partner.addressL1
+                              : 'Enter Address Line 1'
+                          }}"
+                          name="addressLine1"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="addressLine2"
+                          >{{
+                            data
+                              ? data.master.partner.addressL2
+                              : "Address Line 2"
+                          }}:</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="addressLine2"
+                          [(ngModel)]="entityToken.addressLine2"
+                          autocomplete="off"
+                          placeholder="{{
+                            data
+                              ? data.master.partner.addressL2
+                              : 'Enter Address Line 2'
+                          }}"
+                          name="addressLine2"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="postalCode"
+                          >{{
+                            data
+                              ? data.master.partner.postalCode
+                              : "Postal
+                          Code"
+                          }}:</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="postalCode"
+                          [(ngModel)]="entityToken.pinCode"
+                          autocomplete="off"
+                          placeholder="{{
+                            data
+                              ? data.master.partner.postalCodeP
+                              : 'Enter Postal Code'
+                          }}"
+                          name="postalCode"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="state"
+                          >{{
+                            data ? data.master.partner.state : "State"
+                          }}:</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="state"
+                          [(ngModel)]="entityToken.state"
+                          autocomplete="off"
+                          placeholder="{{
+                            data ? data.master.partner.stateP : 'Enter State'
+                          }}"
+                          name="state"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="city"
+                          >{{
+                            data ? data.master.partner.city : "City"
+                          }}:</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="city"
+                          [(ngModel)]="entityToken.city"
+                          autocomplete="off"
+                          placeholder="{{
+                            data ? data.master.partner.cityP : 'Enter City'
+                          }}"
+                          name="city"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <!-- <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="country"
+                          >{{
+                            data
+                              ? data.master.partner.clientLegal
+                              : "Partner Legal Entity Country"
+                          }}<span class="asterisk">*</span>:</label
+                        >
+                        <select
+                          name="country"
+                          class="custom-select"
+                          [(ngModel)]="entityToken.country"
+                          id="entityCountry"
+                        >
+                          <option *ngFor="let c of countries">
+                            {{ c.name }}
+                          </option>
+                        </select>
+                      </div>
+                    </div> -->
+                    <!-- changes start -->
+
+                    <!-- Again Changes Starttttttttt -->
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="country"
+                          >{{
+                            data
+                              ? data.master.partner.clientLegal
+                              : "Partner Legal Entity Country"
+                          }}<span class="asterisk">*</span>:</label
+                        >
+                        <select
+                          name="country"
+                          class="custom-select"
+                          [(ngModel)]="entityToken.country"
+                          (ngModelChange)="countyType2()"
+                          id="country2"
+                        >
+                          <option *ngFor="let c of countries">
+                            {{ c.name }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="form-group">
+                        <label for="region"
+                          >{{
+                            data ? data.master.partner.region : "Region"
+                          }}:</label
+                        >
+                        <select
+                          name="region"
+                          class="custom-select"
+                          [(ngModel)]="entityToken.region"
+                          id="region"
+                        >
+                          <option
+                            *ngFor="let t of partnerRegions"
+                            [ngValue]="t.keyCode"
+                          >
+                            {{ t.key1 }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                    <!-- </div> -->
+                    <!-- <div class="row"> -->
+                    <div class="col-md-2">
+                      <div class="form-group">
+                        <label for="locationCode"
+                          >{{
+                            data
+                              ? data.master.partner.partnerSC
+                              : "Partner Short Code"
+                          }}:</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="locationCode"
+                          [(ngModel)]="entityToken.entityCode"
+                          maxlength="10"
+                          autocomplete="off"
+                          (keyup)="
+                            $event.target.value =
+                              $event.target.value.toUpperCase()
+                          "
+                          placeholder="{{
+                            data
+                              ? data.master.partner.partnerSCP
+                              : 'Enter Partner Short Code'
+                          }}"
+                          name="locationCode"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="form-group">
+                        <label for="partnerStatus1"
+                          >{{ data ? data.master.partner.status : "Status"
+                          }}<span class="asterisk">*</span>:</label
+                        >
+                        <select
+                          name="partnerStatus1"
+                          class="custom-select"
+                          [(ngModel)]="entityToken.status"
+                          id="enStatus"
+                        >
+                          <option selected value="1">Active</option>
+                          <option value="2">Inactive</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="form-group">
+                        <label for="locationType"
+                          >{{
+                            data
+                              ? data.master.partner.allianceProgram
+                              : "Alliance Program"
+                          }}:</label
+                        >
+                        <select
+                          name="locationType"
+                          class="custom-select"
+                          [(ngModel)]="entityToken.alliancePartner"
+                          id="entityAllianceProgram"
+                        >
+                          <option
+                            *ngFor="let a of alliancePartner"
+                            [ngValue]="a.keyCode"
+                          >
+                            {{ a.key1 }}
+                          </option>
+                          <!-- <option selected>Star Alliance</option>
+                                                    <option value="1">One World</option>
+                                                    <option value="2"> Skyteam</option> -->
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="erpNo"
+                          >{{
+                            data
+                              ? data.master.partner.identificationNo
+                              : "ERP Accounting
+                          Code"
+                          }}:</label
+                        >
+                        <input
+                          class="form-control"
+                          id="erpNo"
+                          autocomplete="off"
+                          placeholder="{{
+                            data
+                              ? data.master.partner.identificatonNoP
+                              : 'ERP Accounting Code'
+                          }}"
+                          name="erpNo"
+                          [(ngModel)]="entityToken.erpNo"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="result">
+                    <a class="btn btn-secondary" (click)="resetAddEntity()"
+                      ><i class="fa fa-history" aria-hidden="true"></i>
+                      {{ data ? data.buttons.reset : "Reset" }}</a
+                    >
+                    <a class="btn btn-info" (click)="addPartnerEntity()"
+                      ><i class="fa fa-plus" aria-hidden="true"></i>
+                      {{
+                        data
+                          ? data.master.partner.addEntity
+                          : "Add
+                      Entity"
+                      }}</a
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="contact"
+                role="tabpanel"
+                aria-labelledby="contact-tab"
+              >
+                <div class="contact-data" *ngIf="!addNewContact">
+                  <p class="main-heading">
+                    <span>{{
+                      data ? data.master.partner.contacts : "Contacts"
+                    }}</span>
+                    <span
+                      class="pull-right"
+                      [title]="
+                        !partnerToken._id || partnerToken._id === ''
+                          ? 'Save Partner to add new Contact'
+                          : ''
+                      "
+                    >
+                      <a
+                        [class.disabled]="
+                          !partnerToken._id || partnerToken._id === ''
+                        "
+                        (click)="addNewPartnerContact()"
+                        class="btn btn-info"
+                        ><i class="fa fa-plus" aria-hidden="true"> </i>
+                        {{
+                          data ? data.master.partner.addContact : "Add Contact"
+                        }}
+                      </a>
+                    </span>
+                  </p>
+                  <div class="table-responsive">
+                    <table
+                      mat-table
+                      [dataSource]="dataSourceContact"
+                      class="mat-elevation-z8"
+                      matSort
+                      #contactSort="matSort"
+                    >
+                      <ng-container matColumnDef="name">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.partner.name : "Name" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.name }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="designation">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data
+                              ? data.master.partner.designation
+                              : "Designation"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.designation }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="email">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.partner.email : "Email" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.email }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="number">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{ data ? data.master.partner.number : "Number" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element.number }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef>
+                          {{ data ? data.master.partner.status : "Status" }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.status === 1 ? "Active" : "Inactive" }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="action">
+                        <th
+                          mat-header-cell
+                          *matHeaderCellDef
+                          style="text-align: center"
+                        >
+                          {{ data ? data.master.partner.action : "Action" }}
+                        </th>
+                        <td
+                          mat-cell
+                          *matCellDef="let element; let i = index"
+                          style="text-align: center"
+                        >
+                          <i
+                            class="fa fa-pencil mr-3 mr-lg-4"
+                            aria-hidden="true"
+                            (click)="editSupportContacts(element)"
+                          ></i>
+                          <i
+                            style="color: red; cursor: pointer"
+                            class="fa fa-trash"
+                            aria-hidden="true"
+                            (click)="deleteSupportContact(element._id)"
+                          ></i>
+                          <!-- <label class="mb-0" for="isActive">{{
+                            data ? data.master.user.isActive : "is Active"
+                            }}</label>
+                            <div class="custom-control custom-switch">
+                            <input type="checkbox" name="isActive" class="custom-control-input" id="customSwitch1"  readonly
+                              [(ngModel)]="element.status" />
+                            <label class="custom-control-label" for="customSwitch1"></label>
+                          </div> -->
+                          <!-- <div class="form-group d-flex justify-content-between align-items-center">
+                          </div> -->
+                        </td>
+                      </ng-container>
+
+                      <tr
+                        mat-header-row
+                        *matHeaderRowDef="displayColumnContact"
+                      ></tr>
+                      <tr
+                        mat-row
+                        (dblclick)="editSupportContacts(row)"
+                        *matRowDef="
+                          let row;
+                          columns: displayColumnContact;
+                          let i = index
+                        "
+                      ></tr>
+                      <!-- <tr *ngIf="!dataSourceContact" mat-row>Currently no Data is Available</tr> -->
+                    </table>
+                  </div>
+                  <mat-paginator
+                    #contactpaginator
+                    [pageSizeOptions]="[10, 25, 50, 100]"
+                    aria-label="Select page of Contact"
+                  ></mat-paginator>
+                </div>
+                <div class="add-new-contact" *ngIf="addNewContact">
+                  <p class="main-heading">
+                    <span>{{
+                      data
+                        ? data.master.partner.addContact
+                        : "Add
+                      Contact"
+                    }}</span>
+                    <span
+                      class="close1"
+                      data-toggle="tooltip"
+                      title="Close"
+                      (click)="addNewPartnerContact()"
+                      >X</span
+                    >
+                  </p>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="contactName"
+                          >{{
+                            data
+                              ? data.master.partner.contactName
+                              : "Contact Name"
+                          }}<span class="asterisk">*</span>:</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="contactName"
+                          [(ngModel)]="supportContact.name"
+                          autocomplete="off"
+                          placeholder="{{
+                            data
+                              ? data.master.partner.contactNameP
+                              : 'Enter Contact Name'
+                          }}"
+                          name="contactName"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="contactDesignation"
+                          >{{
+                            data
+                              ? data.master.partner.contactDesignation
+                              : "Contact Designation"
+                          }}<span class="asterisk">*</span>:</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="contactDesignation"
+                          [(ngModel)]="supportContact.designation"
+                          autocomplete="off"
+                          placeholder="{{
+                            data
+                              ? data.master.partner.contactDesignationP
+                              : 'Enter Contact Designation'
+                          }}"
+                          name="contactDesignation"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="contactNo"
+                          >{{
+                            data
+                              ? data.master.partner.contactNo
+                              : "Contact
+                          No"
+                          }}<span class="asterisk">*</span>:</label
+                        >
+                        <input
+                          type="number"
+                          class="form-control"
+                          id="contactNo"
+                          [(ngModel)]="supportContact.number"
+                          autocomplete="off"
+                          min="1"
+                          placeholder="{{
+                            data
+                              ? data.master.partner.contactNoP
+                              : 'Enter Contact No'
+                          }}"
+                          name="contactNo"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="contactEmail"
+                          >{{
+                            data
+                              ? data.master.partner.contactEmail
+                              : "Contact Email"
+                          }}<span class="asterisk">*</span>:</label
+                        >
+                        <input
+                          type="email"
+                          class="form-control"
+                          id="contactEmail"
+                          [(ngModel)]="supportContact.email"
+                          autocomplete="off"
+                          placeholder="{{
+                            data
+                              ? data.master.partner.contactEmailP
+                              : 'Enter Contact Email'
+                          }}"
+                          name="contactEmail"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="entity1"
+                          >{{
+                            data
+                              ? data.master.partner.partnerEntity
+                              : "Partner
+                          Entity"
+                          }}:<span class="asterisk">*</span></label
+                        >
+                        <div class="suggestion_input_wrapper">
+                          <i class="fa fa-search" aria-hidden="true"></i>
+                          <input
+                            type="text"
+                            class="form-control suggestionInput"
+                            id="supportEntity"
+                            [(ngModel)]="supportContact.entity.name"
+                            autocomplete="off"
+                            (keyup)="
+                              fetchPartnerNamesEntity($event.target.value)
+                            "
+                            (keydown)="onTokenPartnerEntityInputKeydown($event)"
+                            placeholder="{{
+                              data
+                                ? data.master.partner.partnerEntityP
+                                : 'Enter Partner Entity'
+                            }}"
+                            name="entity1"
+                          />
+                        </div>
+                        <ul
+                          class="searched-list"
+                          *ngIf="partnersEntity.length > 0"
+                        >
+                          <li
+                            *ngFor="
+                              let partner of partnersEntity;
+                              let i = index
+                            "
+                            [class.selected]="
+                              i === tokenPartnerEntitySuggestionIndex
+                            "
+                            (click)="setTokenPartnerEntity(partner)"
+                          >
+                            {{ partner.name }}
+                          </li>
+                        </ul>
+                        <!-- <select name="entity1" class="custom-select" [(ngModel)]="supportContact.entity" id="supportEntity">
+                                                    <option>Delhi Airport</option>
+                                                    <option>Mumbai Airport</option>
+                                                </select> -->
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="contactType"
+                          >{{
+                            data
+                              ? data.master.partner.contactRole
+                              : "Contact Role"
+                          }}<span class="asterisk">*</span>:</label
+                        >
+                        <select
+                          name="contactType"
+                          class="custom-select"
+                          [(ngModel)]="supportContact.type"
+                          id="supportType"
+                        >
+                          <option
+                            *ngFor="let a of contactRole"
+                            [ngValue]="a.keyCode"
+                          >
+                            {{ a.key1 }}
+                          </option>
+                          <!-- <option>Partner</option>
+                          <option>Plaza</option> -->
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="status"
+                          >{{
+                            data ? data.master.partner.status : "Status"
+                          }}:</label
+                        >
+                        <select
+                          name="status"
+                          class="custom-select"
+                          [(ngModel)]="supportContact.isActive"
+                        >
+                          <option selected value="1">Active</option>
+                          <option value="2">Inactive</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="result">
+                    <a class="btn btn-secondary" (click)="resetAddSupport()"
+                      ><i class="fa fa-history" aria-hidden="true"></i>
+                      {{ data ? data.buttons.reset : "Reset" }}</a
+                    >
+                    <a class="btn btn-info" (click)="addPartnerContact()"
+                      ><i class="fa fa-plus" aria-hidden="true"></i>
+                      {{
+                        data
+                          ? data.master.partner.addContact
+                          : "Add
+                      Contact"
+                      }}</a
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="documen"
+                role="tabpanel"
+                aria-labelledby="documen-tab"
+              >
+                <app-upload-document
+                  (browseFile)="browseFile($event)"
+                  [showFiles]="showFiles"
+                  (changeDocumentStatus)="changeDocumentStatus($event)"
+                  [filleTypes]="filleTypes"
+                  [dataSourceDocuments]="dataSourcePartnerDocuments"
+                  (fetchDocuments)="fetchAIDocuments(tokenRowid)"
+                ></app-upload-document>
+              </div>
+              <div
+                class="tab-pane fade"
+                id="localisation"
+                role="tabpanel"
+                aria-labelledby="localisation-tab"
+              >
+                <table
+                  mat-table
+                  [dataSource]="dataSourceLocalisation"
+                  class="mat-elevation-z8"
+                  matSort
+                >
+                  <ng-container matColumnDef="attribute">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{ data ? data.master.admissionToken.attr : "Attribute" }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">{{ element }}</td>
+                  </ng-container>
+
+                  <ng-container
+                    [matColumnDef]="l.key2"
+                    *ngFor="let l of availLanguages"
+                  >
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{ l.key2 }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      <input
+                        *ngIf="partnerToken.localisation"
+                        type="text"
+                        placeholder="Enter token name in {{ l.key2 }}"
+                        class="form-control"
+                        [(ngModel)]="partnerToken.localisation[element][l.key1]"
+                      />
+                    </td>
+                  </ng-container>
+
+                  <tr
+                    mat-header-row
+                    *matHeaderRowDef="displayedColumnsLocalisation"
+                  ></tr>
+                  <tr
+                    mat-row
+                    *matRowDef="
+                      let row;
+                      columns: displayedColumnsLocalisation;
+                      let i = index
+                    "
+                  ></tr>
+
+                  <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell">
+                      {{
+                        data
+                          ? data.master.admissionToken.noData
+                          : "No data Found!"
+                      }}
+                    </td>
+                  </tr>
+                </table>
+                <div class="result">
+                  <a
+                    *ngIf="userType === 1"
+                    href="javascript:void(null)"
+                    class="btn btn-info"
+                    (click)="updatePartnerLocalisation()"
+                    [class.disabled]="
+                      !partnerToken._id || partnerToken._id === ''
+                    "
+                  >
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    {{ data ? data.buttons.save : "Save" }}</a
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="result mt-4">
+              <!-- <a class="btn btn-primary" style="color: white;"
+                                *ngIf="partnerToken._id && partnerToken._id !== ''" (click)="downloadpartnertoken()"><i
+                                    class="fa fa-download" aria-hidden="true"></i> Generate AI</a> -->
+
+              <a
+                href="javascript:void(0)"
+                data-toggle="modal"
+                *ngIf="partnerToken._id && partnerToken._id !== ''"
+                data-target="#partnerStatusHistory"
+                class="btn btn-success mr-2"
+              >
+                <i class="fa fa-history" aria-hidden="true"></i>
+                {{ data ? data.buttons.actionhistory : "Action History" }}</a
+              >
+              <a
+                href="javascript:void(0)"
+                data-toggle="modal"
+                *ngIf="partnerToken._id && partnerToken._id !== ''"
+                data-target="#partnerSettingsModal"
+                class="btn btn-success mr-2"
+                ><i class="fa fa-cog" aria-hidden="true"></i>
+                {{
+                  data
+                    ? data.master.partner.partnerSettings
+                    : "Partner Settings"
+                }}</a
+              >
+              <a class="btn btn-secondary" (click)="resetPartner()"
+                ><i class="fa fa-history" aria-hidden="true"></i>
+                {{ data ? data.buttons.reset : "Reset" }}</a
+              >
+              <a class="btn btn-info mr-2" (click)="savePartner()"
+                ><i class="fa fa-check" aria-hidden="true"></i>
+                {{ data ? data.buttons.save : "Save" }}</a
+              >
+              <a
+                class="btn btn-success"
+                *ngIf="partnerToken._id && partnerToken._id !== ''"
+                (click)="submitPartner()"
+                ><i class="fa fa-check" aria-hidden="true"></i
+                >{{ data ? data.buttons.submit : "Submit" }}</a
+              >
+            </div>
+          </div>
+          <div *ngIf="showImport">
+            <app-import-data
+              [showNavBar]="false"
+              [showLeftMenu]="false"
+              [validator]="importValidator"
+              (importClose)="backToResults()"
+            ></app-import-data>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="partnerSettingsModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="partnerSettingsModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title mb-0" id="partnerSettingsModalLabel">
+          {{ data ? data.master.partner.partnerSettings : "Partner Settings" }}
+        </h3>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="partner-settings-table" *ngIf="!editpartnerSettings">
+          <div class="table-responsive">
+            <table
+              mat-table
+              [dataSource]="dataSourceSetting"
+              class="mat-elevation-z8"
+              matSort
+              #partnerSettingSort="matSort"
+            >
+              <ng-container matColumnDef="name">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                  {{ data ? data.master.partner.settingName : "Setting Name" }}
+                </th>
+                <td mat-cell *matCellDef="let element">{{ element.lkCode }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="description">
+                <th
+                  mat-header-cell
+                  mat-sort-header
+                  *matHeaderCellDef
+                  width="200px"
+                >
+                  {{ data ? data.master.partner.key1 : "Key 1" }}
+                </th>
+                <td mat-cell *matCellDef="let element">{{ element.key1 }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="value1">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                  {{ data ? data.master.partner.key2 : "Key 2" }}
+                </th>
+                <td mat-cell *matCellDef="let element">{{ element.key2 }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="value2">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                  {{ data ? data.master.partner.key3 : "Key 3" }}
+                </th>
+                <td mat-cell *matCellDef="let element">{{ element.key3 }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="value3">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                  {{ data ? data.master.partner.key4 : "Key 4" }}
+                </th>
+                <td mat-cell *matCellDef="let element">{{ element.key4 }}</td>
+              </ng-container>
+              <ng-container matColumnDef="value4">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                  {{ data ? data.master.partner.key5 : "Key 5" }}
+                </th>
+                <td mat-cell *matCellDef="let element">{{ element.key5 }}</td>
+              </ng-container>
+              <!-- <ng-container matColumnDef="createdOn">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                  Created On
+                </th>
+                <td mat-cell *matCellDef="let element">{{ cs.formatDateTime(element?.createdOn) }}</td>
+              </ng-container>
+              <ng-container matColumnDef="lastModifiedOn">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                  Last Modified On
+                </th>
+                <td mat-cell *matCellDef="let element">{{ cs.formatDateTime(element?.lastModifiedOn) }}</td>
+              </ng-container> -->
+
+              <tr mat-header-row *matHeaderRowDef="displyedSettingColumn"></tr>
+              <tr
+                mat-row
+                (dblclick)="editPartnerSetting(row, true)"
+                *matRowDef="
+                  let row;
+                  columns: displyedSettingColumn;
+                  let i = index
+                "
+              ></tr>
+              <!-- <tr *ngIf="!dataSourceContact" mat-row>Currently no Data is Available</tr> -->
+            </table>
+          </div>
+          <mat-paginator
+            #parnterSettingPagination
+            [pageSizeOptions]="[10, 25, 50, 100]"
+            class="Select Page for partner settings"
+          >
+          </mat-paginator>
+        </div>
+
+        <div class="partner-settings-edit" *ngIf="editpartnerSettings">
+          <p class="main-heading">
+            <span>Edit Partner Setting</span>
+            <span
+              class="close1"
+              data-toggle="tooltip"
+              title="Close"
+              (click)="editpartnerSettings = false"
+              >X</span
+            >
+          </p>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="lkCode"
+                  >LookUp Code:<span class="asterisk">*</span></label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="lkCode"
+                  [(ngModel)]="partnerSettings.lkCode"
+                  autocomplete="off"
+                  placeholder="Enter Look Up Code"
+                  name="lkCode"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="keyCode"
+                  >Key Code<span class="asterisk">*</span>:</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="keyCode"
+                  [(ngModel)]="partnerSettings.keyCode"
+                  autocomplete="off"
+                  placeholder="Enter Key Code"
+                  name="keyCode"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="setting1"
+                  >Key 1<span class="asterisk">*</span>:</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="setting1"
+                  [(ngModel)]="partnerSettings.key1"
+                  autocomplete="off"
+                  placeholder="Enter Key 1"
+                  name="setting1"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="setting2">Key 2:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="setting2"
+                  [(ngModel)]="partnerSettings.key2"
+                  autocomplete="off"
+                  placeholder="Enter Key 2"
+                  name="setting2"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="setting3">Key 3:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="setting3"
+                  [(ngModel)]="partnerSettings.key3"
+                  autocomplete="off"
+                  placeholder="Enter Key 3"
+                  name="setting3"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="setting4">Key 4:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="setting4"
+                  [(ngModel)]="partnerSettings.key4"
+                  autocomplete="off"
+                  placeholder="Enter Key 4"
+                  name="setting4"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="setting5">Key 5:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="setting4"
+                  [(ngModel)]="partnerSettings.key5"
+                  autocomplete="off"
+                  placeholder="Enter Key 5"
+                  name="setting5"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea
+                  type="text"
+                  class="form-control"
+                  id="description"
+                  placeholder="Enter Setting description"
+                  name="description"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          *ngIf="!editpartnerSettings"
+          type="button"
+          class="btn btn-secondary mr-2"
+          data-dismiss="modal"
+        >
+          <i class="fa fa-times" aria-hidden="true"></i>
+          {{ data ? data.buttons.close : "Close" }}
+        </button>
+        <button
+          *ngIf="!editpartnerSettings"
+          type="button"
+          (click)="editPartnerSetting('', false)"
+          class="btn btn-info mr-2"
+          data-dismiss="modal"
+        >
+          <i class="fa fa-plus" aria-hidden="true"></i>
+          Add Partner Setting
+        </button>
+        <button
+          *ngIf="editpartnerSettings"
+          (click)="partnerSettingUpsert()"
+          type="button"
+          class="btn btn-success"
+        >
+          <i class="fa fa-success" aria-hidden="true"></i>
+          {{ data ? data.buttons.save : "Save" }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="isActiveModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="isActiveModalLable"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title mb-0" id="isActiveModalLable">Remarks</h3>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          (click)="changeStatus()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="remarks"
+                >Remarks<span class="asterisk">*</span>:</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="remarks"
+                [(ngModel)]="remarkDetails.remarks"
+                autocomplete="off"
+                placeholder="Enter Remarks"
+                name="remarks"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary mr-2"
+          data-dismiss="modal"
+          (click)="changeStatus()"
+        >
+          <i class="fa fa-times" aria-hidden="true"></i>
+          {{ data ? data.buttons.close : "Close" }}
+        </button>
+        <button
+          type="button"
+          id="svbtn"
+          class="btn btn-success"
+          (click)="saveStatusHistory()"
+        >
+          <i class="fa fa-success" aria-hidden="true"></i>
+          {{ data ? data.buttons.save : "Save" }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--  -->
+<div
+  class="modal fade"
+  id="partnerStatusHistory"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="admissionTokenHistoryLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title mb-0" id="admissionTokenHistoryLabel">
+          {{ data ? data.buttons.actionhistory : "Action History" }}
+        </h3>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="admission-token-history-table">
+          <div class="table-responsive">
+            <table
+              mat-table
+              [dataSource]="dataSourceStatusHistory"
+              class="mat-elevation-z8"
+              matSort
+              #partnerSettingSort="matSort"
+            >
+              <ng-container matColumnDef="action">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                  {{ data ? data.master.admissionToken.action : "Action" }}
+                </th>
+                <td mat-cell *matCellDef="let element">{{ element.action }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="remarks">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                  {{ dataa ? dataa.master.admissionToken.reason : "Remarks" }}
+                </th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.remarks }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="outlet">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                  {{ data ? data.master.admissionToken.outlet : "Outlet" }}
+                </th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.outlet.name }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="modifiedOn">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                  {{
+                    data ? data.master.admissionToken.modifiedon : "Modified On"
+                  }}
+                </th>
+                <td mat-cell *matCellDef="let element">
+                  {{ cs.formatDateTime(element.modifiedOn) }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="modifiedBy">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                  {{
+                    data ? data.master.admissionToken.modifiedby : "Modified By"
+                  }}
+                </th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.modifiedBy.name }}
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displyedActionColumn"></tr>
+              <tr
+                mat-row
+                *matRowDef="
+                  let row;
+                  columns: displyedActionColumn;
+                  let i = index
+                "
+              ></tr>
+            </table>
+          </div>
+          <mat-paginator
+            #parnterSettingPagination
+            [pageSizeOptions]="[10, 25, 50, 100]"
+            class="Select Page for Action Histroy"
+          >
+          </mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

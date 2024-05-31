@@ -1,0 +1,1214 @@
+<div
+  class="content-wrapper d-flex"
+  [ngClass]="{ 'sidebar-open': isSidebarOpen }"
+>
+  <div class="sidebar-wrapper">
+    <app-sidebar [(sidebarState)]="isSidebarOpen"></app-sidebar>
+  </div>
+  <div class="main-wrapper pt-3 h-100">
+    <div></div>
+    <div *ngIf="ExportLoader">
+      <app-loader [message]="exportloaderMessage"></app-loader>
+    </div>
+    <div class="container-fluid h-100">
+      <div class="row h-100">
+        <div class="col-md-12">
+          <div
+            class="property-details-wrapper"
+            style="width: 100%"
+            *ngIf="!showChannelDetails && !showImport"
+          >
+            <div class="row">
+              <div class="col-md-9">
+                <p class="main-heading">
+                  <span
+                    >{{
+                      data && data.master.channel.txtHeading
+                        ? data.master.channel.txtHeading
+                        : "Channels"
+                    }}:</span
+                  >
+
+                  {{
+                    data && data.master.channel.txtdes
+                      ? data.master.channel.txtDes
+                      : "View and Add New Channels in System"
+                  }}
+                </p>
+              </div>
+              <div class="col-md-3 text-right">
+                <a
+                  href="javascript:void(0)"
+                  mat-raised-button
+                  (click)="exportReport('Channels')"
+                  style="line-height: 24px !important"
+                  class="btn btn-info"
+                  ><i class="fa fa-file-text-o" aria-hidden="true"></i>
+                  {{ data ? data.buttons.export : "Export" }}</a
+                >
+
+                <a
+                  (click)="showImportScreen()"
+                  class="btn btn-success text-white mr-2"
+                  ><i class="fa fa-upload" aria-hidden="true"></i>
+                  {{ data ? data.buttons.import : "Import" }}</a
+                >
+                <a class="btn btn-info" (click)="addNewChannels(true)"
+                  ><i class="fa fa-plus" aria-hidden="true"></i>
+                  {{ data ? data.buttons.new : "New" }}</a
+                >
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="search-wrapper">
+                  <div class="search-product">
+                    <div class="search_main">
+                      <div class="search-input">
+                        <span
+                          ><i class="fa fa-search" aria-hidden="true"></i
+                        ></span>
+                        <input
+                          type="search"
+                          [(ngModel)]="simpleSearch"
+                          (keyup.enter)="
+                            simpleSearchChannelsData($event.target.value)
+                          "
+                        />
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>{{
+                          data && data.master.channel.searchC
+                            ? data.master.channel.searchC
+                            : "Search Channels"
+                        }}</label>
+                        <span
+                          ><i
+                            (click)="getChannels()"
+                            class="fa fa-times"
+                            aria-hidden="true"
+                          ></i
+                        ></span>
+                        <span (click)="showQueryForm()" class="dropdown-form"
+                          ><i class="fa fa-sort-desc" aria-hidden="true"></i
+                        ></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="query1" class="query1" *ngIf="showData">
+                    <div class="form-container">
+                      <form>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="channelName"
+                                >{{
+                                  data && data.master.channel.channelName
+                                    ? data.master.channel.channelName
+                                    : "Channel Name"
+                                }}:</label
+                              >
+                              <div class="suggestion_input_wrapper">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  id="channelName"
+                                  placeholder="{{
+                                    data
+                                      ? data.master.channel.channelNameP
+                                      : 'Enter Channel Name'
+                                  }}"
+                                  name="channelName"
+                                  [(ngModel)]="channelName"
+                                  (keyup)="
+                                    fetchChannelNames($event.target.value)
+                                  "
+                                />
+                                <ul
+                                  class="searched-list searchSuggestions"
+                                  *ngIf="channelsNameList.length > 0"
+                                >
+                                  <li
+                                    *ngFor="
+                                      let name of channelsNameList;
+                                      let i = index
+                                    "
+                                    [class.selected]="
+                                      i === tokenChannelNameSuggestionIndex
+                                    "
+                                    (click)="
+                                      setTokenChannelName(name, 'search')
+                                    "
+                                  >
+                                    {{ name.channelName }}
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="soucre"
+                                >{{
+                                  data && data.master.channel.source
+                                    ? data.master.channel.source
+                                    : "Source"
+                                }}:</label
+                              >
+                              <div class="suggestion_input_wrapper">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  id="source"
+                                  placeholder="{{
+                                    data && data.master.channel.sourceP
+                                      ? data.master.channel.sourceP
+                                      : 'Enter Source'
+                                  }}"
+                                  name="source"
+                                  [(ngModel)]="source"
+                                  (keyup)="fetchSource($event.target.value)"
+                                />
+                                <ul
+                                  class="searched-list searchSuggestions"
+                                  *ngIf="sourceList.length > 0"
+                                >
+                                  <li
+                                    *ngFor="
+                                      let source of sourceList;
+                                      let i = index
+                                    "
+                                    [class.selected]="
+                                      i === tokenChannelSourceSuggestionIndex
+                                    "
+                                    (click)="setTokenSource(source, 'search')"
+                                  >
+                                    {{ source.name }}
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="destination"
+                                >{{
+                                  data && data.master.channel.destination
+                                    ? data.master.channel.destination
+                                    : "Destination"
+                                }}:</label
+                              >
+                              <div class="suggestion_input_wrapper">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  id="destination"
+                                  placeholder="{{
+                                    data && data.master.channel.destinationP
+                                      ? data.master.channel.destinationP
+                                      : 'Enter Destination'
+                                  }}"
+                                  name="destination"
+                                  (keyup)="
+                                    fetchDestination($event.target.value)
+                                  "
+                                  [(ngModel)]="destination"
+                                />
+                                <ul
+                                  class="searched-list searchSuggestions"
+                                  *ngIf="destinationList.length > 0"
+                                >
+                                  <li
+                                    *ngFor="
+                                      let destination of destinationList;
+                                      let i = index
+                                    "
+                                    [class.selected]="
+                                      i ===
+                                      tokenChannelDestinationSuggestionIndex
+                                    "
+                                    (click)="
+                                      setTokenDestination(destination, 'search')
+                                    "
+                                  >
+                                    {{ destination.name }}
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="status"
+                                >{{
+                                  data && data.master.channel.status
+                                    ? data.master.channel.status
+                                    : "Status"
+                                }}:</label
+                              >
+                              <select
+                                name="status"
+                                class="custom-select"
+                                [(ngModel)]="status"
+                              >
+                                <option selected>
+                                  {{
+                                    data && data.master.channel.active
+                                      ? data.master.channel.active
+                                      : "Active"
+                                  }}
+                                </option>
+                                <option value="2">
+                                  {{
+                                    data && data.master.channel.inactive
+                                      ? data.master.channel.inactive
+                                      : "Inactive"
+                                  }}
+                                </option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="query-btn">
+                          <a
+                            class="btn btn-secondary"
+                            (click)="resetAdvanceSearch()"
+                            ><i class="fa fa-history" aria-hidden="true"></i>
+                            {{ data ? data.buttons.reset : "Reset" }}</a
+                          >
+                          <a
+                            class="btn btn-info"
+                            (click)="advanceChannelsSearch()"
+                            ><i class="fa fa-search" aria-hidden="true"></i>
+                            {{ data ? data.buttons.search : "Search" }}</a
+                          >
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <div class="property-table-wrapper" style="width: 100%">
+                  <div class="table-responsive">
+                    <table
+                      mat-table
+                      [dataSource]="dataSourceChannels"
+                      matTableExporter
+                      #exporter="matTableExporter"
+                      class="mat-elevation-z8"
+                      matSort
+                      #channelSort="matSort"
+                    >
+                      <ng-container matColumnDef="channelName">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data && data.master.channel.channelName
+                              ? data.master.channel.channelName
+                              : "Channel Name"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.channelName }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="source">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data && data.master.channel.source
+                              ? data.master.channel.source
+                              : "Source"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.source }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="destination">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data && data.master.channel.destination
+                              ? data.master.channel.destination
+                              : "Destination"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.destination }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="createdOn">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data && data.master.channel.createdOn
+                              ? data.master.channel.createdOn
+                              : "Created On"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{
+                            element?.createdOn != null
+                              ? cs.formatDate(element?.createdOn)
+                              : "--"
+                          }}
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="createdBy">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data && data.master.channel.createdBy
+                              ? data.master.channel.createdBy
+                              : "Created By"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.createdBy.name }}
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="status">
+                        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                          {{
+                            data && data.master.channel.status
+                              ? data.master.channel.status
+                              : "Status"
+                          }}
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          {{ element?.status === 1 ? "Active" : "Inactive" }}
+                        </td>
+                      </ng-container>
+
+                      <tr
+                        mat-header-row
+                        *matHeaderRowDef="displayedChannelsColumn"
+                      ></tr>
+                      <tr
+                        mat-row
+                        (dblclick)="getTableClickData(row._id)"
+                        *matRowDef="
+                          let row;
+                          columns: displayedChannelsColumn;
+                          let i = index
+                        "
+                      ></tr>
+
+                      <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell">
+                          {{ data.noData ? data.noData : "No data Found!" }}
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                  <mat-paginator
+                    [pageSizeOptions]="[10, 25, 50, 100]"
+                    aria-label="Select page of channels"
+                  ></mat-paginator>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="new-property-wrapper"
+            *ngIf="showChannelDetails && !showImport"
+          >
+            <p class="main-heading">
+              <span
+                >{{
+                  data && data.master.channel.addHeading
+                    ? data.master.channel.addHeading
+                    : "Add New Channels"
+                }}:
+              </span>
+              {{
+                data && data.master.channel.addDes
+                  ? data.master.channel.addDes
+                  : "Fill the following details to add
+              new channels"
+              }}.
+              <span
+                (click)="hideChannelDetails()"
+                class="close1"
+                data-toggle="tooltip"
+                title="Close"
+                >X</span
+              >
+            </p>
+
+            <form>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="channelName1"
+                      >{{
+                        data && data.master.channel.channelName
+                          ? data.master.channel.channelName
+                          : "Channel Name"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <div class="suggestion_input_wrapper">
+                      <i class="fa fa-search" aria-hidden="true"></i>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="channelName1"
+                        [(ngModel)]="channelName1"
+                        placeholder="{{
+                          data && data.master.channel.channelNameP
+                            ? data.master.channel.channelNameP
+                            : 'Enter Channel Name'
+                        }}"
+                        name="channelName1"
+                        (keyup)="fetchChannelNames($event.target.value)"
+                      />
+                      <ul
+                        class="searched-list searchSuggestions"
+                        *ngIf="channelsNameList.length > 0"
+                      >
+                        <li
+                          *ngFor="let name of channelsNameList; let i = index"
+                          [class.selected]="
+                            i === tokenChannelNameSuggestionIndex
+                          "
+                          (click)="setTokenChannelName(name, 'populate')"
+                        >
+                          {{ name.channelName }}
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-5">
+                  <div class="form-group position-relative">
+                    <label for="source1"
+                      >{{
+                        data && data.master.channel.source
+                          ? data.master.channel.source
+                          : "Source"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <div class="suggestion_input_wrapper">
+                      <i class="fa fa-search" aria-hidden="true"></i>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="source1"
+                        placeholder="{{
+                          data && data.master.channel.sourceP
+                            ? data.master.channel.sourceP
+                            : 'Enter Source'
+                        }}"
+                        name="source1"
+                        [(ngModel)]="source1"
+                        (keyup)="fetchSource($event.target.value)"
+                      />
+                      <ul
+                        class="searched-list searchSuggestions"
+                        *ngIf="sourceList.length > 0"
+                      >
+                        <li
+                          *ngFor="let source of sourceList; let i = index"
+                          [class.selected]="
+                            i === tokenChannelSourceSuggestionIndex
+                          "
+                          (click)="setTokenSource(source, 'populate')"
+                        >
+                          {{ source.name }}
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="align-items-center col-md-1 d-flex">
+                  <button
+                    id="sourceConnectionStringBtn"
+                    (click)="sourceConnectionStringBtn()"
+                    title="{{
+                      data && data.master.channel.sourceStrBtn
+                        ? data.master.channel.sourceStrBtn
+                        : 'Soruce Connection String'
+                    }}"
+                    type="button"
+                    class="btn btn-info w-100"
+                  >
+                    <i aria-hidden="true" class="fa fa-link"></i>
+                  </button>
+                  <button
+                    data-toggle="modal"
+                    data-target="#sourceConnectionString"
+                    id="sourceConnectionStringModalBtn"
+                    type="button"
+                    hidden
+                  ></button>
+                </div>
+                <div class="col-md-5">
+                  <div class="form-group position-relative">
+                    <label for="destination1"
+                      >{{
+                        data && data.master.channel.destination
+                          ? data.master.channel.destination
+                          : "Destination"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <div class="suggestion_input_wrapper">
+                      <i class="fa fa-search" aria-hidden="true"></i>
+
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="destination1"
+                        placeholder="{{
+                          data && data.master.channel.destinationP
+                            ? data.master.channel.destinationP
+                            : 'Enter Destination'
+                        }}"
+                        name="destination1"
+                        [(ngModel)]="destination1"
+                        (keyup)="fetchDestination($event.target.value)"
+                      />
+                      <ul
+                        class="searched-list searchSuggestions"
+                        *ngIf="destinationList.length > 0"
+                      >
+                        <li
+                          *ngFor="
+                            let destination of destinationList;
+                            let i = index
+                          "
+                          [class.selected]="
+                            i === tokenChannelDestinationSuggestionIndex
+                          "
+                          (click)="setTokenDestination(destination, 'populate')"
+                        >
+                          {{ destination.name }}
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="align-items-center col-md-1 d-flex">
+                  <button
+                    id="destinationConnectionStringBtn"
+                    (click)="destinationConnectionStringBtn()"
+                    type="button"
+                    title="{{
+                      data && data.master.channel.destinationStrBtn
+                        ? data.master.channel.destinationStrBtn
+                        : 'Destination Connection String'
+                    }}"
+                    class="btn btn-info w-100"
+                  >
+                    <i aria-hidden="true" class="fa fa-link"></i>
+                  </button>
+                  <button
+                    data-toggle="modal"
+                    id="destinationConnectionStringModalBtn"
+                    data-target="#destinationConnectionString"
+                    type="button"
+                    hidden
+                  ></button>
+                </div>
+
+                <div class="col-md-10">
+                  <div class="form-group">
+                    <label for="supportedEvents">
+                      {{
+                        data && data.master.channel.supportedEvent
+                          ? data.master.channel.supportedEvent
+                          : "Supported Events"
+                      }}<span class="asterisk">*</span>
+                    </label>
+                    <mat-form-field [floatLabel]="'never'">
+                      <mat-select
+                        id="supportedEvents"
+                        [formControl]="supportedEvents"
+                        multiple
+                      >
+                        <mat-option (click)="toggleSelectAllOptions()">
+                          {{ allSelected ? "Deselect All" : "Select All" }}
+                        </mat-option>
+                        <mat-option
+                          *ngFor="let i of supportedEventsOptions"
+                          [selected]="allSelected"
+                          [value]="i"
+                          >{{ i }}</mat-option
+                        >
+                      </mat-select>
+                      <mat-placeholder
+                        style="
+                          margin: 0.725rem 0 0.725rem 11px;
+                          color: #adb5bd;
+                          font-size: 1rem;
+                        "
+                        >Select Supported Events</mat-placeholder
+                      >
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="col-md-2 d-flex">
+                  <div
+                    class="form-group d-flex justify-content-between align-items-center w-100"
+                  >
+                    <label class="mb-0" for="isActive"
+                      >{{
+                        data && data.master.channel.isactive
+                          ? data.master.channel.isactive
+                          : "Is Active"
+                      }}<span class="asterisk">*</span>:</label
+                    >
+                    <div class="custom-control custom-switch">
+                      <input
+                        type="checkbox"
+                        name="isActive"
+                        class="custom-control-input"
+                        id="customSwitch1"
+                        [(ngModel)]="status1"
+                        checked
+                      />
+                      <label
+                        class="custom-control-label"
+                        for="customSwitch1"
+                      ></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div class="result mt-4">
+              <a
+                href="javascript:void(0)"
+                data-toggle="modal"
+                data-target="#channelSettingsModal"
+                class="btn btn-success mr-2"
+                ><i class="fa fa-cog" aria-hidden="true"></i>
+                {{
+                  data && data.buttons.channelSetting
+                    ? data.buttons.channelSetting
+                    : "Channel Setting"
+                }}
+              </a>
+              <a class="btn btn-secondary mr-2" (click)="resetChannel()"
+                ><i class="fa fa-history" aria-hidden="true"></i>
+                {{ data ? data.buttons.reset : "Reset" }}</a
+              >
+              <a class="btn btn-success" (click)="saveChannel()">
+                <i class="fa fa-check" aria-hidden="true"></i>
+                {{ data ? data.buttons.submit : "Submit" }}</a
+              >
+            </div>
+          </div>
+          <div *ngIf="showImport && !showChannelDetails">
+            <app-import-data
+              [showNavBar]="false"
+              [showLeftMenu]="false"
+              [validator]="importValidator"
+              (importClose)="backToResults()"
+            ></app-import-data>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="sourceConnectionString"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="sourceConnectionStringLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title mb-0" id="sourceConnectionStringLabel">
+          {{
+            data && data.master.channel.sourceHeading
+              ? data.master.channel.sourceHeading
+              : "Enter Source Connection String"
+          }}
+        </h3>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row" *ngFor="let key of sourceForm">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="source{{ key.name }}">
+                {{
+                  data && data.master.channel[key.name]
+                    ? data.master.channel[key.name]
+                    : [key.displayName]
+                }}<span class="asterisk" *ngIf="key.isRequired">*</span>:</label
+              >
+              <input
+                type="{{ key.inputType }}"
+                class="form-control"
+                id="source{{ key.name }}"
+                placeholder="{{ key.placeholder }}"
+                name="source{{ key.name }}"
+                [title]="key.description"
+                [(ngModel)]="key.value"
+                [required]="key.isRequired"
+                pattern="{{ key.pattern }}"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-success"
+          (click)="sourceModalClose()"
+        >
+          <i class="fa fa-success" aria-hidden="true"></i>
+          {{ data ? data.buttons.save : "Save" }}
+        </button>
+        <button
+          type="button"
+          data-dismiss="modal"
+          aria-label="Close"
+          id="sourceModalCloseBtn"
+          class="btn btn-success"
+          hidden
+        ></button>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="destinationConnectionString"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="destinationConnectionStringLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title mb-0" id="destinationConnectionStringLabel">
+          {{
+            data && data.master.channel.destinationHeading
+              ? data.master.channel.destinationHeading
+              : "Enter Destination Connection String"
+          }}
+        </h3>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row" *ngFor="let key of destinationForm">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="destination{{ key.name }}">
+                {{
+                  data && data.master.channel[key.name]
+                    ? data.master.channel[key.name]
+                    : [key.displayName]
+                }}<span class="asterisk" *ngIf="key.isRequired">*</span>:</label
+              >
+              <input
+                type="{{ key.inputType }}"
+                class="form-control"
+                id="destination{{ key.name }}"
+                placeholder="{{ key.placeholder }}"
+                name="destination{{ key.name }}"
+                [title]="key.description"
+                [(ngModel)]="key.value"
+                [required]="key.isRequired"
+                pattern="{{ key.pattern }}"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-success"
+          (click)="destinationModalClose()"
+        >
+          <i class="fa fa-success" aria-hidden="true"></i>
+          {{ data ? data.buttons.save : "Save" }}
+        </button>
+        <button
+          type="button"
+          data-dismiss="modal"
+          id="destinationModalCloseBtn"
+          aria-label="Close"
+          class="btn btn-success"
+          hidden
+        ></button>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="channelSettingsModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="channelSettingsModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title mb-0" id="channelSettingsModalLabel">
+          {{
+            data && data.master.channel.channelSetting
+              ? data.master.channel.channelSetting
+              : "Channel Settings"
+          }}
+        </h3>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="channel-settings-table" *ngIf="!editChannelSettings">
+          <div class="table-responsive">
+            <table
+              mat-table
+              [dataSource]="dataSourceSetting"
+              class="mat-elevation-z8"
+              matSort
+              #channelSettingSort="matSort"
+            >
+              <ng-container matColumnDef="name">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                  {{ data ? data.master.channel.settingName : "Setting Name" }}
+                </th>
+                <td mat-cell *matCellDef="let element">{{ element.lkCode }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="description">
+                <th
+                  mat-header-cell
+                  mat-sort-header
+                  *matHeaderCellDef
+                  width="200px"
+                >
+                  {{ data ? data.master.channel.key1 : "Key 1" }}
+                </th>
+                <td mat-cell *matCellDef="let element">{{ element.key1 }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="value1">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                  {{ data ? data.master.channel.key2 : "Key 2" }}
+                </th>
+                <td mat-cell *matCellDef="let element">{{ element.key2 }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="value2">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                  {{ data ? data.master.channel.key3 : "Key 3" }}
+                </th>
+                <td mat-cell *matCellDef="let element">{{ element.key3 }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="value3">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                  {{ data ? data.master.channel.key4 : "Key 4" }}
+                </th>
+                <td mat-cell *matCellDef="let element">{{ element.key4 }}</td>
+              </ng-container>
+              <ng-container matColumnDef="value4">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                  {{ data ? data.master.channel.key5 : "Key 5" }}
+                </th>
+                <td mat-cell *matCellDef="let element">{{ element.key5 }}</td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displyedSettingColumn"></tr>
+              <tr
+                mat-row
+                (dblclick)="editChannelSetting(row, true)"
+                *matRowDef="
+                  let row;
+                  columns: displyedSettingColumn;
+                  let i = index
+                "
+              ></tr>
+            </table>
+          </div>
+          <mat-paginator
+            #parnterSettingPagination
+            [pageSizeOptions]="[10, 25, 50, 100]"
+            class="Select Page for channel settings"
+          >
+          </mat-paginator>
+        </div>
+
+        <div class="channel-settings-edit" *ngIf="editChannelSettings">
+          <p class="main-heading">
+            <span>Edit Channel Setting</span>
+            <span
+              class="close1"
+              data-toggle="tooltip"
+              title="Close"
+              (click)="editChannelSettings = false"
+              >X</span
+            >
+          </p>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="lkCode"
+                  >{{
+                    data && data.master.channel.lkCode
+                      ? data.master.channel.lkCode
+                      : "LookUp Code"
+                  }}:<span class="asterisk">*</span></label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="lkCode"
+                  [(ngModel)]="channelSettings.lkCode"
+                  autocomplete="off"
+                  placeholder="{{
+                    data && data.master.channel.lkCodeP
+                      ? data.master.channel.lkCodeP
+                      : 'Enter Look Up Code'
+                  }}"
+                  name="lkCode"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="keyCode"
+                  >{{
+                    data && data.master.channel.keyCode
+                      ? data.master.channel.keyCode
+                      : "Key Code"
+                  }}<span class="asterisk">*</span>:</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="keyCode"
+                  [(ngModel)]="channelSettings.keyCode"
+                  autocomplete="off"
+                  placeholder="{{
+                    data && data.master.channel.keyCodeP
+                      ? data.master.channel.keyCodeP
+                      : 'Enter Key Code'
+                  }}"
+                  name="keyCode"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="setting1"
+                  >{{
+                    data && data.master.channel.key1
+                      ? data.master.channel.key1
+                      : "Key 1"
+                  }}<span class="asterisk">*</span>:</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="setting1"
+                  [(ngModel)]="channelSettings.key1"
+                  autocomplete="off"
+                  placeholder="{{
+                    data && data.master.channel.key1P
+                      ? data.master.channel.key1P
+                      : 'Enter Key 1'
+                  }}"
+                  name="setting1"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="setting2"
+                  >{{
+                    data && data.master.channel.key2
+                      ? data.master.channel.key2
+                      : "Key 2"
+                  }}:</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="setting2"
+                  [(ngModel)]="channelSettings.key2"
+                  autocomplete="off"
+                  placeholder="{{
+                    data && data.master.channel.key2P
+                      ? data.master.channel.key2P
+                      : 'Enter Key 2'
+                  }}"
+                  name="setting2"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="setting3"
+                  >{{
+                    data && data.master.channel.key2
+                      ? data.master.channel.key2
+                      : "Key 3"
+                  }}:</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="setting3"
+                  [(ngModel)]="channelSettings.key3"
+                  autocomplete="off"
+                  placeholder="{{
+                    data && data.master.channel.key3P
+                      ? data.master.channel.key3P
+                      : 'Enter Key 3'
+                  }}"
+                  name="setting3"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="setting4"
+                  >{{
+                    data && data.master.channel.key4
+                      ? data.master.channel.key4
+                      : "Key 4"
+                  }}:</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="setting4"
+                  [(ngModel)]="channelSettings.key4"
+                  autocomplete="off"
+                  placeholder="{{
+                    data && data.master.channel.key4P
+                      ? data.master.channel.key4P
+                      : 'Enter Key 4'
+                  }}"
+                  name="setting4"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="setting5"
+                  >{{
+                    data && data.master.channel.key5
+                      ? data.master.channel.key5
+                      : "Key 5"
+                  }}:</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="setting4"
+                  [(ngModel)]="channelSettings.key5"
+                  autocomplete="off"
+                  placeholder="{{
+                    data && data.master.channel.key5P
+                      ? data.master.channel.key5P
+                      : 'Enter Key 5'
+                  }}"
+                  name="setting5"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="description"
+                  >{{
+                    data && data.master.channel.desCS
+                      ? data.master.channel.desCS
+                      : "Description"
+                  }}:</label
+                >
+                <textarea
+                  type="text"
+                  class="form-control"
+                  id="description"
+                  placeholder="{{
+                    data && data.master.channel.desPCS
+                      ? data.master.channel.desPCS
+                      : 'Enter Setting description'
+                  }}"
+                  name="description"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          *ngIf="!editChannelSettings"
+          type="button"
+          class="btn btn-secondary mr-2"
+          data-dismiss="modal"
+        >
+          <i class="fa fa-times" aria-hidden="true"></i>
+          {{ data ? data.buttons.close : "Close" }}
+        </button>
+        <button
+          *ngIf="!editChannelSettings"
+          type="button"
+          (click)="editChannelSetting('', false)"
+          class="btn btn-info mr-2"
+          data-dismiss="modal"
+        >
+          <i class="fa fa-plus" aria-hidden="true"></i>
+          {{
+            data && data.master.channel.addCS
+              ? data.master.channel.addCS
+              : "Add Channel Setting"
+          }}
+        </button>
+        <button
+          *ngIf="editChannelSettings"
+          (click)="channelSettingUpsert()"
+          type="button"
+          class="btn btn-success"
+        >
+          <i class="fa fa-success" aria-hidden="true"></i>
+          {{ data ? data.buttons.save : "Save" }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

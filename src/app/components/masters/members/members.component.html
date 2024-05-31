@@ -1,0 +1,1410 @@
+<div
+  class="content-wrapper d-flex"
+  [ngClass]="{ 'sidebar-open': isSidebarOpen }"
+>
+  <div class="sidebar-wrapper">
+    <app-sidebar [(sidebarState)]="isSidebarOpen"></app-sidebar>
+  </div>
+  <div class="main-wrapper pt-3">
+    <div *ngIf="loadershow">
+      <app-loader [message]="loaderMessage"></app-loader>
+    </div>
+    <div class="container-fluid h-100">
+      <div class="row h-100">
+        <div class="col-md-12">
+          <div
+            class="property-details-wrapper"
+            *ngIf="!showMemberDetails && !showImport"
+          >
+            <div class="row">
+              <div class="col-md-4">
+                <p class="main-heading">
+                  <span>{{
+                    data ? data.master.member.txtHeading : "Members"
+                  }}</span
+                  >{{
+                    data
+                      ? data.master.member.txtDes
+                      : "View and add new member for Outlet."
+                  }}
+                </p>
+              </div>
+              <div class="col-md-8">
+                <div class="d-flex justify-content-end">
+                  <a
+                    href="javascript:void(0)"
+                    mat-raised-button
+                    (click)="exportReport('Member')"
+                    style="line-height: 25px !important"
+                    class="btn btn-info"
+                    ><i class="fa fa-file-text-o" aria-hidden="true"></i>
+                    {{ data ? data.master.possalesreport.export : "Export" }}</a
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="search-wrapper">
+                  <div class="search-product">
+                    <div class="search_main">
+                      <div class="search-input">
+                        <span
+                          ><i class="fa fa-search" aria-hidden="true"></i
+                        ></span>
+                        <input
+                          type="search"
+                          id="txtSearch"
+                          [(ngModel)]="keywordSearch"
+                          (keyup.enter)="simpleSearchMember()"
+                        />
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>{{
+                          data ? data.master.member.search : "Search Member"
+                        }}</label>
+                        <span
+                          ><i
+                            (click)="fetchMemberData()"
+                            class="fa fa-times"
+                            aria-hidden="true"
+                          ></i
+                        ></span>
+                        <!-- <span (click)="showQueryForm()" class="dropdown-form"><i
+                                                        class="fa fa-sort-desc" aria-hidden="true"></i></span> -->
+                      </div>
+                    </div>
+                  </div>
+                  <div id="query1" class="query1" *ngIf="showData">
+                    <div class="form-container">
+                      <form>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group">
+                              <label for="hmac"
+                                >{{
+                                  data ? data.master.member.hmac : "HMAC"
+                                }}:</label
+                              >
+                              <input
+                                #hmac
+                                type="text"
+                                class="form-control"
+                                id="hmac"
+                                placeholder="{{
+                                  data ? data.master.member.hmac : 'Enter Hmac'
+                                }}"
+                                name="hmac"
+                              />
+                            </div>
+                          </div>
+                          <!-- <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="memberType">{{data? data.master.member.type :"Member Type"}}:</label>
+                                                            <select name="memberType" class="custom-select">
+                                                                <option *ngFor="let type of memberTypes" [value]="type.keyCode">{{type.key1}}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div> -->
+                        </div>
+                        <!-- <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="partnerName">{{data? data.master.member.partnerName :"Partner Name"}}:</label>
+                                                            <select [(ngModel)]="selectedValue" name="partnerName" class="custom-select">
+                                                                <option *ngFor="let memberData of memberAdvanceData" [Value]="memberData">{{memberData?.name}}</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="status">{{data? data.master.member.status :"Status"}}:</label>
+                                                            <select name="status" class="custom-select">
+                                                                <option selected>Active</option>
+                                                                <option value="1">Inactive</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div> -->
+                        <div class="query-btn">
+                          <a class="btn btn-secondary"
+                            ><i class="fa fa-history" aria-hidden="true"></i>
+                            {{ data ? data.buttons.reset : "Reset" }}</a
+                          >
+                          <a
+                            class="btn btn-info"
+                            (click)="advanceSearchMember(hmac.value)"
+                            ><i class="fa fa-search" aria-hidden="true"></i>
+                            {{ data ? data.buttons.search : "Search" }}</a
+                          >
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="property-table-wrapper">
+              <div class="table-responsive">
+                <table
+                  mat-table
+                  [dataSource]="dataSourceMember"
+                  matTableExporter
+                  #exporter="matTableExporter"
+                  class="mat-elevation-z8"
+                  matSort
+                >
+                  <!-- <ng-container matColumnDef="_id">
+                                <th mat-header-cell *matHeaderCellDef> Partner Id </th>
+                                <td mat-cell *matCellDef="let element"> {{element._id}} </td>
+                            </ng-container> -->
+                  <ng-container matColumnDef="memberID">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{ data ? data.master.member.memberId : "Member ID" }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.memberID }}
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="arrtureMemberID">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{ "Refmemberid" }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.refMemberID ? element.refMemberID : "" }}
+                    </td>
+                  </ng-container>
+                  <!-- <ng-container matColumnDef="hmac">
+                                <th mat-header-cell mat-sort-header *matHeaderCellDef>{{data? data.master.member.hmac :"HMAC"}}</th>
+                                <td mat-cell *matCellDef="let element"> {{element.hmac}} </td>
+                            </ng-container> -->
+
+                  <ng-container matColumnDef="memberType">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{ data ? data.master.member.type : "Type" }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.displayMemberType }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="mobileNum">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{ data ? data.master.member.mobileNo : "Mobile No" }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.mobileNum }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef>
+                      {{ data ? data.master.member.email : "Email" }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.email }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="lastModifiedOn">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{
+                        data
+                          ? data.master.member.membershipLastUsedOn
+                          : "Membership Last Used On"
+                      }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.lastModifiedOn | date : "dd-MMM-yyyy, h:mm" }}
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="status">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{ data ? data.master.member.status : "Status" }}
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element?.status === 1 ? "Active" : "Inactive" }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="action">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                      {{ "Action" }}
+                    </th>
+                    <td mat-cell *matCellDef="let element; let i = index">
+                      <a
+                        class="btn btn-primary font-weight-400 text-white"
+                        (click)="DynamicMemberID(element.memberID)"
+                        >{{ "Mem ID" }}</a
+                      >
+                      <a
+                        class="btn btn-primary font-weight-400 text-white"
+                        (click)="syncMemberID(element.memberID)"
+                        >{{ "Sync" }}</a
+                      >
+                      <a
+                        *ngIf="element.refMemberID != ''"
+                        href="javascript:void(0)"
+                        data-toggle="modal"
+                        data-target="#memberCardHistory"
+                        class="btn btn-primary font-weight-400 text-white"
+                        (click)="
+                          unLinkMemberCard(element.refMemberID, element._id)
+                        "
+                        >{{ "UnLink" }}</a
+                      >
+                    </td>
+                  </ng-container>
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr
+                    mat-row
+                    (dblclick)="getTableClickMemberData(row._id)"
+                    *matRowDef="
+                      let row;
+                      columns: displayedColumns;
+                      let i = index
+                    "
+                  ></tr>
+                  <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell">
+                      {{
+                        data ? data.master.member.nodatafound : "No data Found!"
+                      }}
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <mat-paginator
+                [pageSizeOptions]="[10, 25, 50, 100]"
+                aria-label="Select page of users"
+              ></mat-paginator>
+              <!-- <table datatable class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>{{data? data.master.member.memberId :"Member ID"}}</th>
+                                        <th>{{data? data.master.member.type :"Type"}}</th>
+                                        <th>{{data? data.master.member.mobileNo :"Mobile No"}}</th>
+                                        <th>{{data? data.master.member.email :"Email"}}</th>
+                                        //<th> {{data? data.master.member.memberName :"Member Name"}}</th>
+                                        <th>{{data? data.master.member.membershipLastUsedOn :"Membership Last Used On"}}</th>
+                                        <th>{{data? data.master.member.status :"Status"}}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr (dblclick)="getTableClickMemberData(member)" *ngFor="let member of memberData">
+                                        <td>{{member?.memberID}}</td>
+                                        <td>{{member?.memberType}}</td>
+                                        <td>{{member?.mobileNum}}</td>
+                                        <td>{{member?.email}}</td>
+                                        //<td>{{member?.membershipLastUsedOn}}</td>
+                                        <td>{{member?.lastModifiedOn| date:'dd-MMM-yyyy, h:mm'}}</td>
+                                        <td>{{member?.status===1 ? 'Active':'Inactive'}}</td>
+                                    </tr>
+                                </tbody>
+                            </table> -->
+            </div>
+          </div>
+          <div class="new-property-wrapper" *ngIf="details && !showImport">
+            <p class="main-heading">
+              <span
+                >{{
+                  data ? data.master.member.addNewMember : "Add New Member"
+                }} </span
+              >{{
+                data
+                  ? data.master.member.newMemberDes
+                  : "Fill the following details to add new member for Outlets."
+              }}<span
+                (click)="hideMemberDetails()"
+                class="close1"
+                data-toggle="tooltip"
+                title="Close"
+                >X</span
+              >
+            </p>
+            <form>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="memberID"
+                      >{{
+                        data ? data.master.member.memberId : "Member ID"
+                      }}:</label
+                    >
+                    <input
+                      [value]="memberID"
+                      type="text"
+                      class="form-control"
+                      placeholder="{{
+                        data
+                          ? data.master.member.enterMemberId
+                          : 'Enter Member ID'
+                      }}"
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="memberType1"
+                      >{{ data ? data.master.member.type : "Type" }}:</label
+                    >
+                    <input
+                      [value]="memberType"
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter Member type"
+                      readonly
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="memberMobile"
+                      >{{
+                        data ? data.master.member.mobileNo : "Mobile No"
+                      }}:</label
+                    >
+                    <input
+                      [value]="memberMobile"
+                      type="number"
+                      class="form-control"
+                      placeholder="{{
+                        data
+                          ? data.master.member.entrMobN
+                          : 'Enter Member Mobile No'
+                      }}"
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="memberEmail"
+                      >{{ data ? data.master.member.email : "Email" }}:</label
+                    >
+                    <input
+                      [value]="memberEmail"
+                      type="email"
+                      class="form-control"
+                      placeholder="{{
+                        data
+                          ? data.master.member.entrEmail
+                          : 'Enter Member Email'
+                      }}"
+                      readonly
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="lastAdmission"
+                      >{{
+                        data
+                          ? data.master.member.lastAdmissionDate
+                          : "Last Admission Date"
+                      }}:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      [value]="lastAdmissionDate"
+                      id="lastAdmission"
+                      name="lastAdmission"
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="memberStatus1"
+                      >{{ data ? data.master.member.status : "Status" }}:</label
+                    >
+                    <select name="memberStatus1" class="custom-select">
+                      <option selected>Active</option>
+                      <option value="1">Inactive</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="applicableTill">{{ "Applicable Till" }}:</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [value]="applicableTill"
+                      id="applicableTill"
+                      name="applicableTill"
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="dynamicMemberDeviceID"
+                      >{{ "DynamicMember DeviceID" }}:</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      [value]="dynamicMemberDeviceID"
+                      id="dynamicMemberDeviceID"
+                      name="dynamicMemberDeviceID"
+                      readonly
+                    />
+                  </div>
+                </div>
+              </div>
+            </form>
+            <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  id="admissions-tab"
+                  data-toggle="tab"
+                  href="#admissions"
+                  role="tab"
+                  aria-controls="admissions"
+                  aria-selected="true"
+                  >{{ data ? data.master.member.admissions : "Admissions" }}</a
+                >
+              </li>
+              <!-- <li class="nav-item">
+                              <a class="nav-link" id="associated-partners-tab" data-toggle="tab" href="#associated-partners" role="tab" aria-controls="associated-partners" aria-selected="true">{{data? data.master.member.associatedPartners :"Associated Partners"}}</a>
+                            </li> -->
+            </ul>
+            <div class="tab-content" id="myTabContent">
+              <div
+                class="tab-pane fade show active"
+                id="admissions"
+                role="tabpanel"
+                aria-labelledby="admissions-tab"
+              >
+                <div
+                  class="associated-partners-data"
+                  *ngIf="!addNewAssociatedPartner"
+                >
+                  <p class="main-heading">
+                    <span>{{
+                      data ? data.master.member.admissions : "Admissions"
+                    }}</span>
+                  </p>
+                  <table
+                    mat-table
+                    [dataSource]="dataSourceAdmissions"
+                    class="mat-elevation-z8"
+                    matSort
+                  >
+                    <ng-container matColumnDef="admissionNo">
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                        {{
+                          data
+                            ? data.master.member.admissionNumber
+                            : "Admission Number"
+                        }}
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element.admissionID }}
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="hmac">
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                        {{ data ? data.master.member.hmac : "HMAC" }}
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element.hmac }}
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="admissionDate">
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                        {{
+                          data
+                            ? data.master.member.admissionDate
+                            : "Admission Date"
+                        }}
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ common.formatDateTime(element.createdOn) }}
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="guests">
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                        {{ data ? data.master.member.guests : "Guests" }}
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element.guests }}
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="partner">
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                        {{ data ? data.master.member.partner : "Partner" }}
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element.partnerID.name }}
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="outlet">
+                      <th mat-header-cell *matHeaderCellDef>
+                        {{ data ? data.master.member.outlet : "Outlet" }}
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element.loungeID.name }}
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="status">
+                      <th mat-header-cell *matHeaderCellDef>
+                        {{ data ? data.master.member.status : "Status" }}
+                      </th>
+                      <td mat-cell *matCellDef="let element">
+                        {{ element.displayStatus }}
+                      </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="admColumns"></tr>
+                    <tr
+                      mat-row
+                      (dblclick)="navigateToAdmission(row._id)"
+                      *matRowDef="let row; columns: admColumns; let i = index"
+                    ></tr>
+                  </table>
+                </div>
+              </div>
+              <!-- <div class="tab-pane fade" id="associated-partners" role="tabpanel" aria-labelledby="associated-partners-tab">
+                                <div class="associated-partners-data" *ngIf="!addNewAssociatedPartner">
+                                    <p class="main-heading">
+                                        <span>{{data? data.master.member.associatedPartners :"Associated Partners"}}</span>
+                                    </p>
+                                    <table datatable class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>{{data? data.master.member.partnerName :"Partner Name"}}</th>
+                                                <th>{{data? data.master.member.membershipLastUsedOn :"Membership Last Used On"}}</th>
+                                                <th>{{data? data.master.member.admissionCount :"Admission Count"}}</th>
+                                                <th>{{data? data.master.member.complimentaryAdmission :"Complimentary Admission"}}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>John</td>
+                                                <td>12-Jan-2022</td>
+                                                <td>123</td>
+                                                <td>Yes</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="add-new-user" *ngIf="addNewAssociatedPartner">
+                                    <p class="main-heading">
+                                        <span>Add New Partner</span>
+                                        <span class="close1" data-toggle="tooltip" title="Close" (click)="addNewAssociatedPartner = false">X</span>
+                                    </p>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="partnerName1">Partner Name:</label>
+                                                <select name="partnerName1" class="custom-select">
+                                                    <option selected>John</option>
+                                                    <option value="1">David</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="membershipUsed">Membership Last Used On:</label>
+                                                <input type="date" class="form-control" id="membershipUsed"
+                                                    placeholder="Enter Membership Last Used On" name="membershipUsed">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="admissionCount">Admission Count:</label>
+                                                <input type="number" class="form-control" id="admissionCount"
+                                                    placeholder="Enter Admission Count" name="admissionCount">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="complimentaryAdmission">Complimentary Admission:</label>
+                                                <select name="complimentaryAdmission" class="custom-select">
+                                                    <option selected>Yes</option>
+                                                    <option value="1">No</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="result">
+                                        <a href="#" class="btn btn-secondary"><i class="fa fa-history" aria-hidden="true"></i> Reset</a>
+                                        <a href="#" class="btn btn-info"><i class="fa fa-plus" aria-hidden="true"></i> Add Partner</a>
+                                    </div>
+                                </div>
+                            </div> -->
+            </div>
+            <div class="text-right">
+              <a
+                href="javascript:void(0)"
+                data-toggle="modal"
+                data-target="#memberStatusHistory"
+                class="btn btn-success mr-2"
+                class="btn btn-success"
+                ><i class="fa fa-history" aria-hidden="true"></i
+                >{{ "Action History" }}
+              </a>
+            </div>
+          </div>
+          <!-- Unlink memebrs Table -->
+          <div
+            class="modal fade"
+            id="memberCardHistory"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="admissionTokenHistoryLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h3 class="modal-title mb-0" id="admissionTokenHistoryLabel">
+                    ST Arrture Member is {{ this.refmemberID }}
+                  </h3>
+                  <button
+                    #closeButtonTable
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div>
+                  <!-- <div class="admission-token-history-table">
+                      <div class="table-responsive ">
+                        <table mat-table [dataSource]="dataSourceUnlinkMember" matTableExporter #exporter="matTableExporter"
+                        #cardSort="matSort"
+                          class="mat-elevation-z8" matSort>
+                        
+                          <ng-container matColumnDef="_id">                          
+                            <th mat-header-cell *matHeaderCellDef>
+                              <input type="checkbox" (change)="selectAllCheckbox($event)" />
+                            </th>
+                            <td mat-cell *matCellDef="let row">
+                              <input type="checkbox" (change)="
+                              updateSelectedMembers(
+                                $event.target.checked,
+                                row._id
+                              )
+                            " [checked]="memberCardId.includes(row._id)" />                  
+                            </td>
+                          </ng-container>            
+                          <ng-container matColumnDef="cardName">
+                            <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                              {{ "Card Name "}}
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                              {{ element.cardID.name }}
+                            </td>
+                          </ng-container>
+                          <ng-container matColumnDef="cardNumber">
+                            <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                              {{ "Card Number" }}
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                              {{ element.maskedNum }}
+                            </td>
+                          </ng-container>
+                          <ng-container matColumnDef="expiry">
+                            <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                              {{ "Expiry" }}
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                              {{ element.expiry }}
+                            </td>
+                          </ng-container>
+                          <ng-container matColumnDef="access">
+                            <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                              {{ "Access" }}
+                            </th>
+                            <td mat-cell *matCellDef="let element">                                                          
+                                Access remaining: {{ element.quota && element.quota.length > 0 && element.quota[0].year == currentYear ? element.quota[0].total - element.quota[0].consumed[1] : 'NA' }} of {{ element.quota && element.quota.length > 0 && element.quota[0].year == currentYear ? element.quota[0].total : 'NA' }}
+                            </td>
+                          </ng-container>                                     s
+                          <tr mat-header-row *matHeaderRowDef="displayedColumnsUnlinkmember"></tr>
+                          <tr mat-row  *matRowDef="
+                              let row;
+                              columns: displayedColumnsUnlinkmember;
+                              let i = index
+                            "></tr>
+                          <tr class="mat-row" *matNoDataRow>
+                            <td class="mat-cell">
+                              {{
+                              data ? data.master.member.nodatafound : "No data Found!"
+                              }}
+                            </td>
+                          </tr>
+                        </table>                       
+                      </div>                                                               
+                    </div> -->
+                  <div>
+                    <div class="detail-card-box">
+                      <div class="modal-content mx-auto py-2">
+                        <div>
+                          <div
+                            class="card-heading bg-white px-3 mb-2 py-3 text-center position-relative"
+                            *ngIf="paxData"
+                          >
+                            <i
+                              class="fa fa-arrow-left"
+                              style="
+                                position: absolute;
+                                left: 1rem;
+                                cursor: pointer;
+                                top: 16px;
+                              "
+                              (click)="showCards()"
+                            ></i>
+                            <span
+                              class="font-weight-700 d-flex align-items-center justify-content-center"
+                            >
+                              <span>
+                                {{ selectedCardNumber }}
+                              </span>
+                              <span
+                                class="badge badge-pill badge-warning ml-1"
+                                style="cursor: pointer"
+                                *ngIf="
+                                  selectedLinkedCard && selectedLinkedCard > 0
+                                "
+                                (click)="
+                                  fetchLinkedCardData(
+                                    image,
+                                    linkedCardNumData,
+                                    selectedName,
+                                    selectedCardNumber,
+                                    cardID,
+                                    selectedQuotaRemaining,
+                                    selectedQuota,
+                                    expiry
+                                  )
+                                "
+                              >
+                                +{{ selectedLinkedCard }}
+                              </span>
+                            </span>
+                            <span style="font-size: 6px" class="d-block">{{
+                              selectedName
+                            }}</span>
+                          </div>
+                          <div
+                            class="card-heading bg-white px-3 mb-2 py-3 text-center position-relative"
+                            *ngIf="showLounge"
+                          >
+                            <i
+                              class="fa fa-arrow-left"
+                              style="
+                                position: absolute;
+                                left: 1rem;
+                                cursor: pointer;
+                                top: 16px;
+                              "
+                              (click)="showCards()"
+                            ></i>
+                            <span class="font-weight-700">
+                              {{ selectedCardNumber }}
+                            </span>
+                            <span style="font-size: 6px" class="d-block">{{
+                              selectedName
+                            }}</span>
+                          </div>
+                          <div
+                            class="card-heading bg-white px-3 mb-2 py-3 text-center"
+                            *ngIf="qrCodeData"
+                          >
+                            <div class="cross-Button">
+                              <span
+                                (click)="hideQrcode()"
+                                class="close1"
+                                data-toggle="tooltip"
+                                title="Close"
+                                >X</span
+                              >
+                            </div>
+                            <span class="font-weight-700"
+                              >Dynamic Membership ID</span
+                            >
+                          </div>
+                          <div
+                            class="text-center text-white p-2 mb-2"
+                            style="background-color: #ffb549"
+                            *ngIf="paxData"
+                          >
+                            <p class="mb-0 font-weight-700">
+                              Access remaining: {{ selectedQuotaRemaining }} of
+                              {{ selectedQuota }}
+                            </p>
+                          </div>
+                          <div
+                            class="text-center text-white p-2 mb-2"
+                            style="background-color: #ffb549"
+                            *ngIf="showLounge"
+                          >
+                            <p class="mb-0 font-weight-700">
+                              Accepted at {{ loungeCount }} lounges
+                            </p>
+                          </div>
+                          <div
+                            class="text-center text-white mb-2"
+                            *ngIf="showLounge"
+                          >
+                            <div class="input-group">
+                              <i
+                                class="fa fa-search input-group-text rounded-0 border-right-0"
+                              ></i>
+                              <input
+                                type="text"
+                                class="form-control rounded-0"
+                                placeholder="Search lounge"
+                                aria-label="Text input with checkbox"
+                                (input)="searchLounge($event.target.value)"
+                              />
+                            </div>
+                          </div>
+
+                          <div class="card-grid" *ngIf="showUnlinkMember">
+                            <div class="card-box mb-2" *ngFor="let c of cards">
+                              <b class="pl-1 d-block mb-2">{{ c.cardName }} </b>
+                              <div class="d-flex align-items-center">
+                                <div class="img-wrapper position-relative">
+                                  <img
+                                    [src]="c.img"
+                                    height="48px"
+                                    width="100%"
+                                    alt=""
+                                  />
+                                  <button
+                                    (click)="
+                                      generateQrCode(c.memberID, c.cardName)
+                                    "
+                                    class="btn p-1 qr-btn d-flex"
+                                    title="QR Code"
+                                  >
+                                    <i
+                                      class="fa fa-qrcode"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </button>
+                                  <span
+                                    class="badge badge-pill badge-warning linked-cards"
+                                    *ngIf="c.linkedCard && c.linkedCard > 0"
+                                    (click)="
+                                      fetchLinkedCardData(
+                                        c.img,
+                                        c.linkedCardNum,
+                                        c.cardName,
+                                        c.cardNumber,
+                                        c.cardID,
+                                        c.quotaRemaining,
+                                        c.quota,
+                                        c.expiry
+                                      )
+                                    "
+                                  >
+                                    +{{ c.linkedCard }}
+                                  </span>
+                                </div>
+                                <div class="card-text d-flex flex-column ml-2">
+                                  <span>
+                                    {{ c.cardNumber }}
+                                  </span>
+                                  <span style="font-size: 12px">{{
+                                    c.expiry
+                                  }}</span>
+                                  <span
+                                    class="font-weight-600"
+                                    style="font-size: 15px"
+                                    >Access remaining: {{ c.quotaRemaining }} of
+                                    {{ c.quota }}
+                                  </span>
+                                </div>
+                                <div class="icon-container">
+                                  <div
+                                    *ngIf="c.hasAdmissions"
+                                    (click)="
+                                      showPaxData(
+                                        c._id,
+                                        c.cardNumber,
+                                        c.linkedCard,
+                                        c.linkedCardNum,
+                                        c.cardName,
+                                        c.img,
+                                        c.cardID,
+                                        c.expiry
+                                      )
+                                    "
+                                    class="icon-item"
+                                  >
+                                    <i class="fa fa-solid fa-greater-than"></i>
+                                    <!-- <i class="fa fa-history" ></i> -->
+                                  </div>
+                                </div>
+                              </div>
+                              <span
+                                *ngIf="!c.isKYCDone"
+                                style="font-size: 12px; color: red"
+                                >*Please carry the physical card for KYC</span
+                              >
+                              <div
+                                (click)="
+                                  showHistory(
+                                    c.cardName,
+                                    c.cardID,
+                                    c.cardNumber
+                                  )
+                                "
+                                class="lounges-btn mt-1"
+                              >
+                                Lounge access directory
+                                <i class="fa fa-solid fa-arrow-right"></i>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="lounge-pax-grid" *ngIf="paxData">
+                            <div
+                              class="card-box d-flex align-items-center mb-2 justify-content-between"
+                              *ngFor="let pax of paxCount"
+                            >
+                              <div class="card-text d-flex flex-column">
+                                <span style="line-height: 1.8">
+                                  <b>{{ pax.loungeName }}</b>
+                                </span>
+                                <span>Used on: {{ pax.visitDate }} </span>
+                              </div>
+                              <div *ngIf="!pax.isSupplementaryAdmission">
+                                <i class="fa fa-address-card"></i>
+                              </div>
+                              <div
+                                class="pax-count d-flex flex-column align-items-center"
+                              >
+                                <span
+                                  class="font-weight-700"
+                                  style="font-size: 40px"
+                                >
+                                  {{ pax.count }}
+                                </span>
+                                <span style="font-size: 10px">PAX</span>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="lounge-grid" *ngIf="showLounge">
+                            <!-- <div
+                                class="card-heading bg-white px-3 mb-2 py-3 text-center position-relative"        
+                              >
+                                <i
+                                  class="fa fa-arrow-left"
+                                  style="position: absolute; left: 1rem; cursor: pointer; top:16px"
+                                  (click)="showCards()"
+                                ></i> 
+                                <span class="font-weight-700"> {{ selectedCardNumber }} </span>   
+                              </div>        -->
+                            <div
+                              *ngFor="let lounge of loungeNames; let i = index"
+                              class="card-box py-3 px-2 text-left"
+                            >
+                              <span>
+                                <b
+                                  >{{ i + 1 }}.
+                                  {{
+                                    lounge.displayName
+                                      ? lounge.displayName
+                                      : lounge.name
+                                  }},<i style="font-size: 14px">
+                                    {{ lounge.addressLine1 }},
+                                    {{ lounge.addressLine2 }}</i
+                                  >
+                                  ({{ lounge.airportName }},
+                                  {{ lounge.countryName }})</b
+                                >
+                              </span>
+                            </div>
+                          </div>
+
+                          <div
+                            class="card-grid"
+                            style="background-color: white"
+                            *ngIf="qrCodeData"
+                          >
+                            <div class="qr-Code">
+                              <h2 class="cardName">{{ cardName }}</h2>
+                              <qr-code [value]="qrCode" [size]="250"></qr-code>
+                              <h3 class="date">
+                                Applicable Till : {{ applicable }}
+                              </h3>
+                            </div>
+                          </div>
+                          <div
+                            class="card-heading bg-white px-3 mb-2 py-3 text-center"
+                            *ngIf="showlinkCardData"
+                          >
+                            <div class="cross-Button">
+                              <span
+                                (click)="hidelinkCardData()"
+                                class="close1"
+                                data-toggle="tooltip"
+                                title="Close"
+                                >X</span
+                              >
+                            </div>
+                            <span class="font-weight-700">Linked Cards</span>
+                          </div>
+                          <!-- <div
+                              class="card-grid"
+                              style="background-color: white"
+                              *ngIf="showlinkCardData"
+                            >
+                               <div class="linked" *ngFor="let data of linkedCardNumData">
+                            <img [src]="image" height="48px" alt="" />
+                            <h2 class="pb-2 px-3" >{{data}}</h2>
+                          </div> -->
+                          <!-- <div class="card-box mb-2" *ngFor="let data of linkedCardNumData">
+                                <b class="pl-1 d-block mb-2">{{ selectedName }} </b>
+                                <div class="d-flex align-items-center">
+                                  <div class="img-wrapper position-relative">
+                                    <img [src]="image" height="48px" alt="" />
+                                  </div>
+                                  <div class="card-text d-flex flex-column ml-2">
+                                    <span>
+                                      {{ data }}
+                                    </span>
+                                  </div>
+                                  <div class="supp">
+                                    supplimentry Cards
+                                  </div>
+                                  <div class="access">  Access remaining: {{ selectedQuotaRemaining }} of
+                                    {{ selectedQuota }}</div>
+                                </div>
+                                <div (click)="showHistory(cardID,selectedCardNumber)" class="lounges-btn mt-1">
+                                  Lounge access directory
+                                  <i class="fa fa-solid fa-arrow-right"></i>
+                                </div>
+                              </div> 
+                            </div> -->
+                          <div class="card-grid" *ngIf="showlinkCardData">
+                            <div
+                              class="card-box mb-2"
+                              *ngFor="let c of linkedCardNumData"
+                            >
+                              <b class="pl-1 d-block mb-2"
+                                >{{ selectedName }}
+                              </b>
+                              <div class="d-flex align-items-center">
+                                <div class="img-wrapper position-relative">
+                                  <img
+                                    [src]="image"
+                                    height="100%"
+                                    width="100%"
+                                    alt=""
+                                  />
+                                </div>
+                                <div class="card-text d-flex flex-column ml-2">
+                                  <span>
+                                    {{ c.cardNumber }}
+                                  </span>
+                                  <span style="font-size: 12px">{{
+                                    c.expiry
+                                  }}</span>
+                                  <span
+                                    class="font-weight-600"
+                                    style="font-size: 15px"
+                                    >Access remaining:
+                                    {{ selectedQuotaRemaining }} of
+                                    {{ selectedQuota }}
+                                  </span>
+                                </div>
+                              </div>
+                              <div
+                                (click)="
+                                  showHistory(
+                                    selectedName,
+                                    cardID,
+                                    c.cardNumber
+                                  )
+                                "
+                                class="lounges-btn mt-1"
+                              >
+                                Lounge access directory
+                                <i class="fa fa-solid fa-arrow-right"></i>
+                              </div>
+                            </div>
+                          </div>
+                          <a
+                            class="add-refresh align-items-center d-flex justify-content-center"
+                            *ngIf="showUnlinkMember"
+                            (click)="fetchRecentVisits()"
+                          >
+                            <i class="fa fa-refresh"></i>
+                          </a>
+                          <button
+                            data-toggle="modal"
+                            data-target="#isRejectModal"
+                            class="remove-card btn py-3 w-100"
+                            *ngIf="paxData"
+                            (click)="submitLinkedCardTable()"
+                          >
+                            <span class="text-capitalize">Remove Card </span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <br />
+                  <!-- <div class="text-right" >  
+                      <a data-toggle="modal" (click)="closeLinkedCardTable()" data-backdrop="static"
+                      data-keyboard="false" class="btn btn-danger"><i
+                       aria-hidden="true"></i>{{ "close" }}
+                  </a>         
+                      <a data-toggle="modal" data-target="#isRejectModal" (click)="submitLinkedCardTable()" data-backdrop="static"
+                      data-keyboard="false" class="btn btn-success"><i
+                       aria-hidden="true"></i>{{ "Unlink ST Arrture Member" }}
+                  </a>
+                  </div>  -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="showImport && !showMemberDetails">
+            <app-import-data
+              [showNavBar]="false"
+              [showLeftMenu]="false"
+              [validator]="importValidator"
+              (importClose)="backToResults()"
+            ></app-import-data>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="modal fade"
+    id="isRejectModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="isActiveModalLable"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title mb-0" id="isActiveModalLable">
+            Select reason to unlink
+          </h3>
+          <button
+            #closeButton
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div>
+                <label for="reason">{{ "Reason" }}:</label>
+                <select
+                  name="reason"
+                  [(ngModel)]="reason"
+                  class="custom-select"
+                >
+                  <option *ngFor="let type of reasonType" [value]="type.key1">
+                    {{ type.key1 }}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="remarks"
+                  >Remarks<span class="asterisk">*</span>:</label
+                >
+                <textarea
+                  class="form-control"
+                  id="remarks"
+                  [(ngModel)]="remarks"
+                  autocomplete="off"
+                  placeholder="Enter Remarks"
+                  name="remarks"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            id="svbtn"
+            class="btn btn-danger"
+            (click)="closeLinkedCard()"
+          >
+            <i class="fa fa-success" aria-hidden="true"></i>
+            {{ "Close" }}
+          </button>
+          <button
+            type="button"
+            id="svbtn"
+            class="btn btn-success"
+            (click)="submitUnlinkcard()"
+          >
+            <i class="fa fa-success" aria-hidden="true"></i>
+            {{ data ? data.buttons.save : "Save" }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="modal fade"
+    id="memberStatusHistory"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="admissionTokenHistoryLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content-data">
+        <div class="modal-header">
+          <h3 class="modal-title mb-0" id="admissionTokenHistoryLabel">
+            {{ data ? data.buttons.actionhistory : "Action History" }}
+          </h3>
+          <button
+            #closeButton
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="admission-token-history-table">
+            <div class="table-responsive">
+              <table
+                mat-table
+                [dataSource]="dataSourceStatusHistory"
+                class="mat-elevation-z8"
+                #actionHistorySort="matSort"
+                matSort
+              >
+                <ng-container matColumnDef="action">
+                  <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                    {{ data ? data.master.admissionToken.action : "Action" }}
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.action }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="refmem">
+                  <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                    {{ "MetaData" }}
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    refMemberID:
+                    {{ element.metadata.refMemberID + "," }} cardNumber:
+                    {{ element.metadata.cardNumber }}
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="remarks">
+                  <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                    {{ dataa ? dataa.master.admissionToken.reason : "Remarks" }}
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.remarks }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="outlet">
+                  <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                    {{ data ? data.master.admissionToken.outlet : "Outlet" }}
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.outlet.name }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="modifiedOn">
+                  <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                    {{
+                      data
+                        ? data.master.admissionToken.modifiedon
+                        : "Modified On"
+                    }}
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ cs.formatDateTime(element.modifiedOn) }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="modifiedBy">
+                  <th mat-header-cell mat-sort-header *matHeaderCellDef>
+                    {{
+                      data
+                        ? data.master.admissionToken.modifiedby
+                        : "Modified By"
+                    }}
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.modifiedBy.name }}
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displyedActionColumn"></tr>
+                <tr
+                  mat-row
+                  *matRowDef="
+                    let row;
+                    columns: displyedActionColumn;
+                    let i = index
+                  "
+                ></tr>
+              </table>
+            </div>
+            <mat-paginator
+              #actionHistoryPaginator="matPaginator"
+              [pageSizeOptions]="[10, 25, 50, 100]"
+              class="Select Page for Action Histroy"
+            >
+            </mat-paginator>
+            <div class="modal-footer">
+              <button
+                type="button"
+                id="svbtn"
+                class="btn btn-danger"
+                (click)="closeLinkedCard()"
+              >
+                <i class="fa fa-success" aria-hidden="true"></i>
+                {{ "Close" }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
