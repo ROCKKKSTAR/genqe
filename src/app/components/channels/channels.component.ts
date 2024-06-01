@@ -653,7 +653,7 @@ export class ChannelsComponent implements OnInit {
     this.destinationForm = [];
     this.status1 = true;
     this.allSelected = false;
-    this.supportedEvents.setValue('');
+    this.supportedEvents.setValue([]);
   }
   public resetAdvanceSearch(): void {
     this.channelName = '';
@@ -868,11 +868,11 @@ class ChannelsValidator extends AbstractValidator<IChannels> {
   public failure = 0;
   public importFileId = '';
   public loadershow = false;
-  public eachValue: Subject<IChannels>;
+  declare public eachValue: Subject<IChannels>;
   public title = 'Import Channels';
   public closeTitle = 'Close Import';
-  public saveResponse: Subject<any>;
-  public fileSubject: Subject<File>;
+  declare public saveResponse: Subject<any>;
+  declare public fileSubject: Subject<File>;
   public templateName = 'Channels Template';
   public templateURL =
     env.BASE_URL + 'api/mt/template/download/ImportChannel.xlsx';

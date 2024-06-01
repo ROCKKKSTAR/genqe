@@ -1,5 +1,5 @@
 #stage 1
-FROM node:16-alpine as ppg-angular-app
+FROM node:16-alpine as genqe-angular-app
 WORKDIR /app
 COPY . .
 RUN npm install --force

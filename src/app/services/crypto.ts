@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as CryptoJS from 'crypto-js';
 // import { KMSClient, EncryptCommand, CancelKeyDeletionCommand } from '@aws-sdk/client-kms';
-import decode from 'jwt-decode';
+import jwt_Decode from 'jwt-decode';
 
 @Injectable(
     {
@@ -46,6 +46,6 @@ export class Crypto {
     }
 
     public kmsDecrypt(data): any {
-        return decode(data);
+        return jwt_Decode(data);
     }
 }

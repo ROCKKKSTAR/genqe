@@ -1,4 +1,4 @@
-import { StringMapWithRename } from '@angular/compiler/src/compiler_facade_interface';
+// import { StringMapWithRename } from '@angular/compiler/src/compiler_facade_interface';
 import { IAdmissionToken } from './admission-token.interface';
 import { IPartner } from './partner.interface';
 import { IUser } from './user.interface';

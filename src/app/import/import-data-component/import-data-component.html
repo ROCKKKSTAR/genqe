@@ -1,0 +1,406 @@
+<div *ngIf="hasInputError">
+  <div fxLayout="center center">
+    <h2>{{data.admin.importErr}}</h2>
+  </div>
+</div>
+<div *ngIf="!hasInputError">
+  <div #stepper fxLayout="column" fxLayoutAlign="start start">
+    <div *ngIf="!(rowsToSave.saved | async)">
+      <app-loader [message]="loadingMessage"></app-loader>
+    </div>
+    <h3 class="import-heading position-relative w-100">
+      {{title$ | async}}
+      <span *ngIf="close" (click)="onCloseImport()" class="close1" data-toggle="tooltip" title="Close">X</span>
+    </h3>
+    <div fxLayout="row" fxLayoutAlign="start center" style="padding-bottom: 15px">
+      <div id="stepList" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" style="align-self: center">
+        <mat-card style="font-size: 14px" [ngStyle]="step === 'step1' ? {'background-color' : '#7e003f', 'color': 'white'} :
+                {'background-color' : '#f1f1f1', 'color' : 'black'}">
+          1 - {{data ? data.admin.selectFile : 'Select File'}}
+        </mat-card>
+        <mat-card style="font-size: 14px" [ngStyle]="step === 'step2' ? {'background-color' : '#7e003f', 'color': 'white'} :
+                {'background-color' : '#f1f1f1', 'color' : 'black'}">
+          2 - {{data ? data.admin.matchHeaders : 'Match Headers'}}</mat-card>
+        <mat-card style="font-size: 14px" [ngStyle]="step === 'step3' ? {'background-color' : '#7e003f', 'color': 'white'} :
+                {'background-color' : '#f1f1f1', 'color' : 'black'}">
+          3 - {{data ? data.admin.confirmData : 'Confirm Data'}}</mat-card>
+        <mat-card style="font-size: 14px" [ngStyle]="step === 'step4' ? {'background-color' : '#7e003f', 'color': 'white'} :
+                {'background-color' : '#f1f1f1', 'color' : 'black'}">
+          4 - {{data ? data.buttons.import : 'Import'}}</mat-card>
+      </div>
+    </div>
+    <div #step1 *ngIf="step === 'step1'" fxLayout="row" fxLayoutGap="30px">
+      <div style="height: 90%" fxLayout="column" fxLayoutGap="20px">
+        <div id="1-step-1-header">
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px" style="height: 50px">
+            <button mat-raised-button class="close-action-btn" (click)="onCloseImport()">
+              {{inData.closeTitle}}
+            </button>
+          </div>
+          <table style="font-size: 16px">
+            <tr>
+              <td style="padding-top: 10px">
+                <div id="point-1" *ngIf="(inData.templateURL || inData.templateDownLoadFn) ; else tInstructions"
+                  fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
+                  <span>1. {{data ? data.admin.downloadExcelTemp : 'Download Our
+                    Excel Template'}}</span>
+                  <a type="button" mat-raised-button style="
+                      margin-left: 15px;
+                      margin-top: 10px;
+                      margin-bottom: 10px;
+                      background-color: white;
+                    " [hidden]="!inData.templateURL" [href]="inData.templateURL"
+                    [download]="inData.downLoadedName">{{data ? data.admin.exceltemplate : 'Excel Template'}}</a>
+                  <!-- <a type="button" mat-raised-button style="margin-left: 15px; margin-top: 10px; margin-bottom: 10px;background-color: white;"
+                     [hidden]="!inData.templateDownLoadFn" (click)="inData.templateDownLoadFn()">Excel Template</a> -->
+                </div>
+                <ng-template #tInstructions>
+                  <span style="font-weight: bold; margin-bottom: 5px">1. {{inData.templateInstruction}}</span>
+                </ng-template>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding-top: 20px">
+                <span>2. {{data ? data.admin.openTemp : 'Open the template, fill in
+                  your data (keeping the header row unchanged), then save the
+                  sheet as a excel.'}}</span>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding-top: 10px">
+                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" style="padding-top: 10px">
+                  <div id="file-info-container" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+                    <span class="mat-h3" style="padding-top: 10px">3. {{data ? data.admin.selectExcel : 'Select your
+                      excel
+                      file to upload'}}:
+                    </span>
+                    <div>
+                      <label class="mat-h4" style="
+                          font-weight: bold;
+                          box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%),
+                            0px 2px 2px 0px rgb(0 0 0 / 14%),
+                            0px 1px 5px 0px rgb(0 0 0 / 12%);
+                          padding: 4px 20px;
+                          display: inline-block;
+                          cursor: pointer;
+                          background-color: white;
+                          border-radius: 4px;
+                          margin-bottom: 0px;
+                        " [ngStyle]="fileName$.getValue().name === '' ? {'background': '#3d55df', 'color': 'white'} : 
+                          {'background': 'white', 'color': 'black'}">
+                        <input #fileInput type="file" required style="display: none; z-index: -1;"
+                          (change)="fileName$.next({name: fileInput.files[0].name, changed: true})" />{{data ?
+                        data.admin.chooseFile : 'Choose file'}}
+                      </label>
+                    </div>
+                    <ng-container *ngIf="fileName$ | async as f">
+                      <h4 class="mat-h3" style="font-style: italic; padding-top: 10px">
+                        {{f.name === '' ? 'No File Selected' : f.name}}
+                      </h4>
+                    </ng-container>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding-top: 10px">
+                <span style="padding-top: 10px">4. {{data ? data.admin.uploadFile : 'Upload File'}}:
+                </span>
+                <button [ngStyle]="fileInput.files.length === 0 ? {'color': '#00000042'} :
+                    {'background': '#3d55df', 'color': 'white'}" mat-raised-button
+                  [disabled]="fileInput.files.length === 0" class="save-action-btn"
+                  (click)="moveTo('step2', fileInput)">
+                  {{inData.uploadTitle}}
+                </button>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div *ngIf="inData.showTableForKey" style="padding: 20px">
+        <span class="mat-h4">{{data ? data.admin.importguide : 'Import Guide'}}</span>
+        <table style="font-size: 14px; border: black solid 1px; width: 100%">
+          <tr>
+            <th style="padding: 10px; font-weight: bolder">
+              {{data ? data.admin.classesInSystem : 'Classes in system'}}
+            </th>
+            <th style="padding: 10px; font-weight: bolder">
+              {{data ? data.admin.classNumber : 'In your excel put this as class
+              number'}}
+            </th>
+          </tr>
+          <tr *ngFor="let r of inData._header.get(inData.showTableForKey).inValues" style="padding: 10px">
+            <td style="padding: 10px">{{r.display}}</td>
+            <td style="font-weight: bold; padding: 10px; text-align: center">
+              {{r.match}}
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div #step2 *ngIf="step === 'step2'" label="Verify Fields" style="display: flex; height: 90%" fxFlex="100"
+      fxLayout="column" fxLayoutGap="20px">
+      <div *ngIf="fileReadStatus$ | async as fileReadStatus">
+        <div>
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+            <h2 class="mat-h2">{{data ? data.admin.verifyfield : 'Verify Fields'}}</h2>
+            <div fxLayout="row" fxLayoutAlign="start center" style="padding-bottom: 5px">
+              <button mat-raised-button class="save-action-btn" (click)="moveTo('step3')" [ngStyle]="!fileReadStatus.error ? {'background': '#3d55df', 'color': 'white'} : 
+                        {'background': 'white', 'color': 'black'}" [disabled]="fileReadStatus.error">
+                {{data ? data.admin.continue : 'Continue'}}
+              </button>
+              <button mat-raised-button class="close-action-btn" (click)="moveTo('step1')" style="margin-left: 10px">
+                {{data ? data.admin.goBack : 'Go Back'}}
+              </button>
+              <button mat-raised-button class="close-action-btn" (click)="onCloseImport()" style="margin-left: 10px">
+                {{inData.closeTitle}}
+              </button>
+            </div>
+          </div>
+          <div *ngIf="fileReadStatus.error">
+            <p class="mat-h3">
+              {{data ? data.admin.errInReading : 'There is an error in reading
+              the selected file'}}
+            </p>
+            <p class="mat-h3">{{fileReadStatus.message}}</p>
+            <p class="mat-h3">
+              {{data ? data.admin.goBackErr : 'You can go back select another
+              file and continue'}}
+            </p>
+          </div>
+          <div *ngIf="!fileReadStatus.error">
+            <p class="mat-body">
+              {{data ? data.admin.scannedMsg : 'We have scanned your file and
+              listed your header row fields with those expected by the system.
+              If a column header is blank, please click the drop down arrow to
+              select the matching one.'}}
+            </p>
+            <p style="font-style: italic">
+              {{data ? data.admin.requiredMsg : 'Some column headers are
+              required and must be matched in order to proceed. Others are
+              optional and can be left blank.'}}
+            </p>
+            <div *ngIf="columns$ | async as columns" class="mt-3">
+              <table class="table table-bordered mat-body" style="width: 100%">
+                <tr>
+                  <th>
+                    {{data ?data.admin.columnFromExcel : 'Columns from Excel'}}
+                  </th>
+                  <th>
+                    {{data ? data.admin.assignedField : 'Assigned Fields in
+                    System'}}
+                  </th>
+                  <th>{{data ? data.admin.matched : 'Matched'}}</th>
+                  <th>
+                    {{data ? data.admin.inludeImport : 'Include In Import'}}
+                  </th>
+                </tr>
+                <tr *ngFor="let h of columns; index as i" [ngClass]="!h.doInclude ? 'data-row-grey' : ''">
+                  <td>
+                    <mat-select [value]="h.fileColIndex" [id]="h.key" (selectionChange)="OnChangeColMap($event, i)">
+                      <mat-option *ngFor="let c of fileColumns; index as j" [value]="j">{{c}}</mat-option>
+                    </mat-select>
+                  </td>
+                  <td>
+                    <p style="
+                        display: flex;
+                        align-items: flex-start;
+                        align-content: flex-start;
+                      " class="mb-0">
+                      {{h.key}}
+                    </p>
+                  </td>
+                  <td>
+                    <mat-icon
+                      [ngStyle]="{'color': h.fileColIndex === -1 ? h.doInclude ? 'red' : 'seagreen': 'seagreen'}">
+                      {{h.fileColIndex === -1 ? h.doInclude ? 'error' :
+                      'check_circle' : 'check_circle'}}
+                    </mat-icon>
+                  </td>
+                  <td>
+                    <mat-checkbox color="primary" [disabled]="!h.canIgnore" [(ngModel)]="h.doInclude"
+                      (change)="OnChangeInclude($event.checked, i)">
+                      {{!h.canIgnore ? 'Required' : 'Optional'}}
+                    </mat-checkbox>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div #step3 *ngIf="step === 'step3'" label="Preview Import" style="width: 100%">
+      <div *ngIf="rowsReadStatus$ | async as rowReadStatus">
+        <div>
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+            <h2 class="mat-h2">
+              {{data ? data.admin.previewImport : 'Preview Import'}}
+            </h2>
+            <div #preview fxLayout="row" fxLayoutAlign="start center" style="padding-bottom: 5px">
+              <!-- <button mat-raised-button class="save-action-btn" (click)="onConfirmData()"
+                [disabled]="rowReadStatus.error || !hasValidationError" [ngStyle]="rowReadStatus.error || !hasValidationError ? {'color': '#00000042'} : 
+                      {'background': '#3d55df', 'color': 'white'}">
+                {{data ? data.admin.confirmData : 'Confirm Data'}}
+              </button> -->
+              <button mat-raised-button class="save-action-btn" [disabled]="rowReadStatus.error || hasValidationError"
+                [ngStyle]="rowReadStatus.error || hasValidationError ? {'color': '#00000042'} : 
+                      {'background': '#3d55df', 'color': 'white'}" (click)="moveTo('step4')" style="margin-left: 10px">
+                {{data ? data.buttons.import : 'Import'}}
+              </button>
+              <button mat-raised-button class="close-action-btn" (click)="moveTo('step2')" style="margin-left: 10px">
+                {{data ? data.admin.goBack : 'Go Back'}}
+              </button>
+              <button mat-raised-button class="close-action-btn" (click)="onCloseImport()" style="margin-left: 10px">
+                {{inData.closeTitle}}
+              </button>
+            </div>
+          </div>
+          <div *ngIf="rowReadStatus.error">
+            <p class="mat-h3">
+              {{data ? data.admin.errReading : 'There is some error in reading
+              the rows of data'}}
+            </p>
+            <p class="mat-h3">{{rowReadStatus.message}}</p>
+            <p class="mat-h3">
+              {{data ? data.admin.checkFile : 'Please check the file, correct
+              the data and try again'}}
+            </p>
+          </div>
+          <div *ngIf="!rowReadStatus.error" style="width: 100%">
+            <p class="mat-body">
+              <!-- {{data ? data.admin.mistakeCell : 'The following rows were found
+              in your file. Cells with mistakes are highlighted in red. Please
+              fix your mistakes and then proceed by clicking on Confirm Data. Or
+              Go Back to edit your CSV and start over.'}} -->
+              Cells with mistakes are highlighted in red. Please, edit your CSV fix your mistakes and start over.
+
+            </p>
+            <div class="mt-3" style="overflow-x: auto">
+              <table class="table table-bordered mat-body">
+                <thead>
+                  <tr>
+                    <ng-container *ngFor="let col of headerCheck | columnFilter">
+                      <th>{{col.key}}</th>
+                    </ng-container>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngIf="doneValidation$ | async">
+                    <tr *ngFor="let row of dataRows; index as rI">
+                      <ng-container *ngFor="let c of headerCheck | columnFilter; index as cI">
+                        <td *ngIf="(formGrid1.get(((rI + 1) * 1000 + cI)).errSummary | async) as ce"
+                          [ngClass]="{'table-danger': ce.flag}" [matTooltip]="ce.message">
+                          <p *ngIf="!ce.flag" class="mb-0">
+                            {{formGrid1.get((rI + 1) * 1000 +
+                            cI).fControl.value}}
+                          </p>
+                          <!-- <ng-container *ngIf="ce.flag">
+                            <ng-container *ngIf="!c.inValues">
+                              <input type="text" [formControl]="formGrid1.get(((rI + 1) * 1000 + cI)).fControl" />
+                            </ng-container>
+                            <ng-container *ngIf="c.inValues">
+                              <mat-select style="padding: 10px"
+                                [formControl]="formGrid1.get(((rI + 1) * 1000 + cI)).fControl">
+                                <mat-option *ngFor="let v of c.inValues" [value]="v.match">{{v.display}}</mat-option>
+                              </mat-select>
+                            </ng-container>
+                          </ng-container> -->
+                        </td>
+                      </ng-container>
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div #step4 *ngIf="step === 'step4'" label="Confirm Import" fxLayout="column" fxLayoutGap="20px">
+      <span class="mat-body" style="font-size: 18px" *ngIf="!(rowsToSave.saved | async)">{{data ? data.admin.importLoad
+        : 'Importing .....'}}</span>
+      <div *ngIf="(rowsToSave.saved | async)" fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
+        <mat-icon style="color: green">check_circle</mat-icon>
+        <span class="mat-body" style="font-size: 18px">{{data ? data.admin.importComplete : 'Import Completed'}}</span>
+      </div>
+      <!-- <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px" style="padding-bottom: 5px">
+        <span class="mat-body" style="font-size: 18px">{{data ? data.admin.successfulAdded : 'Successfully added'}}
+          {{rowsToSave.countGood + '/' + rowsToSave.data.length}} {{data ?
+          data.admin.recordsfromfile : 'records from your file'}}</span>
+        <button style="background: '#3d55df'; color: white;" *ngIf="rowsToSave.data.length !== rowsToSave.countGood"
+          mat-raised-button class="close-action-btn" (click)="onCloseImport()">
+          {{inData.closeTitle}}
+        </button>
+        <button style="background: '#3d55df'; color: white;" *ngIf="rowsToSave.data.length === rowsToSave.countGood"
+          mat-raised-button class="save-action-btn" (click)="onCloseImport()">
+          {{inData.closeTitle}}
+        </button>
+      </div> -->
+      <div class="progress form-group" *ngIf="rowsToSave.countGood > 0">
+        <div class="progress-bar progress-bar-striped bg-success" role="progressbar"
+          [style.width.%]="((rowsToSave.countGood + rowsToSave.countBad)/rowsToSave.data.length)*100">
+        </div>
+      </div>
+      <!-- New Import changes -->
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px" style="padding-bottom: 5px">
+        <div fxLayout="column">
+          <span class="mat-body" style="font-size: 18px; color: green">{{data.admin.successfulAdded}}
+            {{rowsToSave.countGood + '/' + rowsToSave.data.length}} {{data.admin.recordsfromfile}}</span>
+          <span class="mat-body" style="font-size: 18px; color: red;">Error Importing {{rowsToSave.countBad + '/' +
+            rowsToSave.data.length}} {{data.admin.recordsfromfile}}</span>
+        </div>
+        <!-- <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center">
+          <button style="background: '#1b98a8'" mat-raised-button class="close-action-btn" *ngIf="!showError"
+            (click)="showErrors()">Show Error</button>
+          <button style="background: '#1b98a8'" mat-raised-button class="close-action-btn" *ngIf="showError"
+            (click)="hideErrors()">Hide Error</button>
+        </div> -->
+        <button style="background: '#3d55df'; color: white;" *ngIf="rowsToSave.data.length !== rowsToSave.countGood"
+          mat-raised-button class="close-action-btn" (click)="onCloseImport()">
+          {{inData.closeTitle}}
+        </button>
+        <button style="background: '#3d55df'; color: white;" *ngIf="rowsToSave.data.length === rowsToSave.countGood"
+          mat-raised-button class="save-action-btn" (click)="onCloseImport()">
+          {{inData.closeTitle}}
+        </button>
+        <button type="button" style="background: rgb(201, 35, 35); color: white;" *ngIf="importerrors.length > 0"
+          mat-raised-button class="save-action-btn" (click)="checkErrorLogs()">
+          Check Error Logs
+        </button>
+      </div>
+      <div *ngIf="importerrors.length > 0">
+        <div *ngFor="let im of importerrors">
+          <span class="mat-body" style="font-size: 14px; color: red">{{im}}</span>
+        </div>
+      </div>
+      <div>
+        <p *ngFor="let m of rowsToSave.messages">{{m}}</p>
+      </div>
+      <!-- <div>
+        <table class="mat-h3" style="width: 50%">
+          <tr>
+            <th style="padding: 5px">
+              {{data ? data.partnerresponse.status : 'Status'}}
+            </th>
+            <th style="padding: 5px" *ngFor="let c of headerCheck | columnFilter">
+              {{c.key}}
+            </th>
+          </tr>
+          <tr *ngFor="let r of rowsToSave.data">
+            <td style="padding: 5px">
+              <mat-icon [ngStyle]="{'color': r.saveStatus !== 2 ? r.saveStatus === 0 ? 'red' : 'seagreen': 'skyblue'}">
+                {{r.saveStatus !== 2 ? r.saveStatus === 0 ? 'error' :
+                'check_circle' : 'hourglass_top'}}
+              </mat-icon>
+            </td>
+            <td style="padding: 5px" *ngFor="let c of headerCheck | columnFilter">
+              {{r.tJSON[c.key]}}
+            </td>
+          </tr>
+        </table>
+      </div> -->
+      <div fxLayout="row" fxLayoutAlign="start center"></div>
+    </div>
+  </div>
+</div>

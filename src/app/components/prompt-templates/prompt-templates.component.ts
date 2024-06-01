@@ -32,7 +32,7 @@ import {
   IGlobalSetting,
 } from 'src/app/models/globalSetting.interface';
 import { ToastrService } from 'ngx-toastr';
-import { saveAs } from 'file-saver';
+// import { saveAs } from 'file-saver';
 import { IVendor } from 'src/app/models/vendor.interface';
 import { MatTableDataSource } from '@angular/material/table';
 import { IUser } from 'src/app/models/user.interface';
@@ -40,7 +40,7 @@ import { AuthenticationService } from 'src/app/services/auth.service';
 import { environment as env } from 'src/environments/environment';
 import { MatTableExporterDirective } from 'mat-table-exporter';
 import { SelectionModel } from '@angular/cdk/collections';
-import * as Handlebars from 'handlebars';
+// import * as Handlebars from 'handlebars';
 import { IPartner } from 'src/app/models/partner.interface';
 import { DatePipe, Location } from '@angular/common';
 declare var $;
@@ -105,7 +105,7 @@ export class PromptTemplatesComponent implements OnInit, AfterViewInit {
   public newIncludeDocuments = false;
   public exportloaderMessage = '';
   public importValidator: PromptValidator;
-  public templateStatus = ['Active', 'Inactive'];
+  public templateStatus: IGlobalSetting[] = [];
   public htmlURL;
   public templateData = [];
   public componentData: ComponentData[] = [];
@@ -212,7 +212,7 @@ export class PromptTemplatesComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.searchInputFunction();
     $('#query1').hide();
-    $('.search-input input').blur(function () {
+    $('.search-input input').blur( () => {
       if ($(this).val()) {
         $(this).find('~ label, ~ span:nth-of-type(n+3)').addClass('not-empty');
       } else {
@@ -228,7 +228,7 @@ export class PromptTemplatesComponent implements OnInit, AfterViewInit {
         .removeClass('not-empty');
     });
 
-    $(document).click(function (event) {
+    $(document).click( (event) => {
       // if you click on anything except the modal itself or the "open modal" link, close the modal
       if (!$(event.target).closest('.query1,.dropdown-form').length) {
         if (
@@ -339,7 +339,7 @@ export class PromptTemplatesComponent implements OnInit, AfterViewInit {
       $('.search-input input').focus();
     }
     $('#query1').hide();
-    $('.search-input input').blur(function () {
+    $('.search-input input').blur( () => {
       if ($(this).val()) {
         $(this).find('~ label, ~ span:nth-of-type(n+3)').addClass('not-empty');
       } else {
@@ -491,7 +491,8 @@ export class PromptTemplatesComponent implements OnInit, AfterViewInit {
       this.templates = [];
     }
   }
-  public templateSimpleSearch(value): void {
+  public templateSimpleSearch(event: Event): void {
+    const value = (event.target as HTMLInputElement).value;
     this.advanceSearch = false;
     this.WS.post(
       'api/prompt/simpleSearchPromptData',
@@ -522,7 +523,8 @@ export class PromptTemplatesComponent implements OnInit, AfterViewInit {
     });
   }
 
-  public fetchPartners(keyword: string): void {
+  public fetchPartners(event: Event): void {
+    const keyword = (event.target as HTMLInputElement).value;
     if (keyword.length > 2) {
       this.WS.post('api/master/partner/names/fetch', { keyword }).subscribe(
         (res: IResponse) => {
@@ -857,7 +859,7 @@ export class PromptTemplatesComponent implements OnInit, AfterViewInit {
   }
 }
 export class PromptValidator extends AbstractValidator<IPromptImport> {
-  // tslint:disable-next-line:variable-name
+  // tslint:disable
   public success = 0;
   public failure = 0;
   public importID = '';

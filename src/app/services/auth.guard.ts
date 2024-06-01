@@ -93,7 +93,7 @@ class CanActivateURL implements CanActivate {
     this.router.navigate(['generate-coupon']);
   }
 
-  checkUserAccess(state): boolean {
+  checkUserAccess(state: any): any {
     const segments = state.url.split('/');
     const lastSegment = segments[segments.length - 1];
     const lastSegmentWithoutParams = '/' + lastSegment.split('?')[0];

@@ -1,21 +1,20 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Router } from '@angular/router';
-import decode from 'jwt-decode';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { IUser } from '../models/user.interface';
 import { ILounge } from '../models/lounge.interface';
-import jwt_decode from 'jwt-decode';
+import jwt_Decode from 'jwt-decode';
 import { WebService } from '../services/web.service';
 import { IGlobalSetting } from '../models/globalSetting.interface';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
-  public currentUser = new BehaviorSubject<IUser>(null);
-  public currentLounge = new BehaviorSubject<ILounge>(null);
+  public currentUser = new BehaviorSubject<IUser | null>(null);
+  public currentLounge = new BehaviorSubject<ILounge | null>(null);
   public sidebarItems: IGlobalSetting[] = [];
   // currentLanguage: any;
-  public selectedLounge: ILounge = null;
+  public selectedLounge: ILounge | undefined;
   private allLounges: ILounge[] = [];
   public currentLanguage = new BehaviorSubject<string>('en');
 
@@ -63,8 +62,8 @@ export class AuthenticationService {
   public async setUserAuthToken(token: string,userToken:string): Promise<any> {
     localStorage.setItem('authToken', token);
     localStorage.setItem('user', userToken);
-    const decodeToken = jwt_decode(token)
-    const user: IUser = jwt_decode(userToken);
+    const decodeToken = jwt_Decode(token)
+    const user: IUser = jwt_Decode(userToken);
     
     this.setCurrentUser(user);
     this.setCurrentLounge(user.userOutlet);

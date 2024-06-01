@@ -1,5 +1,5 @@
 import { SrvRecord } from 'dns';
-import { BoardingPassComponent } from '../components/boarding-pass/boarding-pass.component';
+// import { BoardingPassComponent } from '../components/boarding-pass/boarding-pass.component';
 
 export interface ILanguage {
   language: string;
@@ -450,6 +450,7 @@ export interface LPROJECTS {
 }
 
 export interface LPromptTemp {
+phEnterCriteria: any;
   promptTemplate: string,
   viewedit: string,
   export: string,

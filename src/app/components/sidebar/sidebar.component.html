@@ -474,20 +474,20 @@
           </li> -->
         </ul>
       </li>
-      <li *ngIf="userType === 4">
+      <!-- <li *ngIf="userType === 4">
         <a routerLink="/lounge-access-history" routerLinkActive="active"
           ><i class="fa fa-users" aria-hidden="true"></i
           >{{
             data ? data.buttons.loungeAccessHistory : "Lounge Access History"
           }}</a
         >
-      </li>
-      <li *ngIf="userType === 4">
+      </li> -->
+      <!-- <li *ngIf="userType === 4">
         <a routerLink="/card-bin-lounge-access" routerLinkActive="active"
           ><i class="fa fa-users" aria-hidden="true"></i
           >{{ data ? data.buttons.cardBinAccess : "Card Bin Lounge Access" }}</a
         >
-      </li>
+      </li> -->
       <li routerLinkActive #rla="routerLinkActive" *ngIf="userType === 1">
         <a
           href="#"

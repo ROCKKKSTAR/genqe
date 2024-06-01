@@ -3,7 +3,7 @@ import { IPartner } from './partner.interface';
 import { IUser } from './user.interface';
 
 export class ILounge {
-  _id: string;
+  _id?: string;
   name?: string;
   displaName?: string;
   category?: number;
@@ -66,12 +66,12 @@ export interface ICertificate {
   publicKey: string;
 }
 export class IFacility {
-  name: string;
-  status: number;
-  createdOn: Date;
-  createdBy: number;
-  lastModifiedOn: Date;
-  lastModifiedBy: number;
+  name?: string;
+  status?: number;
+  createdOn?: Date;
+  createdBy?: number;
+  lastModifiedOn?: Date;
+  lastModifiedBy?: number;
 }
 
 export interface IOutletSettings {
@@ -89,18 +89,18 @@ export interface IOutletSettings {
 }
 
 export class IAirport {
-  airportName: string;
+  airportName?: string;
   airportCountry?: ICountry;
-  status: number;
-  createdOn: Date;
-  createdBy: number;
-  lastModifiedOn: Date;
-  lastModifiedBy: number;
+  status?: number;
+  createdOn?: Date;
+  createdBy?: number;
+  lastModifiedOn?: Date;
+  lastModifiedBy?: number;
   airportContinent?: string;
   airportRegion?: string;
-  airportState: string;
-  airportCode: string;
-  airportTimezone: string;
+  airportState?: string;
+  airportCode?: string;
+  airportTimezone?: string;
 }
 
 export interface ILoungePartnerLink {

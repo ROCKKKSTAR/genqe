@@ -23,9 +23,33 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/slick-carousel/slick/slick.scss",
+              "node_modules/slick-carousel/slick/slick-theme.scss",
+              "src/styles.css",
+              "src/assets/css/nucleo-svg.css",
+              "src/assets/css/nucleo-icons.css",
+              "node_modules/fontawesome-free-v6/css/all.min.css",
+              "src/assets/css/font-awesome.css",
+              "src/assets/scss/argon-design-system.scss",
+              "node_modules/ngx-toastr/toastr.css",
+              "node_modules/ngx-toastr/toastr-old.css",
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "node_modules/datatables.net-dt/css/jquery.dataTables.css",
+              "node_modules/select2/dist/css/select2.min.css",
+              "node_modules/dual-listbox/dist/dual-listbox.css",
+              "node_modules/summernote/dist/summernote.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/summernote/dist/summernote.min.js",
+              "node_modules/slick-carousel/slick/slick.min.js",
+              "node_modules/popper.js/dist/umd/popper.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "node_modules/datatables.net/js/jquery.dataTables.js",
+              "node_modules/select2/dist/js/select2.min.js",
+              "node_modules/dual-listbox/dist/dual-listbox.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -61,13 +85,14 @@
           "defaultConfiguration": "production"
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "builder": "@angular-devkit/build-angular:dev-server", 
+           "options": {
+            "port": 4201,
+            "browserTarget": "genqe:build"
+          },
           "configurations": {
             "production": {
               "browserTarget": "genqe:build:production"
-            },
-            "development": {
-              "browserTarget": "genqe:build:development"
             }
           },
           "defaultConfiguration": "development"

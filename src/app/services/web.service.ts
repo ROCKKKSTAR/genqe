@@ -86,7 +86,7 @@ export class WebService {
     return this.http.post(this.BASE_URL + url + '/', formData, { params: httpParams, responseType: 'text', reportProgress: true, observe: 'events' });
   }
 
-  public uploadMultipleFile(url: string, files, input: any, service = 'MASTER') {
+  public uploadMultipleFile(url: string, files: string | any[], input: any, service: any = 'MASTER'): any {
 
     try {
       const frmData = new FormData();

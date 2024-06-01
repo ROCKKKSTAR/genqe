@@ -9,6 +9,7 @@ export class TestCaseManagementComponent implements OnInit {
   public isSidebarOpen = true;
   public loadershow = false;
   public showData: boolean;
+loaderMessage: any;
 
   constructor() {}
 

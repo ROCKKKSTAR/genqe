@@ -37,10 +37,10 @@ import {
   DataValidatorDate,
   DataValidatorRequired,
 } from '../import/validators/validator.functions';
-import { AdmissionPartnerEntitlementValidator } from '../masters/admission-token/admission-token.component';
+// import { AdmissionPartnerEntitlementValidator } from '../masters/admission-token/admission-token.component';
 import { OutletPartnerValidator } from '../masters/lounge/lounge.component';
 import { PartnerValidator } from '../masters/partner/partner.component';
-import { ProductPartnerValidator } from '../masters/product/product.component';
+// import { ProductPartnerValidator } from '../masters/product/product.component';
 import { environment as env } from 'src/environments/environment';
 import { Location } from '@angular/common';
 declare var $;
@@ -499,24 +499,24 @@ export class FileImportExportComponent implements OnInit, AfterViewInit {
           this.partnerToken._id
         );
       }
-      if (parseInt(type, 10) === 3) {
-        this.importValidator = new ProductPartnerValidator(
-          this.WS,
-          this.partnerToken._id
-        );
-      }
+      // if (parseInt(type, 10) === 3) {
+      //   this.importValidator = new ProductPartnerValidator(
+      //     this.WS,
+      //     this.partnerToken._id
+      //   );
+      // }
       if (parseInt(type, 10) === 4) {
         this.importValidator = new OutletPartnerValidator(
           this.WS,
           this.partnerToken._id
         );
       }
-      if (parseInt(type, 10) === 5) {
-        this.importValidator = new AdmissionPartnerEntitlementValidator(
-          this.WS,
-          this.partnerToken._id
-        );
-      }
+      // if (parseInt(type, 10) === 5) {
+      //   this.importValidator = new AdmissionPartnerEntitlementValidator(
+      //     this.WS,
+      //     this.partnerToken._id
+      //   );
+      // }
       this.showImport = true;
     } else {
       console.log(this.importfileType);

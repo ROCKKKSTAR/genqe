@@ -13,6 +13,7 @@ export class TrainNewModelComponent implements OnInit {
   public loadershow = false;
   public showData: boolean;
   currentScreen = 'selectProcessType';
+loaderMessage: any;
 
   constructor(private elementRef: ElementRef) {}
 

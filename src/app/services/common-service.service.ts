@@ -1,4 +1,4 @@
-import { Injectable, ɵCompiler_compileModuleSync__POST_R3__, ViewChild, ElementRef } from '@angular/core';
+import { Injectable, ViewChild, ElementRef } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { environment as env } from 'src/environments/environment';
@@ -13,12 +13,12 @@ import { HttpClient, HttpEvent, HttpEventType } from '@angular/common/http';
 
 import * as JSZip from 'jszip';
 import { PDFDocument, rgb } from 'pdf-lib';
-import pdfMake from 'pdfmake/build/pdfmake';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
-// var htmlToPdfmake = require("html-to-pdfmake");
-import htmlToPdfmake from 'html-to-pdfmake'
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+const htmlToPdfmake = require("html-to-pdfmake");
+// import htmlToPdfmake from 'html-to-pdfmake';
 import { AuthenticationService } from './auth.service';
-import { N } from '@angular/cdk/keycodes';
+// import { N } from '@angular/cdk/keycodes';
 import { DatePipe } from '@angular/common';
 // import * as htmlToImage from 'html-to-image'
 // import { toPng } from 'html-to-image'; 
@@ -70,17 +70,17 @@ export class CommonServiceService {
   public bellCount: Subject<any> = new Subject();
   langKeyCode: string;
   bellCountComponent() {
-    this.bellCount.next()
+    this.bellCount.next(null)
   }
 
   public callDmr: Subject<any> = new Subject();
   dmrCall() {
-    this.callDmr.next()
+    this.callDmr.next(null)
   }
 
   public failedTokens: Subject<any> = new Subject();
   failedTokensCall() {
-    this.failedTokens.next()
+    this.failedTokens.next(null)
   }
 
 
@@ -411,7 +411,7 @@ export class CommonServiceService {
             var gettodaydate = this.formatDateTime(new Date(curetndatetime));
             // console.log('res.result export pdf', res.result)
 
-            var docDefinition = {
+            var docDefinition: any = {
               pageMargins: [40, 60, 40, 60],
               pageSize: 'A4',
 
@@ -1022,7 +1022,7 @@ export class CommonServiceService {
             var gettodaydate = this.formatDateTime(new Date(curetndatetime));
             // console.log('res.result export pdf new', res.result)
 
-            var docDefinition = {
+            var docDefinition: any = {
               pageMargins: [40, 60, 40, 60],
               pageSize: 'A4',
 
@@ -1896,7 +1896,7 @@ export class CommonServiceService {
             var gettodaydate = this.formatDateTime(new Date(curetndatetime));
             // console.log('res.result export pdf', res.result)
 
-            var docDefinition = {
+            var docDefinition: any = {
               pageMargins: [40, 60, 40, 60],
               pageSize: 'A4',
               pageOrientation: 'landscape',
@@ -2524,7 +2524,7 @@ export class CommonServiceService {
             var curetndatetime = todaydate.toISOString();
             var gettodaydate = this.formatDateTime(new Date(curetndatetime));
 
-            var docDefinition = {
+            var docDefinition: any = {
               pageMargins: [40, 60, 40, 60],
               pageSize: 'A4',
               pageOrientation: 'landscape',
@@ -3261,7 +3261,7 @@ export class CommonServiceService {
             var gettodaydate = this.formatDateTime(new Date(curetndatetime));
 
 
-            var docDefinition = {
+            var docDefinition: any = {
               pageMargins: [40, 60, 40, 60],
               pageSize: 'A4',
 
@@ -4018,7 +4018,7 @@ export class CommonServiceService {
             var gettodaydate = this.formatDateTime(new Date(curetndatetime));
             // console.log('res.result export pdf', res.result)
 
-            var docDefinition = {
+            var docDefinition:any = {
               pageMargins: [40, 60, 40, 60],
               pageSize: 'A4',
               header: (currentPage, pageCount) => {

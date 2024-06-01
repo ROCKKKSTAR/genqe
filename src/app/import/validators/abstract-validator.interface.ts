@@ -1,7 +1,7 @@
 import { Observable, Subject } from 'rxjs';
 import { DataValidatorFn, TemplateDownloadFn } from './validator.functions';
 import { InjectionToken } from '@angular/core';
-import { IResponse } from 'src/app/models/server-data-source.model';
+import { IResponse } from '../../../models/server-data-source.model';
 
 export interface ICell {
   rowIndex: number;

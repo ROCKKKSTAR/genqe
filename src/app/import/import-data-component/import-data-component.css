@@ -1,0 +1,15 @@
+.data-row-grey {
+  background-color: #e6e9eb;
+  opacity: 0.3;
+}
+.buttons-wrapper button {
+  margin-right: 10px;
+}
+:host /deep/ .mat-card {
+  padding: 10px 16px;
+}
+.import-heading {
+  color: #6a6a6a;
+    font-weight: bold;
+    font-size: 19px;
+}

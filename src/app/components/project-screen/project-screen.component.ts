@@ -34,7 +34,7 @@ import {
 import { Subject, Subscription, interval } from 'rxjs';
 import { DataValidatorRequired } from '../../import/validators/validator.functions';
 import { environment as env } from 'src/environments/environment';
-import { IGlobalSetting } from '../../chatbot-conversation/chatbot-conversation.component';
+// import { IGlobalSetting } from '../../chatbot-conversation/chatbot-conversation.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MatPaginator } from '@angular/material/paginator';
 import { takeUntil } from 'rxjs/operators';
@@ -46,6 +46,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableExporterDirective } from 'mat-table-exporter';
 import { ILanguage } from 'src/app/models/language.interface';
 import { ActivatedRoute } from '@angular/router';
+import { IGlobalSetting } from 'src/app/models/globalSetting.interface';
 declare var $: any;
 
 @Component({

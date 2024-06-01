@@ -141,7 +141,7 @@ export class SidebarComponent implements OnInit {
       }
     });
   }
-  public displayCouponGen() {
+  public displayCouponGen():any {
     if(this.userType === 1){
       return true;
     } else if(this.userType === 2) {
@@ -160,7 +160,7 @@ export class SidebarComponent implements OnInit {
     }
   }
 
-  public displayReports(){
+  public displayReports(): any{
     if(this.userType === 1){
       return true;
     } else if(this.userType === 2) {

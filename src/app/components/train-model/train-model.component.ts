@@ -9,6 +9,7 @@ export class TrainModelComponent implements OnInit {
   public isSidebarOpen = true;
   public loadershow = false;
   public showData: boolean;
+loaderMessage: any;
 
   constructor() {}
 

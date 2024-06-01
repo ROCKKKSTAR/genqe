@@ -43,7 +43,7 @@ import { IRole, IUser } from 'src/app/models/user.interface';
 import * as XLSX from 'xlsx';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-import { InvoiceData } from '../../invoice/invoice.component';
+// import { InvoiceData } from '../../invoice/invoice.component';
 import { ALERT_RESPONSE, IAlert } from '../../alert-modal/alert.interface';
 import { AppAlertComponent } from '../../alert-modal/alert.component';
 import { AuthenticationService } from 'src/app/services/auth.service';
@@ -372,7 +372,7 @@ export class LoungeComponent implements OnInit, AfterViewInit {
   public loungePartnerId = '';
   public availLanguages: IGlobalSetting[] = [];
   outletReciept: any;
-  public invoices: InvoiceData[] = [];
+  // public invoices: InvoiceData[] = [];
   outletRecieptId: string;
   status: any;
   airportData: any;
@@ -862,7 +862,7 @@ export class LoungeComponent implements OnInit, AfterViewInit {
     this.lounge = [];
     this.partners = [];
     this.vendors = [];
-    this.invoices = [];
+    // this.invoices = [];
     this.clipboardid = '';
   }
 
@@ -2243,26 +2243,26 @@ export class LoungeComponent implements OnInit, AfterViewInit {
     });
   }
 
-  public fetchReceiptNames(keyword: string): void {
-    if (keyword.length > 2) {
-      this.WS.post('api/master/lounge/fetchOutletReceiptNames', {
-        keyword,
-      }).subscribe((res: IResponse) => {
-        if (res.status === 1) {
-          this.invoices = res.result.receipts as InvoiceData[];
-          if (!this.invoices.length) {
-            this.toastr.info('Not found');
-          }
-        } else if (res.status === 2) {
-          this.toastr.info(res.description);
-        } else {
-          this.toastr.error(res.description);
-        }
-      });
-    } else {
-      this.invoices = [];
-    }
-  }
+  // public fetchReceiptNames(keyword: string): void {
+  //   if (keyword.length > 2) {
+  //     this.WS.post('api/master/lounge/fetchOutletReceiptNames', {
+  //       keyword,
+  //     }).subscribe((res: IResponse) => {
+  //       if (res.status === 1) {
+  //         this.invoices = res.result.receipts as InvoiceData[];
+  //         if (!this.invoices.length) {
+  //           this.toastr.info('Not found');
+  //         }
+  //       } else if (res.status === 2) {
+  //         this.toastr.info(res.description);
+  //       } else {
+  //         this.toastr.error(res.description);
+  //       }
+  //     });
+  //   } else {
+  //     this.invoices = [];
+  //   }
+  // }
 
   public fetchLoungeNames(keyword: string): void {
     if (keyword.length > 2) {
@@ -2382,24 +2382,24 @@ export class LoungeComponent implements OnInit, AfterViewInit {
     );
   }
 
-  public setTokenReceipt(invoice: InvoiceData): void {
-    this.getReceiptById(invoice._id);
-    this.invoices = [];
-  }
+  // public setTokenReceipt(invoice: InvoiceData): void {
+  //   this.getReceiptById(invoice._id);
+  //   this.invoices = [];
+  // }
 
-  public getReceiptById(invoiceId: string): void {
-    this.WS.post('api/master/receipt/fetch/id', { id: invoiceId }).subscribe(
-      (res: IResponse) => {
-        if (res.status === 1) {
-          const receipt: InvoiceData = res.result.receipts[0];
-          this.outletRecieptId = res.result.receipts._id;
-          this.outletReciept = res.result.receipts.tname;
-        } else {
-          this.toastr.info(res.description);
-        }
-      }
-    );
-  }
+  // public getReceiptById(invoiceId: string): void {
+  //   this.WS.post('api/master/receipt/fetch/id', { id: invoiceId }).subscribe(
+  //     (res: IResponse) => {
+  //       if (res.status === 1) {
+  //         const receipt: InvoiceData = res.result.receipts[0];
+  //         this.outletRecieptId = res.result.receipts._id;
+  //         this.outletReciept = res.result.receipts.tname;
+  //       } else {
+  //         this.toastr.info(res.description);
+  //       }
+  //     }
+  //   );
+  // }
 
   public fetchOutletOwnedNames(keyword: string): void {
     if (keyword.length > 2) {
@@ -5556,7 +5556,7 @@ export class LoungeComponent implements OnInit, AfterViewInit {
     this.partners.length = 0;
     this.vendors.length = 0;
     this.newParentLounge.length = 0;
-    this.invoices.length = 0;
+    // this.invoices.length = 0;
     this.user.length = 0;
     this.partnersLink.length = 0;
     this.cloneSourceLounge.length = 0;
