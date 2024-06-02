@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { FileImportExportComponent } from './components/file-import-export/file-import-export.component';
-import { LoginComponent } from './account/login.component';
+// import { LoginComponent } from './account/login.component';
 import { DevicesComponent } from './components/masters/devices/devices.component';
 import { LoungeComponent } from './components/masters/lounge/lounge.component';
 import { MembersComponent } from './components/masters/members/members.component';
@@ -45,7 +45,8 @@ import { TrainNewModelComponent } from './components/train-new-model/train-new-m
 const routes: Routes = [
   {
     path: '',
-    component: LoginComponent,
+    loadChildren: () => import('./account/login.component').then(m => m.LoginComponent)
+    // component: LoginComponent,
   },
   // {
   //   path: 'print',
@@ -58,96 +59,126 @@ const routes: Routes = [
   // },
   {
     path: 'login',
-    component: LoginComponent,
+    loadChildren: () => import('./account/login.component').then(m => m.LoginComponent)
+    // component: LoginComponent,
   },
-  { path: 'register', component: RegisterComponent },
-  { path: 'forget', component: ForgetPasswordComponent },
-  { path: 'confirmforgot', component: ConfirmForgotPassword },
+  {
+    path: 'register',
+    loadChildren: () => import('./account/register.component').then(m => m.RegisterComponent)
+    // component: RegisterComponent
+  },
+  {
+    path: 'forget',
+    loadChildren: () => import('./account/forgetpassword.component').then(m => m.ForgetPasswordComponent),
+    // component: ForgetPasswordComponent
+  },
+  {
+    path: 'confirmforgot',
+    loadChildren: () => import('./account/confirmForgotPassword.component').then(m => m.ConfirmForgotPassword),
+    // component: ConfirmForgotPassword
+  },
   {
     path: 'partner',
-    component: PartnerComponent,
+    loadChildren: () => import('./components/masters/partner/partner.component').then(m => m.PartnerComponent),
+    // component: PartnerComponent,
     canActivate: [CanActivateURL],
   },
   {
     path: 'lounge',
-    component: LoungeComponent,
+    loadChildren: () => import('./components/masters/lounge/lounge.component').then(m => m.LoungeComponent),
+    // component: LoungeComponent,
     canActivate: [CanActivateURL],
   },
   {
     path: 'airport',
-    component: AirportComponent,
+    loadChildren: () => import('./components/masters/airport/airport.component').then(m => m.AirportComponent),
+    // component: AirportComponent,
     canActivate: [CanActivateURL],
   },
   {
     path: 'country',
-    component: CountryComponent,
+    loadChildren: () => import('./components/masters/country/country.component').then(m => m.CountryComponent),
+    // component: CountryComponent,
     canActivate: [CanActivateURL],
   },
   {
     path: 'currency',
-    component: CurrencyComponent,
+    loadChildren: () => import('./components/masters/currency/currency.component').then(m => m.CurrencyComponent),
+    // component: CurrencyComponent,
     canActivate: [CanActivateURL],
   },
   {
     path: 'pincode',
-    component: PincodeComponent,
+    loadChildren: () => import('./components/masters/pincode/pincode.component').then(m => m.PincodeComponent),
+    // component: PincodeComponent,
     canActivate: [CanActivateURL],
   },
   {
     path: 'users',
-    component: UsersComponent,
+    loadChildren: () => import('./components/masters/users/users.component').then(m => m.UsersComponent),
+    // component: UsersComponent,
     canActivate: [CanActivateURL],
   },
   {
     path: 'members',
-    component: MembersComponent,
+    loadChildren: () => import('./components/masters/members/members.component').then(m => m.MembersComponent),
+    // component: MembersComponent,
     canActivate: [CanActivateURL],
   },
   {
     path: 'registered-members',
-    component: RegisterdMemberComponent,
+    loadChildren: () => import('./components/masters//registerd-member/registerd-member.component').then(m => m.RegisterdMemberComponent),
+    // component: RegisterdMemberComponent,
     canActivate: [CanActivateURL],
   },
   {
     path: 'file-import-export',
-    component: FileImportExportComponent,
+    loadChildren: () => import('./components/file-import-export/file-import-export.component').then(m => m.FileImportExportComponent),
+    // component: FileImportExportComponent,
     canActivate: [CanActivateURL],
   },
   {
     path: 'devices',
-    component: DevicesComponent,
+    loadChildren: () => import('./components/masters/devices/devices.component').then(m => m.DevicesComponent),
+    // component: DevicesComponent,
     canActivate: [CanActivateURL],
   },
 
   //
   {
     path: 'global-setting',
-    component: GlobalSettingComponent,
+    loadChildren: () => import('./components/masters/global-setting/global-setting.component').then(m => m.GlobalSettingComponent),
+    // component: GlobalSettingComponent,
     canActivate: [CanActivateURL],
   },
   {
     path: 'module',
-    component: ModuleComponent,
+    loadChildren: () => import('./components/masters/module/module.component').then(m => m.ModuleComponent),
+    // component: ModuleComponent,
     canActivate: [CanActivateURL],
   },
   {
     path: 'action',
-    component: ActionComponent,
+    loadChildren: () => import('./components/masters/action/action.component').then(m => m.ActionComponent),
+    // component: ActionComponent,
     canActivate: [CanActivateURL],
   },
   {
     path: 'role',
-    component: RoleComponent,
+    loadChildren: () => import('./components/masters/role/role.component').then(m => m.RoleComponent),
+    // component: RoleComponent,
     canActivate: [CanActivateURL],
   },
   {
     path: 'airline-code',
-    component: AirlineCodeComponent,
+    loadChildren: () => import('./components/masters/airline-code/airline-code.component').then(m => m.AirlineCodeComponent),
+    // component: AirlineCodeComponent,
     canActivate: [CanActivateURL],
   },
   {
     path: 'outlet-events',
-    component: OutletEventsComponent,
+    loadChildren: () => import('./components/masters/outlet-events/outlet-events.component').then(m => m.OutletEventsComponent),
+    // component: OutletEventsComponent,
     canActivate: [CanActivateURL],
   },
   {
@@ -246,7 +277,8 @@ const routes: Routes = [
   },
   {
     path: '**',
-    component: LoginComponent,
+    loadChildren: () => import('./account/login.component').then(m => m.LoginComponent)
+    // component: LoginComponent,
   },
 ];
 
@@ -254,4 +286,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
