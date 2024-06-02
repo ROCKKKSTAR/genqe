@@ -22,5 +22,5 @@ RUN npm run build
 WORKDIR /app/node
 RUN npm install && npm cache clean --force
 
-EXPOSE 4201
+EXPOSE 4202
 CMD [ "node", "app.js" ]

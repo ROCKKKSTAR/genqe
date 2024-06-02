@@ -11,7 +11,7 @@ export class Appconstants {
   // public static ROUTE_API_PROD = 'https://dev-us-lms-backendapi.plaza-network.com/api/login/';
 
   public static ROUTE_LMSUI_PROD = 'https://lms-uat.plaza-network.com/';
-  public static ROUTE_LMSUI_DEV = 'http://localhost:4201/';
+  public static ROUTE_LMSUI_DEV = 'http://localhost:4202/';
 
   /** API RESPONSE CODES */
   public static SUCCESS_RESPONSE_CODE = '200';
