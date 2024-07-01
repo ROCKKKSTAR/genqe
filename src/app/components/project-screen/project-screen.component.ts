@@ -25,7 +25,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { CommonServiceService } from 'src/app/services/common-service.service';
 import { DatePipe } from '@angular/common';
 import { HttpEvent, HttpEventType, HttpParams } from '@angular/common/http';
-import { event, css } from 'jquery';
+// import { event, css } from 'jquery';
 import { IPartner } from 'src/app/models/partner.interface';
 import {
   AbstractValidator,

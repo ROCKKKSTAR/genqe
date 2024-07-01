@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  LANGUAGE_URL: 'http://localhost:4202',
+  LANGUAGE_URL: 'http://localhost:4203',
   BASE_URL: 'http://localhost:3001/', // master service it should be 3000
   ADMISSION_BASE_URL: 'http://localhost:3001/', // admission service
   PAYMENT_BASE_URL: 'http://localhost:3002/',
